@@ -1,0 +1,14 @@
+{
+    "id":"UUUID - client side",
+    "collection_id": "Hard coded - client side",
+    "metadata" : {
+        "topcatmd":"data"
+    },
+    "properties" :{
+        "arbitary property" : "data"
+    },
+    "footprint" : {
+        "data" : "geojson",
+        "crs" : "WSG84"
+    }
+}
