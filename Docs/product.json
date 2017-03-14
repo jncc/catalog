@@ -1,14 +1,60 @@
 {
-    "id":"UUUID - client side",
+    "id": "UUUID",
     "collection_id": "Hard coded - client side",
-    "metadata" : {
-        "topcatmd":"data"
+    "metadata": {
+        "topcatmd": "data"
     },
-    "properties" :{
-        "arbitary property" : "data"
+    "properties": {
+        "externalId" : "string",
+        "arbitary property": "data"
     },
-    "footprint" : {
-        "data" : "geojson",
-        "crs" : "WSG84"
+    "data": {
+        "groups": [
+            {
+                "description": "",
+                "files": {
+                    "s3": [
+                        {
+                            "key": "s3 key",
+                            "bucket": "s3 bucket",
+                            "region": "s3 region"
+                        }
+                    ],
+                    "ftp": [
+                        {
+                            "server": "server url",
+                            "path": "path"
+                        }
+                    ],
+                    "nfs": [
+                        {}
+                    ],
+                    "smb": [
+                        {}
+                    ],
+                    "file share protocol": [
+                        {}
+                    ]
+                },
+                "services": {
+                    "wms": [
+                        {
+                            "url": "service-base-url",
+                            "name": "layer-name"
+                        }
+                    ],
+                    "wfs": [
+                        {
+                            "url": "service-base-url",
+                            "name": "layer-name"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "footprint": {
+        "data": "geojson",
+        "crs": "WSG84"
     }
 }
