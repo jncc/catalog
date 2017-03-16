@@ -31,7 +31,9 @@ app.get(`/search/*?`, async (req, res) => {
   //res.set(`Content-Type`, `text/xml`);
 
   res.json({
-    "term" : req.params[0]
+    "term" : req.params[0],
+    "params": req.query
+
   });
 });
 
