@@ -18,18 +18,6 @@ app.get(`/test`, async (req, res) => {
 
 app.get(`/search/*?`, async (req, res) => {
 
-//   let storedQuery = await storedQueryRepository.load(req.params.key)
-//   let queryResult = getProducts(storedQuery.query);
-
-//   // get all the products out of the query result, ignoring the collection they're in
-//   let products = queryResult.collections.map(c => c.products).reduce((a, b) => a.concat(b));
-
-//   let realWmsUrl = getRealWmsUrl(app.settings.env, req.header(`Host`), req.protocol);
-//   let result = getCapabilities(products, realWmsUrl);
-
-  //let result = req.params.term
-  //res.set(`Content-Type`, `text/xml`);
-
   res.json({
     "term" : req.params[0],
     "params": req.query
@@ -37,43 +25,20 @@ app.get(`/search/*?`, async (req, res) => {
   });
 });
 
-// custom wms GetCapabilites handler
-// app.get(`/search:term`, async (req, res) => {
+app.get(`/product/*?`, async (req, res) => {
 
-// //   let storedQuery = await storedQueryRepository.load(req.params.key)
-// //   let queryResult = getProducts(storedQuery.query);
+  let raw:string = req.params[0];
+  let collection = raw.substring(0, raw.lastIndexOf('/'))
+  let product = raw.substring(raw.lastIndexOf('/') + 1)
 
-// //   // get all the products out of the query result, ignoring the collection they're in
-// //   let products = queryResult.collections.map(c => c.products).reduce((a, b) => a.concat(b));
+  res.json({
+    "term" : req.params[0],
+    "params": req.query,
+    "collection": collection,
+    "product": product
 
-// //   let realWmsUrl = getRealWmsUrl(app.settings.env, req.header(`Host`), req.protocol);
-// //   let result = getCapabilities(products, realWmsUrl);
-
-//   let result = req.params.term
-//   //res.set(`Content-Type`, `text/xml`);
-
-//   res.json({
-//     "term" : req.params.term
-//   });
-// });
-
-// return product metadata to the ui
-// app.get(`/products`, (req, res) => {
-//   validateQuery(req.query);
-//   let result = getProducts(req.query);
-//   res.json(result);
-// });
-
-// store the query and give me a key for it
-// app.post(`/storedQueries`, async (req, res) => {
-//   let query = req.body;
-//   validateQuery(query);
-//   let storedQuery = await storedQueryRepository.store(query);
-//   res.json({ key: storedQuery.id });
-// });
-
-// serve static files from the specified directory
-//app.use(express.static(env.dir));
+  });
+});
 
 // start the express web server
 app.listen(env.port, () => {
