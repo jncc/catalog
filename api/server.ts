@@ -40,6 +40,19 @@ app.get(`/product/*?`, async (req, res) => {
   });
 });
 
+// store the query and give me a key for it
+app.post(`/add/product`, async (req, res) => {
+  let product = req.body;
+
+  console.log(product);
+  
+  res.json({ 
+    key: "product key",
+    productId: product.id
+   });
+});
+
+
 // start the express web server
 app.listen(env.port, () => {
   console.log(`it's ` + new Date().toISOString());
