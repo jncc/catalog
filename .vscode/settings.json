@@ -1,0 +1,7 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib/",
+    // hide the build output from the file explorer
+    "files.exclude": {
+        "built": true
+    }
+}

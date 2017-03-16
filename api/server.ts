@@ -13,7 +13,7 @@ process.on('unhandledRejection', r => console.log(r));
 app.use(bodyParser.json());
 
 app.get(`/test`, async (req, res) => {
-  res.send('donkey')
+  res.send('fooo thing wibbl')
 })
 
 app.get(`/search/*?`, async (req, res) => {
