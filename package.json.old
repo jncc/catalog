@@ -1,0 +1,44 @@
+{
+  "name": "catalog",
+  "version": "1.0.0",
+  "description": "Metadata and data product catalogue.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf built",
+    "compile": "tsc --outDir built",
+    "webpack": "npm run clean && webpack --progress",
+    "build": "npm run clean && npm run compile && webpack",
+    "build:prod": "set NODE_ENV=production && npm run build",
+    "dev": "concurrently -k \"npm run compile\" \"webpack-dev-server --inline --hot \"",
+    "dev:server": "npm run compile",
+    "test": "karma start --single-run",
+    "test:watch": "karma start",
+    "start": "node built/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jncc/catalog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jncc/catalog/issues"
+  },
+  "homepage": "https://github.com/jncc/catalog#readme",
+  "devDependencies": {
+    "@types/debug": "0.0.29",
+    "@types/express": "4.0.35",
+    "@types/node": "7.0.8",
+    "concurrently": "3.4.0",
+    "debug": "2.2.0",
+    "nodemon": "1.11.0",
+    "typescript": "2.2.1",
+    "webpack-dev-server": "2.4.2"
+  },
+  "dependencies": {
+    "body-parser": "1.17.1",
+    "express": "4.14.0",
+    "webpack": "2.2.1"
+  }
+}

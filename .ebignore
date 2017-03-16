@@ -1,0 +1,10 @@
+
+# the .ebignore file helps with elastic beanstalk deployment.
+# by default, "eb deploy" uses .gitignore when building a deployment package,
+# but our .gitignore excludes the built/ directory, which is what we want to package!
+# when present, .ebignore is used by eb deploy instead of .gitignore
+# let's deploy everything (ignoring the .git folder for good measure)
+# but perhaps we could make this more efficient and only deploy what's necessary
+# such as https://github.com/0xadada/dockdj/blob/master/.ebignore
+
+.git/

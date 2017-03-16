@@ -1,0 +1,27 @@
+{
+  "name": "catalog",
+  "version": "1.0.0",
+  "description": "product catalog",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jncc/catalog.git"
+  },
+  "author": "JNCC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jncc/catalog/issues"
+  },
+  "homepage": "https://github.com/jncc/catalog#readme",
+  "dependencies": {
+    "@types/body-parser": "^1.16.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.35"
+  }
+}

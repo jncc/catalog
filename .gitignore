@@ -1,0 +1,15 @@
+
+# node environment variable file
+.env
+
+# npm
+node_modules/
+npm-debug.log
+
+# build output
+built/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
