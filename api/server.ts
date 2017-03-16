@@ -16,7 +16,7 @@ app.get(`/test`, async (req, res) => {
   res.send('donkey')
 })
 
-app.get(`/searchthings/:testy`, async (req, res) => {
+app.get(`/search/*?`, async (req, res) => {
 
 //   let storedQuery = await storedQueryRepository.load(req.params.key)
 //   let queryResult = getProducts(storedQuery.query);
@@ -31,7 +31,7 @@ app.get(`/searchthings/:testy`, async (req, res) => {
   //res.set(`Content-Type`, `text/xml`);
 
   res.json({
-    "term" : req.params.testy
+    "term" : req.params[0]
   });
 });
 
