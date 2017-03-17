@@ -3,6 +3,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser"
 
 import { getEnvironmentSettings } from "./settings";
+import { validateProduct } from "./product/validateProduct"
+import { Product } from "./product/product"
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
@@ -42,13 +44,17 @@ app.get(`/product/*?`, async (req, res) => {
 
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
-  let product = req.body;
+  let product: Product = req.body;
 
-  console.log(product);
-  
+  //validateProduct(product)
+  product.id = "12345"
+
+  let result = JSON.stringify(product)
+
   res.json({ 
-    key: "product key",
-    productId: product.id
+    productId: product.id,
+    externaId: product.properties.externalId,
+    jsonProduct: result
    });
 });
 
