@@ -44,7 +44,7 @@ export interface Product {
     name: string,
     collectionId?: string,
     collectionName: string,
-    metadata?: {},
+    metadata: {},
     properties: ProductProperties,
     data: ProductData,
     footprint: {}

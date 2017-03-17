@@ -21,3 +21,4 @@ export class Database {
         return Database._instance;
     }
 }
+
