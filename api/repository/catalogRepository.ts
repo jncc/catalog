@@ -11,9 +11,12 @@ export class CatalogRepository {
                 .then(collectionId => {
                     return t.one('INSERT INTO product(collection_id, metadata, properties, data, footprint, name) \
                     VALUES ($1, $2, $3, $4, ST_GeomFromGeoJSON($5), $6) \
-                    RETURNING id', 
+                    RETURNING id',
                         [collectionId, product.metadata, product.properties, product.data, product.footprint, product.name], x => x.id);
-                }); 
+                });
+        }).catch(error => {
+            console.log("database error : " + error)
+            throw new Error(error)
         });
     }
 }

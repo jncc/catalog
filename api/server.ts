@@ -47,9 +47,14 @@ app.get(`/product/*?`, async (req, res) => {
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
   let product: Product = req.body;
-
-  let productId = await catalogRepository.storeProduct(product);
-  res.json({ key: productId });
+  try {
+    let productId = await catalogRepository.storeProduct(product);
+    res.json({ productId: productId });
+  }
+  catch (e) {
+      res.sendStatus(500)
+  }
+  
 });
 
 
