@@ -47,6 +47,19 @@ app.get(`/product/*?`, async (req, res) => {
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
   let product: Product = req.body;
+
+  try
+  {
+    validateProduct(product);
+  }
+  catch (e)
+  { 
+    res.statusCode = 400
+    res.send("Product validation error" + e);
+    throw new Error(e);
+  }
+  
+
   try {
     let productId = await catalogRepository.storeProduct(product);
     res.json({ productId: productId });
