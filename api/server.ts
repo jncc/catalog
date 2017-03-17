@@ -55,7 +55,7 @@ app.post(`/add/product`, async (req, res) => {
   catch (e)
   { 
     res.statusCode = 400
-    res.send("Product validation error" + e);
+    res.send("Product validation error: " + e);
     throw new Error(e);
   }
   
