@@ -4,10 +4,12 @@ import * as bodyParser from "body-parser"
 
 import { getEnvironmentSettings } from "./settings";
 import { validateProduct } from "./product/validateProduct"
+import { CatalogRepository } from "./repository/catalogRepository"
 import { Product } from "./product/product"
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
+let catalogRepository = new CatalogRepository();
 
 process.on('unhandledRejection', r => console.log(r));
 
@@ -46,16 +48,8 @@ app.get(`/product/*?`, async (req, res) => {
 app.post(`/add/product`, async (req, res) => {
   let product: Product = req.body;
 
-  //validateProduct(product)
-  product.id = "12345"
-
-  let result = JSON.stringify(product)
-
-  res.json({ 
-    productId: product.id,
-    externaId: product.properties.externalId,
-    jsonProduct: result
-   });
+  let productId = await catalogRepository.storeProduct(product);
+  res.json({ key: productId });
 });
 
 

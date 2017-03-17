@@ -42,6 +42,7 @@ export interface ProductData {
 export interface Product {
     id?: string,
     name: string,
+    collectionId?: string,
     collectionName: string,
     metadata?: {},
     properties: ProductProperties,

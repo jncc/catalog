@@ -1,12 +1,11 @@
 {
-    "id": "UUUID",
-    "collection_id": "Hard coded - client side",
-    "metadata": {
-        "topcatmd": "data"
-    },
+    "name" : "bobby product",
+    "collectionName": "collection/name",
     "properties": {
-        "externalId" : "string",
-        "arbitary property": "data"
+        "externalId" : "thingy",
+        "x": "data",
+        "y": "more data",
+        "z": "more and more data"
     },
     "data": {
         "groups": [
@@ -27,13 +26,10 @@
                         }
                     ],
                     "nfs": [
-                        {}
-                    ],
-                    "smb": [
-                        {}
-                    ],
-                    "file share protocol": [
-                        {}
+                        {
+                            "server": "jeffs box",
+                            "remote mount" : "/plop/wee"
+                        }
                     ]
                 },
                 "services": {
