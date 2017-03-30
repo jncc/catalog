@@ -15,19 +15,22 @@
     "url": "git+https://github.com/jncc/catalog.git"
   },
   "author": "JNCC",
-  "license": "ISC",
+  "license": "OGL",
   "bugs": {
     "url": "https://github.com/jncc/catalog/issues"
   },
   "homepage": "https://github.com/jncc/catalog#readme",
   "dependencies": {
-    "@types/body-parser": "1.16.0",
+    "@mapbox/geojsonhint": "2.0.1",
     "body-parser": "1.17.1",
     "express": "4.15.2",
+    "geojson": "0.4.1",
     "pg-promise": "5.6.4"
   },
   "devDependencies": {
+    "@types/body-parser": "1.16.0",
     "@types/express": "4.0.35",
+    "@types/geojson": "1.0.0",
     "@types/pg-promise": "0.0.28",
     "nodemon": "1.11.0",
     "rimraf": "2.6.1",
