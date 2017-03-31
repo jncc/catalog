@@ -1,4 +1,4 @@
 @ECHO OFF
 
-SET PG_AUTH="username:password"
+SET PGAUTH="username:password"
 SET SERVER_IP="pg_ip:port"
