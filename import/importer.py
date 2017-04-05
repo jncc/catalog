@@ -15,12 +15,10 @@ class Importer:
     product_import      -- If this is a product or collection import
     collection_id       -- The collection ID for a product import
     """
-    def __init__(self, api_base_url, input_file_path, product_import=False, collection_id=None):
+    def __init__(self, api_base_url, input_file_path, product_import=False):
         self.api_base_url = api_base_url
         self.input_file_path = input_file_path
         self.product_import = product_import
-        if self.uuid_str_valid(collection_id):
-            self.collection_id = collection_id
 
     @staticmethod
     def uuid_str_valid(uuid_str):
@@ -32,26 +30,22 @@ class Importer:
 
         """
         try:
-            val = uuid.UUID(uuid_str, version=4)
+            uuid.UUID(uuid_str)
+            return True
         except ValueError:
             return False
 
-        # Check for validity of input, hex should match input if valid
-        return val.hex == uuid_str
-
-    def import_product(self, product, collection_id):
+    def import_product(self, product):
         """
         Import a single product from a JSON blob
 
         Keyword arguments:
         product         -- A JSON blob to import as a product
         """
-        product['collection_id'] = collection_id
-
-        resp = requests.post(urljoin(self.api_base_url, 'product/add'), data=product)
-        if not resp.ok():
+        resp = requests.post(urljoin(self.api_base_url, 'add/product'), json=product)
+        if not resp.ok:
             raise ValueError('Product %s was not imported, error returned from API: %s'
-                             % (product['metadata']['title'], resp.text()))
+                             % (product['name'], resp.text))
 
     def import_collection(self, collection):
         """
@@ -64,14 +58,15 @@ class Importer:
         del collection['products']
 
         resp = requests.post(urljoin(self.api_base_url, 'collection/add'), data=collection)
-        if not resp.ok():
+        if not resp.ok:
             raise ValueError('Product %s was not imported, error returned from API: %s'
                              % (collection['metadata']['title'], resp.text()))
 
         json_resp = json.loads(resp.text)
 
         for product in products:
-            self.import_product(product, json_resp['id'])
+            product['collectionName'] = json_resp['name']
+            self.import_product(product)
 
     def do_import(self):
         """
@@ -79,11 +74,11 @@ class Importer:
         __init__ method
         """
         with open(self.input_file_path, 'r') as input_file_stream:
-            inputs = json.loads(input_file_stream)
+            inputs = json.load(input_file_stream)
 
         if self.product_import:
             for product in inputs:
-                self.import_product(product, self.collection_id)
+                self.import_product(product)
         else:
             raise NotImplementedError()
 
@@ -94,10 +89,12 @@ if __name__ == '__main__':
     PARSER.add_argument('-p', '--product', required=False, action='store_true',
                         help='Tell the importer that we are importing a product / array of \
                         products [append to existing collection]')
-    PARSER.add_argument('-c', '--collection', type=str, required=True, help='Collection ID to \
-                        import into when doing a product import')
+    PARSER.add_argument('-c', '--collection', type=str, required=False, default=None,
+                        help='Collection ID to import into when doing a product import')
 
     ARGS = PARSER.parse_args()
 
-    IMPORTER = Importer(ARGS.api, ARGS.input)
+    print(ARGS)
+
+    IMPORTER = Importer(ARGS.api, ARGS.input, ARGS.product)
     IMPORTER.do_import()
