@@ -1,0 +1,74 @@
+[
+    {
+        "name": "collection/name", // Product Name, must be unique for the collection
+        "collectionName": "project/dataset", // Collection Name, must exist
+        // Metadata blob formatted as per a cut down GEMINI2 format
+        "metadata": {
+            "title": "Product Title",
+            "abstract": "Product Abstract",
+            "topicCategory": "Product Topic Category",
+            "keyword": [
+                "Keyword 1",
+                "Keyword 2",
+                "..."
+            ],
+            "datasetReferenceDate": "YYYY-mm-DD",
+            "accessLimitations": "Any constraints on product access",
+            "useConstraints": "Any constraints on product use i.e. Open Government Licence Version 3",
+            "lineage": "Product Lineage",
+            "responsibleOrganisation": "Product Responsible Organistaion",
+            "metadataPointOfContact": "Product Point of Contact",
+            "metadataDate": "YYYY-mm-DD Date of product metadata creation",
+            "metadataLanguage": "English",           
+            "spatialReferenceSystem": "EPSG code describing the spatial reference system of this product i.e. EPSG:27700",
+            "resourceType": "Resource Type i.e. Dataset"
+        },
+        // Product specific properties, anything that identifies or should be searchable about the product that isn't strictly GEMINI2 metadata
+        "properties": {
+            "osgb_grid_ref": "NY27",
+            "swath_id": 123,
+            "external_ref": "ID-212"
+        },
+        // Data Section
+        "data": {
+            // A list of logical groups of data, may contain only one object, generally 'default'
+            "groups": [
+                {
+                    // General description of the purpose of this group should be short with a 'default' group
+                    "description": "default",
+                    // File locations with a sharing method for the data backing this service, some basic ones envisioned so far i.e. FTP, S3, etc...
+                    "files": {
+                        // S3 file download, includes size, url and type of file
+                        "s3": {
+                            "size": 10130131,
+                            "url": "https://s3-eu-west-1.amazonaws.com/lidar-1/processed/DTM/gridded/27700/10000/DTM_NY27.tif",
+                            "type": "GeoTIFF"
+                        }
+                    }
+                }
+            ]
+        },
+        // A GeoJSON extract that describes the footprint of the product in WGS84 as a MultiPolygon/Polygon, CRS should be included, but will be replaced with
+        // WGS84 if it does not during import, import process will promote any Polygon found here to MultiPolygon
+        "footprint": {
+            "type": "MultiPolygon",
+            "coordinates": [
+                [
+                    [
+                        [-3.252708444643698,55.01808601299337],
+                        [-3.25551820944467,55.10792506925024],
+                        [-3.098805121795129,55.1094396249146],
+                        [-3.096345813599173,55.01959554822891],
+                        [-3.252708444643698,55.01808601299337]
+                    ]
+                ]
+            ],            
+            "crs": {
+                "properties": {
+                    "name": "EPSG:4326"
+                },
+                "type": "name"
+            }
+        }
+    }
+]
