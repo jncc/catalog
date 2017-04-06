@@ -1,8 +1,9 @@
 #pylint: disable=C0111
 from urllib.parse import urljoin
-import json
 import argparse
+import json
 import uuid
+import shapely
 import requests
 
 class Importer:
@@ -13,12 +14,13 @@ class Importer:
     api_base_url        -- The base URL of the API supporting this catalog
     input_file_path     -- The path for the input JSON blob
     product_import      -- If this is a product or collection import
-    collection_id       -- The collection ID for a product import
+    multi_polygon       -- Set to force product footprints to MutliPolygon, true by default
     """
-    def __init__(self, api_base_url, input_file_path, product_import=False):
+    def __init__(self, api_base_url, input_file_path, product_import=False, multi_polygon=True):
         self.api_base_url = api_base_url
         self.input_file_path = input_file_path
         self.product_import = product_import
+        self.multi_polygon = multi_polygon
 
     @staticmethod
     def uuid_str_valid(uuid_str):
@@ -42,6 +44,17 @@ class Importer:
         Keyword arguments:
         product         -- A JSON blob to import as a product
         """
+        geom = shapely.geometry.shape(json.loads(product['footprint']))
+        if self.multi_polygon and geom.type != 'MultiPolygon':
+            ## Looking for multipolygons in the product and the product is not MultiPolygon
+            if geom.type == 'Polygon':
+                multipolygon_geom = shapely.geometry.multipolygon.MultiPolygon([geom])
+            else:
+                raise NotImplementedError('Geometry Type %s is not currently supported for import \
+                                           use Polygon or MultiPolygon' % geom.type)
+            # Have to remove the non array elements produced via shapely
+            product['footprint'] = json.loads(json.dumps(multipolygon_geom))
+
         resp = requests.post(urljoin(self.api_base_url, 'add/product'), json=product)
         if not resp.ok:
             raise ValueError('Product %s was not imported, error returned from API: %s'
@@ -89,8 +102,6 @@ if __name__ == '__main__':
     PARSER.add_argument('-p', '--product', required=False, action='store_true',
                         help='Tell the importer that we are importing a product / array of \
                         products [append to existing collection]')
-    PARSER.add_argument('-c', '--collection', type=str, required=False, default=None,
-                        help='Collection ID to import into when doing a product import')
 
     ARGS = PARSER.parse_args()
 

@@ -1,0 +1,2 @@
+requests==2.9.1
+Shapely==1.5.17.post1
