@@ -41,7 +41,7 @@
                         // S3 file download, includes size, url and type of file
                         "s3": {
                             "size": 10130131,
-                            "url": "https://s3-eu-west-1.amazonaws.com/lidar-1/processed/DTM/gridded/27700/10000/DTM_NY27.tif",
+                            "url": "https://s3-eu-west-1.amazonaws.com/url.file",
                             "type": "GeoTIFF"
                         }
                     }
