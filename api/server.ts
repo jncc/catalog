@@ -1,11 +1,12 @@
 
 import * as express from "express";
 import * as bodyParser from "body-parser"
+import * as ajv from 'ajv';
 
 import { getEnvironmentSettings } from "./settings";
 import { validateProduct } from "./product/validateProduct"
 import { CatalogRepository } from "./repository/catalogRepository"
-import { Product } from "./product/product"
+import { Product, Schema } from "./definitions/product/product"
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
@@ -42,6 +43,15 @@ app.get(`/product/*?`, async (req, res) => {
     "product": product
 
   });
+});
+
+app.post(`/validate`, async (req, res) => {
+  let product: Product = req.body;
+  let validate = ajv({allErrors: true}).compile(Schema)
+  let result = validate(product);
+  console.log(result)
+  console.log(validate.errors)
+  res.send(result)
 });
 
 // store the query and give me a key for it
