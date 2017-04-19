@@ -8,6 +8,8 @@ import * as DataServices from "./components/data/services";
 import * as DataFiles from "./components/data/files";
 import * as ValidationHelper from "../../validation/validationHelper";
 
+import { Database } from "../../repository/database"
+
 export interface Product {
     id?: string,
     name: string,
@@ -19,11 +21,22 @@ export interface Product {
     footprint: Footprint.Footprint
 };
 
-function checkIdExists(schema, data) {
-    return false;
+function checkNameExists(schema, data) {
+    return Database.instance.connection.task(t => {
+        return t.oneOrNone('select name from $1~ where name = $2', [schema.table, data], x => x && x.name)
+            .then(name => {
+                if (name == null || name == undefined) {
+                    return false;
+                }
+                return true;
+            });
+    }).catch(error => {
+        console.log("database error : " + error)
+        throw new Error(error)
+    });
 }
 
-function nonSchemaValidation(product:Product, errors:Array<string>) {
+function nonSchemaValidation(product: Product, errors: Array<string>) {
     errors = Footprint.validate(product.footprint, errors)
     return errors;
 }
@@ -31,15 +44,15 @@ function nonSchemaValidation(product:Product, errors:Array<string>) {
 export function validate(product: Product) {
     let validator = ajv({ async: 'es7', allErrors: true })
     let asyncValidator = ajvasync(validator)
-    let productSchemaValidator = asyncValidator.compile(Schema)
 
-    asyncValidator.addKeyword('idExists', {
+    asyncValidator.addKeyword('nameExists', {
         async: true,
         type: 'string',
-        validate: checkIdExists
+        validate: checkNameExists
     });
 
-    let errors:string[] = new Array<string>();
+    let productSchemaValidator = asyncValidator.compile(Schema)
+    let errors: string[] = new Array<string>();
 
     let promise = new Promise((resolve, reject) => {
         productSchemaValidator(product).then(e => {
@@ -67,8 +80,7 @@ export const Schema = {
     "properties": {
         "id": {
             "type": "string",
-            "format": "uuid",
-            "idExists": {"test": "stuff"}
+            "format": "uuid"
         },
         "name": {
             "type": "string"
@@ -78,7 +90,8 @@ export const Schema = {
             "format": "uuid"
         },
         "collectionName": {
-            "type": "string"
+            "type": "string",
+            "nameExists": { "table": "collection" }
         },
         "metadata": {
             "$ref": "#/definitions/metadata"

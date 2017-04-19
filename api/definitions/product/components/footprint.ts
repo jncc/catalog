@@ -25,7 +25,7 @@ export function validate(footprint: any, errors: string[]) {
         footprint.crs.properties.name != 'EPSG:4326' &&
         footprint.crs.properties.name != 'urn:ogc:def:crs:OGC:1.3:CRS84' &&
         footprint.crs.properties.name != 'urn:ogc:def:crs:EPSG::4326') {
-        errors.push("footprint | projection should be 'EPSG:4326' / 'urn:ogc:def:crs:OGC:1.3:CRS84' / 'urn:ogc:def:crs:EPSG::4326post'");
+        errors.push("footprint | projection should be 'EPSG:4326' / 'urn:ogc:def:crs:OGC:1.3:CRS84' / 'urn:ogc:def:crs:EPSG::4326'");
     }
 
     return errors;
