@@ -1,4 +1,5 @@
 import * as ajv from 'ajv';
+import * as ajvasync from 'ajv-async';
 import * as Footprint from "./components/footprint";
 import * as Properties from "./components/properties";
 import * as Metadata from "./components/metadata";
@@ -18,26 +19,56 @@ export interface Product {
     footprint: Footprint.Footprint
 };
 
-export function validate(product: Product) {
-    let productSchemaValidator = ajv({ allErrors: true }).compile(Schema)
-    let result = productSchemaValidator(product);
-    
-    let errors = ValidationHelper.reduceErrors(productSchemaValidator.errors)
-    
-    // Footprint Validation
+function checkIdExists(schema, data) {
+    return false;
+}
+
+function nonSchemaValidation(product:Product, errors:Array<string>) {
     errors = Footprint.validate(product.footprint, errors)
-    
-    return [result, errors]
+    return errors;
+}
+
+export function validate(product: Product) {
+    let validator = ajv({ async: 'es7', allErrors: true })
+    let asyncValidator = ajvasync(validator)
+    let productSchemaValidator = asyncValidator.compile(Schema)
+
+    asyncValidator.addKeyword('idExists', {
+        async: true,
+        type: 'string',
+        validate: checkIdExists
+    });
+
+    let errors:string[] = new Array<string>();
+
+    let promise = new Promise((resolve, reject) => {
+        productSchemaValidator(product).then(e => {
+            errors = nonSchemaValidation(product, errors)
+            if (errors.length == 0) {
+                resolve([true, []]);
+            } else {
+                reject([false, errors])
+            }
+        }).catch(e => {
+            errors = ValidationHelper.reduceErrors(e.errors)
+            errors = nonSchemaValidation(product, errors)
+            reject([false, errors])
+        })
+    });
+
+    return promise
 };
 
 export const Schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
+    "$async": true,
     "title": "Product",
     "type": "object",
     "properties": {
         "id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "idExists": {"test": "stuff"}
         },
         "name": {
             "type": "string"

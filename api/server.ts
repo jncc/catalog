@@ -48,11 +48,11 @@ app.get(`/product/*?`, async (req, res) => {
 
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
-  let result = Product.validate(product);
-
-  console.log(result[0])
-  console.log(result[1])
-  res.send(result)
+  Product.validate(product).then(result => {
+    res.send(result)
+  }).catch(result => {
+    res.send(result)
+  });  
 });
 
 // store the query and give me a key for it
