@@ -1,8 +1,11 @@
-import * as Properties from "./components/properties"
-import * as Metadata from "./components/metadata"
-import * as Data from "./components/data/data"
-import * as DataServices from "./components/data/services" 
-import * as DataFiles from "./components/data/files"
+import * as ajv from 'ajv';
+import * as Footprint from "./components/footprint";
+import * as Properties from "./components/properties";
+import * as Metadata from "./components/metadata";
+import * as Data from "./components/data/data";
+import * as DataServices from "./components/data/services";
+import * as DataFiles from "./components/data/files";
+import * as ValidationHelper from "../../validation/validationHelper";
 
 export interface Product {
     id?: string,
@@ -12,7 +15,19 @@ export interface Product {
     metadata: Metadata.Metadata,
     properties: Properties.Properties,
     data: Data.Data,
-    footprint: {}
+    footprint: Footprint.Footprint
+};
+
+export function validate(product: Product) {
+    let productSchemaValidator = ajv({ allErrors: true }).compile(Schema)
+    let result = productSchemaValidator(product);
+    
+    let errors = ValidationHelper.reduceErrors(productSchemaValidator.errors)
+    
+    // Footprint Validation
+    errors = Footprint.validate(product.footprint, errors)
+    
+    return [result, errors]
 };
 
 export const Schema = {

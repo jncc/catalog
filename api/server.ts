@@ -2,11 +2,12 @@
 import * as express from "express";
 import * as bodyParser from "body-parser"
 import * as ajv from 'ajv';
-
+import * as ValidationHelper from "./validation/validationHelper";
+import * as Product from "./definitions/product/product";
 import { getEnvironmentSettings } from "./settings";
 import { validateProduct } from "./product/validateProduct"
 import { CatalogRepository } from "./repository/catalogRepository"
-import { Product, Schema } from "./definitions/product/product"
+//import { Product, validate, Schema } from "./definitions/product/product"
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
@@ -24,7 +25,7 @@ app.get(`/test`, async (req, res) => {
 app.get(`/search/*?`, async (req, res) => {
 
   res.json({
-    "term" : req.params[0],
+    "term": req.params[0],
     "params": req.query
 
   });
@@ -32,12 +33,12 @@ app.get(`/search/*?`, async (req, res) => {
 
 app.get(`/product/*?`, async (req, res) => {
 
-  let raw:string = req.params[0];
+  let raw: string = req.params[0];
   let collection = raw.substring(0, raw.lastIndexOf('/'))
   let product = raw.substring(raw.lastIndexOf('/') + 1)
 
   res.json({
-    "term" : req.params[0],
+    "term": req.params[0],
     "params": req.query,
     "collection": collection,
     "product": product
@@ -46,38 +47,36 @@ app.get(`/product/*?`, async (req, res) => {
 });
 
 app.post(`/validate`, async (req, res) => {
-  let product: Product = req.body;
-  let validate = ajv({allErrors: true}).compile(Schema)
-  let result = validate(product);
-  console.log(result)
-  console.log(validate.errors)
+  let product: Product.Product = req.body;
+  let result = Product.validate(product);
+
+  console.log(result[0])
+  console.log(result[1])
   res.send(result)
 });
 
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
-  let product: Product = req.body;
+  let product: Product.Product = req.body;
 
-  try
-  {
+  try {
     validateProduct(product);
   }
-  catch (e)
-  { 
+  catch (e) {
     res.statusCode = 400
     res.send("Product validation error: " + e);
     throw new Error(e);
   }
-  
+
 
   try {
     let productId = await catalogRepository.storeProduct(product);
     res.json({ productId: productId });
   }
   catch (e) {
-      res.sendStatus(500)
+    res.sendStatus(500)
   }
-  
+
 });
 
 
