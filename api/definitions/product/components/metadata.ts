@@ -1,5 +1,63 @@
 export interface Metadata {
+    title: string,
+    abstract: string,
+    topicCategory: string,
+    keywords: Keyword[],
+    temporalExtent: TemporalExtent,
+    datasetReferenceDate: string,
+    lineage: string,
+    resourceLocator: string,
+    additionalInformationSource: string,
+    dataFormat: string,
+    responsibleOrganisation: ResponsibleParty,
+    limitationsOnPublicAccess: string,
+    useConstraints: string,
+    copyright: string,
+    spatialReferenceSystem: string,
+    extent: Extent[],
+    metadataDate: string,
+    metadataPointOfContact: ResponsibleParty,
+    resourceType: string,
+    boundingBox: BoundingBox
+};
 
+export interface Keyword {
+    value: string,
+    vocab: string
+};
+
+export interface TemporalExtent {
+    begin: string,
+    end: string
+};
+
+export interface ResponsibleParty {
+    name: string,
+    email: string,
+    role: string
+};
+
+export interface Extent {
+    value: string,
+    authority: string
+};
+
+export interface BoundingBox {
+    north: number,
+    south: number,
+    east: number,
+    west: number
+};
+
+export function validate(metadata, errors) {
+    if (metadata.boundingBox.north <= metadata.boundingBox.south) {
+        errors.push("metadata | boundingBox | north should be greater than south");
+    }
+    if (metadata.boundingBox.east <= metadata.boundingBox.west) {
+        errors.push("metadata | boundingBox | east should be greater than west");
+    }
+
+    return errors;
 };
 
 export const Schema = {
@@ -29,7 +87,10 @@ export const Schema = {
             },
             "datasetReferenceDate": {
                 "type": "string",
-                "format": "date"
+                "oneOf": [
+                    { "format": "date-time" },
+                    { "format": "date" }
+                ]
             },
             "lineage": {
                 "type": "string",
@@ -74,12 +135,15 @@ export const Schema = {
             },
             "metadataDate": {
                 "type": "string",
-                "format": "date-time"
+                "oneOf": [
+                    { "format": "date-time" },
+                    { "format": "date" }
+                ]
             },
             "metadataPointOfContact": {
                 "$ref": "#/definitions/metadata/responsibleParty"
             },
-            "resourceType":{
+            "resourceType": {
                 "type": "string",
                 "minLength": "1"
             },
@@ -133,7 +197,7 @@ export const Schema = {
                 "minLength": 1
             }
         },
-        "required": ["name","email","role"]
+        "required": ["name", "email", "role"]
     },
     "extent": {
         "type": "object",
@@ -147,24 +211,24 @@ export const Schema = {
                 "minLength": 1
             }
         },
-        "required": ["value","authority"]
+        "required": ["value", "authority"]
     },
     "boundingBox": {
         "type": "object",
         "properties": {
             "north": {
-                "type": "number"
+                "type": "number",
             },
             "south": {
-                "type": "number"
+                "type": "number",
             },
             "east": {
-                "type": "number"
+                "type": "number",
             },
             "west": {
-                "type": "number"
+                "type": "number",
             }
         },
-        "required": ["north","south","east","west"]
+        "required": ["north", "south", "east", "west"]
     }
-}
+};

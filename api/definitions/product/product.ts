@@ -38,11 +38,12 @@ function checkNameExists(schema, data) {
 
 function nonSchemaValidation(product: Product, errors: Array<string>) {
     errors = Footprint.validate(product.footprint, errors)
+    errors = Metadata.validate(product.metadata, errors)
     return errors;
 }
 
 export function validate(product: Product) {
-    let validator = ajv({ async: 'es7', allErrors: true })
+    let validator = ajv({ async: 'es7', allErrors: true, formats: 'full' })
     let asyncValidator = ajvasync(validator)
 
     asyncValidator.addKeyword('nameExists', {
