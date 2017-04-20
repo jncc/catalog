@@ -14,6 +14,7 @@ export const Schema = {
         "$ref": "#/definitions/services/ogc"
     },
     "ogc": {
+        "type": "object",
         "properties": {
             "url": {
                 "type": "string",

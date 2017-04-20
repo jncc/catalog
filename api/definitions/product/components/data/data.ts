@@ -19,6 +19,7 @@ export interface Data {
 
 export const Schema = {
     "data": {
+        "type": "object",
         "properties": {
             "groups": {
                 "type": "array",
@@ -31,6 +32,7 @@ export const Schema = {
         "required": ["groups"]
     },
     "dataGroup": {
+        "type": "object",
         "properties": {
             "description": {
                 "type": "string"

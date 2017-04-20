@@ -11,6 +11,7 @@ export interface ftp {
 
 export const Schema = {
     "s3file": {
+        "type": "object",
         "properties": {
             "key": {
                 "type": "string",
@@ -32,6 +33,7 @@ export const Schema = {
         "required": ["key", "bucket", "region"]
     },
     "ftp": {
+        "type": "object",
         "properties": {
             "server": {
                 "type": "string",

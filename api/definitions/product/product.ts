@@ -94,7 +94,7 @@ export const Schema = {
             "nameExists": { "table": "collection" }
         },
         "metadata": {
-            "$ref": "#/definitions/metadata"
+            "$ref": "#/definitions/metadata/metadata"
         },
         "properties": {
             "$ref": "#/definitions/properties"
