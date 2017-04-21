@@ -78,9 +78,10 @@ export const Schema = {
             },
             "keywords": {
                 "type": "array",
+                "minItems": 1,
                 "items": {
                     "$ref": "#/definitions/metadata/keyword"
-                }
+                }                
             },
             "temporalExtent": {
                 "$ref": "#/definitions/metadata/temporalExtent"
@@ -131,7 +132,8 @@ export const Schema = {
                 "type": "array",
                 "items": {
                     "$ref": "#/definitions/metadata/extent"
-                }
+                },
+                "minItems": 1
             },
             "metadataDate": {
                 "type": "string",

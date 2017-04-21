@@ -44,14 +44,16 @@ export const Schema = {
                         "type": "array",
                         "items": {
                             "$ref": "#/definitions/files/s3file"
-                        }
+                        },
+                        "minItems": 1
                     },
                     "ftp": {
                         "type": "array",
                         "items": {
                             "$ref": "#/definitions/files/ftp"
                         }
-                    }
+                    },
+                    "minItems": 1
                 }
             },
             "services": {
@@ -61,13 +63,15 @@ export const Schema = {
                         "type": "array",
                         "items": {
                             "$ref": "#/definitions/services/wms"
-                        }
+                        },
+                        "minItems": 1
                     },
                     "wfs": {
                         "type": "array",
                         "items": {
                             "$ref": "#/definitions/services/wfs"
-                        }
+                        },
+                        "minItems": 1
                     }
                 }
             }
