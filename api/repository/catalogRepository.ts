@@ -4,6 +4,16 @@ import { Database } from "./database";
 
 export class CatalogRepository {
 
+    getProducts(name: string, limit: number, offset: number): Promise<Array<Product>> {
+        return Database.instance.connection.task(t => {
+            name = name + '%';
+            return t.any('SELECT p.id, p.name, collection_id as "collectionId", c.name as "collectionName", p.metadata, p.properties, p.data, ST_ASGeoJSON(p.footprint) as "footprint" FROM product p INNER JOIN collection c ON p.collection_id = c.id WHERE c.name LIKE $1 ORDER BY c.name, p.name LIMIT $2 OFFSET $3', [name, limit, offset]);
+        }).catch(error => {
+            console.log("database error : " + error)
+            throw new Error(error)
+        })
+    }
+
     storeProduct(product: Product): Promise<string> {
 
         return Database.instance.connection.task(t => {

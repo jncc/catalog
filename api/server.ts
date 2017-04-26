@@ -23,12 +23,31 @@ app.get(`/test`, async (req, res) => {
 })
 
 app.get(`/search/*?`, async (req, res) => {
+  let pattern = /^(([A-Za-z0-9\-\_\.]+)(\/))+([A-Za-z0-9\-\_\.])+/
+  let param: string = req.params[0];
+  let matches = param.match(pattern)
 
-  res.json({
-    "term": req.params[0],
-    "params": req.query
+  console.log(param)
+  console.log(matches)
 
-  });
+  if (matches === null || matches === undefined) {
+    res.status(400)
+    res.json({ "error": "Search term must be provided as a valid path" })
+  } else {
+    catalogRepository.getProducts(param, 50, 0).then(results => {
+      res.json({
+        "term": req.params[0],
+        "params": req.query,
+        "results": results
+      })
+    }).catch(errors => {
+      res.status(500)
+      res.json({
+        "errors": errors 
+      });
+    });
+
+  }
 });
 
 app.get(`/product/*?`, async (req, res) => {
@@ -52,31 +71,29 @@ app.post(`/validate`, async (req, res) => {
     res.send(result)
   }).catch(result => {
     res.send(result)
-  });  
+  });
 });
 
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
   let product: Product.Product = req.body;
-
-  try {
-    validateProduct(product);
-  }
-  catch (e) {
+  Product.validate(product).then(result => {
+    res.send(result)
+    try {
+      catalogRepository.storeProduct(product).then(productId => {
+        res.json({ productId: productId });
+      }).catch(error => {
+        res.status(500);
+        res.send(error);
+      })
+    }
+    catch (e) {
+      res.sendStatus(500);
+    }
+  }).catch(result => {
     res.statusCode = 400
-    res.send("Product validation error: " + e);
-    throw new Error(e);
-  }
-
-
-  try {
-    let productId = await catalogRepository.storeProduct(product);
-    res.json({ productId: productId });
-  }
-  catch (e) {
-    res.sendStatus(500)
-  }
-
+    res.send("Product validation error: " + result);
+  });
 });
 
 
