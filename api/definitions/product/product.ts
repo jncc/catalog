@@ -21,9 +21,9 @@ export interface Product {
     footprint: Footprint.Footprint
 };
 
-function checkNameExists(schema, data) {
+function checkCollectionNameExists(schema, data) {
     return Database.instance.connection.task(t => {
-        return t.oneOrNone('select name from $1~ where name = $2', [schema.table, data], x => x && x.name)
+        return t.oneOrNone('select name from collection where name = $1', [data], x => x && x.name)
             .then(name => {
                 if (name == null || name == undefined) {
                     return false;
@@ -46,10 +46,11 @@ export function validate(product: Product) {
     let validator = ajv({ async: 'es7', allErrors: true, formats: 'full' })
     let asyncValidator = ajvasync(validator)
 
-    asyncValidator.addKeyword('nameExists', {
+    // Add a keyword [external function] to the validator to check for name presence in database table
+    asyncValidator.addKeyword('collectionNameExists', {
         async: true,
         type: 'string',
-        validate: checkNameExists
+        validate: checkCollectionNameExists
     });
 
     let productSchemaValidator = asyncValidator.compile(Schema)
@@ -92,7 +93,7 @@ export const Schema = {
         },
         "collectionName": {
             "type": "string",
-            "nameExists": { "table": "collection" }
+            "collectionNameExists": { }
         },
         "metadata": {
             "$ref": "#/definitions/metadata/metadata"
