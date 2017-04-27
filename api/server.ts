@@ -4,10 +4,9 @@ import * as bodyParser from "body-parser"
 import * as ajv from 'ajv';
 import * as ValidationHelper from "./validation/validationHelper";
 import * as Product from "./definitions/product/product";
+import * as Collection from "./definitions/collection/collection";
 import { getEnvironmentSettings } from "./settings";
-import { validateProduct } from "./product/validateProduct"
-import { CatalogRepository } from "./repository/catalogRepository"
-//import { Product, validate, Schema } from "./definitions/product/product"
+import { CatalogRepository } from "./repository/catalogRepository";
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
@@ -23,12 +22,9 @@ app.get(`/test`, async (req, res) => {
 })
 
 app.get(`/search/*?`, async (req, res) => {
-  let pattern = /^(([A-Za-z0-9\-\_\.]+)(\/))+([A-Za-z0-9\-\_\.])+/
+  let pattern = /^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/
   let param: string = req.params[0];
   let matches = param.match(pattern)
-
-  console.log(param)
-  console.log(matches)
 
   if (matches === null || matches === undefined) {
     res.status(400)

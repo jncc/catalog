@@ -85,7 +85,8 @@ export const Schema = {
             "format": "uuid"
         },
         "name": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^([A-Za-z0-9\-\_\.])+$"
         },
         "collectionId": {
             "type": "string",
@@ -93,6 +94,7 @@ export const Schema = {
         },
         "collectionName": {
             "type": "string",
+            "pattern": "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$",
             "collectionNameExists": { }
         },
         "metadata": {
