@@ -60,14 +60,14 @@ export function validate(product: Product) {
         productSchemaValidator(product).then(e => {
             errors = nonSchemaValidation(product, errors)
             if (errors.length == 0) {
-                resolve([true, []]);
+                resolve([true]);
             } else {
-                reject([false, errors])
+                reject(errors)
             }
         }).catch(e => {
             errors = ValidationHelper.reduceErrors(e.errors)
             errors = nonSchemaValidation(product, errors)
-            reject([false, errors])
+            reject(errors)
         })
     });
 

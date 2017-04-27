@@ -16,13 +16,13 @@ export function validate(collection: Collection) {
     let promise = new Promise((resolve, reject) => {
         collectionSchemaValidator(collection).then(e => {
             if (errors.length == 0) {
-                resolve([true, []]);
+                resolve([true]);
             } else {
-                reject([false, errors])
+                reject(errors)
             }
         }).catch(e => {
             errors = ValidationHelper.reduceErrors(e.errors)
-            reject([false, errors])
+            reject(errors)
         })
     });
 

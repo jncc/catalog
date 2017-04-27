@@ -17,33 +17,35 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-app.get(`/test`, async (req, res) => {
-  res.send('fooo thing wibbl')
-})
-
 app.get(`/search/*?`, async (req, res) => {
-  let pattern = /^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/
   let param: string = req.params[0];
-  let matches = param.match(pattern)
-
-  if (matches === null || matches === undefined) {
-    res.status(400)
-    res.json({ "error": "Search term must be provided as a valid path" })
-  } else {
-    catalogRepository.getProducts(param, 50, 0).then(results => {
-      res.json({
-        "term": req.params[0],
-        "params": req.query,
-        "results": results
-      })
-    }).catch(errors => {
-      res.status(500)
-      res.json({
-        "errors": errors 
-      });
-    });
-
+  let collection: Collection.Collection = { name: param }
+  let respObj = {
+    "term": param,
+    "params": req.query
   }
+  Collection.validate(collection).then(result => {
+    catalogRepository.getProducts(param, 50, 0).then(results => {
+      respObj['results'] = results;
+      res.json(respObj);
+    }).catch(errors => {
+      respObj['errors'] = errors;
+      res.status(500);
+      res.json(respObj);
+    });
+  }).catch(errors => {
+    respObj['errors'] = [];
+    for (let error of errors) {
+      console.log(error)
+      if (error == 'name | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"') {
+        respObj['errors'].push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+      } else {
+        respObj['errors'].push(error)
+      }
+    }
+    res.status(400);
+    res.json(respObj);
+  });
 });
 
 app.get(`/product/*?`, async (req, res) => {
@@ -88,7 +90,7 @@ app.post(`/add/product`, async (req, res) => {
     }
   }).catch(result => {
     res.statusCode = 400
-    res.send("Product validation error: " + result);
+    res.send(result);
   });
 });
 
