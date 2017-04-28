@@ -1,4 +1,3 @@
-
 import * as express from "express";
 import * as bodyParser from "body-parser"
 import * as ajv from 'ajv';
@@ -19,13 +18,32 @@ app.use(bodyParser.json());
 
 app.get(`/search/*?`, async (req, res) => {
   let param: string = req.params[0];
-  let collection: Collection.Collection = { name: param }
+
+  let footprint: string | undefined = undefined;
+  let spatialop: string | undefined = undefined;
+  let properties: any = {}
+
+  for (let query in req.query) {
+    if (query === 'footprint') {
+      footprint = req.query[query];
+    } else if (query === 'spatialop') {
+      spatialop = req.query[query];
+    } else {
+      properties[query] = req.query[query];
+    }
+  }
+
   let respObj = {
     "term": param,
-    "params": req.query
+    "params": {
+      "footprint": footprint,
+      "spatialop": spatialop,
+      "properties": properties
+    }
   }
-  Collection.validate(collection).then(result => {
-    catalogRepository.getProducts(param, 50, 0).then(results => {
+
+  if (param.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+    catalogRepository.getProducts(param, 50, 0, footprint, spatialop, properties).then(results => {
       respObj['results'] = results;
       res.json(respObj);
     }).catch(errors => {
@@ -33,19 +51,14 @@ app.get(`/search/*?`, async (req, res) => {
       res.status(500);
       res.json(respObj);
     });
-  }).catch(errors => {
-    respObj['errors'] = [];
-    for (let error of errors) {
-      console.log(error)
-      if (error == 'name | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"') {
-        respObj['errors'].push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
-      } else {
-        respObj['errors'].push(error)
-      }
-    }
+  } else {
+    respObj['errors'].push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
     res.status(400);
     res.json(respObj);
-  });
+  }
+
+
+
 });
 
 app.get(`/product/*?`, async (req, res) => {

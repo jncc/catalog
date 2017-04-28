@@ -1,21 +1,59 @@
 import { Product } from "../definitions/product/product"
 import { Database } from "./database";
-
+import * as squel from "squel";
 
 export class CatalogRepository {
 
-    getProducts(name: string, limit: number, offset: number): Promise<Array<Product>> {
+    buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, properties: any) {
+        if (footprint !== undefined) {
+            // Do spatial search
+            if (spatialop !== undefined && spatialop === 'within') {
+                baseQuery.where('ST_Within(ST_GeomFromText($2, 4326), footprint)');
+            } else {
+                baseQuery.where('ST_Overlaps(ST_GeomFromText($2, 4326), footprint)');
+            }
+        }
+
+        if (Object.keys(properties).length > 0) {
+            baseQuery.where('properties @> $3');
+        }
+
+        return baseQuery;
+    }
+
+    getProducts(name: string, limit: number, offset: number, footprint: string | undefined, spatialop: string | undefined, properties: any): Promise<Array<Product>> {
+        // Replace wildcard characters in the name
+        name = name.replace('*', '%');
         return Database.instance.connection.task(t => {
-            name = name + '%';
-            return t.any('SELECT p.id, p.name, collection_id as "collectionId", c.name as "collectionName", p.metadata, p.properties, p.data, ST_ASGeoJSON(p.footprint) as "footprint" FROM product p INNER JOIN collection c ON p.collection_id = c.id WHERE c.name || \'/\' || p.name LIKE $1 ORDER BY c.name, p.name LIMIT $2 OFFSET $3', [name, limit, offset]);
+            // Build base query
+            let baseQuery = squel.select()
+                .from('product_view')
+                .field('id').field('name').field('collection_name', 'collectionName').field('metadata').field('properties').field('data').field('ST_AsGeoJSON(footprint)', 'footprint')
+                .where('full_name LIKE $1')
+                .order('full_name')
+                .limit(limit)
+                .offset(offset)
+            // Add optional arguments and filters
+            baseQuery = this.buildQuery(baseQuery, footprint, spatialop, properties);
+            // Run and return results
+            console.log(baseQuery.toString());
+            return t.any(baseQuery.toString(), [name, footprint, properties]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
         })
     }
 
-    storeProduct(product: Product): Promise<string> {
+    getProduct(collection: string, name: string): Promise<Product> {
+        return Database.instance.connection.task(t => {
+            return t.one('SELECT product.* FROM product INNER JOIN collection ON collection.id = product.collection_id WHERE collection.name = $1 AND product.name = $2', [collection, name], x => x);
+        }).catch(error => {
+            console.log("database error : " + error);
+            throw new Error(error);
+        })
+    }
 
+    storeProduct(product: Product): Promise<string> {
         return Database.instance.connection.task(t => {
             return t.one('select id from collection where name = $1', product.collectionName, x => x && x.id)
                 .then(collectionId => {
