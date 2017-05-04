@@ -7,6 +7,9 @@ import * as Collection from "./definitions/collection/collection";
 import { getEnvironmentSettings } from "./settings";
 import { CatalogRepository } from "./repository/catalogRepository";
 
+import { Fixtures } from "./test/fixtures"
+
+
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
 let catalogRepository = new CatalogRepository();
@@ -15,6 +18,13 @@ process.on('unhandledRejection', r => console.log(r));
 
 // parse json body requests
 app.use(bodyParser.json());
+
+app.get('/test', async (req, res) => {
+    const product = Fixtures.GetTestProduct();
+    Product.validate(product).then(result => {
+        res.send(result);
+    });
+});
 
 app.get(`/search/*?`, async (req, res) => {
   let param: string = req.params[0];
@@ -114,4 +124,6 @@ app.listen(env.port, () => {
   console.log(`app.server is listening on: http://localhost:${env.port}`);
   console.log(`node environment is ${env.name}`);
 });
+
+
 

@@ -8,7 +8,14 @@ import * as DataServices from "./components/data/services";
 import * as DataFiles from "./components/data/files";
 import * as ValidationHelper from "../../validation/validationHelper";
 
-import { Database } from "../../repository/database"
+import { Database } from "../../repository/database";
+
+//test reqs
+import { Fixtures } from "../../test/fixtures";
+import 'chai';
+import 'chai-as-promised';
+import 'mocha';
+require('mocha-inline')();
 
 export interface Product {
     id?: string,
@@ -43,9 +50,11 @@ function nonSchemaValidation(product: Product, errors: Array<string>) {
 }
 
 export function validate(product: Product) {
+    console.log('running validator')
+
     let validator = ajv({ allErrors: true, formats: 'full' })
     let asyncValidator = ajvasync(validator)
-
+    
     // Add a keyword [external function] to the validator to check for name presence in database table
     asyncValidator.addKeyword('collectionNameExists', {
         async: true,
@@ -53,10 +62,12 @@ export function validate(product: Product) {
         validate: checkCollectionNameExists
     });
 
+   
     let productSchemaValidator = asyncValidator.compile(Schema)
     let errors: string[] = new Array<string>();
 
     let promise = new Promise((resolve, reject) => {
+        
         productSchemaValidator(product).then(e => {
             errors = nonSchemaValidation(product, errors)
             if (errors.length == 0) {
@@ -118,3 +129,11 @@ export const Schema = {
     },
     "required": ["name", "collectionName", "metadata", "properties", "data", "footprint"]
 }
+
+//Tests
+describe('validate', () => {
+  it('should validate a valid product', () => {
+    const product = Fixtures.GetTestProduct();
+    validate(product).should.eventually.equal(true);
+  });
+});
