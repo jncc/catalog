@@ -43,7 +43,7 @@ function nonSchemaValidation(product: Product, errors: Array<string>) {
 }
 
 export function validate(product: Product) {
-    let validator = ajv({ async: 'es7', allErrors: true, formats: 'full' })
+    let validator = ajv({ allErrors: true, formats: 'full' })
     let asyncValidator = ajvasync(validator)
 
     // Add a keyword [external function] to the validator to check for name presence in database table
@@ -66,7 +66,6 @@ export function validate(product: Product) {
             }
         }).catch(e => {
             errors = ValidationHelper.reduceErrors(e.errors)
-            errors = nonSchemaValidation(product, errors)
             reject(errors)
         })
     });
