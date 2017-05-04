@@ -32,7 +32,6 @@
     "squel": "^5.9.1"
   },
   "devDependencies": {
-    "@types/ajv": "^1.0.0",
     "@types/body-parser": "1.16.0",
     "@types/chai": "^3.5.1",
     "@types/chai-as-promised": "0.0.30",
