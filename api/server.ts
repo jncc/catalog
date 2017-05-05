@@ -68,8 +68,9 @@ app.get(`/search/*?`, async (req, res) => {
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
   Product.validate(product).then(result => {
-    res.send(result)
+    res.sendStatus(200)
   }).catch(result => {
+    res.statusCode = 400
     res.send(result)
   });
 });
@@ -78,13 +79,11 @@ app.post(`/validate`, async (req, res) => {
 app.post(`/add/product`, async (req, res) => {
   let product: Product.Product = req.body;
   Product.validate(product).then(result => {
-    res.send(result)
     try {
       catalogRepository.storeProduct(product).then(productId => {
         res.json({ productId: productId });
       }).catch(error => {
         res.status(500);
-        res.send(error);
       })
     }
     catch (e) {
