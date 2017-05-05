@@ -14,8 +14,8 @@ import { Database } from "../../repository/database";
 import { Fixtures } from "../../test/fixtures";
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-import 'mocha';
-require('mocha-inline')();
+import  'mocha';
+// require('mocha-inline')();
 chai.use(chaiAsPromised);
 
 export interface Product {
@@ -72,7 +72,7 @@ export function validate(product: Product) {
         productSchemaValidator(product).then(e => {
             errors = nonSchemaValidation(product, errors)
             if (errors.length == 0) {
-                resolve([true]);
+                resolve(errors);
             } else {
                 reject(errors)
             }
@@ -135,10 +135,18 @@ export const Schema = {
 describe('validate', () => {
   it('should validate a valid product', () => {
     const product = Fixtures.GetTestProduct();
-    chai.expect(validate(product)).to.eventually.equal(true);
+    chai.expect(validate(product)).to.not.be.rejected;
   });
   it('should reject an invalid product', () => {
     const product = Fixtures.GetTestProduct();
-    chai.expect(validate(product)).to.eventually.be.rejected;
+    validate(product).then(result => {
+        console.log("then");
+        console.log(result);
+    }).catch(result => {
+        console.log("catch");
+        console.log(result)
+    })
+    chai.expect(validate(product)).to.be.rejected;
   });
-});
+
+})
