@@ -12,10 +12,11 @@ import { Database } from "../../repository/database";
 
 //test reqs
 import { Fixtures } from "../../test/fixtures";
-import 'chai';
-import 'chai-as-promised';
+import * as chai from 'chai';
+import * as chaiAsPromised from 'chai-as-promised';
 import 'mocha';
 require('mocha-inline')();
+chai.use(chaiAsPromised);
 
 export interface Product {
     id?: string,
@@ -134,6 +135,10 @@ export const Schema = {
 describe('validate', () => {
   it('should validate a valid product', () => {
     const product = Fixtures.GetTestProduct();
-    validate(product).should.eventually.equal(true);
+    chai.expect(validate(product)).to.eventually.equal(true);
+  });
+  it('should reject an invalid product', () => {
+    const product = Fixtures.GetTestProduct();
+    chai.expect(validate(product)).to.eventually.be.rejected;
   });
 });
