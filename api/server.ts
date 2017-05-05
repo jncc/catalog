@@ -19,13 +19,6 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-app.get('/test', async (req, res) => {
-    const product = Fixtures.GetTestProduct();
-    Product.validate(product).then(result => {
-        res.send(result);
-    });
-});
-
 app.get(`/search/*?`, async (req, res) => {
   let param: string = req.params[0];
 
@@ -71,20 +64,6 @@ app.get(`/search/*?`, async (req, res) => {
 
 });
 
-app.get(`/product/*?`, async (req, res) => {
-
-  let raw: string = req.params[0];
-  let collection = raw.substring(0, raw.lastIndexOf('/'))
-  let product = raw.substring(raw.lastIndexOf('/') + 1)
-
-  res.json({
-    "term": req.params[0],
-    "params": req.query,
-    "collection": collection,
-    "product": product
-
-  });
-});
 
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
