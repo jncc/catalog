@@ -15,6 +15,7 @@ import { Fixtures } from "../../test/fixtures";
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import  'mocha';
+import { should } from 'chai';
 // require('mocha-inline')();
 chai.use(chaiAsPromised);
 
@@ -50,7 +51,7 @@ function nonSchemaValidation(product: Product, errors: Array<string>) {
     return errors;
 }
 
-export function validate(product: Product) {
+export function validate(product: Product): Promise<Array<string>> {
     console.log('running validator')
 
     let validator = ajv({ allErrors: true, formats: 'full' })
@@ -134,19 +135,7 @@ export const Schema = {
 //Tests
 describe('validate', () => {
   it('should validate a valid product', () => {
-    const product = Fixtures.GetTestProduct();
-    chai.expect(validate(product)).to.not.be.rejected;
+    const product = Fixtures.GetTestProduct();   
+    return chai.expect(validate(product)).to.not.be.rejected;
   });
-  it('should reject an invalid product', () => {
-    const product = Fixtures.GetTestProduct();
-    validate(product).then(result => {
-        console.log("then");
-        console.log(result);
-    }).catch(result => {
-        console.log("catch");
-        console.log(result)
-    })
-    chai.expect(validate(product)).to.be.rejected;
-  });
-
 })
