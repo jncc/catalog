@@ -12,7 +12,6 @@ export interface Metadata {
     responsibleOrganisation: ResponsibleParty,
     limitationsOnPublicAccess: string,
     useConstraints: string,
-    copyright: string,
     spatialReferenceSystem: string,
     extent: Extent[],
     metadataDate: string,
@@ -110,7 +109,7 @@ export const Schema = {
                 "minLength": 1
             },
             "responsibleOrganisation": {
-                "$ref": "#/definitions/metadata/responsibleParty"
+                "$ref": "#/definitions/metadata/responsibleOrganisation",
             },
             "limitationsOnPublicAccess": {
                 "type": "string",
@@ -120,20 +119,9 @@ export const Schema = {
                 "type": "string",
                 "minLength": 1
             },
-            "copyright": {
-                "type": "string",
-                "minLength": 1
-            },
             "spatialReferenceSystem": {
                 "type": "string",
                 "minLength": 1
-            },
-            "extent": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/definitions/metadata/extent"
-                },
-                "minItems": 1
             },
             "metadataDate": {
                 "type": "string",
@@ -143,7 +131,7 @@ export const Schema = {
                 ]
             },
             "metadataPointOfContact": {
-                "$ref": "#/definitions/metadata/responsibleParty"
+                "$ref": "#/definitions/metadata/metadataPointOfContact"
             },
             "resourceType": {
                 "type": "string",
@@ -153,7 +141,7 @@ export const Schema = {
                 "$ref": "#/definitions/metadata/boundingBox"
             }
         },
-        "required": ["title", "abstract", "topicCategory", "keywords", "temporalExtent", "datasetReferenceDate", "lineage", "resourceLocator", "additionalInformationSource", "dataFormat", "responsibleOrganisation", "limitationsOnPublicAccess", "useConstraints", "copyright", "spatialReferenceSystem", "extent", "metadataDate", "metadataPointOfContact", "resourceType", "boundingBox"]
+        "required": ["title", "abstract", "topicCategory", "keywords", "temporalExtent", "datasetReferenceDate", "lineage", "resourceLocator", "responsibleOrganisation", "limitationsOnPublicAccess", "useConstraints", "spatialReferenceSystem", "metadataDate", "metadataPointOfContact", "resourceType", "boundingBox"]
     },
     "keyword": {
         "type": "object",
@@ -167,7 +155,7 @@ export const Schema = {
                 "minLength": 1
             }
         },
-        "required": ["value", "vocab"]
+        "required": ["value"]
     },
     "temporalExtent": {
         "type": "object",
@@ -183,7 +171,7 @@ export const Schema = {
         },
         "required": ["begin", "end"]
     },
-    "responsibleParty": {
+    "responsibleOrganisation": {
         "type": "object",
         "properties": {
             "name": {
@@ -199,21 +187,22 @@ export const Schema = {
                 "minLength": 1
             }
         },
-        "required": ["name", "email", "role"]
+        "required": ["email"]
     },
-    "extent": {
+    "metadataPointOfContact": {
         "type": "object",
         "properties": {
-            "value": {
+            "name": {
                 "type": "string",
                 "minLength": 1
             },
-            "authority": {
+            "email": {
                 "type": "string",
-                "minLength": 1
-            }
+                "format": "email"
+            },
+            "role": "metadataPointOfContact"
         },
-        "required": ["value", "authority"]
+        "required": ["name", "email", "role"]
     },
     "boundingBox": {
         "type": "object",

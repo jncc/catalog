@@ -58,11 +58,11 @@ export function validate(product: Product): Promise<Array<string>> {
     let asyncValidator = ajvasync(validator)
     
     // Add a keyword [external function] to the validator to check for name presence in database table
-    asyncValidator.addKeyword('collectionNameExists', {
-        async: true,
-        type: 'string',
-        validate: checkCollectionNameExists
-    });
+    // asyncValidator.addKeyword('collectionNameExists', {
+    //     async: true,
+    //     type: 'string',
+    //     validate: checkCollectionNameExists
+    // });
 
    
     let productSchemaValidator = asyncValidator.compile(Schema)
@@ -106,8 +106,7 @@ export const Schema = {
         },
         "collectionName": {
             "type": "string",
-            "pattern": "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$",
-            "collectionNameExists": { }
+            "pattern": "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"
         },
         "metadata": {
             "$ref": "#/definitions/metadata/metadata"
@@ -135,7 +134,10 @@ export const Schema = {
 //Tests
 describe('validate', () => {
   it('should validate a valid product', () => {
-    const product = Fixtures.GetTestProduct();   
+    const product = Fixtures.GetTestProduct();
+    validate(product).then(result => {
+        console.log(result);
+    })   
     return chai.expect(validate(product)).to.not.be.rejected;
   });
 })

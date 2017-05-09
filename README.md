@@ -1,8 +1,8 @@
 # catalog
 Metadata and data product catalogue.
 
-Development
------------
+## Development
+
 
 The catalog is a Node.js REST server application written in Typescript.
 
@@ -23,3 +23,6 @@ You're good to go.
 A browser window will open at http://localhost:5000
 
 Tip: It's often handy to run the Typescript compiler `tsc` to quickly check for compile errors.
+
+Run Tests
+    npm run tests
