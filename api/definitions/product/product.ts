@@ -16,7 +16,7 @@ import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import  'mocha';
 import { should } from 'chai';
-// require('mocha-inline')();
+require('mocha-inline')();
 chai.use(chaiAsPromised);
 
 export interface Product {
@@ -28,62 +28,6 @@ export interface Product {
     properties: Properties.Properties,
     data: Data.Data,
     footprint: Footprint.Footprint
-};
-
-function checkCollectionNameExists(schema, data) {
-    return Database.instance.connection.task(t => {
-        return t.oneOrNone('select name from collection where name = $1', [data], x => x && x.name)
-            .then(name => {
-                if (name == null || name == undefined) {
-                    return false;
-                }
-                return true;
-            });
-    }).catch(error => {
-        console.log("database error : " + error)
-        throw new Error(error)
-    });
-}
-
-function nonSchemaValidation(product: Product, errors: Array<string>) {
-    errors = Footprint.validate(product.footprint, errors)
-    errors = Metadata.validate(product.metadata, errors)
-    return errors;
-}
-
-export function validate(product: Product): Promise<Array<string>> {
-    console.log('running validator')
-
-    let validator = ajv({ allErrors: true, formats: 'full' })
-    let asyncValidator = ajvasync(validator)
-    
-    // Add a keyword [external function] to the validator to check for name presence in database table
-    // asyncValidator.addKeyword('collectionNameExists', {
-    //     async: true,
-    //     type: 'string',
-    //     validate: checkCollectionNameExists
-    // });
-
-   
-    let productSchemaValidator = asyncValidator.compile(Schema)
-    let errors: string[] = new Array<string>();
-
-    let promise = new Promise((resolve, reject) => {
-        
-        productSchemaValidator(product).then(e => {
-            errors = nonSchemaValidation(product, errors)
-            if (errors.length == 0) {
-                resolve(errors);
-            } else {
-                reject(errors)
-            }
-        }).catch(e => {
-            errors = ValidationHelper.reduceErrors(e.errors)
-            reject(errors)
-        })
-    });
-
-    return promise
 };
 
 export const Schema = {
@@ -130,6 +74,58 @@ export const Schema = {
     },
     "required": ["name", "collectionName", "metadata", "properties", "data", "footprint"]
 }
+
+function checkCollectionNameExists(errors: Array<string>, collectionName: string) {
+    return Database.instance.connection.task(t => {
+        return t.oneOrNone('select name from collection where name = $1', [collectionName], x => x && x.name)
+            .then(name => {
+                if (name == null || name == undefined) {
+                    errors.push(' | collection name does not exist in the database')
+                }
+                return errors;
+            });
+    }).catch(error => {
+        console.log("database error : " + error)
+        throw new Error(error)
+    });
+}
+
+function nonSchemaValidation(product: Product, errors: Array<string>): Promise<Array<string>> {
+    errors = Footprint.nonSchemaValidation(product.footprint, errors)
+    errors = Metadata.nonSchemaValidation(product.metadata, errors)
+    
+    return checkCollectionNameExists(errors, product.collectionName);
+}
+
+export function validate(product: Product): Promise<Array<string>> {
+    console.log('running validator')
+
+    let validator = ajv({ allErrors: true, formats: 'full' })
+    let asyncValidator = ajvasync(validator)
+   
+    let productSchemaValidator = asyncValidator.compile(Schema)
+    let errors: string[] = new Array<string>();
+
+    let promise = new Promise((resolve, reject) => {
+        
+        productSchemaValidator(product)
+        .then(e => nonSchemaValidation(product, e))     
+        .then(e => {
+            if (errors.length == 0) {
+                resolve(errors);
+            } else {
+                reject(errors)
+            }
+        }).catch(e => {
+            errors = ValidationHelper.reduceErrors(e.errors)
+            reject(errors)
+        })
+    });
+
+    return promise
+};
+
+
 
 //Tests
 describe('validate', () => {
