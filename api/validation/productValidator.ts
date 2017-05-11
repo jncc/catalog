@@ -18,6 +18,7 @@ import  'mocha';
 import { should } from 'chai';
 require('mocha-inline')();
 chai.use(chaiAsPromised);
+import * as TypeMoq from "typemoq";
 
 export class ProductValidator{
     constructor(private repository: CatalogRepository) {}
@@ -56,18 +57,27 @@ export class ProductValidator{
 
         return promise
     };
-
-
 }
 
 
-//Tests
-describe('validate', () => {
+// Tests
+describe('Product validator', () => {
+    let validator : ProductValidator;
+    let mock = TypeMoq.Mock.ofType(CatalogRepository);
+    
+    before(() => {
+        mock.setup(x => x.checkCollectionNameExists([TypeMoq.It.isAnyString()], TypeMoq.It.isAnyString())).returns((x, y) => {
+            return Promise.resolve(x);
+        })
+
+        validator = new ProductValidator(mock.object)
+    })
+
     it('should validate a valid product', () => {
         const product = Fixtures.GetTestProduct();
-        validate(product).then(result => {
+        validator.validate(product).then(result => {
             console.log(result);
         })   
-        return chai.expect(validate(product)).to.not.be.rejected;
+        return chai.expect(validator.validate(product)).to.not.be.rejected;
     });
 })
