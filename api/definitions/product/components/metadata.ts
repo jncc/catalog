@@ -48,7 +48,7 @@ export interface BoundingBox {
     west: number
 };
 
-export function nonSchemaValidation(metadata, errors) {
+export function validate(metadata, errors) {
     if (metadata.boundingBox.north <= metadata.boundingBox.south) {
         errors.push("metadata | boundingBox | north should be greater than south");
     }

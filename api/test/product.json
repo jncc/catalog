@@ -47,20 +47,19 @@
         "osgbGridRef": "NH87"
     },
     "data": {
-        "files": {
-            "s3": [{
-                "key" : "/processed/DTM/gridded/27700/10000/DTM_NH87.tif",
-                "bucket" : "lidar-1",
-                "region" : "eu-west-1",
-                "type": "GeoTIFF"
-            },
+        "groups": [
             {
-                "key" : "/processed/DTM/gridded/27700/10000/DTM_NH87_preview.tif",
-                "bucket" : "lidar-1",
-                "region" : "eu-west-1",
-                "type": "GeoTIFF"
-            }]
-        }
+                "files": {
+                    "s3": [{
+                        "key" : "/processed/DTM/gridded/27700/10000/DTM_NH87.tif",
+                        "bucket" : "lidar-1",
+                        "region" : "eu-west-1",
+                        "type": "GeoTIFF"
+                    }]
+                },
+                "description": "default"
+            }
+        ]
     },
     "footprint": {
         "type": "MultiPolygon",

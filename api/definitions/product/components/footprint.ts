@@ -4,7 +4,7 @@ export interface Footprint {
 
 };
 
-export function nonSchemaValidation(footprint: any, errors: string[]) {
+export function validate(footprint: any, errors: string[]) {
     let result = geojsonhint.hint(footprint, {
         precisionWarning: false
     });

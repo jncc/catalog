@@ -2,7 +2,6 @@ import * as express from "express";
 import * as bodyParser from "body-parser"
 import * as ajv from 'ajv';
 import * as ValidationHelper from "./validation/validationHelper";
-import { ProductValidator} from "./validation/productValidator"
 import * as Product from "./definitions/product/product";
 import * as Collection from "./definitions/collection/collection";
 import { getEnvironmentSettings } from "./settings";
@@ -14,7 +13,6 @@ import { Fixtures } from "./test/fixtures"
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
 let catalogRepository = new CatalogRepository();
-let productValidator = new ProductValidator(catalogRepository);
 
 process.on('unhandledRejection', r => console.log(r));
 
@@ -69,7 +67,7 @@ app.get(`/search/*?`, async (req, res) => {
 
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
-  productValidator.validate(product).then(result => {
+  Product.validate(product).then(result => {
     res.sendStatus(200)
   }).catch(result => {
     res.statusCode = 400
@@ -80,7 +78,7 @@ app.post(`/validate`, async (req, res) => {
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
   let product: Product.Product = req.body;
-  productValidator.validate(product).then(result => {
+  Product.validate(product).then(result => {
     try {
       catalogRepository.storeProduct(product).then(productId => {
         res.json({ productId: productId });

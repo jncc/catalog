@@ -1,9 +1,23 @@
+import * as ajv from 'ajv';
+import * as ajvasync from 'ajv-async';
 import * as Footprint from "./components/footprint";
 import * as Properties from "./components/properties";
 import * as Metadata from "./components/metadata";
 import * as Data from "./components/data/data";
 import * as DataServices from "./components/data/services";
 import * as DataFiles from "./components/data/files";
+import * as ValidationHelper from "../../validation/validationHelper";
+
+import { Database } from "../../repository/database";
+
+//test reqs
+import { Fixtures } from "../../test/fixtures";
+import * as chai from 'chai';
+import * as chaiAsPromised from 'chai-as-promised';
+import  'mocha';
+import { should } from 'chai';
+// require('mocha-inline')();
+chai.use(chaiAsPromised);
 
 export interface Product {
     id?: string,
@@ -14,6 +28,62 @@ export interface Product {
     properties: Properties.Properties,
     data: Data.Data,
     footprint: Footprint.Footprint
+};
+
+function checkCollectionNameExists(schema, data) {
+    return Database.instance.connection.task(t => {
+        return t.oneOrNone('select name from collection where name = $1', [data], x => x && x.name)
+            .then(name => {
+                if (name == null || name == undefined) {
+                    return false;
+                }
+                return true;
+            });
+    }).catch(error => {
+        console.log("database error : " + error)
+        throw new Error(error)
+    });
+}
+
+function nonSchemaValidation(product: Product, errors: Array<string>) {
+    errors = Footprint.validate(product.footprint, errors)
+    errors = Metadata.validate(product.metadata, errors)
+    return errors;
+}
+
+export function validate(product: Product): Promise<Array<string>> {
+    console.log('running validator')
+
+    let validator = ajv({ allErrors: true, formats: 'full' })
+    let asyncValidator = ajvasync(validator)
+    
+    // Add a keyword [external function] to the validator to check for name presence in database table
+    // asyncValidator.addKeyword('collectionNameExists', {
+    //     async: true,
+    //     type: 'string',
+    //     validate: checkCollectionNameExists
+    // });
+
+   
+    let productSchemaValidator = asyncValidator.compile(Schema)
+    let errors: string[] = new Array<string>();
+
+    let promise = new Promise((resolve, reject) => {
+        
+        productSchemaValidator(product).then(e => {
+            errors = nonSchemaValidation(product, errors)
+            if (errors.length == 0) {
+                resolve(errors);
+            } else {
+                reject(errors)
+            }
+        }).catch(e => {
+            errors = ValidationHelper.reduceErrors(e.errors)
+            reject(errors)
+        })
+    });
+
+    return promise
 };
 
 export const Schema = {
@@ -60,3 +130,14 @@ export const Schema = {
     },
     "required": ["name", "collectionName", "metadata", "properties", "data", "footprint"]
 }
+
+//Tests
+describe('validate', () => {
+  it('should validate a valid product', () => {
+    const product = Fixtures.GetTestProduct();
+    validate(product).then(result => {
+        console.log(result);
+    })   
+    return chai.expect(validate(product)).to.not.be.rejected;
+  });
+})
