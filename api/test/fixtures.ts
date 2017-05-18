@@ -15,6 +15,7 @@ export class Fixtures {
 describe('Test fixtures', () => {
   it('GetTestProduct should return the product from ./api/test/product.json', () => {
     const result = Fixtures.GetTestProduct();
-    chai.expect(result.id).to.equal('cdc1c5c4-0940-457e-8583-e1cd45b0a5a3');
+    chai.expect(result.id).to.equal('foo bar');
+    //chai.expect(result.id).to.equal('cdc1c5c4-0940-457e-8583-e1cd45b0a5a3');
   });
 });

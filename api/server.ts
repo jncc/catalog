@@ -2,6 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser"
 import * as ajv from 'ajv';
 import * as ValidationHelper from "./validation/validationHelper";
+import { ProductValidator } from "./validation/productValidator"
 import * as Product from "./definitions/product/product";
 import * as Collection from "./definitions/collection/collection";
 import { getEnvironmentSettings } from "./settings";
@@ -67,7 +68,9 @@ app.get(`/search/*?`, async (req, res) => {
 
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
-  Product.validate(product).then(result => {
+  let productValidtor = new ProductValidator(catalogRepository)
+
+  productValidtor.validate(product).then(result => {
     res.sendStatus(200)
   }).catch(result => {
     res.statusCode = 400
@@ -78,7 +81,9 @@ app.post(`/validate`, async (req, res) => {
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
   let product: Product.Product = req.body;
-  Product.validate(product).then(result => {
+  let productValidtor = new ProductValidator(catalogRepository)
+
+  productValidtor.validate(product).then(result => {
     try {
       catalogRepository.storeProduct(product).then(productId => {
         res.json({ productId: productId });
