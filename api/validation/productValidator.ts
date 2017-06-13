@@ -23,14 +23,13 @@ import * as TypeMoq from "typemoq";
 export class ProductValidator{
     constructor(private repository: CatalogRepository) {}
 
-    private nonSchemaValidation(product: Product, errors: Array<string>): Promise<Array<string>> {
+    private nonSchemaValidation(product: Product, errors: string[]): Promise<string[]> {
         errors = Footprint.nonSchemaValidation(product.footprint, errors)
         errors = Metadata.nonSchemaValidation(product.metadata, errors)
-        
         return this.repository.checkCollectionNameExists(errors, product.collectionName);
     }
 
-    validate(product: Product): Promise<Array<string>> {
+    validate(product: Product): Promise<string[]> {
         console.log('running validator')
 
         let validator = ajv({ allErrors: true, formats: 'full' })
@@ -61,22 +60,36 @@ export class ProductValidator{
 
 // Tests
 describe('Product validator', () => {
-    let validator : ProductValidator;
-    let mock = TypeMoq.Mock.ofType(CatalogRepository);
     
-    before(() => {
-        mock.setup(x => x.checkCollectionNameExists([TypeMoq.It.isAnyString()], TypeMoq.It.isAnyString())).returns((x, y) => {
-            return Promise.resolve(x);
-        })
+    let mockRepo = TypeMoq.Mock.ofType(CatalogRepository);
+    let validator =  new ProductValidator(mockRepo.object);
+    
+    // before(() => {
+    //     // mockRepo.setup(x => x.checkCollectionNameExists([TypeMoq.It.isAnyString()], TypeMoq.It.isAnyString())).returns((x, y) => {
+    //     //     console.log("funky")
+    //     //     return Promise.resolve(x);
+    //     // })
 
-        validator = new ProductValidator(mock.object)
-    })
+    //     validator = new ProductValidator(mockRepo.object)
+    // })
 
     it('should validate a valid product', () => {
         const product = Fixtures.GetTestProduct();
-        validator.validate(product).then(result => {
-            console.log(result);
-        })   
+      
         return chai.expect(validator.validate(product)).to.not.be.rejected;
     });
+
+    // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
+    // it('should not validate a product with an invalid collection name', () =>{
+    //     let mr = TypeMoq.Mock.ofType(CatalogRepository);
+    //     mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.is<string[]>(), TypeMoq.It.isAnyString())).returns((x, y) => {
+    //         return Promise.resolve(x);
+    //     })
+
+    //     let v2 = new ProductValidator(mr.object)
+
+    //     const product = Fixtures.GetTestProduct();
+
+    //     return chai.expect(v2.validate(product)).to.be.rejected;
+    // });
 })
