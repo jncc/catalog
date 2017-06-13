@@ -63,15 +63,6 @@ describe('Product validator', () => {
     
     let mockRepo = TypeMoq.Mock.ofType(CatalogRepository);
     let validator =  new ProductValidator(mockRepo.object);
-    
-    // before(() => {
-    //     // mockRepo.setup(x => x.checkCollectionNameExists([TypeMoq.It.isAnyString()], TypeMoq.It.isAnyString())).returns((x, y) => {
-    //     //     console.log("funky")
-    //     //     return Promise.resolve(x);
-    //     // })
-
-    //     validator = new ProductValidator(mockRepo.object)
-    // })
 
     it('should validate a valid product', () => {
         const product = Fixtures.GetTestProduct();
@@ -79,6 +70,12 @@ describe('Product validator', () => {
         return chai.expect(validator.validate(product)).to.not.be.rejected;
     });
 
+    it('should not validate a product with no product name', () => {
+        let p = Fixtures.GetTestProduct();
+        p.collectionName = '';
+
+        return chai.expect(validator.validate(p)).to.be.rejected;
+    })
     // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
     // it('should not validate a product with an invalid collection name', () =>{
     //     let mr = TypeMoq.Mock.ofType(CatalogRepository);
