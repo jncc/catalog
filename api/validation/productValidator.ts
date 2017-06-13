@@ -11,14 +11,15 @@ import * as DataFiles from "../definitions/product/components/data/files";
 import * as ValidationHelper from "./validationHelper";
 
 //test reqs
-import { Fixtures } from "../test/fixtures";
+import  'mocha';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-import  'mocha';
-import { should } from 'chai';
+import * as TypeMoq from "typemoq";
+import { Fixtures } from "../test/fixtures";
+
+//test setup
 require('mocha-inline')();
 chai.use(chaiAsPromised);
-import * as TypeMoq from "typemoq";
 
 export class ProductValidator{
     constructor(private repository: CatalogRepository) {}
@@ -59,6 +60,8 @@ export class ProductValidator{
 };
 
 // Tests
+
+
 describe('Product validator', () => {
     
     let mockRepo = TypeMoq.Mock.ofType(CatalogRepository);
@@ -78,7 +81,7 @@ describe('Product validator', () => {
         .and.eventually.have.lengthOf(1)
         .and.include('name | should match pattern "^([A-Za-z0-9-_.])+$"');
     })
-    
+
     // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
     // it('should not validate a product with an invalid collection name', () =>{
     //     let mr = TypeMoq.Mock.ofType(CatalogRepository);
