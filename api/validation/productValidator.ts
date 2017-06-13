@@ -66,9 +66,9 @@ describe('Product validator', () => {
     let validator =  new ProductValidator(mockRepo.object);
 
     it('should validate a valid product', () => {
-        const product = Fixtures.GetTestProduct();
+        let p = Fixtures.GetTestProduct();
     
-        return chai.expect(validator.validate(product)).to.not.be.rejected;
+        return chai.expect(validator.validate(p)).to.not.be.rejected;
     });
 
     it('should not validate if no product name', () => {
@@ -87,7 +87,7 @@ describe('Product validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
         .and.eventually.have.length(1)
-        .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+        .and.include('collectionName | should match pattern "^\/(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
     })
     
     it('should not validate and invalid collection name', () => {
@@ -97,13 +97,13 @@ describe('Product validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
         .and.eventually.have.length(1)
-        .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+        .and.include('collectionName | should match pattern "^\/(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
     })
 
     it('should validate a valid collection name', () => {
         let p = Fixtures.GetTestProduct();
 
-        p.collectionName = 'test/name/2009/1/2'
+        p.collectionName = '/test/name/2009/1/2'
 
         return chai.expect(validator.validate(p)).to.not.be.rejected
     })
