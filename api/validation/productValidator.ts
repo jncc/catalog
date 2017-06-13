@@ -31,8 +31,6 @@ export class ProductValidator{
     }
 
     validate(product: Product): Promise<string[]> {
-        console.log('running validator')
-
         let validator = ajv({ allErrors: true, formats: 'full' })
         let asyncValidator = ajvasync(validator)
     
@@ -73,7 +71,7 @@ describe('Product validator', () => {
         return chai.expect(validator.validate(product)).to.not.be.rejected;
     });
 
-    it('should not validate a product with no product name', () => {
+    it('should not validate if no product name', () => {
         let p = Fixtures.GetTestProduct();
         p.name = '';
 
@@ -82,6 +80,33 @@ describe('Product validator', () => {
         .and.include('name | should match pattern "^([A-Za-z0-9-_.])+$"');
     })
 
+    it('should not validate if no collection name', () => {
+        let p = Fixtures.GetTestProduct();
+
+        p.collectionName = '';
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+        .and.eventually.have.length(1)
+        .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+    })
+    
+    it('should not validate and invalid collection name', () => {
+        let p = Fixtures.GetTestProduct();
+
+        p.collectionName = '\\\\';
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+        .and.eventually.have.length(1)
+        .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+    })
+
+    it('should validate a valid collection name', () => {
+        let p = Fixtures.GetTestProduct();
+
+        p.collectionName = 'test/name/2009/1/2'
+
+        return chai.expect(validator.validate(p)).to.not.be.rejected
+    })
     // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
     // it('should not validate a product with an invalid collection name', () =>{
     //     let mr = TypeMoq.Mock.ofType(CatalogRepository);
