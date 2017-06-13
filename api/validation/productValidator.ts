@@ -11,14 +11,14 @@ import * as DataFiles from "../definitions/product/components/data/files";
 import * as ValidationHelper from "./validationHelper";
 
 //test reqs
-// import { Fixtures } from "../test/fixtures";
-// import * as chai from 'chai';
-// import * as chaiAsPromised from 'chai-as-promised';
-// import  'mocha';
-// import { should } from 'chai';
-// require('mocha-inline')();
-// chai.use(chaiAsPromised);
-// import * as TypeMoq from "typemoq";
+import { Fixtures } from "../test/fixtures";
+import * as chai from 'chai';
+import * as chaiAsPromised from 'chai-as-promised';
+import  'mocha';
+import { should } from 'chai';
+require('mocha-inline')();
+chai.use(chaiAsPromised);
+import * as TypeMoq from "typemoq";
 
 export class ProductValidator{
     constructor(private repository: CatalogRepository) {}
@@ -59,24 +59,24 @@ export class ProductValidator{
     };
 };
 
-// // Tests
-// describe('Product validator', () => {
-//     let validator : ProductValidator;
-//     let mock = TypeMoq.Mock.ofType(CatalogRepository);
+// Tests
+describe('Product validator', () => {
+    let validator : ProductValidator;
+    let mock = TypeMoq.Mock.ofType(CatalogRepository);
     
-//     before(() => {
-//         mock.setup(x => x.checkCollectionNameExists([TypeMoq.It.isAnyString()], TypeMoq.It.isAnyString())).returns((x, y) => {
-//             return Promise.resolve(x);
-//         })
+    before(() => {
+        mock.setup(x => x.checkCollectionNameExists([TypeMoq.It.isAnyString()], TypeMoq.It.isAnyString())).returns((x, y) => {
+            return Promise.resolve(x);
+        })
 
-//         validator = new ProductValidator(mock.object)
-//     })
+        validator = new ProductValidator(mock.object)
+    })
 
-//     it('should validate a valid product', () => {
-//         const product = Fixtures.GetTestProduct();
-//         validator.validate(product).then(result => {
-//             console.log(result);
-//         })   
-//         return chai.expect(validator.validate(product)).to.not.be.rejected;
-//     });
-// })
+    it('should validate a valid product', () => {
+        const product = Fixtures.GetTestProduct();
+        validator.validate(product).then(result => {
+            console.log(result);
+        })   
+        return chai.expect(validator.validate(product)).to.not.be.rejected;
+    });
+})
