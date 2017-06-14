@@ -100,17 +100,10 @@ describe('Product validator', () => {
         .and.include('collectionName | should match pattern "^\/(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
     })
 
-    it('should validate a valid collection name', () => {
-        let p = Fixtures.GetTestProduct();
-
-        p.collectionName = '/test/name/2009/1/2'
-
-        return chai.expect(validator.validate(p)).to.not.be.rejected
-    })
     // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
     // it('should not validate a product with an invalid collection name', () =>{
     //     let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    //     mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.is<string[]>(), TypeMoq.It.isAnyString())).returns((x, y) => {
+    //     mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAnyString()[], TypeMoq.It.isAnyString())).returns((x, y) => {
     //         return Promise.resolve(x);
     //     })
 
