@@ -50,10 +50,10 @@ export interface BoundingBox {
 
 export function nonSchemaValidation(metadata, errors) {
     if (metadata.boundingBox.north <= metadata.boundingBox.south) {
-        errors.push("metadata | boundingBox | north should be greater than south");
+        errors.push("metadata.boundingBox | north should be greater than south");
     }
     if (metadata.boundingBox.east <= metadata.boundingBox.west) {
-        errors.push("metadata | boundingBox | east should be greater than west");
+        errors.push("metadata.boundingBox | east should be greater than west");
     }
 
     return errors;
@@ -200,7 +200,10 @@ export const Schema = {
                 "type": "string",
                 "format": "email"
             },
-            "role": "metadataPointOfContact"
+            "role": {
+                "type": "string",
+                "pattern": "^metadataPointOfContact$"
+            }
         },
         "required": ["name", "email", "role"]
     },
