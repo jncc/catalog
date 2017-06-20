@@ -413,8 +413,8 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.s3.data.bucket | should NOT be shorter than 1 characters')        
-    })    
+            .and.contain('data.files.s3.data.bucket | should NOT be shorter than 1 characters')
+    })
 
     it('should not validate an s3 data group with missing key', () => {
         let p = Fixtures.GetTestProduct();
@@ -485,10 +485,10 @@ describe('Data Validator', () => {
                     }
                 }
             }
-        }    
+        }
 
-        return chai.expect(validator.validate(p)).to.be.fulfilled    
-    })    
+        return chai.expect(validator.validate(p)).to.be.fulfilled
+    })
 
     it('should validate an ftp data group with a server as a uri', () => {
         let p = Fixtures.GetTestProduct();
@@ -501,9 +501,9 @@ describe('Data Validator', () => {
                     }
                 }
             }
-        }    
+        }
 
-        return chai.expect(validator.validate(p)).to.be.fulfilled    
+        return chai.expect(validator.validate(p)).to.be.fulfilled
     })
 
     it('should validate an ftp data group with a server as a ipv4', () => {
@@ -517,10 +517,10 @@ describe('Data Validator', () => {
                     }
                 }
             }
-        }    
+        }
 
-        return chai.expect(validator.validate(p)).to.be.fulfilled    
-    })            
+        return chai.expect(validator.validate(p)).to.be.fulfilled
+    })
 
     it('should validate an ftp data group with a server as a ipv6', () => {
         let p = Fixtures.GetTestProduct();
@@ -533,7 +533,103 @@ describe('Data Validator', () => {
                     }
                 }
             }
-        }    
+        }
+
+        return chai.expect(validator.validate(p)).to.be.fulfilled
+    })
+})
+
+describe('Footprint Validator', () => {
+    let mockRepo = TypeMoq.Mock.ofType(CatalogRepository);
+    let validator = new ProductValidator(mockRepo.object);
+
+    it('should not validate a invalid GeoJSON blob', () => {
+        let p = Fixtures.GetTestProduct()
+        p.footprint = {
+            "type": "Bobbins",
+            "coordinates": [
+                [-3.252708444643698, 55.01808601299337],
+                [-3.096345813599173, 55.01959554822891],
+                [-3.098805121795129, 55.1094396249146],
+                [-3.25551820944467, 55.10792506925024],
+                [-3.252708444643698, 55.01808601299337]
+            ],
+            "crs": {
+                "properties": {
+                    "name": "mine"
+                },
+                "type": "name"
+            }
+        }
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+        .and.eventually.have.length(3)
+    })
+
+    it('should not validate a non Multipolygon footprint', () => {
+        let p = Fixtures.GetTestProduct()
+        p.footprint = {
+            "type": "Polygon",
+            "coordinates": [[
+                [-3.252708444643698, 55.01808601299337],
+                [-3.096345813599173, 55.01959554822891],
+                [-3.098805121795129, 55.1094396249146],
+                [-3.25551820944467, 55.10792506925024],
+                [-3.252708444643698, 55.01808601299337]
+            ]],
+            "crs": {
+                "properties": {
+                    "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+                },
+                "type": "name"
+            }
+        }
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+        .and.eventually.have.length(1)
+        .and.contain("footprint.type | should be 'MultiPolygon'")
+    })
+
+    it('should not validate a missing CRS', () => {
+        let p = Fixtures.GetTestProduct()
+        p.footprint = Fixtures.GetFootprint()
+        delete p.footprint['crs']
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+            .and.eventually.have.length(1)
+            .and.contain("footprint.crs | CRS must be specified")
+    })
+
+    it('should not validate a non WGS84 CRS', () => {
+        let p = Fixtures.GetTestProduct()
+        p.footprint = Fixtures.GetFootprint()
+        p.footprint['crs']['properties']['name'] = 'EPSG:27700'
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+            .and.eventually.have.length(1)
+            .and.contain("footprint.crs.properties.name | should be 'EPSG:4326' / 'urn:ogc:def:crs:OGC:1.3:CRS84' / 'urn:ogc:def:crs:EPSG::4326'")
+    })
+
+    it('should validate a CRS as EPSG:4326', () => {
+        let p = Fixtures.GetTestProduct()
+        p.footprint = Fixtures.GetFootprint()
+        p.footprint['crs']['properties']['name'] = 'EPSG:4326'
+
+        return chai.expect(validator.validate(p)).to.be.fulfilled
+    })
+
+    it('should validate a CRS as urn:ogc:def:crs:OGC:1.3:CRS84', () => {
+        let p = Fixtures.GetTestProduct()
+        p.footprint = Fixtures.GetFootprint()
+        p.footprint['crs']['properties']['name'] = 'urn:ogc:def:crs:OGC:1.3:CRS84'
+
+        return chai.expect(validator.validate(p)).to.be.fulfilled
+    })
+
+    it('should validate a CRS as urn:ogc:def:crs:EPSG::4326', () => {
+        let p = Fixtures.GetTestProduct()
+        p.footprint = Fixtures.GetFootprint()
+        p.footprint['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG::4326'
 
         return chai.expect(validator.validate(p)).to.be.fulfilled
     })

@@ -17,7 +17,11 @@ export function nonSchemaValidation(footprint: any, errors: string[]) {
     });
 
     if (footprint.type != 'MultiPolygon') {
-        errors.push("footprint | footprint should be MultiPolygon");
+        errors.push("footprint.type | should be 'MultiPolygon'");
+    }
+
+    if (footprint.crs == undefined) {
+        errors.push("footprint.crs | CRS must be specified")
     }
 
     if (footprint.crs != undefined &&
@@ -25,7 +29,7 @@ export function nonSchemaValidation(footprint: any, errors: string[]) {
         footprint.crs.properties.name != 'EPSG:4326' &&
         footprint.crs.properties.name != 'urn:ogc:def:crs:OGC:1.3:CRS84' &&
         footprint.crs.properties.name != 'urn:ogc:def:crs:EPSG::4326') {
-        errors.push("footprint | projection should be 'EPSG:4326' / 'urn:ogc:def:crs:OGC:1.3:CRS84' / 'urn:ogc:def:crs:EPSG::4326'");
+        errors.push("footprint.crs.properties.name | should be 'EPSG:4326' / 'urn:ogc:def:crs:OGC:1.3:CRS84' / 'urn:ogc:def:crs:EPSG::4326'");
     }
 
     return errors;
