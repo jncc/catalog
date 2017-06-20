@@ -1,57 +1,74 @@
-import { s3file, ftp } from "./files";
+import { s3file, s3fileTyped, ftp, ftpTyped } from "./files";
 import { wms, wfs } from "./services";
 
-export interface DataGroup {
-    description: string,
-    files?: {
-        s3?: s3file[]
-        ftp?: ftp[]
-    },
-    services?: {
-        wms?: wms[],
-        wfs?: wfs[]
-    }
-};
+export interface fileGroup<T, X> {
+    data: T,
+    preview?: T,
+    metadata?: T,
+    other?: X[]
+}
 
 export interface Data {
-    groups: DataGroup[]
+    files?: {
+        s3?: fileGroup<s3file, s3fileTyped>
+        ftp?: fileGroup<ftp, ftpTyped>
+    },
+    services?: {
+        wms?: wms,
+        wfs?: wfs
+    }
 };
 
 export const Schema = {
     "data": {
         "type": "object",
         "properties": {
-            "groups": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/definitions/data/dataGroup"
-                },
-                "minItems": 1
-            }
-        },
-        "required": ["groups"]
-    },
-    "dataGroup": {
-        "type": "object",
-        "properties": {
-            "description": {
-                "type": "string"
-            },
             "files": {
                 "type": "object",
                 "properties": {
                     "s3": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/files/s3file"
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "$ref": "#/definitions/files/s3file"
+                            },
+                            "preview": {
+                                "$ref": "#/definitions/files/s3file"
+                            },
+                            "metadata": {
+                                "$ref": "#/definitions/files/s3file"
+                            },
+                            "other": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/files/s3file"
+                                },
+                                "minItems": 1
+                            }
                         },
-                        "minItems": 1
+                        "required": ["data"]
                     },
                     "ftp": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/files/ftp"
-                        }
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "$ref": "#/definitions/files/ftp"
+                            },
+                            "preview": {
+                                "$ref": "#/definitions/files/ftp"
+                            },
+                            "metadata": {
+                                "$ref": "#/definitions/files/ftp"
+                            },
+                            "other": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/files/ftp"
+                                },
+                                "minItems": 1
+                            }
+                        },
+                        "required": ["data"]
                     },
                     "minItems": 1
                 }
@@ -60,22 +77,13 @@ export const Schema = {
                 "type": "object",
                 "properties": {
                     "wms": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/services/wms"
-                        },
-                        "minItems": 1
+                        "$ref": "#/definitions/services/wms"
                     },
                     "wfs": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/services/wfs"
-                        },
-                        "minItems": 1
+                        "$ref": "#/definitions/services/wfs"
                     }
                 }
             }
-        },
-        "required": ["description"]
+        }
     }
 }

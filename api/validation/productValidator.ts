@@ -378,60 +378,62 @@ describe('Data Validator', () => {
     let mockRepo = TypeMoq.Mock.ofType(CatalogRepository);
     let validator = new ProductValidator(mockRepo.object);
 
-    it('should not validate a data group with missing required elements or invalid optional elements', () => {
+    it('should not validate an s3 data group with missing region', () => {
         let p = Fixtures.GetTestProduct();
-        p.data.groups = [
-            {
-                description: "test",
-                files: {
-                    s3: [
-                        {
-                            region: '',
-                            bucket: 'missing-region',
-                            key: '/test.tif',
-                            type: 'data'
-                        },
-                        {
-                            region: 'missing-bucket',
-                            bucket: '',
-                            key: '/test.png',
-                            type: 'preview'
-                        },
-                        {
-                            region: 'missing-key',
-                            bucket: 'missing-key',
-                            key: '',
-                            type: 'metadata'
-                        },
-                        {
-                            region: 'invalid-type',
-                            bucket: 'invalid-type',
-                            key: '/invalid/type.file',
-                            type: ''
-                        }
-                    ],
-                    ftp: [
-                        {
-                            server: '',
-                            path: '/no/server/uri',
-                            type: 'data'
-                        },
-                        {
-                            server: 'no-path.com',
-                            path: '',
-                            type: 'preview'
-                        },
-                        {
-                            server: 'invalid-type.com',
-                            path: '/invalid/type.file',
-                            type: ''
-                        },
-                    ]
-                },
-                services: [
-
-                ]
+        p.data = {
+            files: {
+                s3: {
+                    data: {
+                        region: '',
+                        bucket: 'missing-region',
+                        key: '/test.tif'
+                    }
+                }
             }
-        ]
+        }
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+            .and.eventually.have.length(1)
+            .and.contain('data.files.s3.data.region | should NOT be shorter than 1 characters')
     })
+
+    it('should not validate an s3 data group with missing bucket', () => {
+        let p = Fixtures.GetTestProduct();
+        p.data = {
+            files: {
+                s3: {
+                    data: {
+                        region: 'missing-bucket',
+                        bucket: '',
+                        key: '/test.tif'
+                    }
+                }
+            }
+        }
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+            .and.eventually.have.length(1)
+            .and.contain('data.files.s3.data.bucket | should NOT be shorter than 1 characters')        
+    })    
+
+    it('should not validate an s3 data group with missing key', () => {
+        let p = Fixtures.GetTestProduct();
+        p.data = {
+            files: {
+                s3: {
+                    data: {
+                        region: 'missing-key',
+                        bucket: 'missing-key',
+                        key: ''
+                    }
+                }
+            }
+        }
+
+        return chai.expect(validator.validate(p)).to.be.rejected
+            .and.eventually.have.length(1)
+            .and.contain('data.files.s3.data.key | should NOT be shorter than 1 characters')
+    })
+
+
 })

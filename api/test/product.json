@@ -46,19 +46,15 @@
         "osgbGridRef": "NH87"
     },
     "data": {
-        "groups": [
-            {
-                "files": {
-                    "s3": [{
-                        "key" : "/processed/DTM/gridded/27700/10000/DTM_NH87.tif",
-                        "bucket" : "lidar-1",
-                        "region" : "eu-west-1",
-                        "type": "GeoTIFF"
-                    }]
-                },
-                "description": "default"
+        "files": {
+            "s3": {
+                "data": {
+                    "key" : "/processed/DTM/gridded/27700/10000/DTM_NH87.tif",
+                    "bucket" : "lidar-1",
+                    "region" : "eu-west-1"
+                }
             }
-        ]
+        }
     },
     "footprint": {
         "type": "MultiPolygon",
