@@ -1,12 +1,14 @@
 export interface s3file {
     key: string,
     bucket: string,
-    region: string
+    region: string,
+    type?: string
 };
 
 export interface ftp {
     server: string,
-    path: string
+    path: string,
+    type?: string
 };
 
 export const Schema = {
@@ -40,6 +42,10 @@ export const Schema = {
                 "format": "uri"
             },
             "path": {
+                "type": "string",
+                "minLength": 1
+            },
+            "type": {
                 "type": "string",
                 "minLength": 1
             }
