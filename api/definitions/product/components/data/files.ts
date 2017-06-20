@@ -47,7 +47,11 @@ export const Schema = {
         "properties": {
             "server": {
                 "type": "string",
-                "format": "uri"
+                "oneOf": [
+                    {"format": "hostname"},
+                    {"format": "ipv6"},
+                    {"format": "uri"}
+                ]
             },
             "path": {
                 "type": "string",
