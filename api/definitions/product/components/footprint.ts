@@ -4,6 +4,21 @@ export interface Footprint {
 
 };
 
+export function fixCommonIssues(footprint: any) {
+     // If CRS does not exist then push in default so it can be added to database
+    if (footprint.crs == undefined) {
+        //errors.push("footprint.crs | CRS must be specified")
+        footprint['crs'] = {
+            "properties": {
+                "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+            },
+            "type": "name"
+        }
+    }
+
+    return footprint
+}
+
 export function nonSchemaValidation(footprint: any, errors: string[]) {
     let result = geojsonhint.hint(footprint, {
         precisionWarning: false
@@ -20,6 +35,7 @@ export function nonSchemaValidation(footprint: any, errors: string[]) {
         errors.push("footprint.type | should be 'MultiPolygon'");
     }
 
+    // If CRS does not exist we should throw an error (it should always exist and is fixed in fixCommonIssues function)
     if (footprint.crs == undefined) {
         errors.push("footprint.crs | CRS must be specified")
     }

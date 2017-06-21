@@ -25,8 +25,11 @@ export class ProductValidator {
     constructor(private repository: CatalogRepository) { }
 
     private nonSchemaValidation(product: Product, errors: string[]): Promise<string[]> {
+        product.footprint = Footprint.fixCommonIssues(product.footprint)
         errors = Footprint.nonSchemaValidation(product.footprint, errors)
+
         errors = Metadata.nonSchemaValidation(product.metadata, errors)
+
         return this.repository.checkCollectionNameExists(errors, product.collectionName);
     }
 
@@ -180,17 +183,16 @@ describe('Metadata validator', () => {
             .and.include('metadata.keywords[0].vocab | should NOT be shorter than 1 characters')
     })
 
-    // TODO: Vocab can be null, but not when setting it this way, needs to be nullable
-    // it('should validate metadata keyword with a value and no vocab', () => {
-    //     let p = Fixtures.GetTestProduct();
-    //     p.metadata.keywords = [{
-    //         "value": "value"
-    //     }];
+    it('should validate metadata keyword with a value and no vocab', () => {
+        let p = Fixtures.GetTestProduct();
+        p.metadata.keywords = [{
+            "value": "value"
+        }];
 
-    //     return chai.expect(validator.validate(p)).to.be.rejected
-    //     .and.eventually.have.length(1)
-    //     .and.include('metadata.keywords[0].vocab | should NOT be shorter than 1 characters')        
-    // })        
+        return chai.expect(validator.validate(p)).to.be.rejected
+        .and.eventually.have.length(1)
+        .and.include('metadata.keywords[0].vocab | should NOT be shorter than 1 characters')        
+    })        
 
     it('should validate metadata keyword with a value and vocab', () => {
         let p = Fixtures.GetTestProduct();
@@ -590,14 +592,12 @@ describe('Footprint Validator', () => {
         .and.contain("footprint.type | should be 'MultiPolygon'")
     })
 
-    it('should not validate a missing CRS', () => {
+    it('should validate a missing CRS, replacing it with default for pushing into Postgres', () => {
         let p = Fixtures.GetTestProduct()
         p.footprint = Fixtures.GetFootprint()
         delete p.footprint['crs']
 
-        return chai.expect(validator.validate(p)).to.be.rejected
-            .and.eventually.have.length(1)
-            .and.contain("footprint.crs | CRS must be specified")
+        return chai.expect(validator.validate(p)).to.be.fulfilled
     })
 
     it('should not validate a non WGS84 CRS', () => {

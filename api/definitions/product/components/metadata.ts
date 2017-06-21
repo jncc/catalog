@@ -22,7 +22,7 @@ export interface Metadata {
 
 export interface Keyword {
     value: string,
-    vocab: string
+    vocab?: string
 };
 
 export interface TemporalExtent {
