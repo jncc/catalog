@@ -1,17 +1,14 @@
 import { s3file, s3fileTyped, ftp, ftpTyped } from "./files";
 import { wms, wfs } from "./services";
 
-export interface fileGroup<T, X> {
-    data: T,
-    preview?: T,
-    metadata?: T,
-    other?: X[]
+export interface fileGroup<T> {
+    data: T
 }
 
 export interface Data {
     files?: {
-        s3?: fileGroup<s3file, s3fileTyped>
-        ftp?: fileGroup<ftp, ftpTyped>
+        s3?: fileGroup<s3file>,
+        ftp?: fileGroup<ftp>
     },
     services?: {
         wms?: wms,
@@ -31,21 +28,14 @@ export const Schema = {
                         "properties": {
                             "data": {
                                 "$ref": "#/definitions/files/s3file"
-                            },
-                            "preview": {
-                                "$ref": "#/definitions/files/s3file"
-                            },
-                            "metadata": {
-                                "$ref": "#/definitions/files/s3file"
-                            },
-                            "other": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/files/s3file"
-                                },
-                                "minItems": 1
                             }
                         },
+                        "patternProperties": {
+                            "^.*data$": {
+                                "$ref": "#/definitions/files/s3file"
+                            }
+                        },
+                        "additionalProperties": false,
                         "required": ["data"]
                     },
                     "ftp": {
@@ -53,21 +43,14 @@ export const Schema = {
                         "properties": {
                             "data": {
                                 "$ref": "#/definitions/files/ftp"
-                            },
-                            "preview": {
-                                "$ref": "#/definitions/files/ftp"
-                            },
-                            "metadata": {
-                                "$ref": "#/definitions/files/ftp"
-                            },
-                            "other": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/files/ftp"
-                                },
-                                "minItems": 1
                             }
                         },
+                        "patternProperties": {
+                            "^.*data$": {
+                                "$ref": "#/definitions/files/ftp"
+                            }
+                        },
+                        "additionalProperties": false,
                         "required": ["data"]
                     },
                     "minItems": 1
