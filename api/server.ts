@@ -69,15 +69,21 @@ app.get(`/collection/search/*?`, async (req, res) => {
   let properties: any = {}
 
   let respObj: any = getRespObj(param, footprint, spatialop, properties)
-  
-  catalogRepository.getCollections(param, 50, 0, footprint, spatialop, properties).then(results => {
-    respObj['results'] = results;
-    res.json(respObj);
-  }).catch(errors => {
-    respObj['errors'] = errors;
-    res.status(500);
-    res.json(respObj);
-  });
+
+  if (param.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+    catalogRepository.getCollections(param, 50, 0, footprint, spatialop, properties).then(results => {
+      respObj['results'] = results;
+      res.json(respObj);
+    }).catch(errors => {
+      respObj['errors'] = errors;
+      res.status(500);
+      res.json(respObj);
+    });
+  } else {
+    respObj['errors'].push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
+    res.status(400);
+    res.json(respObj);    
+  }
 });
 
 app.get(`/product/search/*?`, async (req, res) => {
@@ -104,11 +110,7 @@ app.get(`/product/search/*?`, async (req, res) => {
     res.status(400);
     res.json(respObj);
   }
-
-
-
 });
-
 
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
