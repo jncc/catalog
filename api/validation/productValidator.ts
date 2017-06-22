@@ -104,18 +104,33 @@ describe('Product validator', () => {
     })
 
     // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
-    // it('should not validate a product with an invalid collection name', () =>{
-    //     let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    //     mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAnyString()[], TypeMoq.It.isAnyString())).returns((x, y) => {
-    //         return Promise.resolve(x);
-    //     })
+    // TODO: Using isAny but really should be an array if we can figure it out
+    it('should not validate a product with an invalid collection name', () =>{
+        let mr = TypeMoq.Mock.ofType(CatalogRepository);
+        mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+            return Promise.reject(x);
+        })
 
-    //     let v2 = new ProductValidator(mr.object)
+        let v2 = new ProductValidator(mr.object)
 
-    //     const product = Fixtures.GetTestProduct();
+        const product = Fixtures.GetTestProduct();
 
-    //     return chai.expect(v2.validate(product)).to.be.rejected;
-    // });
+        return chai.expect(v2.validate(product)).to.be.rejected;
+    });
+
+    // TODO: Using isAny but really should be an array if we can figure it out
+    it('should validate a product with a valid collection name', () =>{
+        let mr = TypeMoq.Mock.ofType(CatalogRepository);
+        mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+            return Promise.resolve(x);
+        })
+
+        let v2 = new ProductValidator(mr.object)
+
+        const product = Fixtures.GetTestProduct();
+
+        return chai.expect(v2.validate(product)).to.be.fulfilled;
+    });    
 })
 
 describe('Metadata validator', () => {
@@ -189,9 +204,7 @@ describe('Metadata validator', () => {
             "value": "value"
         }];
 
-        return chai.expect(validator.validate(p)).to.be.rejected
-        .and.eventually.have.length(1)
-        .and.include('metadata.keywords[0].vocab | should NOT be shorter than 1 characters')        
+        return chai.expect(validator.validate(p)).to.be.fulfilled
     })        
 
     it('should validate metadata keyword with a value and vocab', () => {
