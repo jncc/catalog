@@ -52,5 +52,7 @@ export function nonSchemaValidation(footprint: any, errors: string[]) {
 };
 
 export const Schema = {
-    "type": "object"
+    "footprint": {
+        "type": "object"
+    }
 };

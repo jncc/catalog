@@ -1,4 +1,5 @@
 import { Product } from "../definitions/product/product"
+import { Collection } from "../definitions/collection/collection"
 import { Database } from "./database";
 import * as squel from "squel";
 
@@ -7,10 +8,14 @@ export class CatalogRepository {
     buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, properties: any) {
         if (footprint !== undefined) {
             // Do spatial search
-            if (spatialop !== undefined && spatialop === 'within') {
-                baseQuery.where('ST_Within(ST_GeomFromText($2, 4326), footprint)');
-            } else {
-                baseQuery.where('ST_Overlaps(ST_GeomFromText($2, 4326), footprint)');
+            if (spatialop !== undefined) {
+                if (spatialop === 'within') {
+                    baseQuery.where('ST_Within(ST_GeomFromText($2, 4326), footprint)');
+                } else if (spatialop === 'overlaps') {
+                    baseQuery.where('ST_Overlaps(ST_GeomFromText($2, 4326), footprint)');
+                } else {
+                    baseQuery.where('ST_Intersects(ST_GeomFromText($2, 4326), footprint)');
+                }
             }
         }
 
@@ -19,6 +24,26 @@ export class CatalogRepository {
         }
 
         return baseQuery;
+    }
+
+    getCollections(name: string, limit: number, offset: number, footprint: string | undefined, spatialop: string | undefined, properties: any): Promise<Array<Collection>> {
+        name = name.replace('*', '%')
+        return Database.instance.connection.task(t => {
+            let baseQuery = squel.select()
+                .from('collection')
+                .field('id').field('name').field('metadata').field('ST_AsGeoJSON(footprint)', 'footprint')
+                .where('name LIKE $1')
+                .order('name')
+                .limit(limit)
+                .offset(offset)
+
+            baseQuery = this.buildQuery(baseQuery, footprint, spatialop, {});
+            console.log(baseQuery.toString());
+            return t.any(baseQuery.toString(), [name, footprint, properties]);
+        }).catch(error => {
+            console.log("database error : " + error)
+            throw new Error(error)
+        });
     }
 
     getProducts(name: string, limit: number, offset: number, footprint: string | undefined, spatialop: string | undefined, properties: any): Promise<Array<Product>> {

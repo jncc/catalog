@@ -1,9 +1,14 @@
 import * as ajv from "ajv";
 import * as ajvasync from "ajv-async"
 import * as ValidationHelper from "../../validation/validationHelper"
+import * as Metadata from "../components/metadata"
+import * as Footprint from "../components/footprint"
 
 export interface Collection {
-    name?: string
+    id: string,
+    name: string,
+    metadata: Metadata.Metadata,
+    footprint: Footprint.Footprint
 };
 
 export function validate(collection: Collection) {
@@ -42,6 +47,17 @@ export const Schema = {
         "name": {
             "type": "string",
             "pattern": "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"
+        },
+        "metadata": {
+            "$ref": "#/definitions/metadata/metadata"
+        },
+        "footprint": {
+            "$ref": "#/definitions/footprint/footprint"
         }
-    }
+    },
+    "definitions": {
+        "metadata": Metadata.Schema,
+        "footprint": Footprint.Schema
+    },
+    "required": ["id", "name", "metadata", "footprint"]
 };

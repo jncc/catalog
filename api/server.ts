@@ -10,7 +10,6 @@ import { CatalogRepository } from "./repository/catalogRepository";
 
 import { Fixtures } from "./test/fixtures"
 
-
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
 let catalogRepository = new CatalogRepository();
@@ -20,31 +19,76 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-app.get(`/search/*?`, async (req, res) => {
-  let param: string = req.params[0];
+function getRespObj(param: string, footprint:string|undefined, spatialop:string|undefined, properties:any) {
+  let respObj:any = {
+    "term": param,
+    "params": { }
+  };
 
+  if (footprint != undefined) {
+    respObj['params']['footprint'] = footprint;
+  }
+
+  if (spatialop != undefined) {
+    respObj['params']['spatialop'] = spatialop;
+  }
+
+  if (Object.keys(properties).length > 0) {
+    respObj['params']['properties'] = properties;
+  }
+
+  return respObj;
+}
+
+function extractQueryParams(param: string, queryParams: any) {
   let footprint: string | undefined = undefined;
   let spatialop: string | undefined = undefined;
   let properties: any = {}
 
-  for (let query in req.query) {
+  for (let query in queryParams) {
     if (query === 'footprint') {
-      footprint = req.query[query];
+      footprint = queryParams[query];
     } else if (query === 'spatialop') {
-      spatialop = req.query[query];
+      spatialop = queryParams[query];
     } else {
-      properties[query] = req.query[query];
+      properties[query] = queryParams[query];
     }
   }
 
-  let respObj = {
-    "term": param,
-    "params": {
-      "footprint": footprint,
-      "spatialop": spatialop,
-      "properties": properties
-    }
-  }
+  return [footprint, spatialop, properties]
+}
+
+app.get(`/collection/search/*?`, async (req, res) => {
+  let param: string = req.params[0];
+  let extracted = extractQueryParams(param, req.query)
+  
+  let footprint: string | undefined = extracted[0];
+  let spatialop: string | undefined = extracted[1];
+  // properties should be ignored in this instance
+  //let properties: any = extracted[2];
+  let properties: any = {}
+
+  let respObj: any = getRespObj(param, footprint, spatialop, properties)
+  
+  catalogRepository.getCollections(param, 50, 0, footprint, spatialop, properties).then(results => {
+    respObj['results'] = results;
+    res.json(respObj);
+  }).catch(errors => {
+    respObj['errors'] = errors;
+    res.status(500);
+    res.json(respObj);
+  });
+});
+
+app.get(`/product/search/*?`, async (req, res) => {
+  let param: string = req.params[0];
+
+  let extracted = extractQueryParams(param, req.query)
+
+  let respObj: any = extracted[0]
+  let footprint: string | undefined = extracted[1];
+  let spatialop: string | undefined = extracted[2];
+  let properties: any = extracted[3];
 
   if (param.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
     catalogRepository.getProducts(param, 50, 0, footprint, spatialop, properties).then(results => {

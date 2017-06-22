@@ -1,6 +1,6 @@
-import * as Footprint from "./components/footprint";
+import * as Footprint from "../components/footprint";
+import * as Metadata from "../components/metadata";
 import * as Properties from "./components/properties";
-import * as Metadata from "./components/metadata";
 import * as Data from "./components/data/data";
 import * as DataServices from "./components/data/services";
 import * as DataFiles from "./components/data/files";
