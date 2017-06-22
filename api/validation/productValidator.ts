@@ -90,7 +90,7 @@ describe('Product validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.include('collectionName | should match pattern "^\/(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+            .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
     })
 
     it('should not validate and invalid collection name', () => {
@@ -100,7 +100,7 @@ describe('Product validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.include('collectionName | should match pattern "^\/(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+            .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
     })
 
     // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
@@ -409,7 +409,7 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.s3.data.region | should NOT be shorter than 1 characters')
+            .and.contain('data.files.s3[\'data\'].region | should NOT be shorter than 1 characters')
     })
 
     it('should not validate an s3 data group with missing bucket', () => {
@@ -428,7 +428,7 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.s3.data.bucket | should NOT be shorter than 1 characters')
+            .and.contain('data.files.s3[\'data\'].bucket | should NOT be shorter than 1 characters')
     })
 
     it('should not validate an s3 data group with missing key', () => {
@@ -447,8 +447,50 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.s3.data.key | should NOT be shorter than 1 characters')
+            .and.contain('data.files.s3[\'data\'].key | should NOT be shorter than 1 characters')
     })
+
+    it('should validate an s3 data group with additonal ^.*data$ properties', () => {
+        let p = Fixtures.GetTestProduct();
+        p.data = {
+            files: {
+                s3: {
+                    data: {
+                        region: 'test',
+                        bucket: 'test',
+                        key: 'test'
+                    },
+                    preview_data: {
+                        region: 'test',
+                        bucket: 'test',
+                        key: 'test'   
+                    }
+                }
+            }
+        };
+
+        return chai.expect(validator.validate(p)).to.be.fulfilled;
+    })
+
+    // it('should not validate an s3 data group with additonal ^.*data$ properties that does not match the s3file type', () => {
+    //     let p = Fixtures.GetTestProduct();
+    //     p.data = {
+    //         files: {
+    //             s3: {
+    //                 data: {
+    //                     region: 'test',
+    //                     bucket: 'test',
+    //                     key: 'test'
+    //                 },
+    //                 preview_data: {
+    //                     bobbins: 'should-fail'
+    //                 }
+    //             }
+    //         }
+    //     };
+
+    //     return chai.expect(validator.validate(p)).to.be.fulfilled;
+    // })    
 
     it('should not validate an ftp data group with an invalid server URI', () => {
         let p = Fixtures.GetTestProduct();
@@ -465,10 +507,10 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(4)
-            .and.contain('data.files.ftp.data.server | should match format \"hostname\"')
-            .and.contain('data.files.ftp.data.server | should match format \"ipv6\"')
-            .and.contain('data.files.ftp.data.server | should match format \"uri\"')
-            .and.contain('data.files.ftp.data.server | should match exactly one schema in oneOf')
+            .and.contain('data.files.ftp[\'data\'].server | should match format \"hostname\"')
+            .and.contain('data.files.ftp[\'data\'].server | should match format \"ipv6\"')
+            .and.contain('data.files.ftp[\'data\'].server | should match format \"uri\"')
+            .and.contain('data.files.ftp[\'data\'].server | should match exactly one schema in oneOf')
     })
 
     it('should not validate an ftp data group with missing path', () => {
@@ -486,7 +528,7 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.ftp.data.path | should NOT be shorter than 1 characters')
+            .and.contain('data.files.ftp[\'data\'].path | should NOT be shorter than 1 characters')
     })
 
     it('should validate an ftp data group with a server as a hostname', () => {

@@ -1,8 +1,9 @@
-import { s3file, s3fileTyped, ftp, ftpTyped } from "./files";
+import { s3file, ftp} from "./files";
 import { wms, wfs } from "./services";
 
 export interface fileGroup<T> {
-    data: T
+    data: T,
+    [x: string]: T
 }
 
 export interface Data {
@@ -25,11 +26,6 @@ export const Schema = {
                 "properties": {
                     "s3": {
                         "type": "object",
-                        "properties": {
-                            "data": {
-                                "$ref": "#/definitions/files/s3file"
-                            }
-                        },
                         "patternProperties": {
                             "^.*data$": {
                                 "$ref": "#/definitions/files/s3file"
@@ -40,11 +36,6 @@ export const Schema = {
                     },
                     "ftp": {
                         "type": "object",
-                        "properties": {
-                            "data": {
-                                "$ref": "#/definitions/files/ftp"
-                            }
-                        },
                         "patternProperties": {
                             "^.*data$": {
                                 "$ref": "#/definitions/files/ftp"

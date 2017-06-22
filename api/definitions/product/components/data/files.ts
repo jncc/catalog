@@ -5,19 +5,11 @@ export interface s3file {
     type?: string
 };
 
-export interface s3fileTyped extends s3file {
-    type?: string
-};
-
 export interface ftp {
     server: string,
     path: string,
     type?: string
 };
-
-export interface ftpTyped extends ftp {
-    type?: string
-}
 
 export const Schema = {
     "s3file": {
