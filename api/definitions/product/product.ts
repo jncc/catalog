@@ -22,7 +22,7 @@ export const Schema = {
     "$async": true,
     "title": "Product",
     "type": "object",
-    "additionalProperties" : false,
+    "additionalProperties": false,
     "properties": {
         "id": {
             "type": "string",
@@ -55,7 +55,7 @@ export const Schema = {
     },
     "definitions": {
         "metadata": Metadata.Schema,
-        "properties": Properties.Schema,
+        "properties": Properties.Schema,/**/
         "data": Data.Schema,
         "files": DataFiles.Schema,
         "services": DataServices.Schema

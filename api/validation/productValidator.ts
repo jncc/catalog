@@ -71,7 +71,6 @@ describe('Product validator', () => {
     it('should validate a valid product', () => {
         let p = Fixtures.GetTestProduct();
 
-        console.log(validator.validate(p))
         return chai.expect(validator.validate(p)).to.not.be.rejected;
     });
 
