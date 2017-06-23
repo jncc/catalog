@@ -71,6 +71,7 @@ describe('Product validator', () => {
     it('should validate a valid product', () => {
         let p = Fixtures.GetTestProduct();
 
+        console.log(validator.validate(p))
         return chai.expect(validator.validate(p)).to.not.be.rejected;
     });
 
@@ -105,7 +106,7 @@ describe('Product validator', () => {
 
     // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
     // TODO: Using isAny but really should be an array if we can figure it out
-    it('should not validate a product with an invalid collection name', () =>{
+    it('should not validate a product with an invalid collection name', () => {
         let mr = TypeMoq.Mock.ofType(CatalogRepository);
         mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
             return Promise.reject(x);
@@ -119,7 +120,7 @@ describe('Product validator', () => {
     });
 
     // TODO: Using isAny but really should be an array if we can figure it out
-    it('should validate a product with a valid collection name', () =>{
+    it('should validate a product with a valid collection name', () => {
         let mr = TypeMoq.Mock.ofType(CatalogRepository);
         mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
             return Promise.resolve(x);
@@ -130,7 +131,7 @@ describe('Product validator', () => {
         const product = Fixtures.GetTestProduct();
 
         return chai.expect(v2.validate(product)).to.be.fulfilled;
-    });    
+    });
 })
 
 describe('Metadata validator', () => {
@@ -205,7 +206,7 @@ describe('Metadata validator', () => {
         }];
 
         return chai.expect(validator.validate(p)).to.be.fulfilled
-    })        
+    })
 
     it('should validate metadata keyword with a value and vocab', () => {
         let p = Fixtures.GetTestProduct();
@@ -396,9 +397,9 @@ describe('Data Validator', () => {
     it('should not validate an s3 data group with missing region', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                s3: {
-                    data: {
+            product: {
+                files: {
+                    s3: {
                         region: '',
                         bucket: 'missing-region',
                         key: '/test.tif'
@@ -409,15 +410,15 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.s3[\'data\'].region | should NOT be shorter than 1 characters')
+            .and.contain('data[\'product\'].files.s3.region | should NOT be shorter than 1 characters')
     })
 
     it('should not validate an s3 data group with missing bucket', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                s3: {
-                    data: {
+            product: {
+                files: {
+                    s3: {
                         region: 'missing-bucket',
                         bucket: '',
                         key: '/test.tif'
@@ -428,15 +429,15 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.s3[\'data\'].bucket | should NOT be shorter than 1 characters')
+            .and.contain('data[\'product\'].files.s3.bucket | should NOT be shorter than 1 characters')
     })
 
     it('should not validate an s3 data group with missing key', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                s3: {
-                    data: {
+            product: {
+                files: {
+                    s3: {
                         region: 'missing-key',
                         bucket: 'missing-key',
                         key: ''
@@ -447,23 +448,27 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.s3[\'data\'].key | should NOT be shorter than 1 characters')
+            .and.contain('data[\'product\'].files.s3.key | should NOT be shorter than 1 characters')
     })
 
     it('should validate an s3 data group with additonal ^.*data$ properties', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                s3: {
-                    data: {
+            product: {
+                files: {
+                    s3: {
                         region: 'test',
                         bucket: 'test',
                         key: 'test'
-                    },
-                    preview_data: {
+                    }
+                }
+            },
+            preview: {
+                files: {
+                    s3: {
                         region: 'test',
                         bucket: 'test',
-                        key: 'test'   
+                        key: 'test'
                     }
                 }
             }
@@ -490,14 +495,14 @@ describe('Data Validator', () => {
     //     };
 
     //     return chai.expect(validator.validate(p)).to.be.fulfilled;
-    // })    
+    // })
 
     it('should not validate an ftp data group with an invalid server URI', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                ftp: {
-                    data: {
+            product: {
+                files: {
+                    ftp: {
                         server: '',
                         path: '/mising/server.file'
                     }
@@ -507,18 +512,18 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(4)
-            .and.contain('data.files.ftp[\'data\'].server | should match format \"hostname\"')
-            .and.contain('data.files.ftp[\'data\'].server | should match format \"ipv6\"')
-            .and.contain('data.files.ftp[\'data\'].server | should match format \"uri\"')
-            .and.contain('data.files.ftp[\'data\'].server | should match exactly one schema in oneOf')
+            .and.contain('data[\'product\'].files.ftp.server | should match format \"hostname\"')
+            .and.contain('data[\'product\'].files.ftp.server | should match format \"ipv6\"')
+            .and.contain('data[\'product\'].files.ftp.server | should match format \"uri\"')
+            .and.contain('data[\'product\'].files.ftp.server | should match exactly one schema in oneOf')
     })
 
     it('should not validate an ftp data group with missing path', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                ftp: {
-                    data: {
+            product: {
+                files: {
+                    ftp: {
                         server: 'missing.path.com',
                         path: ''
                     }
@@ -528,15 +533,15 @@ describe('Data Validator', () => {
 
         return chai.expect(validator.validate(p)).to.be.rejected
             .and.eventually.have.length(1)
-            .and.contain('data.files.ftp[\'data\'].path | should NOT be shorter than 1 characters')
+            .and.contain('data[\'product\'].files.ftp.path | should NOT be shorter than 1 characters')
     })
 
     it('should validate an ftp data group with a server as a hostname', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                ftp: {
-                    data: {
+            product: {
+                files: {
+                    ftp: {
                         server: 'hostname.present',
                         path: 'path/to/file.txt'
                     }
@@ -550,9 +555,9 @@ describe('Data Validator', () => {
     it('should validate an ftp data group with a server as a uri', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                ftp: {
-                    data: {
+            product: {
+                files: {
+                    ftp: {
                         server: 'ftp://hostname.present:24',
                         path: 'path/to/file.txt'
                     }
@@ -566,9 +571,9 @@ describe('Data Validator', () => {
     it('should validate an ftp data group with a server as a ipv4', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                ftp: {
-                    data: {
+            product: {
+                files: {
+                    ftp: {
                         server: '192.168.1.1',
                         path: 'path/to/file.txt'
                     }
@@ -582,9 +587,9 @@ describe('Data Validator', () => {
     it('should validate an ftp data group with a server as a ipv6', () => {
         let p = Fixtures.GetTestProduct();
         p.data = {
-            files: {
-                ftp: {
-                    data: {
+            product: {
+                files: {
+                    ftp: {
                         server: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
                         path: 'path/to/file.txt'
                     }
@@ -620,7 +625,7 @@ describe('Footprint Validator', () => {
         }
 
         return chai.expect(validator.validate(p)).to.be.rejected
-        .and.eventually.have.length(3)
+            .and.eventually.have.length(3)
     })
 
     it('should not validate a non Multipolygon footprint', () => {
@@ -643,8 +648,8 @@ describe('Footprint Validator', () => {
         }
 
         return chai.expect(validator.validate(p)).to.be.rejected
-        .and.eventually.have.length(1)
-        .and.contain("footprint.type | should be 'MultiPolygon'")
+            .and.eventually.have.length(1)
+            .and.contain("footprint.type | should be 'MultiPolygon'")
     })
 
     it('should validate a missing CRS, replacing it with default for pushing into Postgres', () => {

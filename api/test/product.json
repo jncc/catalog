@@ -1,94 +1,100 @@
 {
-    "id": "cdc1c5c4-0940-457e-8583-e1cd45b0a5a3",
-    "collectionName": "scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/10000",
-    "name": "NH87",
-    "metadata": {
-        "title": "LiDAR for Scotland Phase I DTM NH87",
-        "keywords": [
-            {"value": "Orthoimagery"},
-            {"value": "Elevation"},
-            {"value": "Society"}
-        ],
-        "lineage": "The LiDAR data was collected from an aircraft between March 2011 and May 2012 for 10 collection areas. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 10 collection areas. Blom delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy and point density for each collection area. The results were delivered between 1st July 2011 and 2nd May 2012. The data was then aggregated into 10KM GeoTIFF chunks for easier consumption by an end user.",
-        "abstract": "The Scottish Public Sector LiDAR Phase I dataset was commissioned by the Scottish Government, SEPA and Scottish Water in 2011. This was commissioned in response to the Flood Risk Management Act (2009). The contract was awarded to Atkins, and the LiDAR data was collected and delivered by Blom. Airbourne LiDAR data was collected for 10 collection areas totalling 11,845 km2 between March 2011 and May 2012. A DTM and DSM were produced from the point clouds, with 1m spatial resolution. The data is licenced under an Open Government Licence.",
-        "metadataDate": "2017-04-05",
-        "resourceType": "Dataset",
-        "topicCategory": "Orthoimagery Elevation",
-        "useConstraints": "Open Government Licence Version 3",
-        "metadataLanguage": "English",
-        "accessLimitations": "",
-        "datasetReferenceDate": "2016-11-15",
-        "metadataPointOfContact": {
-            "name" : "Scottish Government, GI-SAT@gov.scot (Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital), Victoria Quay, Edinburgh, Scotland, EH6 6QQ, United Kingdom",
-            "email" : "ceu@gov.scot",
-            "role" : "metadataPointOfContact"
-        } ,
-        "spatialReferenceSystem": "EPSG:27700",
-        "responsibleOrganisation": {
-            "name" : "Scottish Government",
-            "email" : "ceu@gov.scot"
-            },
-        "resourceLocator": "catalog://scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/10000/NH87",
-        "temporalExtent": {
-            "begin" : "2011-03-01T00:00:00Z",
-            "end" : "2012-05-01T00:00:00Z"
-        },
-        "limitationsOnPublicAccess" : "None",
-        "boundingBox" : {
-            "north" : 57.7960680443262,
-            "south" : 57.7062934711795,
-            "east" : -3.85220733512446,
-            "west" : -4.0203233299185
-        }
+  "id": "cdc1c5c4-0940-457e-8583-e1cd45b0a5a3",
+  "collectionName": "scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/10000",
+  "name": "NH87",
+  "metadata": {
+    "title": "LiDAR for Scotland Phase I DTM NH87",
+    "keywords": [
+      {
+        "value": "Orthoimagery"
+      },
+      {
+        "value": "Elevation"
+      },
+      {
+        "value": "Society"
+      }
+    ],
+    "lineage": "The LiDAR data was collected from an aircraft between March 2011 and May 2012 for 10 collection areas. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 10 collection areas. Blom delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy and point density for each collection area. The results were delivered between 1st July 2011 and 2nd May 2012. The data was then aggregated into 10KM GeoTIFF chunks for easier consumption by an end user.",
+    "abstract": "The Scottish Public Sector LiDAR Phase I dataset was commissioned by the Scottish Government, SEPA and Scottish Water in 2011. This was commissioned in response to the Flood Risk Management Act (2009). The contract was awarded to Atkins, and the LiDAR data was collected and delivered by Blom. Airbourne LiDAR data was collected for 10 collection areas totalling 11,845 km2 between March 2011 and May 2012. A DTM and DSM were produced from the point clouds, with 1m spatial resolution. The data is licenced under an Open Government Licence.",
+    "metadataDate": "2017-04-05",
+    "resourceType": "Dataset",
+    "topicCategory": "Orthoimagery Elevation",
+    "useConstraints": "Open Government Licence Version 3",
+    "metadataLanguage": "English",
+    "accessLimitations": "",
+    "datasetReferenceDate": "2016-11-15",
+    "metadataPointOfContact": {
+      "name": "Scottish Government, GI-SAT@gov.scot (Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital), Victoria Quay, Edinburgh, Scotland, EH6 6QQ, United Kingdom",
+      "email": "ceu@gov.scot",
+      "role": "metadataPointOfContact"
     },
-    "properties": {
-        "externalId" : "DTM_NH87.tif",
-        "osgbGridRef": "NH87"
+    "spatialReferenceSystem": "EPSG:27700",
+    "responsibleOrganisation": {
+      "name": "Scottish Government",
+      "email": "ceu@gov.scot"
     },
-    "data": {
-        "files": {
-            "s3": {
-                "data": {
-                    "key" : "/processed/DTM/gridded/27700/10000/DTM_NH87.tif",
-                    "bucket" : "lidar-1",
-                    "region" : "eu-west-1"
-                }
-            }
-        }
+    "resourceLocator": "catalog://scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/10000/NH87",
+    "temporalExtent": {
+      "begin": "2011-03-01T00:00:00Z",
+      "end": "2012-05-01T00:00:00Z"
     },
-    "footprint": {
-        "type": "MultiPolygon",
-        "coordinates": [
-            [
-                [
-                    [
-                        -4.0153200553563,
-                        57.7037340545619
-                    ],
-                                        [
-                        -3.84761973734191,
-                        57.7062934711795
-                    ],
-                                        [
-                        -3.85220733512446,
-                        57.7960680443262
-                    ],
-                                        [
-                        -4.0203233299185,
-                        57.7934997752308
-                    ],
-                                        [
-                        -4.0153200553563,
-                        57.7037340545619
-                    ]
-                ]
-            ]
-        ],
-        "crs": {
-            "properties": {
-                "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-            },
-            "type": "name"
-        }
+    "limitationsOnPublicAccess": "None",
+    "boundingBox": {
+      "north": 57.7960680443262,
+      "south": 57.7062934711795,
+      "east": -3.85220733512446,
+      "west": -4.0203233299185
     }
+  },
+  "properties": {
+    "externalId": "DTM_NH87.tif",
+    "osgbGridRef": "NH87"
+  },
+  "data": {
+    "product": {
+      "files": {
+        "s3": {
+          "key": "/processed/DTM/gridded/27700/10000/DTM_NH87.tif",
+          "bucket": "lidar-1",
+          "region": "eu-west-1"
+        }
+      }
+    }
+  },
+  "footprint": {
+    "type": "MultiPolygon",
+    "coordinates": [
+      [
+        [
+          [
+            -4.0153200553563,
+            57.7037340545619
+          ],
+          [
+            -3.84761973734191,
+            57.7062934711795
+          ],
+          [
+            -3.85220733512446,
+            57.7960680443262
+          ],
+          [
+            -4.0203233299185,
+            57.7934997752308
+          ],
+          [
+            -4.0153200553563,
+            57.7037340545619
+          ]
+        ]
+      ]
+    ],
+    "crs": {
+      "properties": {
+        "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+      },
+      "type": "name"
+    }
+  }
 }

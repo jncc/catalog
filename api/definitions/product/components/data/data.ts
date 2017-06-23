@@ -1,15 +1,15 @@
 import { s3file, ftp} from "./files";
 import { wms, wfs } from "./services";
 
-export interface fileGroup<T> {
-    data: T,
-    [x: string]: T
+export interface Data {
+    product: DataGroup,
+    [x: string]: DataGroup
 }
 
-export interface Data {
+export interface DataGroup {
     files?: {
-        s3?: fileGroup<s3file>,
-        ftp?: fileGroup<ftp>
+        s3?: s3file,
+        ftp?: ftp
     },
     services?: {
         wms?: wms,
@@ -20,44 +20,44 @@ export interface Data {
 export const Schema = {
     "data": {
         "type": "object",
+        "additionalProperties" : false,
+        "patternProperties": {
+            "^[A-Za-z0-9]+$": {
+                "$ref": "#/definitions/data/datagroup"
+            }
+        },
+        "required": ["product"]
+    },
+    "datagroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "minProperties": 1,
         "properties": {
-            "files": {
-                "type": "object",
-                "properties": {
-                    "s3": {
-                        "type": "object",
-                        "patternProperties": {
-                            "^.*data$": {
-                                "$ref": "#/definitions/files/s3file"
-                            }
-                        },
-                        "additionalProperties": false,
-                        "required": ["data"]
-                    },
-                    "ftp": {
-                        "type": "object",
-                        "patternProperties": {
-                            "^.*data$": {
-                                "$ref": "#/definitions/files/ftp"
-                            }
-                        },
-                        "additionalProperties": false,
-                        "required": ["data"]
-                    },
-                    "minItems": 1
+        "files": {
+            "type": "object",
+            "additionalProperties" : false,
+            "properties": {
+                "s3": {
+                    "$ref": "#/definitions/files/s3file"
+                },
+                "ftp": {
+                    "$ref": "#/definitions/files/ftp"
                 }
-            },
-            "services": {
-                "type": "object",
-                "properties": {
-                    "wms": {
-                        "$ref": "#/definitions/services/wms"
-                    },
-                    "wfs": {
-                        "$ref": "#/definitions/services/wfs"
-                    }
+            }
+        },
+        "services": {
+            "type": "object",
+            "additionalProperties" : false,
+            "properties": {
+                "wms": {
+                    "$ref": "#/definitions/services/wms"
+                },
+                "wfs": {
+                    "$ref": "#/definitions/services/wfs"
                 }
             }
         }
-    }
+        }
+
+    },
 }
