@@ -1,27 +1,27 @@
 Cataloging scenarios
 
 # Collection naming convention
-Naming convention as follows:  
+Naming convention as follows:
 project/productset/x/y/z/version
 
 Where x/y/z are for product specific differentiation.
 No version exists for the top level product. previous version would have vX attributed.
 Version numbers start at 1 except in very special cases as these are all release products.
 
-Ie  
-Top level  
-eodip/sentinel1/ard/backscatter  
+Ie
+Top level
+eodip/sentinel1/ard/backscatter
 
 Previous versions
-eodip/sentinel1/ard/backscatter/v2  
-eodip/sentinel1/ard/backscatter/v1  
+eodip/sentinel1/ard/backscatter/v2
+eodip/sentinel1/ard/backscatter/v1
 
 Records for previous data that has expired and been deleted should be removed from the catalog
 
 Examples:
-eodip/sentinel1/ard/backscatter  
-scotland-gov-gi/lidar-1/processed/dsm  
-scotland-gov-gi/lidar-1/processed/dsm/gridded/27700/100000 
+eodip/sentinel1/ard/backscatter
+scotland-gov-gi/lidar-1/processed/dsm
+scotland-gov-gi/lidar-1/processed/dsm/gridded/27700/100000
 
 
 # Use cases for the storage of catalog data
@@ -37,17 +37,17 @@ Ie a wms layer for a collection of smaller products.
 
 Example:
 
-Scottish lidar data consists of: 
+Scottish lidar data consists of:
 - A set of raw las files
 - DSM and DTM 100 K tifs
 - A uk wide dsm and wms layer
 
-The data is dividid into collections of like products. 
+The data is divided into collections of like products.
 
-scotland-gov-gi/lidar-1/processed/dsm  
-scotland-gov-gi/lidar-1/processed/dsm/gridded/27700/100000  
-scotland-gov-gi/lidar-1/processed/dtm  
-scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/100000  
-scotland-gov-gi/lidar-1/raw/las/gridded/27700/1000  
+scotland-gov-gi/lidar-1/processed/dsm
+scotland-gov-gi/lidar-1/processed/dsm/gridded/27700/100000
+scotland-gov-gi/lidar-1/processed/dtm
+scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/100000
+scotland-gov-gi/lidar-1/raw/las/gridded/27700/1000
 
 

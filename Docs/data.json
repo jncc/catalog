@@ -1,43 +1,48 @@
 {
-    "groups": [{
-        "description" : "",
-        "files": {
-            "s3": [
-                {
-                    "key": "s3 key",
-                    "bucket": "s3 bucket",
-                    "region": "s3 region"
-                }
-            ],
-            "ftp": [
-                {
-                    "server": "server url",
-                    "path": "path"
-                }
-            ],
-            "nfs": [
-                {}
-            ],
-            "smb": [
-                {}
-            ],
-            "file share protocol": [
-                {}
-            ]
-        },
-        "services": {
-            "wms": [
-                {
-                    "url": "service-base-url",
-                    "name": "layer-name"
-                }
-            ],
-            "wfs": [
-                {
-                    "url":"service-base-url",
-                    "name": "layer-name"
-                }
-            ]
-        }
-    }]
+  "product": {
+    "files": {
+      "s3": {
+        "key": "s3 key",
+        "bucket": "s3 bucket",
+        "region": "s3 region"
+      },
+      "ftp": {
+        "server": "server url",
+        "path": "path"
+      }
+    },
+    "services": {
+      "wms": {
+        "url": "service-base-url",
+        "name": "layer-name"
+      },
+      "wfs": {
+        "url": "service-base-url",
+        "name": "layer-name"
+      }
+    }
+  },
+ "arbitrarylabel":{
+    "files": {
+      "s3": {
+        "key": "s3 key",
+        "bucket": "s3 bucket",
+        "region": "s3 region"
+      },
+      "ftp": {
+        "server": "server url",
+        "path": "path"
+      }
+    },
+    "services": {
+      "wms": {
+        "url": "service-base-url",
+        "name": "layer-name"
+      },
+      "wfs": {
+        "url": "service-base-url",
+        "name": "layer-name"
+      }
+    }
+ }
 }
