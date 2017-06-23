@@ -22,6 +22,7 @@ export const Schema = {
     "$async": true,
     "title": "Product",
     "type": "object",
+    "additionalProperties" : false,
     "properties": {
         "id": {
             "type": "string",

@@ -51,6 +51,7 @@ export function nonSchemaValidation(footprint: any, errors: string[]) {
     return errors;
 };
 
+//validated seperatly from schema
 export const Schema = {
     "footprint": {
         "type": "object"

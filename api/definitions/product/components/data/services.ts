@@ -15,6 +15,7 @@ export const Schema = {
     },
     "ogc": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
             "url": {
                 "type": "string",
