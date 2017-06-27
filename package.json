@@ -23,7 +23,7 @@
   "dependencies": {
     "@mapbox/geojsonhint": "2.0.1",
     "ajv": "4.11.6",
-    "ajv-async": "^0.1.0",
+    "ajv-async": "0.1.0",
     "body-parser": "1.17.1",
     "express": "4.15.2",
     "geojson": "0.4.1",
@@ -41,13 +41,13 @@
     "@types/node": "7.0.15",
     "@types/pg-promise": "0.0.28",
     "chai": "3.5.0",
-    "chai-as-promised": "^6.0.0",
+    "chai-as-promised": "6.0.0",
     "mocha": "3.3.0",
     "nodemon": "1.11.0",
     "rimraf": "2.6.1",
     "ts-node": "3.0.2",
     "typemoq": "1.6.0",
     "typescript": "2.3.4",
-    "yarn": "^0.24.5"
+    "yarn": "0.24.5"
   }
 }
