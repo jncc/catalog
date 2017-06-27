@@ -8,6 +8,7 @@ export interface Collection {
     id: string,
     name: string,
     metadata: Metadata.Metadata,
+    productsSchema: any,
     footprint: Footprint.Footprint
 };
 
@@ -51,9 +52,13 @@ export const Schema = {
         "metadata": {
             "$ref": "#/definitions/metadata/metadata"
         },
+        "propertiesSchema": {
+            "type": "object"
+        },
         "footprint": {
             "$ref": "#/definitions/footprint/footprint"
-        }
+        },
+        "required": ["id", "name", "metadata", "propertiesSchema", "footprint"]
     },
     "definitions": {
         "metadata": Metadata.Schema,

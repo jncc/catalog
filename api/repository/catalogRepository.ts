@@ -31,15 +31,28 @@ export class CatalogRepository {
         return Database.instance.connection.task(t => {
             let baseQuery = squel.select()
                 .from('collection')
-                .field('id').field('name').field('metadata').field('ST_AsGeoJSON(footprint)', 'footprint')
+                .field('id').field('name').field('metadata').field('products_schema', 'productsSchema').field('ST_AsGeoJSON(footprint)', 'footprint')
                 .where('name LIKE $1')
                 .order('name')
                 .limit(limit)
                 .offset(offset)
 
             baseQuery = this.buildQuery(baseQuery, footprint, spatialop, {});
-            console.log(baseQuery.toString());
             return t.any(baseQuery.toString(), [name, footprint, properties]);
+        }).catch(error => {
+            console.log("database error : " + error)
+            throw new Error(error)
+        });
+    }
+
+    getCollection(name: string):Promise<Collection> {
+        return Database.instance.connection.task(t => {
+            let baseQuery = squel.select()
+                .from('collection')
+                .field('id').field('name').field('metadata').field('products_schema', 'productsSchema').field('ST_AsGeoJSON(footprint)', 'footprint')
+                .where('name = $1')
+
+                return t.oneOrNone(baseQuery.toString(), [name]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
@@ -61,7 +74,6 @@ export class CatalogRepository {
             // Add optional arguments and filters
             baseQuery = this.buildQuery(baseQuery, footprint, spatialop, properties);
             // Run and return results
-            console.log(baseQuery.toString());
             return t.any(baseQuery.toString(), [name, footprint, properties]);
         }).catch(error => {
             console.log("database error : " + error)
@@ -93,7 +105,7 @@ export class CatalogRepository {
         });
     }
 
-    checkCollectionNameExists(errors: Array<string>, collectionName: string) {
+    checkCollectionNameExists(errors: Array<string>, collectionName: string): Promise<string[]> {
         return Database.instance.connection.task(t => {
             return t.oneOrNone('select name from collection where name = $1', [collectionName], x => x && x.name)
                 .then(name => {

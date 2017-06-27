@@ -1,5 +1,6 @@
 import { CatalogRepository } from "../repository/catalogRepository";
-import { Product, Schema } from "../definitions/product/product";
+import * as Product from "../definitions/product/product";
+import * as Collection from "../definitions/collection/collection";
 import * as ajv from 'ajv';
 import * as ajvasync from 'ajv-async';
 import * as Footprint from "../definitions/components/footprint";
@@ -24,35 +25,64 @@ chai.use(chaiAsPromised);
 export class ProductValidator {
     constructor(private repository: CatalogRepository) { }
 
-    private nonSchemaValidation(product: Product, errors: string[]): Promise<string[]> {
-        product.footprint = Footprint.fixCommonIssues(product.footprint)
-        errors = Footprint.nonSchemaValidation(product.footprint, errors)
-
-        errors = Metadata.nonSchemaValidation(product.metadata, errors)
-
-        return this.repository.checkCollectionNameExists(errors, product.collectionName);
-    }
-
-    validate(product: Product): Promise<string[]> {
+    private validateProductProperties(collection: Collection.Collection, product: Product.Product, errors: string[]): Promise<string[]> {
         let validator = ajv({ allErrors: true, formats: 'full' })
         let asyncValidator = ajvasync(validator)
 
-        let productSchemaValidator = asyncValidator.compile(Schema)
+        let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema)
+
+        let promise = new Promise((resolve, reject) => {
+            propertiesSchemaValidator(product.properties)
+                .then(e => {
+                    resolve();
+                }).catch(e => {
+                    errors = errors.concat(ValidationHelper.reduceErrors(e.errors, 'properties'))
+                    reject(errors)
+                })
+        });
+
+        return promise;
+    }
+
+    private nonSchemaValidation(product: Product.Product, errors: string[]): Promise<string[]> {
+        // Fix common issues with footprint and validate it
+        product.footprint = Footprint.fixCommonIssues(product.footprint)
+        errors = Footprint.nonSchemaValidation(product.footprint, errors)
+        // Run additional validation on metadata
+        errors = Metadata.nonSchemaValidation(product.metadata, errors)
+        // Validate product properties according to its collection properties_schema     
+        return this.repository.checkCollectionNameExists(errors, product.collectionName).then(check => {
+            return this.repository.getCollection(product.collectionName).then(c => {
+                return this.validateProductProperties(c, product, errors)
+            })
+        })
+    }
+
+    validate(product: Product.Product): Promise<string[]> {
+        let validator = ajv({ allErrors: true, formats: 'full' })
+        let asyncValidator = ajvasync(validator)
+
+        let productSchemaValidator = asyncValidator.compile(Product.Schema)
         let errors: string[] = new Array<string>();
 
         let promise = new Promise((resolve, reject) => {
 
             productSchemaValidator(product)
+                .catch(e => {
+                    errors = errors.concat(ValidationHelper.reduceErrors(e.errors))
+                    reject(errors)
+                })
                 .then(e => this.nonSchemaValidation(product, errors))
+                .catch(e => {
+                    errors = errors.concat(e)
+                    reject(errors)
+                })
                 .then(e => {
                     if (errors.length == 0) {
                         resolve(errors);
                     } else {
                         reject(errors)
                     }
-                }).catch(e => {
-                    errors = ValidationHelper.reduceErrors(e.errors)
-                    reject(errors)
                 })
         });
 
@@ -61,7 +91,6 @@ export class ProductValidator {
 };
 
 // Tests
-
 
 describe('Product validator', () => {
 

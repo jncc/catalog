@@ -19,10 +19,10 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-function getRespObj(param: string, footprint:string|undefined, spatialop:string|undefined, properties:any) {
-  let respObj:any = {
+function getRespObj(param: string, footprint: string | undefined, spatialop: string | undefined, properties: any) {
+  let respObj: any = {
     "term": param,
-    "params": { }
+    "params": {}
   };
 
   if (footprint != undefined) {
@@ -61,7 +61,7 @@ function extractQueryParams(param: string, queryParams: any) {
 app.get(`/collection/search/*?`, async (req, res) => {
   let param: string = req.params[0];
   let extracted = extractQueryParams(param, req.query)
-  
+
   let footprint: string | undefined = extracted[0];
   let spatialop: string | undefined = extracted[1];
   // properties should be ignored in this instance
@@ -82,7 +82,7 @@ app.get(`/collection/search/*?`, async (req, res) => {
   } else {
     respObj['errors'].push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
     res.status(400);
-    res.json(respObj);    
+    res.json(respObj);
   }
 });
 
@@ -116,12 +116,14 @@ app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
   let productValidtor = new ProductValidator(catalogRepository)
 
-  productValidtor.validate(product).then(result => {
-    res.sendStatus(200)
-  }).catch(result => {
-    res.statusCode = 400
-    res.send(result)
-  });
+  productValidtor.validate(product)
+    .then(result => {
+      res.sendStatus(200)
+    }).catch(result => {
+      console.log(result)
+      res.statusCode = 400
+      res.send(result)
+    });
 });
 
 // store the query and give me a key for it

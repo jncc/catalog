@@ -55,7 +55,7 @@ export const Schema = {
     },
     "definitions": {
         "metadata": Metadata.Schema,
-        "properties": Properties.Schema,/**/
+        "properties": Properties.Schema,
         "data": Data.Schema,
         "files": DataFiles.Schema,
         "services": DataServices.Schema
