@@ -1,7 +1,10 @@
 import { Product } from "../definitions/product/product";
+import { Collection } from "../definitions/collection/collection"
+import { CatalogRepository } from "../repository/catalogRepository"
 import * as fs from 'fs'
 
 import * as chai from 'chai';
+import * as TypeMoq from "typemoq";
 import 'mocha';
 require('mocha-inline')();
 
@@ -27,8 +30,33 @@ export class Fixtures {
         },
         "type": "name"
       }
-    } 
+    }
   }
+
+  public static GetCollection(): Collection {
+    return {
+      id: '3bfc0280-5708-40ee-aef4-df3ddeb4fd21',
+      name: 'test/collection',
+      metadata: this.GetTestProduct().metadata,
+      footprint: this.GetTestProduct().footprint,
+      productsSchema: { "type": "object", "title": "Properties", "$async": true, "$schema": "http://json-schema.org/draft-04/schema#" }
+    }
+  }
+
+  public static GetMockRepo(): TypeMoq.IMock<CatalogRepository> {
+    let mockRepo = TypeMoq.Mock.ofType(CatalogRepository);
+    mockRepo.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+      return Promise.resolve(x);
+    })
+    mockRepo.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection = Fixtures.GetCollection();
+      return Promise.resolve(c)
+    })
+
+    return mockRepo;
+  }
+
+
 }
 
 describe('Test fixtures', () => {
