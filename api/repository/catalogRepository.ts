@@ -76,8 +76,6 @@ export class CatalogRepository {
             // Add optional arguments and filters
             baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, query.productProperties);
             // Run and return results
-            console.log("borked query: " + baseQuery.toString())
-            console.log([collectionName, query.footprint, query.productProperties])
             return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
         }).catch(error => {
             console.log("database error : " + error)

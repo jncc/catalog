@@ -50,7 +50,6 @@ class Result {
   promisedResult: Promise<any>
 }
 
-
 function search(req, res, searchType: SearchType) {
 
   let requestParameter = req.params[0]
