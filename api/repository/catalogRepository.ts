@@ -1,14 +1,15 @@
 import { Product } from "../definitions/product/product"
 import { Collection } from "../definitions/collection/collection"
 import { Database } from "./database";
+import { Query } from "../query"
 import * as squel from "squel";
 
 export class CatalogRepository {
 
-    buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, properties: any) {
-        if (footprint !== undefined) {
+    buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, properties: any | undefined) {
+        if (footprint !== '') {
             // Do spatial search
-            if (spatialop !== undefined) {
+            if (spatialop !== '') {
                 if (spatialop === 'within') {
                     baseQuery.where('ST_Within(ST_GeomFromText($2, 4326), footprint)');
                 } else if (spatialop === 'overlaps') {
@@ -26,8 +27,8 @@ export class CatalogRepository {
         return baseQuery;
     }
 
-    getCollections(name: string, limit: number, offset: number, footprint: string | undefined, spatialop: string | undefined, properties: any): Promise<Array<Collection>> {
-        name = name.replace('*', '%')
+    getCollections(query: Query, limit: number, offset: number): Promise<Array<Collection>> {
+        let collectionName = query.collection.replace('*', '%')
         return Database.instance.connection.task(t => {
             let baseQuery = squel.select()
                 .from('collection')
@@ -37,8 +38,8 @@ export class CatalogRepository {
                 .limit(limit)
                 .offset(offset)
 
-            baseQuery = this.buildQuery(baseQuery, footprint, spatialop, {});
-            return t.any(baseQuery.toString(), [name, footprint, properties]);
+            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, {});
+            return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
@@ -59,9 +60,10 @@ export class CatalogRepository {
         });
     }
 
-    getProducts(name: string, limit: number, offset: number, footprint: string | undefined, spatialop: string | undefined, properties: any): Promise<Array<Product>> {
+    getProducts(query: Query, limit: number, offset: number): Promise<Array<Product>> {
         // Replace wildcard characters in the name
-        name = name.replace('*', '%');
+        let collectionName = query.collection.replace('*', '%')
+
         return Database.instance.connection.task(t => {
             // Build base query
             let baseQuery = squel.select()
@@ -72,9 +74,11 @@ export class CatalogRepository {
                 .limit(limit)
                 .offset(offset)
             // Add optional arguments and filters
-            baseQuery = this.buildQuery(baseQuery, footprint, spatialop, properties);
+            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, query.productProperties);
             // Run and return results
-            return t.any(baseQuery.toString(), [name, footprint, properties]);
+            console.log("borked query: " + baseQuery.toString())
+            console.log([collectionName, query.footprint, query.productProperties])
+            return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
