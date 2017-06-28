@@ -6,7 +6,7 @@ import * as squel from "squel";
 
 export class CatalogRepository {
 
-    buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, properties: any | undefined) {
+    buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, fromCollectionDate: Date | undefined, toCollectionDate: Date | undefined, properties: any | undefined) {
         if (footprint !== '') {
             // Do spatial search
             if (spatialop !== '') {
@@ -20,6 +20,9 @@ export class CatalogRepository {
             }
         }
 
+        if (fromCollectionDate && toCollectionDate) {
+          baseQuery.where('to_date(properties->>\'collectionDate\', \'YYYY-MM-DD\') BETWEEN $4 AND $5')
+        }
         if (Object.keys(properties).length > 0) {
             baseQuery.where('properties @> $3');
         }
@@ -38,13 +41,14 @@ export class CatalogRepository {
                 .limit(limit)
                 .offset(offset)
 
-            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, {});
+            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, undefined, undefined, {})
             return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
         });
     }
+
 
     getCollection(name: string):Promise<Collection> {
         return Database.instance.connection.task(t => {
@@ -74,9 +78,9 @@ export class CatalogRepository {
                 .limit(limit)
                 .offset(offset)
             // Add optional arguments and filters
-            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, query.productProperties);
+            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, query.fromCollectionDate, query.toCollectionDate, query.productProperties);
             // Run and return results
-            return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
+            return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties, query.fromCollectionDate, query.toCollectionDate]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
