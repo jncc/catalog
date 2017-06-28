@@ -23,7 +23,6 @@ For linux set_env.sh:
 
 You're good to go. 
 
-
     yarn install
     yarn run dev
 

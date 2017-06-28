@@ -7,6 +7,7 @@ import * as Product from "./definitions/product/product";
 import * as Collection from "./definitions/collection/collection";
 import { getEnvironmentSettings } from "./settings";
 import { CatalogRepository } from "./repository/catalogRepository";
+import { Query } from "./query"
 
 import { Fixtures } from "./test/fixtures"
 
@@ -19,98 +20,81 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-function getRespObj(param: string, footprint: string | undefined, spatialop: string | undefined, properties: any) {
-  let respObj: any = {
-    "term": param,
-    "params": {}
-  };
 
-  if (footprint != undefined) {
-    respObj['params']['footprint'] = footprint;
-  }
+function getQuery(param: string, queryParams: any) {
 
-  if (spatialop != undefined) {
-    respObj['params']['spatialop'] = spatialop;
-  }
+  let result = new Query()
 
-  if (Object.keys(properties).length > 0) {
-    respObj['params']['properties'] = properties;
-  }
-
-  return respObj;
-}
-
-function extractQueryParams(param: string, queryParams: any) {
-  let footprint: string | undefined = undefined;
-  let spatialop: string | undefined = undefined;
-  let properties: any = {}
+  result.collection = param
 
   for (let query in queryParams) {
     if (query === 'footprint') {
-      footprint = queryParams[query];
+      result.footprint = queryParams[query];
     } else if (query === 'spatialop') {
-      spatialop = queryParams[query];
-    } else {
-      properties[query] = queryParams[query];
+      result.spatialop = queryParams[query];
+    } else if (query) {
+      result.productProperties[query] = queryParams[query];
     }
   }
 
-  return [footprint, spatialop, properties]
+  return result
+}
+
+enum SearchType {
+  product,
+  collection
+}
+
+class Result {
+  query: Query
+  promisedResult: Promise<any>
+}
+
+function search(req, res, searchType: SearchType) {
+
+  let requestParameter = req.params[0]
+  let requestQuerystring = req.query
+
+  if (!requestParameter.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+    res.json({
+      query: new Query(),
+      errors: ['searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"']
+    })
+
+  } else {
+
+    let query = getQuery(requestParameter, requestQuerystring)
+    let result: Promise<any>
+
+    if (searchType == SearchType.product) {
+      result = catalogRepository.getProducts(query, 50, 0)
+    } else {
+      result = catalogRepository.getCollections(query, 50, 0)
+    }
+
+    result.then(x => {
+      res.json({
+        query: query,
+        result: x
+      })
+    }).catch(x => {
+      res.status(500);
+      res.json({
+        query: query,
+        errors: x
+      })
+    })
+  }
 }
 
 app.get(`/collection/search/*?`, async (req, res) => {
-  let param: string = req.params[0];
-  let extracted = extractQueryParams(param, req.query)
-
-  let footprint: string | undefined = extracted[0];
-  let spatialop: string | undefined = extracted[1];
-  // properties should be ignored in this instance
-  //let properties: any = extracted[2];
-  let properties: any = {}
-
-  let respObj: any = getRespObj(param, footprint, spatialop, properties)
-
-  if (param.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-    catalogRepository.getCollections(param, 50, 0, footprint, spatialop, properties).then(results => {
-      respObj['results'] = results;
-      res.json(respObj);
-    }).catch(errors => {
-      respObj['errors'] = errors;
-      res.status(500);
-      res.json(respObj);
-    });
-  } else {
-    respObj['errors'].push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
-    res.status(400);
-    res.json(respObj);
-  }
-});
+  search(req, res, SearchType.collection)
+})
 
 app.get(`/product/search/*?`, async (req, res) => {
-  let param: string = req.params[0];
+  search(req, res, SearchType.product)
+})
 
-  let extracted = extractQueryParams(param, req.query)
-
-  let respObj: any = extracted[0]
-  let footprint: string | undefined = extracted[1];
-  let spatialop: string | undefined = extracted[2];
-  let properties: any = extracted[3];
-
-  if (param.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-    catalogRepository.getProducts(param, 50, 0, footprint, spatialop, properties).then(results => {
-      respObj['results'] = results;
-      res.json(respObj);
-    }).catch(errors => {
-      respObj['errors'] = errors;
-      res.status(500);
-      res.json(respObj);
-    });
-  } else {
-    respObj['errors'].push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
-    res.status(400);
-    res.json(respObj);
-  }
-});
 
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
