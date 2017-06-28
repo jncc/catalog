@@ -26,7 +26,7 @@ export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
   private validateProductProperties(collection: Collection.Collection, product: Product.Product, errors: string[]): Promise<string[]> {
-    let validator = ajv({ allErrors: true, formats: 'full' })
+    let validator = ajv({ allErrors: true, formats: 'full' });
     let asyncValidator = ajvasync(validator)
 
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema)
@@ -711,25 +711,170 @@ describe('Footprint Validator', () => {
   })
 })
 
-describe('propertiesValidator', () => {
+describe('Product Properties Validator', () => {
   let mockRepo = Fixtures.GetMockRepo()
   let validator = new ProductValidator(mockRepo.object);
 
-  it('should not validate a product with an invalid collection name', () => {
+  it('should validate a product with an valid properties collection', () => {
     let mr = TypeMoq.Mock.ofType(CatalogRepository);
     mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
       return Promise.resolve(x);
-    })
+    });
     mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
-      c.productsSchema = { "type": "object", "title": "Properties", "$async": true, "$schema": "http://json-schema.org/draft-04/schema#", "required": ["externalId"], "properties": { "externalId": { "type": "string", "minLength": 1 } }, "additionalProperties": false }
+      c.productsSchema = {
+        "type": "object",
+        "title": "Properties",
+        "$async": true,
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "required": ["externalId"],
+        "properties": {
+          "externalId": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
       return Promise.resolve(c)
     })
 
     let v2 = new ProductValidator(mr.object)
 
     const product = Fixtures.GetTestProduct();
+    product.properties = {
+      'externalId': 1145234
+    }
 
-    return chai.expect(v2.validate(product)).to.be.rejected;
+    return chai.expect(v2.validate(product)).to.be.fulfilled;
+  });
+
+  it('should validate a product with an valid properties collection - formatted string types', () => {
+    let mr = TypeMoq.Mock.ofType(CatalogRepository);
+    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+      return Promise.resolve(x);
+    });
+    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection.Collection = Fixtures.GetCollection();
+      c.productsSchema = { "type": "object", "title": "Properties", "$async": true, "$schema": "http://json-schema.org/draft-04/schema#", "required": ["externalId"], "properties": { "externalId": { "type": "string", "format": "uuid" }, "datetime": { "type": "string", "format": "date-time" } }, "additionalProperties": false }
+      return Promise.resolve(c)
+    })
+
+    let v2 = new ProductValidator(mr.object)
+
+    const product = Fixtures.GetTestProduct();
+    product.properties = {
+      'externalId': 'cdc1c5c4-0940-457e-8583-e1cd45b0a5a3',
+      'datetime': '2017-06-28T00:00:00Z'
+    }
+
+    return chai.expect(v2.validate(product)).to.be.fulfilled;
+  });
+
+  it('should not validate a product with an invalid properties collection - non-matching definitions', () => {
+    let mr = TypeMoq.Mock.ofType(CatalogRepository);
+    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+      return Promise.resolve(x);
+    });
+    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection.Collection = Fixtures.GetCollection();
+      c.productsSchema = { "type": "object", "title": "Properties", "$async": true, "$schema": "http://json-schema.org/draft-04/schema#", "required": ["externalId"], "properties": { "externalId": { "type": "string", "minLength": 1 } }, "additionalProperties": false }
+      return Promise.resolve(c)
+    });
+
+    let v2 = new ProductValidator(mr.object)
+
+    const product = Fixtures.GetTestProduct();
+    product.properties = {
+      'externalId': 1145234
+    }
+
+    return chai.expect(v2.validate(product)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('properties.externalId | should be string');
+  });
+
+  it('should not validate a product with an bad properties collection - formatted string types', () => {
+    let mr = TypeMoq.Mock.ofType(CatalogRepository);
+    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+      return Promise.resolve(x);
+    });
+    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection.Collection = Fixtures.GetCollection();
+      c.productsSchema = { "type": "object", "title": "Properties", "$async": true, "$schema": "http://json-schema.org/draft-04/schema#", "required": ["externalId"], "properties": { "externalId": { "type": "string", "format": "uuid" }, "datetime": { "type": "string", "format": "date-time" } }, "additionalProperties": false }
+      return Promise.resolve(c)
+    })
+
+    let v2 = new ProductValidator(mr.object)
+
+    const product = Fixtures.GetTestProduct();
+    product.properties = {
+      'externalId': 'not-a-uuid',
+      'datetime': '2017-06-28'
+    }
+
+    return chai.expect(v2.validate(product)).to.be.rejected
+      .and.eventually.have.length(2)
+      .and.contain('properties.externalId | should match format "uuid"')
+      .and.contain('properties.datetime | should match format "date-time"');
+  });
+
+  it('should not validate a product with an invalid properties collection - missing definitions', () => {
+    let mr = TypeMoq.Mock.ofType(CatalogRepository);
+    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+      return Promise.resolve(x);
+    });
+    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection.Collection = Fixtures.GetCollection();
+      c.productsSchema = {
+        "type": "object",
+        "title": "Properties",
+        "$async": true,
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "required": ["externalId"],
+        "properties": {
+          "externalId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      };
+      return Promise.resolve(c)
+    });
+
+    let v2 = new ProductValidator(mr.object)
+
+    const product = Fixtures.GetTestProduct();
+    product.properties = {
+
+    }
+
+    return chai.expect(v2.validate(product)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('properties | should have required property \'externalId\'');
+  });
+
+  it('should not validate a product with an invalid properties collection - additional definitions', () => {
+    let mr = TypeMoq.Mock.ofType(CatalogRepository);
+    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+      return Promise.resolve(x);
+    });
+    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection.Collection = Fixtures.GetCollection();
+      c.productsSchema = { "type": "object", "title": "Properties", "$async": true, "$schema": "http://json-schema.org/draft-04/schema#", "required": ["externalId"], "properties": { "externalId": { "type": "string", "minLength": 1 } }, "additionalProperties": false }
+      return Promise.resolve(c)
+    });
+
+    let v2 = new ProductValidator(mr.object)
+
+    const product = Fixtures.GetTestProduct();
+    product.properties = {
+      externalId: 'external-id-string',
+      rogue: 'should-not-be-here'
+    }
+
+    return chai.expect(v2.validate(product)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('properties | should NOT have additional properties');
   });
 })
