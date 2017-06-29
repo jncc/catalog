@@ -55,7 +55,7 @@ export class ProductValidator {
       return this.repository.getCollection(product.collectionName).then(c => {
         return this.validateProductProperties(c, product, errors);
       })
-    })
+    });
   }
 
   validate(product: Product.Product): Promise<string[]> {
@@ -111,7 +111,7 @@ describe('Product validator', () => {
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.lengthOf(1)
       .and.include('name | should match pattern "^([A-Za-z0-9-_.])+$"');
-  })
+  });
 
   it('should not validate if no collection name', () => {
     let p = Fixtures.GetTestProduct();
@@ -121,7 +121,7 @@ describe('Product validator', () => {
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
       .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
-  })
+  });
 
   it('should not validate and invalid collection name', () => {
     let p = Fixtures.GetTestProduct();
@@ -131,7 +131,7 @@ describe('Product validator', () => {
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
       .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
-  })
+  });
 
   // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
   // TODO: Using isAny but really should be an array if we can figure it out
@@ -147,7 +147,7 @@ describe('Product validator', () => {
 
     return chai.expect(v2.validate(product)).to.be.rejected;
   });
-})
+});
 
 describe('Metadata validator', () => {
 
