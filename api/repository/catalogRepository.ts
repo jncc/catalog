@@ -21,8 +21,13 @@ export class CatalogRepository {
         }
 
         if (fromCaptureDate && toCaptureDate) {
-          baseQuery.where('to_date(properties->>\'capturedate\', \'YYYY-MM-DD\') BETWEEN $4 AND $5')
+            baseQuery.where('to_date(properties->>\'capturedate\', \'YYYY-MM-DD\') BETWEEN $4 AND $5')
+        } else if (fromCaptureDate && !toCaptureDate) {
+            baseQuery.where('to_date(properties->>\'capturedate\', \'YYYY-MM-DD\') >= $4')
+        } else if (!fromCaptureDate && toCaptureDate) {
+            baseQuery.where('to_date(properties->>\'capturedate\', \'YYYY-MM-DD\') <= $5')
         }
+        
         if (Object.keys(properties).length > 0) {
             baseQuery.where('properties @> $3');
         }

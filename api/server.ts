@@ -84,7 +84,7 @@ function search(req, res, searchType: SearchType) {
       res.status(500);
       res.json({
         query: query,
-        errors: x
+        errors: x.message
       })
     })
   }

@@ -5,5 +5,4 @@ export class Query {
   fromCaptureDate: Date | undefined = undefined
   toCaptureDate: Date | undefined = undefined
   productProperties: any = {}
-  errors: string[] = []
 }
