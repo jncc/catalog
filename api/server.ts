@@ -20,20 +20,23 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-
 function getQuery(param: string, queryParams: any) {
 
   let result = new Query()
 
   result.collection = param
 
-  for (let query in queryParams) {
-    if (query === 'footprint') {
-      result.footprint = queryParams[query];
-    } else if (query === 'spatialop') {
-      result.spatialop = queryParams[query];
-    } else if (query) {
-      result.productProperties[query] = queryParams[query];
+  for (let parameter in queryParams) {
+    if (parameter === 'footprint') {
+      result.footprint = queryParams[parameter];
+    } else if (parameter === 'spatialop') {
+      result.spatialop = queryParams[parameter];
+    } else if (parameter === 'fromCaptureDate') {
+      result.fromCaptureDate = new Date(queryParams[parameter])
+    } else if (parameter === 'toCaptureDate') {
+      result.toCaptureDate = new Date(queryParams[parameter])
+    } else if (parameter) {
+      result.productProperties[parameter] = queryParams[parameter];
     }
   }
 

@@ -6,7 +6,7 @@ import * as squel from "squel";
 
 export class CatalogRepository {
 
-    buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, properties: any | undefined) {
+    buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, fromCaptureDate: Date | undefined, toCaptureDate: Date | undefined, properties: any | undefined) {
         if (footprint !== '') {
             // Do spatial search
             if (spatialop !== '') {
@@ -20,6 +20,9 @@ export class CatalogRepository {
             }
         }
 
+        if (fromCaptureDate && toCaptureDate) {
+          baseQuery.where('to_date(properties->>\'capturedate\', \'YYYY-MM-DD\') BETWEEN $4 AND $5')
+        }
         if (Object.keys(properties).length > 0) {
             baseQuery.where('properties @> $3');
         }
@@ -38,13 +41,14 @@ export class CatalogRepository {
                 .limit(limit)
                 .offset(offset)
 
-            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, {});
+            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, undefined, undefined, {})
             return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
         });
     }
+
 
     getCollection(name: string):Promise<Collection> {
         return Database.instance.connection.task(t => {
@@ -74,23 +78,23 @@ export class CatalogRepository {
                 .limit(limit)
                 .offset(offset)
             // Add optional arguments and filters
-            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, query.productProperties);
+            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, query.fromCaptureDate, query.toCaptureDate, query.productProperties);
             // Run and return results
-            return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
+            return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties, query.fromCaptureDate, query.toCaptureDate]);
         }).catch(error => {
             console.log("database error : " + error)
             throw new Error(error)
         })
     }
 
-    getProduct(collection: string, name: string): Promise<Product> {
-        return Database.instance.connection.task(t => {
-            return t.one('SELECT product.* FROM product INNER JOIN collection ON collection.id = product.collection_id WHERE collection.name = $1 AND product.name = $2', [collection, name], x => x);
-        }).catch(error => {
-            console.log("database error : " + error);
-            throw new Error(error);
-        })
-    }
+    // getProduct(collection: string, name: string): Promise<Product> {
+    //     return Database.instance.connection.task(t => {
+    //         return t.one('SELECT product.* FROM product INNER JOIN collection ON collection.id = product.collection_id WHERE collection.name = $1 AND product.name = $2', [collection, name], x => x);
+    //     }).catch(error => {
+    //         console.log("database error : " + error);
+    //         throw new Error(error);
+    //     })
+    // }
 
     storeProduct(product: Product): Promise<string> {
         return Database.instance.connection.task(t => {
