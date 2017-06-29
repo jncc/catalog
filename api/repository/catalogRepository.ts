@@ -31,7 +31,7 @@ export class CatalogRepository {
     }
 
     getCollections(query: Query, limit: number, offset: number): Promise<Array<Collection>> {
-        let collectionName = query.collection.replace('*', '%')
+        let collectionName = query.collection.replace(/\*/g, '%')
         return Database.instance.connection.task(t => {
             let baseQuery = squel.select()
                 .from('collection')
@@ -66,7 +66,7 @@ export class CatalogRepository {
 
     getProducts(query: Query, limit: number, offset: number): Promise<Array<Product>> {
         // Replace wildcard characters in the name
-        let collectionName = query.collection.replace('*', '%')
+        let collectionName = query.collection.replace(/\*/g, '%')
 
         return Database.instance.connection.task(t => {
             // Build base query
@@ -80,6 +80,8 @@ export class CatalogRepository {
             // Add optional arguments and filters
             baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, query.fromCaptureDate, query.toCaptureDate, query.productProperties);
             // Run and return results
+            console.log(baseQuery.toString())
+            console.log([collectionName, query.footprint, query.productProperties, query.fromCaptureDate, query.toCaptureDate])
             return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties, query.fromCaptureDate, query.toCaptureDate]);
         }).catch(error => {
             console.log("database error : " + error)
