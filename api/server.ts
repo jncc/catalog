@@ -32,10 +32,10 @@ function getQuery(param: string, queryParams: any) {
       result.footprint = queryParams[parameter];
     } else if (parameter === 'spatialop') {
       result.spatialop = queryParams[parameter];
-    } else if (parameter === 'fromCollectionDate') {
-      result.fromCollectionDate = new Date(queryParams[parameter])
-    } else if (parameter === 'toCollectionDate') {
-      result.toCollectionDate = new Date(queryParams[parameter])
+    } else if (parameter === 'fromCaptureDate') {
+      result.fromCaptureDate = new Date(queryParams[parameter])
+    } else if (parameter === 'toCaptureDate') {
+      result.toCaptureDate = new Date(queryParams[parameter])
     } else if (parameter) {
       result.productProperties[parameter] = queryParams[parameter];
     }
