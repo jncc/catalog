@@ -20,7 +20,6 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-
 function getQuery(param: string, queryParams: any) {
 
   let result = new Query()
