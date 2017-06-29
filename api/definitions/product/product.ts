@@ -7,58 +7,57 @@ import * as DataFiles from "./components/data/files";
 import * as ValidationHelper from "../../validation/validationHelper";
 
 export interface Product {
-    id?: string,
-    name: string,
-    collectionId?: string,
-    collectionName: string,
-    metadata: Metadata.Metadata,
-    properties: Properties.Properties,
-    data: Data.Data,
-    footprint: Footprint.Footprint
+  id: string,
+  name: string,
+  collectionName: string,
+  metadata: Metadata.Metadata,
+  properties: Properties.Properties,
+  data: Data.Data,
+  footprint: Footprint.Footprint
 };
 
 export const Schema = {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "$async": true,
-    "title": "Product",
-    "type": "object",
-    "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$async": true,
+  "title": "Product",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^([A-Za-z0-9\-\_\.])+$"
+    },
+    "collectionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "collectionName": {
+      "type": "string",
+      "pattern": "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"
+    },
+    "metadata": {
+      "$ref": "#/definitions/metadata/metadata"
+    },
     "properties": {
-        "id": {
-            "type": "string",
-            "format": "uuid"
-        },
-        "name": {
-            "type": "string",
-            "pattern": "^([A-Za-z0-9\-\_\.])+$"
-        },
-        "collectionId": {
-            "type": "string",
-            "format": "uuid"
-        },
-        "collectionName": {
-            "type": "string",
-            "pattern": "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"
-        },
-        "metadata": {
-            "$ref": "#/definitions/metadata/metadata"
-        },
-        "properties": {
-            "$ref": "#/definitions/properties"
-        },
-        "data": {
-            "$ref": "#/definitions/data/data"
-        },
-        "footprint": {
-            "type": "object"
-        }
+      "$ref": "#/definitions/properties"
     },
-    "definitions": {
-        "metadata": Metadata.Schema,
-        "properties": Properties.Schema,
-        "data": Data.Schema,
-        "files": DataFiles.Schema,
-        "services": DataServices.Schema
+    "data": {
+      "$ref": "#/definitions/data/data"
     },
-    "required": ["name", "collectionName", "metadata", "properties", "data", "footprint"]
+    "footprint": {
+      "type": "object"
+    }
+  },
+  "definitions": {
+    "metadata": Metadata.Schema,
+    "properties": Properties.Schema,
+    "data": Data.Schema,
+    "files": DataFiles.Schema,
+    "services": DataServices.Schema
+  },
+  "required": ["name", "collectionName", "metadata", "properties", "data", "footprint"]
 };
