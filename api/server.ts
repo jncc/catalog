@@ -20,28 +20,6 @@ process.on('unhandledRejection', r => console.log(r));
 // parse json body requests
 app.use(bodyParser.json());
 
-function getQuery(param: string, queryParams: any) {
-
-  let result = new Query()
-
-  result.collection = param
-
-  for (let parameter in queryParams) {
-    if (parameter === 'footprint') {
-      result.footprint = queryParams[parameter];
-    } else if (parameter === 'spatialop') {
-      result.spatialop = queryParams[parameter];
-    } else if (parameter === 'fromCaptureDate') {
-      result.fromCaptureDate = new Date(queryParams[parameter])
-    } else if (parameter === 'toCaptureDate') {
-      result.toCaptureDate = new Date(queryParams[parameter])
-    } else if (parameter) {
-      result.productProperties[parameter] = queryParams[parameter];
-    }
-  }
-
-  return result
-}
 
 enum SearchType {
   product,
@@ -60,13 +38,13 @@ function search(req, res, searchType: SearchType) {
 
   if (!requestParameter.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
     res.json({
-      query: new Query(),
+      query: {},
       errors: ['searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"']
     })
 
   } else {
 
-    let query = getQuery(requestParameter, requestQuerystring)
+    let query = new Query(req)
     let result: Promise<any>
 
     if (searchType == SearchType.product) {
