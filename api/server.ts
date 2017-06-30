@@ -8,6 +8,7 @@ import * as Collection from "./definitions/collection/collection";
 import { getEnvironmentSettings } from "./settings";
 import { CatalogRepository } from "./repository/catalogRepository";
 import { Query } from "./query"
+import { QueryValidator } from "./validation/queryValidation"
 
 import { Fixtures } from "./test/fixtures"
 
@@ -33,39 +34,29 @@ class Result {
 
 function search(req, res, searchType: SearchType) {
 
-  let requestParameter = req.params[0]
-  let requestQuerystring = req.query
+  //todo validate query here
 
-  if (!requestParameter.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-    res.json({
-      query: {},
-      errors: ['searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"']
-    })
+  let query = new Query(req)
+  let result: Promise<any>
 
+  if (searchType == SearchType.product) {
+    result = catalogRepository.getProducts(query, 50, 0)
   } else {
-
-    let query = new Query(req)
-    let result: Promise<any>
-
-    if (searchType == SearchType.product) {
-      result = catalogRepository.getProducts(query, 50, 0)
-    } else {
-      result = catalogRepository.getCollections(query, 50, 0)
-    }
-
-    result.then(x => {
-      res.json({
-        query: query,
-        result: x
-      })
-    }).catch(x => {
-      res.status(500);
-      res.json({
-        query: query,
-        errors: x.message
-      })
-    })
+    result = catalogRepository.getCollections(query, 50, 0)
   }
+
+  result.then(x => {
+    res.json({
+      query: query,
+      result: x
+    })
+  }).catch(x => {
+    res.status(500);
+    res.json({
+      query: query,
+      errors: x.message
+    })
+  })
 }
 
 app.get(`/collection/search/*?`, async (req, res) => {
