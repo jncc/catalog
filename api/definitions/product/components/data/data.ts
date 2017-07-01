@@ -7,14 +7,10 @@ export interface Data {
 }
 
 export interface DataGroup {
-  files?: {
     s3?: s3file,
     ftp?: ftp
-  },
-  services?: {
     wms?: wms,
     wfs?: wfs
-  }
 };
 
 export const Schema = {
@@ -33,29 +29,17 @@ export const Schema = {
     "additionalProperties": false,
     "minProperties": 1,
     "properties": {
-      "files": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "s3": {
-            "$ref": "#/definitions/files/s3file"
-          },
-          "ftp": {
-            "$ref": "#/definitions/files/ftp"
-          }
-        }
+      "s3": {
+        "$ref": "#/definitions/files/s3file"
       },
-      "services": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "wms": {
-            "$ref": "#/definitions/services/wms"
-          },
-          "wfs": {
-            "$ref": "#/definitions/services/wfs"
-          }
-        }
+      "ftp": {
+        "$ref": "#/definitions/files/ftp"
+      },
+      "wms": {
+        "$ref": "#/definitions/services/wms"
+      },
+      "wfs": {
+        "$ref": "#/definitions/services/wfs"
       }
     }
   },

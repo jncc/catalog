@@ -413,78 +413,70 @@ describe('Data Validator', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          s3: {
-            region: '',
-            bucket: 'missing-region',
-            key: '/test.tif'
-          }
+        s3: {
+          region: '',
+          bucket: 'missing-region',
+          key: '/test.tif'
         }
       }
     };
 
+    console.log(validator.validate(p))
+
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.contain('data[\'product\'].files.s3.region | should NOT be shorter than 1 characters');
+      .and.contain('data[\'product\'].s3.region | should NOT be shorter than 1 characters');
   });
 
   it('should not validate an s3 data group with missing bucket', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          s3: {
-            region: 'missing-bucket',
-            bucket: '',
-            key: '/test.tif'
-          }
+        s3: {
+          region: 'missing-bucket',
+          bucket: '',
+          key: '/test.tif'
         }
       }
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.contain('data[\'product\'].files.s3.bucket | should NOT be shorter than 1 characters');
+      .and.contain('data[\'product\'].s3.bucket | should NOT be shorter than 1 characters');
   });
 
   it('should not validate an s3 data group with missing key', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          s3: {
-            region: 'missing-key',
-            bucket: 'missing-key',
-            key: ''
-          }
+        s3: {
+          region: 'missing-key',
+          bucket: 'missing-key',
+          key: ''
         }
       }
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.contain('data[\'product\'].files.s3.key | should NOT be shorter than 1 characters');
+      .and.contain('data[\'product\'].s3.key | should NOT be shorter than 1 characters');
   });
 
   it('should validate an s3 data group with additonal ^.*data$ properties', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          s3: {
-            region: 'test',
-            bucket: 'test',
-            key: 'test'
-          }
+        s3: {
+          region: 'test',
+          bucket: 'test',
+          key: 'test'
         }
       },
       preview: {
-        files: {
-          s3: {
-            region: 'test',
-            bucket: 'test',
-            key: 'test'
-          }
+        s3: {
+          region: 'test',
+          bucket: 'test',
+          key: 'test'
         }
       }
     };
@@ -516,50 +508,44 @@ describe('Data Validator', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          ftp: {
-            server: '',
-            path: '/mising/server.file'
-          }
+        ftp: {
+          server: '',
+          path: '/mising/server.file'
         }
       }
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(4)
-      .and.contain('data[\'product\'].files.ftp.server | should match format \"hostname\"')
-      .and.contain('data[\'product\'].files.ftp.server | should match format \"ipv6\"')
-      .and.contain('data[\'product\'].files.ftp.server | should match format \"uri\"')
-      .and.contain('data[\'product\'].files.ftp.server | should match exactly one schema in oneOf');
+      .and.contain('data[\'product\'].ftp.server | should match format \"hostname\"')
+      .and.contain('data[\'product\'].ftp.server | should match format \"ipv6\"')
+      .and.contain('data[\'product\'].ftp.server | should match format \"uri\"')
+      .and.contain('data[\'product\'].ftp.server | should match exactly one schema in oneOf');
   });
 
   it('should not validate an ftp data group with missing path', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          ftp: {
-            server: 'missing.path.com',
-            path: ''
-          }
+        ftp: {
+          server: 'missing.path.com',
+          path: ''
         }
       }
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.contain('data[\'product\'].files.ftp.path | should NOT be shorter than 1 characters');
+      .and.contain('data[\'product\'].ftp.path | should NOT be shorter than 1 characters');
   });
 
   it('should validate an ftp data group with a server as a hostname', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          ftp: {
-            server: 'hostname.present',
-            path: 'path/to/file.txt'
-          }
+        ftp: {
+          server: 'hostname.present',
+          path: 'path/to/file.txt'
         }
       }
     };
@@ -571,11 +557,9 @@ describe('Data Validator', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          ftp: {
-            server: 'ftp://hostname.present:24',
-            path: 'path/to/file.txt'
-          }
+        ftp: {
+          server: 'ftp://hostname.present:24',
+          path: 'path/to/file.txt'
         }
       }
     };
@@ -587,11 +571,9 @@ describe('Data Validator', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          ftp: {
-            server: '192.168.1.1',
-            path: 'path/to/file.txt'
-          }
+        ftp: {
+          server: '192.168.1.1',
+          path: 'path/to/file.txt'
         }
       }
     };
@@ -603,11 +585,9 @@ describe('Data Validator', () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
-        files: {
-          ftp: {
-            server: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
-            path: 'path/to/file.txt'
-          }
+        ftp: {
+          server: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+          path: 'path/to/file.txt'
         }
       }
     };
