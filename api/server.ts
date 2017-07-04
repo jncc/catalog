@@ -8,9 +8,7 @@ import * as Collection from "./definitions/collection/collection";
 import { getEnvironmentSettings } from "./settings";
 import { CatalogRepository } from "./repository/catalogRepository";
 import { Query } from "./query"
-import { QueryValidator } from "./validation/queryValidation"
-
-import { Fixtures } from "./test/fixtures"
+import { RequestValidator } from "./validation/requestValidator"
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
@@ -32,31 +30,41 @@ class Result {
   promisedResult: Promise<any>
 }
 
-function search(req, res, searchType: SearchType) {
+function search(req: express.Request, res: express.Response, searchType: SearchType) {
+  let requestParameter = req.params[0]
+  let queryParams = req.query
 
-  //todo validate query here
+  let reqErrors = RequestValidator.validate(requestParameter, queryParams)
 
-  let query = new Query(req)
-  let result: Promise<any>
-
-  if (searchType == SearchType.product) {
-    result = catalogRepository.getProducts(query, 50, 0)
+  if (reqErrors.length > 0) {
+    res.status(400)
+    res.json({
+      errors: reqErrors
+    })
   } else {
-    result = catalogRepository.getCollections(query, 50, 0)
-  }
 
-  result.then(x => {
-    res.json({
-      query: query,
-      result: x
+    let query = new Query(req)
+    let result: Promise<any>
+
+    if (searchType == SearchType.product) {
+      result = catalogRepository.getProducts(query, 50, 0)
+    } else {
+      result = catalogRepository.getCollections(query, 50, 0)
+    }
+
+    result.then(x => {
+      res.json({
+        query: query,
+        result: x
+      })
+    }).catch(x => {
+      res.status(500);
+      res.json({
+        query: query,
+        errors: x.message
+      })
     })
-  }).catch(x => {
-    res.status(500);
-    res.json({
-      query: query,
-      errors: x.message
-    })
-  })
+  }
 }
 
 app.get(`/collection/search/*?`, async (req, res) => {
@@ -77,7 +85,7 @@ app.post(`/validate`, async (req, res) => {
       res.sendStatus(200)
     }).catch(result => {
       console.log(result)
-      res.statusCode = 400
+      res.status(400)
       res.send(result)
     });
 });

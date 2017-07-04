@@ -1,6 +1,8 @@
+import { Request } from "express"
+
 export class Query {
   //todo: type request
-  constructor(req) {
+  constructor(req: Request) {
     let requestParameter = req.params[0]
     let queryParams = req.query
 
