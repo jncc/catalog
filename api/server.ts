@@ -87,6 +87,8 @@ app.post(`/add/product`, async (req, res) => {
   let product: Product.Product = req.body;
   let productValidtor = new ProductValidator(catalogRepository)
 
+  //todo check product exists
+
   productValidtor.validate(product).then(result => {
     try {
       catalogRepository.storeProduct(product).then(productId => {
