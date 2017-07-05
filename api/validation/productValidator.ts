@@ -421,8 +421,6 @@ describe('Data Validator', () => {
       }
     };
 
-    console.log(validator.validate(p))
-
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
       .and.contain('data[\'product\'].s3.region | should NOT be shorter than 1 characters');
