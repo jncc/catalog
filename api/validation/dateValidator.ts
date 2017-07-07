@@ -13,7 +13,7 @@ export class DateValidator {
     } else {
 
       if (!Date.parse(dateString)) {
-        errors.push(fieldName + ' | date is not a valid date')
+        errors.push(fieldName + ' | is not a valid date')
         isValid = false
       } else {
         let date = new Date(dateString)
@@ -32,7 +32,7 @@ export class DateValidator {
       +elements[1] != date.getUTCMonth() + 1 ||
       +elements[2] != date.getUTCDate()) {
 
-      errors.push(fieldName + ' | date is not a valid date')
+      errors.push(fieldName + ' | is not a valid date')
       isValid = false
     }
     return isValid
@@ -65,7 +65,7 @@ describe('Date Validator', () => {
     ['2015-02-29', '2015-16-16', '2015-02-31'].forEach(x => {
       let errors: string[] = []
       DateValidator.validateDate(x, 'test', errors)
-      chai.expect(errors).to.have.length(1).and.contain('test | date is not a valid date')
+      chai.expect(errors).to.have.length(1).and.contain('test | is not a valid date')
     })
   })
 

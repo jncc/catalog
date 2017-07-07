@@ -20,7 +20,7 @@ export class RequestValidator {
       } else if (parameter === 'spatialop') {
         this.validateSpatialOp(queryParams[parameter], errors);
       } else if (parameter === 'fromCaptureDate' || parameter === 'toCaptureDate') {
-        if (DateValidator.validateDate(parameter, queryParams[parameter], errors)) {
+        if (DateValidator.validateDate(queryParams[parameter], parameter, errors)) {
           Dates[parameter] = new Date(queryParams[parameter])
         }
       }
@@ -109,7 +109,7 @@ describe('Request Validator', () => {
   })
 
   it('should not validate and improperly formated capture date', () => {
-    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '01-01-2012' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid utc date time format')
+    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '01-01-2012' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date time format')
   })
 
   it('should not validate an invalid date', () => {
