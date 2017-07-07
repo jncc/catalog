@@ -8,10 +8,20 @@ import * as chai from 'chai';
 
 require('mocha-inline')();
 
+interface CaptureDateRange {
+  fromCaptureDate?: Date,
+  toCaptureDate?: Date,
+  valueError: Boolean
+}
+
 export class RequestValidator {
   static validate(reqParam: string, queryParams): string[] {
     let errors: string[] = []
-    let Dates = {}
+    let dates: CaptureDateRange = {
+      fromCaptureDate: undefined,
+      toCaptureDate: undefined,
+      valueError: false
+    }
 
     this.validateRequestParameter(reqParam, errors)
     for (let parameter in queryParams) {
@@ -21,11 +31,32 @@ export class RequestValidator {
         this.validateSpatialOp(queryParams[parameter], errors);
       } else if (parameter === 'fromCaptureDate' || parameter === 'toCaptureDate') {
         if (DateValidator.validateDate(queryParams[parameter], parameter, errors)) {
-          Dates[parameter] = new Date(queryParams[parameter])
+          dates[parameter] = new Date(queryParams[parameter])
+        } else {
+          dates.valueError = true
         }
       }
     };
+    if(!dates.valueError && (dates.fromCaptureDate || dates.toCaptureDate)) this.validateCaptureDates(dates, errors)
+
     return errors;
+  }
+
+  private static validateCaptureDates(dates : CaptureDateRange, errors: string[]): Boolean {
+    let isValid = true
+
+    if(!dates.fromCaptureDate && dates.toCaptureDate) {
+      errors.push('fromCaptureDate | both a from and to capture date must be specified')
+      isValid = false
+    } else if(dates.fromCaptureDate && !dates.toCaptureDate) {
+      errors.push('toCaptureDate | both a from and to capture date must be specified')
+      isValid = false
+    } else if(dates.fromCaptureDate && dates.toCaptureDate && ! (dates.toCaptureDate >= dates.fromCaptureDate)){
+      errors.push('fromCaptureDate | toCaptureDate must be greater than or equal to fromCaptureDate')
+      isValid = false
+    }
+
+    return isValid
   }
 
   private static validateRequestParameter(requestParameter: string, errors: string[]) {
@@ -104,16 +135,35 @@ describe('Request Validator', () => {
   it('should validate a valid fromCaptureDate', () => {
     ['2014-01-04',
     '2014-01-05T06:34:23Z'].forEach(x => {
-      chai.expect(RequestValidator.validate(p, { fromCaptureDate: x })).to.be.empty
+      chai.expect(RequestValidator.validate(p, { fromCaptureDate: x, toCaptureDate: '2017-01-01'})).to.be.empty
+    })
+  })
+
+  it('should validate a valid toCaptureDate', () => {
+    ['2014-01-04',
+    '2014-01-05T06:34:23Z'].forEach(x => {
+      chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2010-01-01', toCaptureDate: x})).to.be.empty
     })
   })
 
   it('should not validate and improperly formated capture date', () => {
-    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '01-01-2012' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date time format')
+    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '01-01-2012', toCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date time format')
   })
 
   it('should not validate an invalid date', () => {
-    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2015-02-29' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date')
+    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2015-02-29', toCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date')
+  })
+
+  it('should not validate a fromCaptureDate without a toCaptureDate', () => {
+    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('toCaptureDate | both a from and to capture date must be specified')
+  })
+
+  it('should not validate a toCaptureDate without a fromCaptureDate', () => {
+    chai.expect(RequestValidator.validate(p, { toCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('fromCaptureDate | both a from and to capture date must be specified')
+  })
+
+  it('should not validate a toCaptureDate before a fromCaptureDate', () => {
+    chai.expect(RequestValidator.validate(p, { toCaptureDate: '2016-01-01', fromCaptureDate: '2017-01-01' })).to.have.length(1).and.contain('fromCaptureDate | toCaptureDate must be greater than or equal to fromCaptureDate')
   })
 
 })
