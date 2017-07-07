@@ -1,5 +1,6 @@
 import * as wellknown from "wellknown"
 import * as geojson from "geojson"
+import { DateValidator } from "./dateValidator"
 
 //test reqs
 import 'mocha';
@@ -19,7 +20,7 @@ export class RequestValidator {
       } else if (parameter === 'spatialop') {
         this.validateSpatialOp(queryParams[parameter], errors);
       } else if (parameter === 'fromCaptureDate' || parameter === 'toCaptureDate') {
-        if (this.validateDate(parameter, queryParams[parameter], errors)) {
+        if (DateValidator.validateDate(parameter, queryParams[parameter], errors)) {
           Dates[parameter] = new Date(queryParams[parameter])
         }
       }
@@ -44,21 +45,7 @@ export class RequestValidator {
       if (!firstCoord.every((element, index) => {return element === lastCoord[index]})) {
         errors.push('footprint | is not a closed polygon')
       }
-
     }
-  }
-
-  private static validateDate(paramName: string, param: string, errors: string[]): boolean {
-    let isValid = true;
-    if (!param.match(/^\b[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)?$/)) {
-      errors.push(paramName + ' | is not a valid utc date time format')
-      isValid = false
-    } else if (!Date.parse(param)) {
-      errors.push(paramName + ' | is not a valid date')
-      isValid = false
-    }
-
-    return isValid
   }
 
   private static validateSpatialOp(param: string, errors: string[]) {
@@ -115,7 +102,8 @@ describe('Request Validator', () => {
   })
 
   it('should validate a valid fromCaptureDate', () => {
-    ['2014-01-04', '2014-01-05T06:34:23Z'].forEach(x => {
+    ['2014-01-04',
+    '2014-01-05T06:34:23Z'].forEach(x => {
       chai.expect(RequestValidator.validate(p, { fromCaptureDate: x })).to.be.empty
     })
   })
@@ -125,7 +113,6 @@ describe('Request Validator', () => {
   })
 
   it('should not validate an invalid date', () => {
-    console.log(RequestValidator.validate(p, { fromCaptureDate: '2015-02-29' }))
     chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2015-02-29' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date')
   })
 
