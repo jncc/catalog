@@ -26,6 +26,10 @@ export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
   private validateProductProperties(collection: Collection.Collection, product: Product.Product, errors: string[]): Promise<string[]> {
+    if (collection.productsSchema == '') {
+      return Promise.resolve(errors)
+    }
+
     let validator = ajv({ allErrors: true, formats: 'full' });
     let asyncValidator = ajvasync(validator);
 
@@ -691,12 +695,17 @@ describe('Footprint Validator', () => {
 describe('Product Properties Validator', () => {
   let mockRepo = Fixtures.GetMockRepo();
   let validator = new ProductValidator(mockRepo.object);
+  let mr: TypeMoq.IMock<CatalogRepository>
 
-  it('should validate a product with an valid properties collection', () => {
-    let mr = TypeMoq.Mock.ofType(CatalogRepository);
+  beforeEach(() => {
+    mr = TypeMoq.Mock.ofType(CatalogRepository);
     mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
       return Promise.resolve(x);
     });
+  })
+
+  it('should validate a product with an valid properties collection', () => {
+
     mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
@@ -726,10 +735,7 @@ describe('Product Properties Validator', () => {
   });
 
   it('should validate a product with an valid properties collection - formatted string types', () => {
-    let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.resolve(x);
-    });
+
     mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
@@ -765,10 +771,7 @@ describe('Product Properties Validator', () => {
   });
 
   it('should not validate a product with an invalid properties collection - non-matching definitions', () => {
-    let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.resolve(x);
-    });
+
     mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
@@ -801,10 +804,7 @@ describe('Product Properties Validator', () => {
   });
 
   it('should not validate a product with an bad properties collection - formatted string types', () => {
-    let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.resolve(x);
-    });
+
     mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
@@ -843,10 +843,7 @@ describe('Product Properties Validator', () => {
   });
 
   it('should not validate a product with an invalid properties collection - missing definitions', () => {
-    let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.resolve(x);
-    });
+
     mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
@@ -876,40 +873,35 @@ describe('Product Properties Validator', () => {
       .and.contain('properties | should have required property \'externalId\'');
   });
 
-  it('should not validate a product with an invalid properties collection - additional definitions', () => {
-    let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.resolve(x);
-    });
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
-      c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "required": ["externalId"],
-        "properties": {
-          "externalId": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "additionalProperties": false
-      };
-      return Promise.resolve(c);
-    });
 
-    let v2 = new ProductValidator(mr.object);
+  // it('Should not validate invalid dates', () => {
+  //   mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+  //     let c: Collection.Collection = Fixtures.GetCollection();
+  //     c.productsSchema = {
+  //       "type": "object",
+  //       "title": "Properties",
+  //       "$async": true,
+  //       "$schema": "http://json-schema.org/draft-04/schema#",
+  //       "properties": {
+  //         "date": {
+  //           "type": "string",
+  //           "format": "date-time"
+  //         },
+  //       },
+  //     };
+  //     return Promise.resolve(c);
+  //   });
 
-    const product = Fixtures.GetTestProduct();
-    product.properties = {
-      externalId: 'external-id-string',
-      rogue: 'should-not-be-here'
-    };
+  //   let v2 = new ProductValidator(mr.object);
 
-    return chai.expect(v2.validate(product)).to.be.rejected
-      .and.eventually.have.length(1)
-      .and.contain('properties | should NOT have additional properties');
-  });
+  //   const product = Fixtures.GetTestProduct();
+  //   product.properties = {
+  //     externalId: 'external-id-string',
+  //     rogue: 'should-not-be-here'
+  //   };
+
+  //   return chai.expect(v2.validate(product)).to.be.rejected
+  //     .and.eventually.have.length(1)
+  //     .and.contain('properties | should NOT have additional properties');
+  // })
 })
