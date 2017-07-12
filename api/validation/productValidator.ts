@@ -10,6 +10,7 @@ import * as Data from "../definitions/product/components/data/data";
 import * as DataServices from "../definitions/product/components/data/services";
 import * as DataFiles from "../definitions/product/components/data/files";
 import * as ValidationHelper from "./validationHelper";
+import { DateValidator } from "./dateValidator"
 
 //test reqs
 import 'mocha';
@@ -25,13 +26,36 @@ chai.use(chaiAsPromised);
 export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
+  private vadlidateDate(schema, data): boolean {
+    let errors: string[] = []
+    console.log(data)
+    DateValidator.validateDate(data, 'jsonPath',errors)
+    console.log("gotCalled")
+    if (errors.length > 0 ) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  private getValidator(): ajvasync {
+    let validator = ajv({ allErrors: true, formats: 'full' });
+    let asyncValidator = ajvasync(validator);
+
+    asyncValidator.addKeyword('validateDate', {
+        type: 'string',
+        validate: this.vadlidateDate
+    });
+
+    return asyncValidator;
+  }
+
   private validateProductProperties(collection: Collection.Collection, product: Product.Product, errors: string[]): Promise<string[]> {
     if (collection.productsSchema == '') {
       return Promise.resolve(errors)
     }
 
-    let validator = ajv({ allErrors: true, formats: 'full' });
-    let asyncValidator = ajvasync(validator);
+    let asyncValidator = this.getValidator();
 
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 
@@ -62,9 +86,9 @@ export class ProductValidator {
     });
   }
 
+
   validate(product: Product.Product): Promise<string[]> {
-    let validator = ajv({ allErrors: true, formats: 'full' });
-    let asyncValidator = ajvasync(validator);
+    let asyncValidator = this.getValidator();
 
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
     let errors: string[] = new Array<string>();
@@ -873,35 +897,64 @@ describe('Product Properties Validator', () => {
       .and.contain('properties | should have required property \'externalId\'');
   });
 
+  it('Should not validate invalid dates', () => {
 
-  // it('Should not validate invalid dates', () => {
-  //   mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-  //     let c: Collection.Collection = Fixtures.GetCollection();
-  //     c.productsSchema = {
-  //       "type": "object",
-  //       "title": "Properties",
-  //       "$async": true,
-  //       "$schema": "http://json-schema.org/draft-04/schema#",
-  //       "properties": {
-  //         "date": {
-  //           "type": "string",
-  //           "format": "date-time"
-  //         },
-  //       },
-  //     };
-  //     return Promise.resolve(c);
-  //   });
+    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection.Collection = Fixtures.GetCollection();
+      c.productsSchema = {
+        "type": "object",
+        "title": "Properties",
+        "$async": true,
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "validateDate": true
+          },
+        },
+      };
+      return Promise.resolve(c);
+    });
 
-  //   let v2 = new ProductValidator(mr.object);
+    let v2 = new ProductValidator(mr.object);
 
-  //   const product = Fixtures.GetTestProduct();
-  //   product.properties = {
-  //     externalId: 'external-id-string',
-  //     rogue: 'should-not-be-here'
-  //   };
+    const product = Fixtures.GetTestProduct();
+    product.properties = {
+      date: '2015-02-29T00:00:00Z'
+    };
 
-  //   return chai.expect(v2.validate(product)).to.be.rejected
-  //     .and.eventually.have.length(1)
-  //     .and.contain('properties | should NOT have additional properties');
-  // })
+    return chai.expect(v2.validate(product)).to.be.rejected
+      .and.eventually.have.length(1)
+  })
+
+  it('Should validate valid dates', () => {
+
+    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      let c: Collection.Collection = Fixtures.GetCollection();
+      c.productsSchema = {
+        "type": "object",
+        "title": "Properties",
+        "$async": true,
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "validateDate": true
+          },
+        },
+      };
+      return Promise.resolve(c);
+    });
+
+    let v2 = new ProductValidator(mr.object);
+
+    const product = Fixtures.GetTestProduct();
+    product.properties = {
+      date: '2015-02-12T00:00:00Z'
+    };
+
+    return chai.expect(v2.validate(product)).to.eventually.be.empty
+  })
 })
