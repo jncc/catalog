@@ -26,25 +26,25 @@ chai.use(chaiAsPromised);
 export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
-  private vadlidateDate(schema, data): boolean {
-    let errors: string[] = []
-    console.log(data)
-    DateValidator.validateDate(data, 'jsonPath',errors)
-    console.log("gotCalled")
-    if (errors.length > 0 ) {
-      return false
-    } else {
-      return true
-    }
-  }
 
-  private getValidator(): ajvasync {
+  private getValidator() {
     let validator = ajv({ allErrors: true, formats: 'full' });
     let asyncValidator = ajvasync(validator);
 
-    asyncValidator.addKeyword('validateDate', {
-        type: 'string',
-        validate: this.vadlidateDate
+    asyncValidator.addKeyword('fullDateValidation', {
+      type: 'string',
+      errors: true,
+      validate: (schema, data) => {
+        //todo: Get real errors into avj error list.
+        var errors: string[] = []
+        DateValidator.validateDate(data, '', errors)
+
+        if (errors.length > 0) {
+          return false
+        } else {
+          return true
+        }
+      }
     });
 
     return asyncValidator;
@@ -910,7 +910,7 @@ describe('Product Properties Validator', () => {
           "date": {
             "type": "string",
             "format": "date-time",
-            "validateDate": true
+            "fullDateValidation": true
           },
         },
       };
@@ -941,7 +941,7 @@ describe('Product Properties Validator', () => {
           "date": {
             "type": "string",
             "format": "date-time",
-            "validateDate": true
+            "fullDateValidation": true
           },
         },
       };
