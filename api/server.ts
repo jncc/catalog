@@ -9,7 +9,7 @@ import { getEnvironmentSettings } from "./settings";
 import { CatalogRepository } from "./repository/catalogRepository";
 import { Query } from "./query"
 
-import { Fixtures } from "./test/fixtures"
+import { Fixtures } from "./tests/fixtures"
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);

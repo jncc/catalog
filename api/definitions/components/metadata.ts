@@ -1,52 +1,52 @@
 export interface Metadata {
-  title: string,
-  abstract: string,
-  topicCategory: string,
-  keywords: Keyword[],
-  temporalExtent: TemporalExtent,
-  datasetReferenceDate: string,
-  lineage: string,
-  resourceLocator: string,
-  additionalInformationSource: string,
-  dataFormat: string,
-  responsibleOrganisation: ResponsibleParty,
-  limitationsOnPublicAccess: string,
-  useConstraints: string,
-  spatialReferenceSystem: string,
-  extent: Extent[],
-  metadataDate: string,
-  metadataPointOfContact: ResponsibleParty,
-  resourceType: string,
-  boundingBox: BoundingBox
-};
+  title: string;
+  abstract: string;
+  topicCategory: string;
+  keywords: Keyword[];
+  temporalExtent: TemporalExtent;
+  datasetReferenceDate: string;
+  lineage: string;
+  resourceLocator: string;
+  additionalInformationSource: string;
+  dataFormat: string;
+  responsibleOrganisation: ResponsibleParty;
+  limitationsOnPublicAccess: string;
+  useConstraints: string;
+  spatialReferenceSystem: string;
+  extent: Extent[];
+  metadataDate: string;
+  metadataPointOfContact: ResponsibleParty;
+  resourceType: string;
+  boundingBox: BoundingBox;
+}
 
 export interface Keyword {
-  value: string,
-  vocab?: string
-};
+  value: string;
+  vocab?: string;
+}
 
 export interface TemporalExtent {
-  begin: string,
-  end: string
-};
+  begin: string;
+  end: string;
+}
 
 export interface ResponsibleParty {
-  name: string,
-  email: string,
-  role: string
-};
+  name: string;
+  email: string;
+  role: string;
+}
 
 export interface Extent {
-  value: string,
-  authority: string
-};
+  value: string;
+  authority: string;
+}
 
 export interface BoundingBox {
-  north: number,
-  south: number,
-  east: number,
-  west: number
-};
+  north: number;
+  south: number;
+  east: number;
+  west: number;
+}
 
 export function nonSchemaValidation(metadata, errors) {
   if (metadata.boundingBox.north <= metadata.boundingBox.south) {
@@ -57,7 +57,7 @@ export function nonSchemaValidation(metadata, errors) {
   }
 
   return errors;
-};
+}
 
 export const Schema = {
   "metadata": {

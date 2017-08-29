@@ -1,6 +1,6 @@
 export function reduceErrors(errors: any, prependPath?: string) {
     let reduced = new Array<string>();
-    if (errors != undefined) {
+    if (errors !== undefined) {
         for (let error of errors) {
             if (prependPath === undefined) {
                 reduced.push(`${error.dataPath.substring(1)} | ${error.message}`);
@@ -15,4 +15,4 @@ export function reduceErrors(errors: any, prependPath?: string) {
     }
 
     return reduced;
-};
+}

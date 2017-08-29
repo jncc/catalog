@@ -1,11 +1,11 @@
 
 import * as pgPromise from "pg-promise";
-import { IMain, IDatabase } from "pg-promise";
+import { IDatabase, IMain } from "pg-promise";
 
 /* Singleton database client. */
 export class Database {
 
-    public readonly connection: IDatabase<any>
+    public readonly connection: IDatabase<any>;
     private static _instance: Database;
 
     constructor() {

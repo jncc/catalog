@@ -1,0 +1,189 @@
+<geonet:schematronerrors xmlns:geonet="http://www.fao.org/geonetwork"> <geonet:report geonet:rule="schematron-rules-geonetwork"> <svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" title="Schematron validation / GeoNetwork recommendations" schemaVersion=""> <!--       --> <svrl:ns-prefix-in-attribute-values uri="http://www.opengis.net/gml" prefix="gml" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmd" prefix="gmd" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/srv" prefix="srv" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gco" prefix="gco" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.fao.org/geonetwork" prefix="geonet" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/1999/xlink" prefix="xlink" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']" />
+ <svrl:successful-report ref="#_1" test="$localeAndNoLanguage" location="/*[local-name()='MD_Metadata']"> <svrl:text>"eng"</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_1" test="$duplicateLanguage" location="/*[local-name()='MD_Metadata']"> <svrl:text />
+ </svrl:successful-report> </svrl:schematron-output> </geonet:report> <geonet:report geonet:rule="schematron-rules-inspire-sds.disabled"> <svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:iso="http://purl.oclc.org/dsdl/schematron" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:schold="http://www.ascc.net/xml/schematron" xmlns:skos="http://www.w3.org/2004/02/skos/core#" title="INSPIRE SDS metadata" schemaVersion=""> <!--       --> <svrl:ns-prefix-in-attribute-values uri="http://www.opengis.net/gml" prefix="gml" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmd" prefix="gmd" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmx" prefix="gmx" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/srv" prefix="srv" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gco" prefix="gco" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.fao.org/geonetwork" prefix="geonet" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/2004/02/skos/core#" prefix="skos" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/1999/xlink" prefix="xlink" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_Metadata" />
+ <svrl:successful-report ref="#_1" test="count(gmd:identificationInfo/srv:SV_ServiceIdentification)=0" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ </svrl:schematron-output> </geonet:report> <geonet:report geonet:rule="schematron-rules-inspire-strict.disabled"> <svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:iso="http://purl.oclc.org/dsdl/schematron" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:schold="http://www.ascc.net/xml/schematron" xmlns:skos="http://www.w3.org/2004/02/skos/core#" title="INSPIRE Strict Validation rules" schemaVersion=""> <!--       --> <svrl:ns-prefix-in-attribute-values uri="http://www.opengis.net/gml" prefix="gml" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmd" prefix="gmd" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmx" prefix="gmx" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/srv" prefix="srv" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gco" prefix="gco" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.fao.org/geonetwork" prefix="geonet" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/2004/02/skos/core#" prefix="skos" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/1999/xlink" prefix="xlink" />
+ <svrl:active-pattern document="" name="" />
+ </svrl:schematron-output> </geonet:report> <geonet:report geonet:rule="schematron-rules-inspire.disabled"> <svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:iso="http://purl.oclc.org/dsdl/schematron" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:schold="http://www.ascc.net/xml/schematron" xmlns:skos="http://www.w3.org/2004/02/skos/core#" title="INSPIRE metadata implementing rule validation" schemaVersion=""> <!--       --> <svrl:ns-prefix-in-attribute-values uri="http://www.opengis.net/gml" prefix="gml" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmd" prefix="gmd" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmx" prefix="gmx" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/srv" prefix="srv" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gco" prefix="gco" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.fao.org/geonetwork" prefix="geonet" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/2004/02/skos/core#" prefix="skos" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/1999/xlink" prefix="xlink" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_Metadata" />
+ <svrl:successful-report ref="#_1" test="$resourceType_present" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>dataset</svrl:text> </svrl:successful-report> <svrl:fired-rule context="//gmd:MD_DataIdentification| //*[@gco:isoType='gmd:MD_DataIdentification']| //srv:SV_ServiceIdentification| //*[@gco:isoType='srv:SV_ServiceIdentification']" />
+ <svrl:successful-report ref="#_23" test="not($noResourceAbstract)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>Analysis of seabed drop-down video and stills final report from various survey programmes in four areas; North West Anglesey, Pisces Reef (Irish Sea), North Sea (North East Scotland - SMPA) and Western Channel. The objective of the imagery analysis contract was to undertake a taxonomic analysis of seabed imagery collected with drop-down video systems from the four areas. Following this analysis, biotopes were assigned (in accordance with the UK Marine Habitat Classification for Britain and Ireland ver 04.05) and the absence/presence of Annex I reef was assessed. For the North East Scotland survey the presence of Priority Marine Features has also been assessed.</svrl:text> </svrl:successful-report> <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" />
+ <svrl:successful-report ref="#_25" test="not($noResourceTitle)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:citation[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:CI_Citation[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>Final report of analysis of seabed drop-down video and stills from North West Anglesey, Pisces Reef (Irish Sea), North Sea (North East Scotland) and Western Channel</svrl:text> </svrl:successful-report> <svrl:fired-rule context="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource" />
+ <svrl:failed-assert ref="#_115" test="not($noResourceLocator)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:distributionInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_Distribution[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:transferOptions[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DigitalTransferOptions[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:onLine[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:CI_OnlineResource[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text />
+ </svrl:failed-assert> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification[ normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'series' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'dataset' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = '']| //*[@gco:isoType='gmd:MD_DataIdentification' and ( normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'series' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'dataset' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = '')]" />
+ <svrl:successful-report ref="#_23" test="$euLanguage" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>eng</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_23" test="not($noTopic)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text> <gmd:MD_TopicCategoryCode xmlns:gml="http://www.opengis.net/gml/3.2"> oceans <geonet:element ref="91" parent="90" uuid="gmd:MD_TopicCategoryCode_a6988484-cdb2-4ab4-9d30-fa82f60ee1c7" />
+ </gmd:MD_TopicCategoryCode> </svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_23" test="$resourceIdentifier_code" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>c3a3bcff-3af2-4e31-80c0-c6c4572fa00d</svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification| //*[@gco:isoType='gmd:MD_DataIdentification']" />
+ <svrl:failed-assert ref="#_23" test="count($inspire-theme) &gt; 0" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>INSPIRE Theme thesaurus not found (at file:////var/lib/geonetwork_data/config/codelist/external/thesauri/theme/inspire-theme.rdf. Check installation in codelist/external/thesauri/theme. Download thesaurus from https://geonetwork.svn.sourceforge.net/svnroot/geonetwork/utilities/gemet/thesauri/.</svrl:text> </svrl:failed-assert> <svrl:failed-assert ref="#_23" test="$inspire-theme-found &gt; 0" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text />
+ </svrl:failed-assert> <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification[ normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'series' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'dataset' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ''] /gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox | //*[@gco:isoType='gmd:MD_DataIdentification' and ( normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'series' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'dataset' or normalize-space(../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = '')] /gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox " />
+ <svrl:successful-report ref="#_95" test="(-180.00 &lt;= $west) and ( $west &lt;= 180.00)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_Extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:geographicElement[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_GeographicBoundingBox[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>-5.51864</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_95" test="(-180.00 &lt;= $east) and ($east &lt;= 180.00)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_Extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:geographicElement[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_GeographicBoundingBox[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>1.91895</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_95" test="(-90.00 &lt;= $south) and ($south &lt;= $north)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_Extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:geographicElement[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_GeographicBoundingBox[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>49.222434</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_95" test="($south &lt;= $north) and ($north &lt;= 90.00)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_Extent[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:geographicElement[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:EX_GeographicBoundingBox[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>61.1365</svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification| //*[@gco:isoType='gmd:MD_DataIdentification']| //srv:SV_ServiceIdentification| //*[@gco:isoType='srv:SV_ServiceIdentification']" />
+ <svrl:successful-report ref="#_23" test="$publicationDate" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text> <gco:Date xmlns:gml="http://www.opengis.net/gml/3.2"> 2015-09-01 <geonet:element ref="31" parent="30" uuid="gco:Date_ffbfc051-5a77-48e1-881d-d2086fcacb6b" />
+ </gco:Date> <geonet:element xmlns:gml="http://www.opengis.net/gml/3.2" ref="30" parent="29" uuid="gmd:date_0200a176-3911-4e0b-b489-81c3bd6228ef" />
+ </svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:DQ_DataQuality[../../gmd:identificationInfo/gmd:MD_DataIdentification or ../../gmd:identificationInfo/*/@gco:isoType = 'gmd:MD_DataIdentification']" />
+ <svrl:successful-report ref="#_121" test="not($lineage)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:dataQualityInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:DQ_DataQuality[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="/gmd:MD_Metadata" />
+ <svrl:failed-assert ref="#_1" test="$degree" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>false</svrl:text> </svrl:failed-assert> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification| //*[@gco:isoType='gmd:MD_DataIdentification']| //srv:SV_ServiceIdentification| //*[@gco:isoType='srv:SV_ServiceIdentification']" />
+ <svrl:successful-report ref="#_23" test="$accessConstraints_found" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>1</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_23" test="$otherConstraintInfo!='' and not($accessConstraints) and not($otherConstraints)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text> <gco:CharacterString xmlns:gml="http://www.opengis.net/gml/3.2"> No limitations <geonet:element ref="87" parent="86" uuid="gco:CharacterString_083f6422-9f5f-4673-9b7c-885e50724717" />
+ </gco:CharacterString> </svrl:text> </svrl:successful-report> <svrl:fired-rule context="//gmd:MD_DataIdentification/gmd:resourceConstraints/*| //*[@gco:isoType='gmd:MD_DataIdentification']/gmd:resourceConstraints/*| //srv:SV_ServiceIdentification/gmd:resourceConstraints/*| //*[@gco:isoType='srv:SV_ServiceIdentification']/gmd:resourceConstraints/*" />
+ <svrl:successful-report ref="#_81" test="$accessConstraints!=''" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:resourceConstraints[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_LegalConstraints[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>otherRestrictions</svrl:text> </svrl:successful-report> <svrl:fired-rule context="//gmd:MD_DataIdentification/gmd:resourceConstraints/*| //*[@gco:isoType='gmd:MD_DataIdentification']/gmd:resourceConstraints/*| //srv:SV_ServiceIdentification/gmd:resourceConstraints/*| //*[@gco:isoType='srv:SV_ServiceIdentification']/gmd:resourceConstraints/*" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification| //*[@gco:isoType='gmd:MD_DataIdentification']| //srv:SV_ServiceIdentification| //*[@gco:isoType='srv:SV_ServiceIdentification']" />
+ <svrl:successful-report ref="#_23" test="$useLimitation_count" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>NRW Ecological Data Exempt from General Release Under EIR</svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:identificationInfo" />
+ <svrl:successful-report ref="#_22" test="not($missing)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:pointOfContact |//*[@gco:isoType='gmd:MD_DataIdentification']/gmd:pointOfContact |//*[@gco:isoType='srv:SV_ServiceIdentification']/gmd:pointOfContact" />
+ <svrl:successful-report ref="#_40" test="not($missing)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:identificationInfo[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:MD_DataIdentification[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:pointOfContact[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>Joint Nature Conservation Committee (JNCC) (custodian)</svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_Metadata" />
+ <svrl:successful-report ref="#_1" test="$dateStamp" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>2017-03-08</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_1" test="$language_present" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>eng</svrl:text> </svrl:successful-report> <svrl:successful-report ref="#_1" test="not($missing)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="//gmd:MD_Metadata/gmd:contact" />
+ <svrl:successful-report ref="#_8" test="not($missing)" location="/*:MD_Metadata[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]/*:contact[namespace-uri()='http://www.isotc211.org/2005/gmd'][1]"> <svrl:text>Joint Nature Conservation Committee (pointOfContact)</svrl:text> </svrl:successful-report> </svrl:schematron-output> </geonet:report> <geonet:report geonet:rule="schematron-rules-iso"> <svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" title="Schematron validation for ISO&#xA;&#x9;&#x9;19115(19139)" schemaVersion=""> <!--       --> <svrl:ns-prefix-in-attribute-values uri="http://www.opengis.net/gml" prefix="gml" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmd" prefix="gmd" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/srv" prefix="srv" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gco" prefix="gco" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.fao.org/geonetwork" prefix="geonet" />
+ <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/1999/xlink" prefix="xlink" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:successful-report ref="#_118" test="(normalize-space(gco:CharacterString) = '') and (not(@gco:nilReason) or not(contains('inapplicable missing template unknown withheld',@gco:nilReason)))" location="/*[local-name()='MD_Metadata']/*[local-name()='distributionInfo']/*[local-name()='MD_Distribution']/*[local-name()='transferOptions']/*[local-name()='MD_DigitalTransferOptions']/*[local-name()='onLine']/*[local-name()='CI_OnlineResource']/*[local-name()='name']"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="*[gco:CharacterString]" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//*[gmd:CI_ResponsibleParty]" />
+ <svrl:successful-report ref="#_8" test="$count &gt; 0" location="/*[local-name()='MD_Metadata']/*[local-name()='contact']"> <svrl:text> <gmd:organisationName xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2"> <gco:CharacterString> Joint Nature Conservation Committee <geonet:element ref="11" parent="10" uuid="gco:CharacterString_b4dfb992-0586-4289-9132-71ffe702f512" />
+ </gco:CharacterString> <geonet:element ref="10" parent="9" uuid="gmd:organisationName_8d87bedc-8c58-47cd-af57-d3d87285abec" />
+ </gmd:organisationName> - </svrl:text> </svrl:successful-report> <svrl:fired-rule context="//*[gmd:CI_ResponsibleParty]" />
+ <svrl:successful-report ref="#_40" test="$count &gt; 0" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='pointOfContact']"> <svrl:text> <gmd:organisationName xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2"> <gco:CharacterString> Joint Nature Conservation Committee (JNCC) <geonet:element ref="43" parent="42" uuid="gco:CharacterString_e17a6300-c390-4e5f-8778-3fb0ee6dfe7f" />
+ </gco:CharacterString> <geonet:element ref="42" parent="41" uuid="gmd:organisationName_93ff6c91-5fea-4714-966d-3a2893e8113f" />
+ </gmd:organisationName> - </svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_LegalConstraints[gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions'] |//*[@gco:isoType='gmd:MD_LegalConstraints' and gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']" />
+ <svrl:successful-report ref="#_81" test="$access = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='resourceConstraints']/*[local-name()='MD_LegalConstraints']"> <svrl:text> <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2"> No limitations <geonet:element ref="87" parent="86" uuid="gco:CharacterString_083f6422-9f5f-4673-9b7c-885e50724717" />
+ </gco:CharacterString> </svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset' or gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='series']" />
+ <svrl:successful-report ref="#_121" test="$emptyStatement = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='dataQualityInfo']/*[local-name()='DQ_DataQuality']"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:LI_Lineage" />
+ <svrl:successful-report ref="#_127" test="$emptySource = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='dataQualityInfo']/*[local-name()='DQ_DataQuality']/*[local-name()='lineage']/*[local-name()='LI_Lineage']"> <svrl:text />
+ </svrl:successful-report> <svrl:successful-report ref="#_127" test="$emptyProcessStep = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='dataQualityInfo']/*[local-name()='DQ_DataQuality']/*[local-name()='lineage']/*[local-name()='LI_Lineage']"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset']" />
+ <svrl:successful-report ref="#_121" test="$noReportNorLineage = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='dataQualityInfo']/*[local-name()='DQ_DataQuality']"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:DQ_Scope" />
+ <svrl:successful-report ref="#_123" test="$levelDesc" location="/*[local-name()='MD_Metadata']/*[local-name()='dataQualityInfo']/*[local-name()='DQ_DataQuality']/*[local-name()='scope']/*[local-name()='DQ_Scope']"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_Distribution" />
+ <svrl:successful-report ref="#_105" test="$count" location="/*[local-name()='MD_Metadata']/*[local-name()='distributionInfo']/*[local-name()='MD_Distribution']"> <svrl:text>1</svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:EX_Extent" />
+ <svrl:successful-report ref="#_93" test="$count" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='extent']/*[local-name()='EX_Extent']"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification|//*[contains(@gco:isoType, 'MD_DataIdentification')]" />
+ <svrl:successful-report ref="#_23" test="$extent = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_DataIdentification|//*[contains(@gco:isoType, 'MD_DataIdentification')]" />
+ <svrl:successful-report ref="#_23" test="$topic = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']"> <svrl:text>"oceans"</svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:MD_Metadata/gmd:hierarchyLevel|//*[@gco:isoType='gmd:MD_Metadata']/gmd:hierarchyLevel" />
+ <svrl:successful-report ref="#_6" test="$hl = false()" location="/*[local-name()='MD_Metadata']/*[local-name()='hierarchyLevel']"> <svrl:text>"dataset"</svrl:text> </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="/*/gmd:language" />
+ <svrl:successful-report ref="#_4" test="node() | @gco:nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='language']"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="/*/gmd:contact" />
+ <svrl:successful-report ref="#_8" test="node() | @gco:nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='contact']"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:citation/*/gmd:title" />
+ <svrl:successful-report ref="#_26" test="$text or $nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='citation']/*[local-name()='CI_Citation']/*[local-name()='title']"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:citation/*/gmd:date/*/gmd:date" />
+ <svrl:successful-report ref="#_30" test="$text or $nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='citation']/*[local-name()='CI_Citation']/*[local-name()='date']/*[local-name()='CI_Date']/*[local-name()='date']"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:citation/*/gmd:date/*/gmd:dateType" />
+ <svrl:successful-report ref="#_32" test="$text or $nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='citation']/*[local-name()='CI_Citation']/*[local-name()='date']/*[local-name()='CI_Date']/*[local-name()='dateType']"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:abstract" />
+ <svrl:successful-report ref="#_38" test="$text or $nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='abstract']"> <svrl:text />
+ </svrl:successful-report> <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:language" />
+ <svrl:successful-report ref="#_88" test="node() | @gco:nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='language']"> <svrl:text />
+ </svrl:successful-report> <svrl:active-pattern document="" name="" />
+ <svrl:fired-rule context="//gmd:identificationInfo/*/gmd:citation" />
+ <svrl:successful-report ref="#_24" test="gmd:CI_Citation | @gco:nilReason" location="/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='citation']"> <svrl:text />
+ </svrl:successful-report> </svrl:schematron-output> </geonet:report> </geonet:schematronerrors>

@@ -1,21 +1,21 @@
-import { s3file, ftp } from "./files";
-import { wms, wfs } from "./services";
+import { FTP, S3File } from "./files";
+import { WFS, WMS  } from "./services";
 
 export interface Data {
-  product: DataGroup,
-  [x: string]: DataGroup
+  product: DataGroup;
+  [x: string]: DataGroup;
 }
 
 export interface DataGroup {
   files?: {
-    s3?: s3file,
-    ftp?: ftp
-  },
+    s3?: S3File,
+    ftp?: FTP
+  };
   services?: {
-    wms?: wms,
-    wfs?: wfs
-  }
-};
+    wms?: WMS,
+    wfs?: WFS
+  };
+}
 
 export const Schema = {
   "data": {
@@ -59,4 +59,4 @@ export const Schema = {
       }
     }
   },
-}
+};

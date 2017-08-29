@@ -1,39 +1,39 @@
 import * as ajv from "ajv";
-import * as ajvasync from "ajv-async"
-import * as ValidationHelper from "../../validation/validationHelper"
-import * as Metadata from "../components/metadata"
-import * as Footprint from "../components/footprint"
+import * as ajvasync from "ajv-async";
+import * as ValidationHelper from "../../validation/validationHelper";
+import * as Footprint from "../components/footprint";
+import * as Metadata from "../components/metadata";
 
 export interface Collection {
-  id: string,
-  name: string,
-  metadata: Metadata.Metadata,
-  productsSchema: any,
-  footprint: Footprint.Footprint
-};
+  id: string;
+  name: string;
+  metadata: Metadata.Metadata;
+  productsSchema: any;
+  footprint: Footprint.Footprint;
+}
 
 export function validate(collection: Collection) {
-  let validator = ajv({ async: 'es7', allErrors: true, formats: 'full' })
-  let asyncValidator = ajvasync(validator)
+  let validator = ajv({ async: "es7", allErrors: true, formats: "full" });
+  let asyncValidator = ajvasync(validator);
 
-  let collectionSchemaValidator = asyncValidator.compile(Schema)
+  let collectionSchemaValidator = asyncValidator.compile(Schema);
   let errors: string[] = new Array<string>();
 
   let promise = new Promise((resolve, reject) => {
-    collectionSchemaValidator(collection).then(e => {
-      if (errors.length == 0) {
+    collectionSchemaValidator(collection).then((e) => {
+      if (errors.length === 0) {
         resolve([true]);
       } else {
-        reject(errors)
+        reject(errors);
       }
-    }).catch(e => {
-      errors = ValidationHelper.reduceErrors(e.errors)
-      reject(errors)
-    })
+    }).catch((e) => {
+      errors = ValidationHelper.reduceErrors(e.errors);
+      reject(errors);
+    });
   });
 
-  return promise
-};
+  return promise;
+}
 
 export const Schema = {
   "$schema": "http://json-schema.org/draft-04/schema#",

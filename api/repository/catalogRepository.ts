@@ -1,54 +1,53 @@
-import { Product } from "../definitions/product/product"
-import { Collection } from "../definitions/collection/collection"
-import { Database } from "./database";
-import { Query } from "../query"
 import * as squel from "squel";
+import { Collection } from "../definitions/collection/collection";
+import { Product } from "../definitions/product/product";
+import { Query } from "../query";
+import { Database } from "./database";
 
 export class CatalogRepository {
 
     buildQuery(baseQuery: any, footprint: string | undefined, spatialop: string | undefined, fromCollectionDate: Date | undefined, toCollectionDate: Date | undefined, properties: any | undefined) {
-        if (footprint !== '') {
+        if (footprint !== "") {
             // Do spatial search
-            if (spatialop !== '') {
-                if (spatialop === 'within') {
-                    baseQuery.where('ST_Within(ST_GeomFromText($2, 4326), footprint)');
-                } else if (spatialop === 'overlaps') {
-                    baseQuery.where('ST_Overlaps(ST_GeomFromText($2, 4326), footprint)');
+            if (spatialop !== "") {
+                if (spatialop === "within") {
+                    baseQuery.where("ST_Within(ST_GeomFromText($2, 4326), footprint)");
+                } else if (spatialop === "overlaps") {
+                    baseQuery.where("ST_Overlaps(ST_GeomFromText($2, 4326), footprint)");
                 } else {
-                    baseQuery.where('ST_Intersects(ST_GeomFromText($2, 4326), footprint)');
+                    baseQuery.where("ST_Intersects(ST_GeomFromText($2, 4326), footprint)");
                 }
             }
         }
 
         if (fromCollectionDate && toCollectionDate) {
-          baseQuery.where('to_date(properties->>\'collectionDate\', \'YYYY-MM-DD\') BETWEEN $4 AND $5')
+          baseQuery.where("to_date(properties->>\'collectionDate\', \'YYYY-MM-DD\') BETWEEN $4 AND $5")
         }
         if (Object.keys(properties).length > 0) {
-            baseQuery.where('properties @> $3');
+            baseQuery.where("properties @> $3");
         }
 
         return baseQuery;
     }
 
-    getCollections(query: Query, limit: number, offset: number): Promise<Array<Collection>> {
-        let collectionName = query.collection.replace('*', '%')
-        return Database.instance.connection.task(t => {
+    getCollections(query: Query, limit: number, offset: number): Promise<Collection[]> {
+        let collectionName = query.collection.replace("*", "%");
+        return Database.instance.connection.task((t) => {
             let baseQuery = squel.select()
-                .from('collection')
-                .field('id').field('name').field('metadata').field('products_schema', 'productsSchema').field('ST_AsGeoJSON(footprint)', 'footprint')
-                .where('name LIKE $1')
-                .order('name')
+                .from("collection")
+                .field("id").field("name").field("metadata").field("products_schema", "productsSchema").field("ST_AsGeoJSON(footprint)", "footprint")
+                .where("name LIKE $1")
+                .order("name")
                 .limit(limit)
                 .offset(offset)
 
-            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, undefined, undefined, {})
+            baseQuery = this.buildQuery(baseQuery, query.footprint, query.spatialop, undefined, undefined, {});
             return t.any(baseQuery.toString(), [collectionName, query.footprint, query.productProperties]);
-        }).catch(error => {
-            console.log("database error : " + error)
-            throw new Error(error)
+        }).catch((error) => {
+            console.log("database error : " + error);
+            throw new Error(error);
         });
     }
-
 
     getCollection(name: string):Promise<Collection> {
         return Database.instance.connection.task(t => {

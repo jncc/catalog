@@ -1,15 +1,15 @@
-export interface s3file {
-  key: string,
-  bucket: string,
-  region: string,
-  type?: string
-};
+export interface S3File {
+  key: string;
+  bucket: string;
+  region: string;
+  type?: string;
+}
 
-export interface ftp {
-  server: string,
-  path: string,
-  type?: string
-};
+export interface FTP {
+  server: string;
+  path: string;
+  type?: string;
+}
 
 export const Schema = {
   "s3file": {

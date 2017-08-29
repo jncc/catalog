@@ -10,7 +10,7 @@ require('mocha-inline')();
 
 export class Fixtures {
   public static GetTestProduct(): Product {
-    var content = fs.readFileSync('./api/test/product.json', 'utf8');
+    var content = fs.readFileSync('./api/tests/product.json', 'utf8');
     return JSON.parse(content);
   }
 

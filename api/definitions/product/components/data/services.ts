@@ -1,10 +1,10 @@
-export interface ogc {
-  url: string,
-  name: string
-};
+export interface OGC {
+  url: string;
+  name: string;
+}
 
-export interface wms extends ogc { };
-export interface wfs extends ogc { };
+export interface WMS extends OGC { }
+export interface WFS extends OGC { }
 
 export const Schema = {
   "wms": {
