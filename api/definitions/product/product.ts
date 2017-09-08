@@ -29,7 +29,7 @@ export const Schema = {
     },
     "name": {
       "type": "string",
-      "pattern": "^([A-Za-z0-9\-\_\.])+$"
+      "pattern": "^(([A-Za-z0-9\_\-]+)(\/))*([A-Za-z0-9\_\-])+$"
     },
     "collectionId": {
       "type": "string",
@@ -37,7 +37,7 @@ export const Schema = {
     },
     "collectionName": {
       "type": "string",
-      "pattern": "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"
+      "pattern": "^(([A-Za-z0-9\_\-]+)(\/))*([A-Za-z0-9\_\-])+$"
     },
     "metadata": {
       "$ref": "#/definitions/metadata/metadata"
