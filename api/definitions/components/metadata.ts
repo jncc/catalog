@@ -141,7 +141,7 @@ export const Schema = {
         "$ref": "#/definitions/metadata/boundingBox"
       }
     },
-    "required": ["title", "abstract", "topicCategory", "keywords", "temporalExtent", "datasetReferenceDate", "lineage", "resourceLocator", "responsibleOrganisation", "limitationsOnPublicAccess", "useConstraints", "spatialReferenceSystem", "metadataDate", "metadataPointOfContact", "resourceType", "boundingBox"]
+    "required": ["title", "boundingBox"]
   },
   "keyword": {
     "type": "object",
