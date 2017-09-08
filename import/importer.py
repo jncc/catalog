@@ -3,8 +3,11 @@ from urllib.parse import urljoin
 import argparse
 import json
 import uuid
-import shapely
 import requests
+import psycopg2
+
+from shapely import geometry
+
 
 class Importer:
     """
@@ -16,9 +19,11 @@ class Importer:
     product_import      -- If this is a product or collection import
     multi_polygon       -- Set to force product footprints to MutliPolygon, true by default
     """
-    def __init__(self, api_base_url, input_file_path, product_import=False, multi_polygon=True):
+
+    def __init__(self, api_base_url, input_file_path, cursor, product_import=False, multi_polygon=True):
         self.api_base_url = api_base_url
         self.input_file_path = input_file_path
+        self.cursor = cursor
         self.product_import = product_import
         self.multi_polygon = multi_polygon
 
@@ -44,18 +49,36 @@ class Importer:
         Keyword arguments:
         product         -- A JSON blob to import as a product
         """
-        geom = shapely.geometry.shape(json.loads(product['footprint']))
-        if self.multi_polygon and geom.type != 'MultiPolygon':
-            ## Looking for multipolygons in the product and the product is not MultiPolygon
-            if geom.type == 'Polygon':
-                multipolygon_geom = shapely.geometry.multipolygon.MultiPolygon([geom])
-            else:
-                raise NotImplementedError('Geometry Type %s is not currently supported for import \
-                                           use Polygon or MultiPolygon' % geom.type)
-            # Have to remove the non array elements produced via shapely
-            product['footprint'] = json.loads(json.dumps(multipolygon_geom))
+        ###
+        # General footprint fixing stuff
+        ###
+        footprint = json.dumps(product['footprint'])
+        geom = geometry.shape(product['footprint'])
 
-        resp = requests.post(urljoin(self.api_base_url, 'add/product'), json=product)
+        # Use PostGIS to force Multipolygon if needed
+        if self.multi_polygon and geom.type != 'MultiPolygon':
+            self.cursor.execute(
+                'SELECT ST_AsGeoJSON(ST_Multi(ST_GeomFromGeojson(%s)))', (footprint,))
+            footprint = self.cursor.fetchone()[0]
+
+        # Use PostGIS to force Right Hand Rule on polygons as GeoJSON defines it (PostGIS
+        # ST_ForceRHR produces exterior rings as CW, we need CCW so need to ST_Reverse as
+        # well). Also force 2D to prevent people supplying 3D polygons randomly to the
+        # service
+        self.cursor.execute(
+            'SELECT ST_AsGeoJSON(ST_Force2D(ST_Reverse(ST_ForceRHR(ST_GeomFromGeojson(%s)))))', (footprint,))
+        footprint = self.cursor.fetchone()[0]
+
+        product['footprint'] = json.loads(footprint)
+
+        ###
+        # Push product to import API
+        ###
+        resp = requests.post('%s/add/product' %
+                             self.api_base_url, json=product)
+        # resp = requests.post('%s/validate' %
+        #                      self.api_base_url, json=product)
+
         if not resp.ok:
             raise ValueError('Product %s was not imported, error returned from API: %s'
                              % (product['name'], resp.text))
@@ -70,7 +93,8 @@ class Importer:
         products = collection['products']
         del collection['products']
 
-        resp = requests.post(urljoin(self.api_base_url, 'collection/add'), data=collection)
+        resp = requests.post(
+            urljoin(self.api_base_url, 'collection/add'), data=collection)
         if not resp.ok:
             raise ValueError('Product %s was not imported, error returned from API: %s'
                              % (collection['metadata']['title'], resp.text()))
@@ -95,17 +119,37 @@ class Importer:
         else:
             raise NotImplementedError()
 
+
 if __name__ == '__main__':
-    PARSER = argparse.ArgumentParser(description='Imports a JSON blob into the catalog')
-    PARSER.add_argument('-i', '--input', type=str, required=True, help='Path to json input file')
-    PARSER.add_argument('-a', '--api', type=str, required=True, help='URL to the base catalog API')
+    PARSER = argparse.ArgumentParser(
+        description='Imports a JSON blob into the catalog')
+    PARSER.add_argument('-i', '--input', type=str,
+                        required=True, help='Path to json input file')
+    PARSER.add_argument('-a', '--api', type=str, required=True,
+                        help='URL to the base catalog API')
     PARSER.add_argument('-p', '--product', required=False, action='store_true',
                         help='Tell the importer that we are importing a product / array of \
                         products [append to existing collection]')
+    PARSER.add_argument('--dbhost', type=str, required=True,
+                        help='PostGIS DB hostname - fixing polygons')
+    PARSER.add_argument('--dbport', type=int, required=False, default=5432,
+                        help='PostGIS DB port - fixing polygons')
+    PARSER.add_argument('--dbname', type=str, required=True,
+                        help='PostGIS DB name - fixing polygons')
+    PARSER.add_argument('--dbuser', type=str, required=True,
+                        help='PostGIS DB user - fixing polygons')
+    PARSER.add_argument('--dbpass', type=str, required=True,
+                        help='PostGIS DB password - fixing polygons')
 
     ARGS = PARSER.parse_args()
 
-    print(ARGS)
+    CONN = psycopg2.connect(dbname=ARGS.dbname, host=ARGS.dbhost,
+                            port=ARGS.dbport, user=ARGS.dbuser, password=ARGS.dbpass)
+    CURSOR = CONN.cursor()
 
-    IMPORTER = Importer(ARGS.api, ARGS.input, ARGS.product)
-    IMPORTER.do_import()
+    try:
+        IMPORTER = Importer(ARGS.api, ARGS.input, CURSOR, ARGS.product)
+        IMPORTER.do_import()
+    finally:
+        CURSOR.close()
+        CONN.close()
