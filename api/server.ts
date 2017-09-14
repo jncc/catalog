@@ -58,9 +58,7 @@ app.post(`/product/search`, async (req, res) => {
   let query = new Query(req.body.collection, req.body);
 
   ProductRequestValidator.validate(query, catalogRepository).then(() => {
-    console.log("2 ProductRequestValidator.validate");
-    catalogRepository.getProducts(query, query.limit, query.offset).then((result) => {
-      console.log("catalogRepository.getProducts");
+    catalogRepository.getProducts(query).then((result) => {
       res.json({
         query: query,
         result: result

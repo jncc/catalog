@@ -60,7 +60,7 @@ export class CatalogRepository {
     });
   }
 
-  public getProducts(query: Query.Query, limit: number, offset: number): Promise<Product[]> {
+  public getProducts(query: Query.Query): Promise<Product[]> {
     // Replace wildcard characters in the name
     let productName = query.productName.replace(/\*/g, "%");
 
@@ -74,8 +74,8 @@ export class CatalogRepository {
         .where("collection_name = ?", query.collection)
         .where("name LIKE ?", productName)
         .order("full_name")
-        .limit(limit)
-        .offset(offset);
+        .limit(query.limit)
+        .offset(query.offset);
 
       // Add optional arguments and filters
       baseQuery = this.buildQuery(baseQuery, query);

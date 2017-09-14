@@ -65,7 +65,7 @@ export class Fixtures {
       let c: Collection = Fixtures.GetCollection();
       return Promise.resolve(c);
     });
-    mockRepo.setup((x) => x.getProducts(TypeMoq.It.isAny(), TypeMoq.It.isAnyNumber(), TypeMoq.It.isAnyNumber()))
+    mockRepo.setup((x) => x.getProducts(TypeMoq.It.isAny()))
       .returns((x, y) => {
         let p: Product = Fixtures.GetTestProduct();
         return Promise.resolve([p]);

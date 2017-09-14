@@ -12,7 +12,6 @@ export class QueryValidator {
       let extractedQueryParams: any = this.getExtractedQueryParams(params);
       this.validateExtractedQueryParams(validationSchema, extractedQueryParams)
         .then(() => {
-          console.log("this.validateExtractedQueryParams");
           resolve();
         }).catch((errors) => {
           reject(errors);
@@ -20,24 +19,27 @@ export class QueryValidator {
     });
   }
 
-  public static extractQueryDataTypes(schema: any, query: Query.Query): any[] {
+  public static extractQueryDataTypes(schema: any, query: Query.Query): any {
     let properties = query.terms.map((term) => term.property);
-    return properties.filter((item, position) => properties.indexOf(item) === position).map((property) => {
-      let tm: any = {};
-      if (schema.properties[property].type === "string") {
-        if ("format" in schema.properties[property] && schema.properties[property].format in ["date", "date-time"]) {
-          tm[property] = schema.properties[property].format;
-        } else {
-          tm[property] = "string";
-        }
-      } else if (schema.properties[property].type === "number") {
-        tm[property] = "double";
-      } else if (schema.properties[property].type === "integer") {
-        tm[property] = "int";
-      }
+    let tm: any = {};
 
-      return tm;
-    });
+    properties.filter((item, position) => properties.indexOf(item) === position).forEach((property) => {
+        if (schema.properties.hasOwnProperty(property)) {
+          if (schema.properties[property].type === "string") {
+            if (schema.properties[property].hasOwnProperty("format") && ["date", "date-time"].indexOf(schema.properties[property].format) >= 0) {
+              tm[property] = schema.properties[property].format;
+            } else {
+              tm[property] = "string";
+            }
+           } else if (schema.properties[property].type === "number") {
+            tm[property] = "double";
+          } else if (schema.properties[property].type === "integer") {
+            tm[property] = "int";
+          }
+        }
+      });
+
+    return tm;
   }
 
   public static validateExtractedDataTypes(query: Query.Query, extracted: any[]): string[] {
@@ -134,13 +136,6 @@ export class QueryValidator {
           });
       });
 
-      console.log("GOT HERE");
-      console.log(errors);
-      console.log("GOT HERE");
-      console.log(schema);
-      console.log("GOT HERE");
-      console.log(extractedQueryParams);
-      console.log("GOT HERE");
       if (errors.length > 0) {
         reject(errors);
       } else {

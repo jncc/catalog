@@ -140,37 +140,18 @@ export class ProductRequestValidator extends RequestValidator {
       if (query.terms.length > 0) {
         if (!query.types.empty) {
           catalogRepository.getCollection(query.collection).then((collection) => {
-            console.log("1 catalogRepository.getCollection");
             if (collection !== undefined) {
               query.types = QueryValidator.extractQueryDataTypes(collection.productsSchema, query);
-              // let typesErrors = QueryValidator.validateExtractedDataTypes(query, query.types);
-
-              // // validate current operators against schema
-              // if (typesErrors.length > 0) {
-              //   errors.concat(typesErrors);
-              // }
-
               QueryValidator.validateQueryParams(collection.productsSchema, query.terms).then((x) => {
-                console.log("QueryValidator.validateQueryParams");
-                // query params valid for this schema
+                resolve();
               }).catch((err) => {
-                console.log("QueryValidator.validateQueryParams ERROR");
-                // query params not valid for this schema
-                errors.concat(err);
+                reject(errors.concat(err));
               });
             } else {
               reject(["searchParam | collection must exist"]);
             }
-
-            if (errors.length > 0) {
-              reject(errors);
-            } else {
-              resolve();
-            }
           });
         }
-        // Need to validate the properties blob
-        // QueryValidator.extractQueryDataTypes()
       }
     });
   }
