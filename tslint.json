@@ -1,0 +1,14 @@
+// tslint.json
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "prefer-const": false,
+    "no-unused-expression": false,
+    "object-literal-shorthand": false,
+    "no-console": false,
+    "trailing-comma": false,
+    "object-literal-sort-keys": false,
+    "no-empty-interface": false,
+    "max-line-length": false
+  }
+}

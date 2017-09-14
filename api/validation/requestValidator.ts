@@ -1,170 +1,372 @@
-import * as wellknown from "wellknown"
-import * as geojson from "geojson"
-import { DateValidator } from "./dateValidator"
+import * as chai from "chai"; // test reqs
+import * as geojson from "geojson";
+import "mocha"; // test reqs
+import * as wellknown from "wellknown";
 
-//test reqs
-import 'mocha';
-import * as chai from 'chai';
+import { Query } from "../query";
+import { CatalogRepository } from "../repository/catalogRepository";
+import { Fixtures } from "../test/fixtures";
+import { DateValidator } from "./dateValidator";
+import { QueryValidator } from "./queryValidator";
+import mochainline = require("mocha-inline");
 
-require('mocha-inline')();
+export abstract class RequestValidator {
+  // public static validate(query: Query, catalogRepository: CatalogRepository): string[] {
+  //   let errors: string[] = [];
 
-interface CaptureDateRange {
-  fromCaptureDate?: Date,
-  toCaptureDate?: Date,
-  valueError: Boolean
-}
+  //   this.validateRequestParameter(query, errors);
+  //   if (query.footprint !== "") {
+  //     this.validateFootprint(query.footprint, errors);
+  //   }
+  //   if (query.spatialop !== "") {
+  //     this.validateSpatialOp(query.spatialop, errors);
+  //   }
 
-export class RequestValidator {
-  static validate(reqParam: string, queryParams): string[] {
-    let errors: string[] = []
-    let dates: CaptureDateRange = {
-      fromCaptureDate: undefined,
-      toCaptureDate: undefined,
-      valueError: false
+  //   if (query.properties.length > 0) {
+  //     if (query.types.empty) {
+  //       //
+  //       catalogRepository.getCollection(query.collection).then((collection) => {
+  //         if (collection !== undefined) {
+  //           // extract data types from schema
+  //           query.types = QueryValidator.extractQueryDataTypes(collection.productsSchema, query);
+  //           let typesErrors = QueryValidator.validateExtractedDataTypes(query, query.types);
+
+  //           // validate current operators against schema
+  //           if (typesErrors.length > 0) {
+  //             errors.concat(typesErrors);
+  //           }
+
+  //           QueryValidator.validateQueryParams(collection.productsSchema, query.properties).then((x) => {
+  //             // query params valid for this schema
+  //           }).catch((err) => {
+  //             // query params not valid for this schema
+  //             errors.concat(err);
+  //           });
+  //         } else {
+  //           // do not found stuff
+  //         }
+  //       });
+  //     }
+  //     // Need to validate the properties blob
+  //     // QueryValidator.extractQueryDataTypes()
+  //   }
+
+  //   // if(!dates.valueError && (dates.fromCaptureDate || dates.toCaptureDate)) this.validateCaptureDates(dates, errors)
+
+  //   return errors;
+  // }
+
+  // private static validateCaptureDates(dates : CaptureDateRange, errors: string[]): Boolean {
+  //   let isValid = true
+
+  //   if(!dates.fromCaptureDate && dates.toCaptureDate) {
+  //     errors.push('fromCaptureDate | both a from and to capture date must be specified')
+  //     isValid = false
+  //   } else if(dates.fromCaptureDate && !dates.toCaptureDate) {
+  //     errors.push('toCaptureDate | both a from and to capture date must be specified')
+  //     isValid = false
+  //   } else if(dates.fromCaptureDate && dates.toCaptureDate && ! (dates.toCaptureDate >= dates.fromCaptureDate)){
+  //     errors.push('fromCaptureDate | toCaptureDate must be greater than or equal to fromCaptureDate')
+  //     isValid = false
+  //   }
+
+  //   return isValid
+  // }
+
+  protected static validateRequestParameter(query: Query, errors: string[]) {
+    if (!query.collection.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+      errors.push(
+        'searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
     }
-
-    this.validateRequestParameter(reqParam, errors)
-    for (let parameter in queryParams) {
-      if (parameter === 'footprint') {
-        this.validateFootprint(queryParams[parameter], errors);
-      } else if (parameter === 'spatialop') {
-        this.validateSpatialOp(queryParams[parameter], errors);
-      } else if (parameter === 'fromCaptureDate' || parameter === 'toCaptureDate') {
-        if (DateValidator.validateDate(queryParams[parameter], parameter, errors)) {
-          dates[parameter] = new Date(queryParams[parameter])
-        } else {
-          dates.valueError = true
-        }
-      }
-    };
-    if(!dates.valueError && (dates.fromCaptureDate || dates.toCaptureDate)) this.validateCaptureDates(dates, errors)
-
-    return errors;
   }
 
-  private static validateCaptureDates(dates : CaptureDateRange, errors: string[]): Boolean {
-    let isValid = true
-
-    if(!dates.fromCaptureDate && dates.toCaptureDate) {
-      errors.push('fromCaptureDate | both a from and to capture date must be specified')
-      isValid = false
-    } else if(dates.fromCaptureDate && !dates.toCaptureDate) {
-      errors.push('toCaptureDate | both a from and to capture date must be specified')
-      isValid = false
-    } else if(dates.fromCaptureDate && dates.toCaptureDate && ! (dates.toCaptureDate >= dates.fromCaptureDate)){
-      errors.push('fromCaptureDate | toCaptureDate must be greater than or equal to fromCaptureDate')
-      isValid = false
-    }
-
-    return isValid
-  }
-
-  private static validateRequestParameter(requestParameter: string, errors: string[]) {
-    if (!requestParameter.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-      errors.push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"')
-    }
-
-  }
-
-  private static validateFootprint(param: string, errors: string[]) {
-    let footprint = <geojson.Polygon>wellknown.parse(param)
+  protected static validateFootprint(param: string, errors: string[]) {
+    let footprint = wellknown.parse(param) as geojson.Polygon;
     if (!footprint) {
-      errors.push('footprint | is not valid WKT')
+      errors.push("footprint | is not valid WKT");
     } else {
-      let firstCoord = footprint.coordinates[0][0]
-      let lastCoord = footprint.coordinates[0][footprint.coordinates[0].length - 1]
-      if (!firstCoord.every((element, index) => {return element === lastCoord[index]})) {
-        errors.push('footprint | is not a closed polygon')
+      let firstCoord = footprint.coordinates[0][0];
+      let lastCoord = footprint.coordinates[0][footprint.coordinates[0].length - 1];
+      if (!firstCoord.every((element, index) => element === lastCoord[index])) {
+        errors.push("footprint | is not a closed polygon");
       }
     }
   }
 
-  private static validateSpatialOp(param: string, errors: string[]) {
-    if (!['within', 'intersects', 'overlaps'].find(val => val === param)) {
-      errors.push('spatialop | should be one of "within", "intersects", "overlaps"')
+  protected static validateSpatialOp(param: string, errors: string[]) {
+    if (!["within", "intersects", "overlaps"].find((val) => val === param)) {
+      errors.push("spatialop | should be one of 'within', 'intersects', 'overlaps'");
     }
   }
 
 }
+// tslint:disable-next-line:max-classes-per-file
+export class CollectionRequestValidator extends RequestValidator {
+  public static validate(query: Query, catalogRepository: CatalogRepository): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      let errors: string[] = [];
 
+      if (!query.collection.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+        reject(['searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"']);
+      }
+      if (query.footprint !== "") {
+        this.validateFootprint(query.footprint, errors);
+      }
+      if (query.spatialop !== "") {
+        this.validateSpatialOp(query.spatialop, errors);
+      }
 
-describe('Request Validator', () => {
-  let p = '*test/valid/pat*h/1/2/345aa*'
+    });
+  }
+}
 
-  it('should validate a valid search path', () => {
-    chai.expect(RequestValidator.validate(p, {})).to.be.empty
-  })
+// tslint:disable-next-line:max-classes-per-file
+export class ProductRequestValidator extends RequestValidator {
+  public static validate(query: Query, catalogRepository: CatalogRepository): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      let errors: string[] = [];
 
-  it('should not validate an invalid search path', () => {
-    let reqParam = '\\\\test/inv%%alid/path/1/2/345aa'
-    chai.expect(RequestValidator.validate(reqParam, {})).to.have.length(1)
-      .and.contain('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"')
-  })
+      if (!query.collection.match(/^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/)) {
+        // tslint:disable-next-line:max-line-length
+        errors.push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"');
+      }
+      if (query.footprint !== "") {
+        this.validateFootprint(query.footprint, errors);
+      }
+      if (query.spatialop !== "") {
+        this.validateSpatialOp(query.spatialop, errors);
+      }
 
-  it('should validate a valid spatialOp', () => {
-    ['within', 'intersects', 'overlaps'].forEach(x => {
-      chai.expect(RequestValidator.validate(p, { spatialop: x })).to.be.empty
-    })
-  })
+      if (query.terms.length > 0) {
+        if (!query.types.empty) {
+          catalogRepository.getCollection(query.collection).then((collection) => {
+            console.log("1 catalogRepository.getCollection");
+            if (collection !== undefined) {
+              query.types = QueryValidator.extractQueryDataTypes(collection.productsSchema, query);
+              // let typesErrors = QueryValidator.validateExtractedDataTypes(query, query.types);
 
-  it('should not validate an invalid spatialOp', () => {
-    chai.expect(RequestValidator.validate(p, { spatialop: 'bobbins' })).to.have.length(1)
-      .and.contain('spatialop | should be one of "within", "intersects", "overlaps"')
-  })
+              // // validate current operators against schema
+              // if (typesErrors.length > 0) {
+              //   errors.concat(typesErrors);
+              // }
 
-  it('should validate a valid WKT footprint', () => {
-    var footprint = 'POLYGON((-2.2043681144714355 53.692260240428965,-2.203187942504883 53.692260240428965,-2.203187942504883 53.691726603500705,-2.2043681144714355 53.691726603500705,-2.2043681144714355 53.692260240428965))'
+              QueryValidator.validateQueryParams(collection.productsSchema, query.terms).then((x) => {
+                console.log("QueryValidator.validateQueryParams");
+                // query params valid for this schema
+              }).catch((err) => {
+                console.log("QueryValidator.validateQueryParams ERROR");
+                // query params not valid for this schema
+                errors.concat(err);
+              });
+            } else {
+              reject(["searchParam | collection must exist"]);
+            }
 
-    chai.expect(RequestValidator.validate(p, { footprint: footprint })).to.be.empty
-  })
+            if (errors.length > 0) {
+              reject(errors);
+            } else {
+              resolve();
+            }
+          });
+        }
+        // Need to validate the properties blob
+        // QueryValidator.extractQueryDataTypes()
+      }
+    });
+  }
+}
 
-  it('should not validate an ivalid WKT footprint', () => {
-    var footprint = 'POLYGON((-2.2043681144714355 53.692260240428965,-2.203187942504883 53.692260240428965,-2.203187942504883 53.691726603500705,-2.2043681144714355 53.691726603500705,-2.2043681144714355))'
+describe("Product Request Validator", () => {
+  let p = "test/valid/path/1/2/345aa";
+  let mockRepo = Fixtures.GetMockRepo().object;
 
-    chai.expect(RequestValidator.validate(p, { footprint: footprint })).to.have.length(1)
-      .and.contain('footprint | is not valid WKT')
-  })
+  it("should validate a valid search path", () => {
+    chai.expect(ProductRequestValidator.validate(new Query(p, {}), mockRepo))
+      .to.be.empty;
+  });
 
-  it('should not validate a WKT footprint that is not a closed polygon', () => {
-    var footprint = 'POLYGON((-2.2043681144714355 53.692260240428965,-2.203187942504883 53.692260240428965,-2.203187942504883 53.691726603500705,-2.2043681144714355 53.691726603500705))'
+  it("should not validate an wildcard search path", () => {
+    let reqParam = "*test/valid/pat*h/1/2/345aa*";
+    chai.expect(ProductRequestValidator.validate(new Query(reqParam, {}), mockRepo))
+      .to.have.length(1)
+      .and.contain(
+      'searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"');
+  });
 
-    chai.expect(RequestValidator.validate(p, { footprint: footprint })).to.have.length(1)
-      .and.contain('footprint | is not a closed polygon')
-  })
+  it("should not validate an invalid search path", () => {
+    let reqParam = "\\\\test/inv%%alid/path/1/2/345aa";
+    chai.expect(ProductRequestValidator.validate(new Query(reqParam, {}), mockRepo))
+      .to.have.length(1)
+      .and.contain(
+      'searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"');
+  });
 
-  it('should validate a valid fromCaptureDate', () => {
-    ['2014-01-04',
-    '2014-01-05T06:34:23Z'].forEach(x => {
-      chai.expect(RequestValidator.validate(p, { fromCaptureDate: x, toCaptureDate: '2017-01-01'})).to.be.empty
-    })
-  })
+  it("should validate a valid spatialOp", () => {
+    ["within", "intersects", "overlaps"].forEach((x) => {
+      chai.expect(ProductRequestValidator.validate(new Query(p, { spatialop: x }), mockRepo))
+        .to.be.empty;
+    });
+  });
 
-  it('should validate a valid toCaptureDate', () => {
-    ['2014-01-04',
-    '2014-01-05T06:34:23Z'].forEach(x => {
-      chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2010-01-01', toCaptureDate: x})).to.be.empty
-    })
-  })
+  it("should not validate an invalid spatialOp", () => {
+    chai.expect(ProductRequestValidator.validate(new Query(p, { spatialop: "bobbins" }), mockRepo))
+      .to.have.length(1)
+      .and.contain("spatialop | should be one of 'within', 'intersects', 'overlaps'");
+  });
 
-  it('should not validate and improperly formated capture date', () => {
-    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '01-01-2012', toCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date time format')
-  })
+  it("should validate a valid WKT footprint", () => {
+    let footprint =
+      "POLYGON((-2.2043681144714355 53.692260240428965," +
+      "-2.203187942504883 53.692260240428965," +
+      "-2.203187942504883 53.691726603500705," +
+      "-2.2043681144714355 53.691726603500705," +
+      "-2.2043681144714355 53.692260240428965))";
 
-  it('should not validate an invalid date', () => {
-    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2015-02-29', toCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('fromCaptureDate | is not a valid date')
-  })
+    chai.expect(ProductRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+      .to.be.empty;
+  });
 
-  it('should not validate a fromCaptureDate without a toCaptureDate', () => {
-    chai.expect(RequestValidator.validate(p, { fromCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('toCaptureDate | both a from and to capture date must be specified')
-  })
+  it("should not validate an ivalid WKT footprint", () => {
+    let footprint =
+      "POLYGON((-2.2043681144714355 53.692260240428965," +
+      "-2.203187942504883 53.692260240428965," +
+      "-2.203187942504883 53.691726603500705," +
+      "-2.2043681144714355 53.691726603500705," +
+      "-2.2043681144714355))";
 
-  it('should not validate a toCaptureDate without a fromCaptureDate', () => {
-    chai.expect(RequestValidator.validate(p, { toCaptureDate: '2016-01-01' })).to.have.length(1).and.contain('fromCaptureDate | both a from and to capture date must be specified')
-  })
+    chai.expect(ProductRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+      .to.have.length(1)
+      .and.contain("footprint | is not valid WKT");
+  });
 
-  it('should not validate a toCaptureDate before a fromCaptureDate', () => {
-    chai.expect(RequestValidator.validate(p, { toCaptureDate: '2016-01-01', fromCaptureDate: '2017-01-01' })).to.have.length(1).and.contain('fromCaptureDate | toCaptureDate must be greater than or equal to fromCaptureDate')
-  })
+  it("should not validate a WKT footprint that is not a closed polygon", () => {
+    let footprint =
+      "POLYGON((-2.2043681144714355 53.692260240428965," +
+      "-2.203187942504883 53.692260240428965," +
+      "-2.203187942504883 53.691726603500705," +
+      "-2.2043681144714355 53.691726603500705))";
 
-})
+    chai.expect(ProductRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+      .to.have.length(1)
+      .and.contain("footprint | is not a closed polygon");
+  });
+});
 
+describe("Collection Request Validator", () => {
+  let p = "*test/valid/pat*h/1/2/345aa*";
+  let mockRepo = Fixtures.GetMockRepo().object;
+
+  it("should validate a valid search path", () => {
+    chai.expect(ProductRequestValidator.validate(new Query(p, {}), mockRepo))
+      .to.be.empty;
+  });
+
+  it("should not validate an invalid search path", () => {
+    let reqParam = "\\\\test/inv%%alid/path/1/2/345aa";
+    chai.expect(CollectionRequestValidator.validate(new Query(reqParam, {}), mockRepo))
+      .to.have.length(1)
+      .and.contain(
+      'searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
+  });
+
+  it("should validate a valid spatialOp", () => {
+    ["within", "intersects", "overlaps"].forEach((x) => {
+      chai.expect(CollectionRequestValidator.validate(new Query(p, { spatialop: x }), mockRepo))
+        .to.be.empty;
+    });
+  });
+
+  it("should not validate an invalid spatialOp", () => {
+    chai.expect(CollectionRequestValidator.validate(new Query(p, { spatialop: "bobbins" }), mockRepo))
+      .to.have.length(1)
+      .and.contain("spatialop | should be one of 'within', 'intersects', 'overlaps'");
+  });
+
+  it("should validate a valid WKT footprint", () => {
+    let footprint =
+      "POLYGON((-2.2043681144714355 53.692260240428965," +
+      "-2.203187942504883 53.692260240428965," +
+      "-2.203187942504883 53.691726603500705," +
+      "-2.2043681144714355 53.691726603500705," +
+      "-2.2043681144714355 53.692260240428965))";
+
+    chai.expect(CollectionRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+      .to.be.empty;
+  });
+
+  it("should not validate an ivalid WKT footprint", () => {
+    let footprint =
+      "POLYGON((-2.2043681144714355 53.692260240428965," +
+      "-2.203187942504883 53.692260240428965," +
+      "-2.203187942504883 53.691726603500705," +
+      "-2.2043681144714355 53.691726603500705," +
+      "-2.2043681144714355))";
+
+    chai.expect(CollectionRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+      .to.have.length(1)
+      .and.contain("footprint | is not valid WKT");
+  });
+
+  it("should not validate a WKT footprint that is not a closed polygon", () => {
+    let footprint =
+      "POLYGON((-2.2043681144714355 53.692260240428965," +
+      "-2.203187942504883 53.692260240428965," +
+      "-2.203187942504883 53.691726603500705," +
+      "-2.2043681144714355 53.691726603500705))";
+
+    chai.expect(CollectionRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+      .to.have.length(1)
+      .and.contain("footprint | is not a closed polygon");
+  });
+
+  // it("should validate a valid fromCaptureDate", () => {
+  //   ["2014-01-04",
+  //     "2014-01-05T06:34:23Z"].forEach((x) => {
+  //       chai.expect(
+  //         CollectionRequestValidator.validate(new Query(p, { fromCaptureDate: x, toCaptureDate: "2017-01-01" }), mockRepo))
+  //         .to.be.empty;
+  //     });
+  // });
+
+  // it("should validate a valid toCaptureDate", () => {
+  //   ["2014-01-04",
+  //     "2014-01-05T06:34:23Z"].forEach((x) => {
+  //       chai.expect(
+  //         RequestValidator.validate(new Query(p, { fromCaptureDate: "2010-01-01", toCaptureDate: x }), mockRepo))
+  //         .to.be.empty;
+  //     });
+  // });
+
+  // it("should not validate and improperly formated capture date", () => {
+  //   chai.expect(
+  //     RequestValidator.validate(new Query(p, { fromCaptureDate: "01-01-2012", toCaptureDate: "2016-01-01" }), mockRepo))
+  //     .to.have.length(1)
+  //     .and.contain("fromCaptureDate | is not a valid date time format");
+  // });
+
+  // it("should not validate an invalid date", () => {
+  //   chai.expect(
+  //     RequestValidator.validate(new Query(p, { fromCaptureDate: "2015-02-29", toCaptureDate: "2016-01-01" }), mockRepo))
+  //     .to.have.length(1)
+  //     .and.contain("fromCaptureDate | is not a valid date");
+  // });
+
+  // it("should not validate a fromCaptureDate without a toCaptureDate", () => {
+  //   chai.expect(RequestValidator.validate(new Query(p, { fromCaptureDate: "2016-01-01" }), mockRepo))
+  //     .to.have.length(1)
+  //     .and.contain("toCaptureDate | both a from and to capture date must be specified");
+  // });
+
+  // it("should not validate a toCaptureDate without a fromCaptureDate", () => {
+  //   chai.expect(RequestValidator.validate(new Query(p, { toCaptureDate: "2016-01-01" }), mockRepo))
+  //     .to.have.length(1)
+  //     .and.contain("fromCaptureDate | both a from and to capture date must be specified");
+  // });
+
+  // it("should not validate a toCaptureDate before a fromCaptureDate", () => {
+  //   chai.expect(
+  //     RequestValidator.validate(new Query(p, { toCaptureDate: "2016-01-01", fromCaptureDate: "2017-01-01" }), mockRepo))
+  //     .to.have.length(1)
+  //     .and.contain("fromCaptureDate | toCaptureDate must be greater than or equal to fromCaptureDate");
+  // });
+});

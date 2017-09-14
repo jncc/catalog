@@ -1,32 +1,60 @@
-import { Request } from "express"
+export const ALLOWED_OPERATORS = {
+  "date-time": {
+    allowed: [">", ">=", "=", "=<", "<"]
+  },
+  "date": {
+    allowed: [">", ">=", "=", "=<", "<"]
+  },
+  "int": {
+    allowed: [">", ">=", "=", "=<", "<"]
+  },
+  "double": {
+    allowed: [">", ">=", "=", "=<", "<"]
+  },
+  "default": {
+    allowed: ["="]
+  }
+};
+
+export interface ITerm {
+  property: string;
+  operation: string;
+  value: string;
+}
 
 export class Query {
-  //todo: type request
-  constructor(req: Request) {
-    let requestParameter = req.params[0]
-    let queryParams = req.query
+  public offset: number = 0;
+  public limit: number = 50;
+  public collection: string = "";
+  public footprint: string = "";
+  public spatialop: string = "";
+  public terms: ITerm[] = [];
+  public types: any = {};
+  public productName: string = "*";
 
-    this.collection = req.params[0]
+  // todo: type request
+  constructor(requestParameter: string, queryParams: any) {
+    this.collection = requestParameter;
 
-    for (let parameter in queryParams) {
-      if (parameter === 'footprint') {
-        this.footprint = queryParams[parameter];
-      } else if (parameter === 'spatialop') {
-        this.spatialop = queryParams[parameter];
-      } else if (parameter === 'fromCaptureDate') {
-        this.fromCaptureDate = new Date(queryParams[parameter])
-      } else if (parameter === 'toCaptureDate') {
-        this.toCaptureDate = new Date(queryParams[parameter])
-      } else if (parameter) {
-        this.productProperties[parameter] = queryParams[parameter];
-      }
+    if ("footprint" in queryParams) {
+      this.footprint = queryParams.footprint;
     }
-  }
+    if ("spatialop" in queryParams) {
+      this.spatialop = queryParams.spatialop;
+    }
+    if ("offset" in queryParams) {
+      this.offset = queryParams.offset;
+    }
+    if ("limit" in queryParams) {
+      this.limit = queryParams.limit;
+    }
+    // Product search parameters
+    if ("terms" in queryParams) {
+      this.terms = queryParams.terms;
+    }
+    if ("productName" in queryParams) {
+      this.productName = queryParams.productName;
+    }
 
-  collection: string = ''
-  footprint: string = ''
-  spatialop: string = ''
-  fromCaptureDate: Date | undefined = undefined
-  toCaptureDate: Date | undefined = undefined
-  productProperties: any = {}
+  }
 }

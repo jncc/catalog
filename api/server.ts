@@ -1,119 +1,120 @@
+import * as ajv from "ajv";
+import * as bodyParser from "body-parser";
 import * as express from "express";
-import * as bodyParser from "body-parser"
-import * as ajv from 'ajv';
-import * as ValidationHelper from "./validation/validationHelper";
-import { ProductValidator } from "./validation/productValidator"
-import * as Product from "./definitions/product/product";
 import * as Collection from "./definitions/collection/collection";
-import { getEnvironmentSettings } from "./settings";
+import * as Product from "./definitions/product/product";
+import * as ValidationHelper from "./validation/validationHelper";
+
+import { Query } from "./query";
 import { CatalogRepository } from "./repository/catalogRepository";
-import { Query } from "./query"
-import { RequestValidator } from "./validation/requestValidator"
+import { getEnvironmentSettings } from "./settings";
+import { ProductValidator } from "./validation/productValidator";
+import { CollectionRequestValidator, ProductRequestValidator } from "./validation/requestValidator";
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
 let catalogRepository = new CatalogRepository();
 
-process.on('unhandledRejection', r => console.log(r));
+process.on("unhandledRejection", (r) => console.log(r));
 
 // parse json body requests
 app.use(bodyParser.json());
 
-
 enum SearchType {
   product,
-  collection
+  collection,
 }
 
 class Result {
-  query: Query
-  promisedResult: Promise<any>
-}
-
-function search(req: express.Request, res: express.Response, searchType: SearchType) {
-  let requestParameter = req.params[0]
-  let queryParams = req.query
-
-  let reqErrors = RequestValidator.validate(requestParameter, queryParams)
-
-  if (reqErrors.length > 0) {
-    res.status(400)
-    res.json({
-      errors: reqErrors
-    })
-  } else {
-
-    let query = new Query(req)
-    let result: Promise<any>
-
-    if (searchType == SearchType.product) {
-      result = catalogRepository.getProducts(query, 50, 0)
-    } else {
-      result = catalogRepository.getCollections(query, 50, 0)
-    }
-
-    result.then(x => {
-      res.json({
-        query: query,
-        result: x
-      })
-    }).catch(x => {
-      res.status(500);
-      res.json({
-        query: query,
-        errors: x.message
-      })
-    })
-  }
+  public query: Query;
+  public promisedResult: Promise<any>;
 }
 
 app.get(`/collection/search/*?`, async (req, res) => {
-  search(req, res, SearchType.collection)
-})
+  let query = new Query(req.params[0], req.query);
+  let reqErrors = CollectionRequestValidator.validate(query, catalogRepository).then(() => {
+    catalogRepository.getCollections(query, 50, 0).then((results) => {
+      res.json({
+        query: query,
+        result: results
+      });
+    }).catch((error) => {
+      res.status(500);
+      res.json({
+        query: query,
+        errors: error.message
+      });
+    });
+  }).catch((errors) => {
+    res.status(400);
+    res.json({
+      errors: reqErrors
+    });
+  });
+});
 
-app.get(`/product/search/*?`, async (req, res) => {
-  search(req, res, SearchType.product)
-})
+app.post(`/product/search`, async (req, res) => {
+  let requestParameter = req.params[0];
+  let query = new Query(req.body.collection, req.body);
 
+  ProductRequestValidator.validate(query, catalogRepository).then(() => {
+    console.log("2 ProductRequestValidator.validate");
+    catalogRepository.getProducts(query, query.limit, query.offset).then((result) => {
+      console.log("catalogRepository.getProducts");
+      res.json({
+        query: query,
+        result: result
+      });
+    }).catch((error) => {
+      res.status(500);
+      res.json({
+        query: query,
+        errors: error.message
+      });
+    });
+  }).catch((errors) => {
+    res.status(400);
+    res.json({
+      errors: errors
+    });
+  });
+});
 
 app.post(`/validate`, async (req, res) => {
   let product: Product.Product = req.body;
-  let productValidtor = new ProductValidator(catalogRepository)
+  let productValidtor = new ProductValidator(catalogRepository);
 
   productValidtor.validate(product)
-    .then(result => {
-      res.sendStatus(200)
-    }).catch(result => {
-      console.log(result)
-      res.status(400)
-      res.send(result)
+    .then((result) => {
+      res.sendStatus(200);
+    }).catch((result) => {
+      res.status(400);
+      res.send(result);
     });
 });
 
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
   let product: Product.Product = req.body;
-  let productValidtor = new ProductValidator(catalogRepository)
+  let productValidtor = new ProductValidator(catalogRepository);
 
-  //todo check product exists
+  // todo check product exists
 
-  productValidtor.validate(product).then(result => {
+  productValidtor.validate(product).then((result) => {
     try {
-      catalogRepository.storeProduct(product).then(productId => {
+      catalogRepository.storeProduct(product).then((productId) => {
         res.json({ productId: productId });
-      }).catch(error => {
+      }).catch((error) => {
         res.status(500);
-      })
-    }
-    catch (e) {
+      });
+    } catch (e) {
       res.sendStatus(500);
     }
-  }).catch(result => {
-    res.statusCode = 400
+  }).catch((result) => {
+    res.statusCode = 400;
     res.send(result);
   });
 });
-
 
 // start the express web server
 app.listen(env.port, () => {
@@ -121,6 +122,3 @@ app.listen(env.port, () => {
   console.log(`app.server is listening on: http://localhost:${env.port}`);
   console.log(`node environment is ${env.name}`);
 });
-
-
-
