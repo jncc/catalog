@@ -138,19 +138,23 @@ export class ProductRequestValidator extends RequestValidator {
       }
 
       if (query.terms.length > 0) {
-        if (!query.types.empty) {
-          catalogRepository.getCollection(query.collection).then((collection) => {
-            if (collection !== undefined) {
-              query.types = QueryValidator.extractQueryDataTypes(collection.productsSchema, query);
-              QueryValidator.validateQueryParams(collection.productsSchema, query.terms).then((x) => {
-                resolve();
-              }).catch((err) => {
-                reject(errors.concat(err));
-              });
-            } else {
-              reject(["searchParam | collection must exist"]);
-            }
-          });
+        catalogRepository.getCollection(query.collection).then((collection) => {
+          if (collection !== undefined) {
+            query.types = QueryValidator.extractQueryDataTypes(collection.productsSchema, query);
+            QueryValidator.validateQueryParams(collection.productsSchema, query.terms).then((x) => {
+              resolve();
+            }).catch((err) => {
+              reject(errors.concat(err));
+            });
+          } else {
+            reject(["searchParam | collection must exist"]);
+          }
+        });
+      } else {
+        if (errors.length > 0) {
+          reject(errors);
+        } else {
+          resolve();
         }
       }
     });

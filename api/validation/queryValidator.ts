@@ -1,5 +1,4 @@
 import * as ajv from "ajv";
-import * as ajvasync from "ajv-async";
 import * as Query from "../query";
 import * as ValidationHelper from "../validation/validationHelper";
 
@@ -24,20 +23,20 @@ export class QueryValidator {
     let tm: any = {};
 
     properties.filter((item, position) => properties.indexOf(item) === position).forEach((property) => {
-        if (schema.properties.hasOwnProperty(property)) {
-          if (schema.properties[property].type === "string") {
-            if (schema.properties[property].hasOwnProperty("format") && ["date", "date-time"].indexOf(schema.properties[property].format) >= 0) {
-              tm[property] = schema.properties[property].format;
-            } else {
-              tm[property] = "string";
-            }
-           } else if (schema.properties[property].type === "number") {
-            tm[property] = "double";
-          } else if (schema.properties[property].type === "integer") {
-            tm[property] = "int";
+      if (schema.properties.hasOwnProperty(property)) {
+        if (schema.properties[property].type === "string") {
+          if (schema.properties[property].hasOwnProperty("format") && ["date", "date-time"].indexOf(schema.properties[property].format) >= 0) {
+            tm[property] = schema.properties[property].format;
+          } else {
+            tm[property] = "string";
           }
+        } else if (schema.properties[property].type === "number") {
+          tm[property] = "double";
+        } else if (schema.properties[property].type === "integer") {
+          tm[property] = "int";
         }
-      });
+      }
+    });
 
     return tm;
   }
@@ -101,39 +100,16 @@ export class QueryValidator {
   private static validateExtractedQueryParams(schema: any, extractedQueryParams: any[]): Promise<string[]> {
     return new Promise((resolve, reject) => {
       let validator = ajv({ allErrors: true, formats: "full" });
-      let asyncValidator = ajvasync(validator);
-
-      asyncValidator.addKeyword("fullDateValidation", {
-        type: "string",
-        errors: true,
-        validate: (ajvschema, data) => {
-          // todo: Get real errors into avj error list.
-          let errors: string[] = [];
-          DateValidator.validateDate(data, "", errors);
-
-          if (errors.length > 0) {
-            return false;
-          } else {
-            return true;
-          }
-        }
-      });
-
-      let propertySchemaValidator = asyncValidator.compile(schema);
+      validator.addMetaSchema(require("ajv/lib/refs/json-schema-draft-04.json"));
       let errors: string[] = new Array<string>();
+
+      let propertySchemaValidator = validator.compile(schema);
+
       extractedQueryParams.forEach((param) => {
-        propertySchemaValidator(param)
-          .then((e) => {
-            // data is valid, do nothing
-          })
-          .catch((err) => {
-            if (!(err instanceof ajvasync.ValidationError)) {
-              throw err;
-            }
-            // data is invalid
-            console.log("Validation errors:", err.errors);
-            errors.push(err.errors);
-          });
+        let valid = propertySchemaValidator(param);
+        if (!valid) {
+          errors = (ValidationHelper.reduceErrors(validator.errors, ""));
+        }
       });
 
       if (errors.length > 0) {
