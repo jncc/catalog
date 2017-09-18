@@ -30,7 +30,8 @@ class Result {
   public promisedResult: Promise<any>;
 }
 
-app.get(`/collection/search/*?`, async (req, res) => {
+app.get(`/search/collection/*?`, async (req, res) => {
+  console.log('plop')
   let query = new Query(req.params[0], req.query);
   let reqErrors = CollectionRequestValidator.validate(query, catalogRepository).then(() => {
     catalogRepository.getCollections(query, 50, 0).then((results) => {
@@ -53,7 +54,7 @@ app.get(`/collection/search/*?`, async (req, res) => {
   });
 });
 
-app.post(`/product/search`, async (req, res) => {
+app.post(`/search/product`, async (req, res) => {
   let requestParameter = req.params[0];
   let query = new Query(req.body.collection, req.body);
 
