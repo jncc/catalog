@@ -25,7 +25,6 @@ export class CatalogRepository {
       baseQuery = this.buildQuery(baseQuery, query);
       return t.any(baseQuery.toParam());
     }).catch((error) => {
-      console.log("database error : " + error);
       throw new Error(error);
     });
   }

@@ -31,7 +31,6 @@ class Result {
 }
 
 app.get(`/search/collection/*?`, async (req, res) => {
-  console.log('plop')
   let query = new Query(req.params[0], req.query);
   let reqErrors = CollectionRequestValidator.validate(query, catalogRepository).then(() => {
     catalogRepository.getCollections(query, 50, 0).then((results) => {

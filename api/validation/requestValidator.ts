@@ -115,7 +115,8 @@ export class CollectionRequestValidator extends RequestValidator {
       if (query.spatialop !== "") {
         this.validateSpatialOp(query.spatialop, errors);
       }
-
+      
+      resolve([])
     });
   }
 }
