@@ -11,6 +11,7 @@ import * as Data from "../definitions/product/components/data/data";
 import * as DataServices from "../definitions/product/components/data/services";
 import * as DataFiles from "../definitions/product/components/data/files";
 import * as ValidationHelper from "./validationHelper";
+import * as ValidatorFactory from "./validatorFactory";
 import { DateValidator } from "./dateValidator"
 
 //test reqs
@@ -28,35 +29,12 @@ export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
 
-  private getValidator() {
-    let validator = ajv({ allErrors: true, formats: "full" });
-    let asyncValidator = ajvasync(validator);
-
-    asyncValidator.addKeyword("fullDateValidation", {
-      type: "string",
-      errors: true,
-      validate: (schema, data) => {
-        //todo: Get real errors into avj error list.
-        var errors: string[] = []
-        DateValidator.validateDate(data, "", errors)
-
-        if (errors.length > 0) {
-          return false
-        } else {
-          return true
-        }
-      }
-    });
-
-    return asyncValidator;
-  }
-
   private validateProductProperties(collection: Collection.Collection, product: Product.Product, errors: string[]): Promise<string[]> {
     if (collection.productsSchema == "") {
       return Promise.resolve(errors)
     }
 
-    let asyncValidator = this.getValidator();
+    let asyncValidator = ValidatorFactory.getAsyncValidator();
 
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 
@@ -89,12 +67,12 @@ export class ProductValidator {
 
 
   validate(product: Product.Product): Promise<string[]> {
-    let asyncValidator = this.getValidator();
+    let asyncValidator = ValidatorFactory.getAsyncValidator();
 
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
     let errors: string[] = new Array<string>();
 
-    let promise = new Promise<string[]>((resolve, reject) => {
+    return new Promise<string[]>((resolve, reject) => {
       productSchemaValidator(product)
         .then(e => this.nonSchemaValidation(product, errors))
         .then(e => {
@@ -115,8 +93,6 @@ export class ProductValidator {
           reject(errors);
         })
     });
-
-    return promise;
   };
 };
 
@@ -137,6 +113,8 @@ describe("Product validator", () => {
     let p = Fixtures.GetTestProduct();
     p.name = "";
 
+    validator.validate(p).catch((x) => console.log(x))
+
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.lengthOf(1)
       .and.include('name | should match pattern "^([A-Za-z0-9-_.])+$"');
@@ -147,6 +125,8 @@ describe("Product validator", () => {
 
     p.collectionName = "";
 
+    validator.validate(p).catch((x) => console.log(x))
+
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
       .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
@@ -156,6 +136,8 @@ describe("Product validator", () => {
     let p = Fixtures.GetTestProduct();
 
     p.collectionName = "\\\\";
+
+    validator.validate(p).catch((x) => console.log(x))
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)

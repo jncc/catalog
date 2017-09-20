@@ -1,8 +1,7 @@
 import * as ajv from "ajv";
 import * as Query from "../query";
 import * as ValidationHelper from "../validation/validationHelper";
-
-import { DateValidator } from "../validation/dateValidator";
+import * as ValidatorFactory from "./validatorFactory";
 
 export class QueryValidator {
   public static validateQueryParams(schema: any, params: any): Promise<string[]> {
@@ -99,8 +98,7 @@ export class QueryValidator {
    */
   private static validateExtractedQueryParams(schema: any, extractedQueryParams: any[]): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      let validator = ajv({ allErrors: true, formats: "full" });
-      validator.addMetaSchema(require("ajv/lib/refs/json-schema-draft-04.json"));
+      let validator = ValidatorFactory.getValidator();
       let errors: string[] = new Array<string>();
 
       let propertySchemaValidator = validator.compile(schema);
