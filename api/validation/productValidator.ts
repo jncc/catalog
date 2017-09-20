@@ -106,10 +106,9 @@ describe("Product validator", () => {
   it("should validate a valid product", () => {
     let p = Fixtures.GetTestProduct();
 
-    validator.validate(p).then((x) => console.log(x.length)).catch((y) => console.log(y))
-
     return chai.expect(validator.validate(p))
-      .to.eventually.be.an('array').that.is.empty;
+      .to.be.fulfilled
+      .and.eventually.be.an('array').that.is.empty;
   });
 
   it("should not validate if no product name", () => {

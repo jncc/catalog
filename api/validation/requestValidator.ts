@@ -117,7 +117,11 @@ export class CollectionRequestValidator extends RequestValidator {
         this.validateSpatialOp(query.spatialop, errors);
       }
       
-      resolve([])
+      if(errors.length > 0) {
+        reject(errors)
+      } else {
+        resolve(errors)
+      }
     });
   }
 }
@@ -144,7 +148,7 @@ export class ProductRequestValidator extends RequestValidator {
           if (collection !== undefined) {
             query.types = QueryValidator.extractQueryDataTypes(collection.productsSchema, query);
             QueryValidator.validateQueryParams(collection.productsSchema, query.terms).then((x) => {
-              resolve();
+              resolve(errors);
             }).catch((err) => {
               reject(errors.concat(err));
             });
@@ -156,7 +160,7 @@ export class ProductRequestValidator extends RequestValidator {
         if (errors.length > 0) {
           reject(errors);
         } else {
-          resolve();
+          resolve(errors);
         }
       }
     });
@@ -169,8 +173,8 @@ describe("Product Request Validator", () => {
 
   it("should validate a valid search path", () => {
     return chai.expect(ProductRequestValidator.validate(new Query(p, {}), mockRepo))
-      .to.not.be.rejected
-      .and.eventually.be.empty
+      .to.be.fulfilled
+      .and.eventually.be.an('array').that.is.empty;
   });
 
   it("should not validate an wildcard search path", () => {
@@ -194,8 +198,8 @@ describe("Product Request Validator", () => {
   it("should validate a valid spatialOp", () => {
     ["within", "intersects", "overlaps"].forEach((x) => {
       return chai.expect(ProductRequestValidator.validate(new Query(p, { spatialop: x }), mockRepo))
-        .to.not.be.rejected
-        .and.eventually.be.empty;
+        .to.be.fulfilled
+        .and.eventually.an('array').that.is.empty;
     });
   });
 
@@ -215,8 +219,8 @@ describe("Product Request Validator", () => {
       "-2.2043681144714355 53.692260240428965))";
 
     return chai.expect(ProductRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
-      .to.not.be.rejected
-      .and.eventually.be.empty
+      .to.be.fulfilled
+      .and.eventually.be.an('array').that.is.empty;
   });
 
   it("should not validate an ivalid WKT footprint", () => {
@@ -252,9 +256,9 @@ describe("Collection Request Validator", () => {
   let mockRepo = Fixtures.GetMockRepo().object;
 
   it("should validate a valid search path", () => {
-    return chai.expect(ProductRequestValidator.validate(new Query(p, {}), mockRepo))
-      .to.not.be.rejected
-      .and.eventually.be.empty;
+    return chai.expect(CollectionRequestValidator.validate(new Query(p, {}), mockRepo))
+      .to.be.fulfilled
+      .and.eventually.be.an('array').that.is.empty;
   });
 
   it("should not validate an invalid search path", () => {
@@ -269,8 +273,8 @@ describe("Collection Request Validator", () => {
   it("should validate a valid spatialOp", () => {
     ["within", "intersects", "overlaps"].forEach((x) => {
       return chai.expect(CollectionRequestValidator.validate(new Query(p, { spatialop: x }), mockRepo))
-        .to.not.be.rejected
-        .and.eventually.be.empty;
+        .to.be.fulfilled
+        .and.eventually.be.an('array').that.is.empty;
     });
   });
 
@@ -290,8 +294,8 @@ describe("Collection Request Validator", () => {
       "-2.2043681144714355 53.692260240428965))";
 
     return chai.expect(CollectionRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
-      .to.not.be.rejected
-      .and.eventually.be.empty;
+      .to.be.fulfilled
+      .and.eventually.be.an('array').that.is.empty;
   });
 
   it("should not validate an ivalid WKT footprint", () => {
