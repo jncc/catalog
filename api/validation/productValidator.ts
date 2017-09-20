@@ -113,8 +113,6 @@ describe("Product validator", () => {
     let p = Fixtures.GetTestProduct();
     p.name = "";
 
-    validator.validate(p).catch((x) => console.log(x))
-
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.lengthOf(1)
       .and.include('name | should match pattern "^([A-Za-z0-9-_.])+$"');
@@ -125,11 +123,9 @@ describe("Product validator", () => {
 
     p.collectionName = "";
 
-    validator.validate(p).catch((x) => console.log(x))
-
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
+      .and.include('collectionName | should match pattern "^(([A-Za-z0-9\_\-]+)(\/))*([A-Za-z0-9\_\-])+$"');
   });
 
   it("should not validate and invalid collection name", () => {
@@ -137,11 +133,9 @@ describe("Product validator", () => {
 
     p.collectionName = "\\\\";
 
-    validator.validate(p).catch((x) => console.log(x))
-
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.include('collectionName | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
+      .and.include('collectionName | should match pattern "^(([A-Za-z0-9\_\-]+)(\/))*([A-Za-z0-9\_\-])+$"');
   });
 
   // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
