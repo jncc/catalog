@@ -9,7 +9,8 @@ import { Query } from "./query";
 import { CatalogRepository } from "./repository/catalogRepository";
 import { getEnvironmentSettings } from "./settings";
 import { ProductValidator } from "./validation/productValidator";
-import { CollectionRequestValidator, ProductRequestValidator } from "./validation/requestValidator";
+import { CollectionRequestValidator } from "./validation/request/collectionRequestValidator";
+import { ProductRequestValidator } from "./validation/request/productRequestValidator";
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
