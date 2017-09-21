@@ -1,31 +1,31 @@
-export interface ogc {
-  url: string,
-  name: string
-};
+export interface IOGC {
+  url: string;
+  name: string;
+}
 
-export interface wms extends ogc { };
-export interface wfs extends ogc { };
+export interface IWMS extends IOGC { }
+export interface IWFS extends IOGC { }
 
 export const Schema = {
-  "wms": {
-    "$ref": "#/definitions/services/ogc"
+  wms: {
+    $ref: "#/definitions/services/ogc"
   },
-  "wfs": {
-    "$ref": "#/definitions/services/ogc"
+  wfs: {
+    $ref: "#/definitions/services/ogc"
   },
-  "ogc": {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "url": {
-        "type": "string",
-        "format": "uri"
+  ogc: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      url: {
+        type: "string",
+        format: "uri"
       },
-      "name": {
-        "type": "string",
-        "minLength": 1
+      name: {
+        type: "string",
+        minLength: 1
       }
     },
-    "required": ["url", "name"]
+    required: ["url", "name"]
   }
 };

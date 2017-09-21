@@ -29,7 +29,7 @@ chai.use(chaiAsPromised);
 export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
-  public validate(product: Product.Product): Promise<string[]> {
+  public validate(product: Product.IProduct): Promise<string[]> {
     let asyncValidator = ValidatorFactory.getAsyncValidator();
 
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
@@ -58,7 +58,7 @@ export class ProductValidator {
     });
   }
 
-  private validateProductProperties(collection: Collection.Collection, product: Product.Product, errors: string[]): Promise<string[]> {
+  private validateProductProperties(collection: Collection.ICollection, product: Product.IProduct, errors: string[]): Promise<string[]> {
     if (collection.productsSchema === "") {
       return Promise.resolve(errors);
     }
@@ -80,7 +80,7 @@ export class ProductValidator {
     return promise;
   }
 
-  private nonSchemaValidation(product: Product.Product, errors: string[]): Promise<string[]> {
+  private nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
     // Fix common issues with footprint and validate it
     product.footprint = Footprint.fixCommonIssues(product.footprint);
     errors = Footprint.nonSchemaValidation(product.footprint, errors);
@@ -709,7 +709,7 @@ describe("Product Properties Validator", () => {
   it("should validate a product with an valid properties collection", () => {
 
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
+      let c: Collection.ICollection = Fixtures.GetCollection();
       c.productsSchema = {
         type: "object",
         title: "Properties",
@@ -739,7 +739,7 @@ describe("Product Properties Validator", () => {
   it("should validate a product with an valid properties collection - formatted string types", () => {
 
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
+      let c: Collection.ICollection = Fixtures.GetCollection();
       c.productsSchema = {
         type: "object",
         title: "Properties",
@@ -775,7 +775,7 @@ describe("Product Properties Validator", () => {
   it("should not validate a product with an invalid properties collection - non-matching definitions", () => {
 
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
+      let c: Collection.ICollection = Fixtures.GetCollection();
       c.productsSchema = {
         type: "object",
         title: "Properties",
@@ -808,7 +808,7 @@ describe("Product Properties Validator", () => {
   it("should not validate a product with an bad properties collection - formatted string types", () => {
 
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
+      let c: Collection.ICollection = Fixtures.GetCollection();
       c.productsSchema = {
         type: "object",
         title: "Properties",
@@ -847,7 +847,7 @@ describe("Product Properties Validator", () => {
   it("should not validate a product with an invalid properties collection - missing definitions", () => {
 
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
+      let c: Collection.ICollection = Fixtures.GetCollection();
       c.productsSchema = {
         type: "object",
         title: "Properties",
@@ -878,7 +878,7 @@ describe("Product Properties Validator", () => {
   it("Should not validate invalid dates", () => {
 
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
+      let c: Collection.ICollection = Fixtures.GetCollection();
       c.productsSchema = {
         type: "object",
         title: "Properties",
@@ -909,7 +909,7 @@ describe("Product Properties Validator", () => {
   it("Should validate valid dates", () => {
 
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection.Collection = Fixtures.GetCollection();
+      let c: Collection.ICollection = Fixtures.GetCollection();
       c.productsSchema = {
         type: "object",
         title: "Properties",

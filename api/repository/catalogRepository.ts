@@ -2,15 +2,15 @@ import * as squel from "squel";
 import * as Query from "../query";
 import * as QueryValidator from "../validation/queryValidator";
 
-import { Collection } from "../definitions/collection/collection";
-import { Product } from "../definitions/product/product";
+import { ICollection } from "../definitions/collection/collection";
+import { IProduct } from "../definitions/product/product";
 
 import { Database } from "./database";
 
-//todo: handle database errors nicely
+// todo: handle database errors nicely
 
 export class CatalogRepository {
-  public getCollections(query: Query.Query, limit: number, offset: number): Promise<Collection[]> {
+  public getCollections(query: Query.Query, limit: number, offset: number): Promise<ICollection[]> {
     let collectionName = query.collection.replace(/\*/g, "%");
     return Database.instance.connection.task((t) => {
       let baseQuery = squel.select({ numberedParameters: true })
@@ -29,7 +29,7 @@ export class CatalogRepository {
     });
   }
 
-  public getCollection(name: string): Promise<Collection> {
+  public getCollection(name: string): Promise<ICollection> {
     return Database.instance.connection.task((t) => {
       let baseQuery = squel.select({ numberedParameters: true })
         .from("collection")
@@ -59,7 +59,7 @@ export class CatalogRepository {
     });
   }
 
-  public getProducts(query: Query.Query): Promise<Product[]> {
+  public getProducts(query: Query.Query): Promise<IProduct[]> {
     // Replace wildcard characters in the name
     let productName = query.productName.replace(/\*/g, "%");
 
@@ -87,7 +87,7 @@ export class CatalogRepository {
     });
   }
 
-  public storeProduct(product: Product): Promise<string> {
+  public storeProduct(product: IProduct): Promise<string> {
     return Database.instance.connection.task((t) => {
       return t.one("select id from collection where name = $1", product.collectionName, (x) => x && x.id)
         .then((collectionId) => {

@@ -34,5 +34,4 @@ export abstract class RequestValidator {
       errors.push("spatialop | should be one of 'within', 'intersects', 'overlaps'");
     }
   }
-
 }

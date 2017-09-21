@@ -80,7 +80,7 @@ app.post(`/search/product`, async (req, res) => {
 });
 
 app.post(`/validate`, async (req, res) => {
-  let product: Product.Product = req.body;
+  let product: Product.IProduct = req.body;
   let productValidtor = new ProductValidator(catalogRepository);
 
   productValidtor.validate(product)
@@ -94,7 +94,7 @@ app.post(`/validate`, async (req, res) => {
 
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
-  let product: Product.Product = req.body;
+  let product: Product.IProduct = req.body;
   let productValidtor = new ProductValidator(catalogRepository);
 
   // todo check product exists

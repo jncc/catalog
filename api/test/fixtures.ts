@@ -1,5 +1,5 @@
-import { Collection } from "../definitions/collection/collection";
-import { Product } from "../definitions/product/product";
+import { ICollection } from "../definitions/collection/collection";
+import { IProduct } from "../definitions/product/product";
 import { CatalogRepository } from "../repository/catalogRepository";
 
 import * as chai from "chai";
@@ -11,7 +11,7 @@ import * as TypeMoq from "typemoq";
 require("mocha-inline")();
 
 export class Fixtures {
-  public static GetTestProduct(): Product {
+  public static GetTestProduct(): IProduct {
     let content = fs.readFileSync("./api/test/product.json", "utf8");
     return JSON.parse(content);
   }
@@ -35,7 +35,7 @@ export class Fixtures {
     };
   }
 
-  public static GetCollection(): Collection {
+  public static GetCollection(): ICollection {
     return {
       id: "3bfc0280-5708-40ee-aef4-df3ddeb4fd21",
       name: "test/collection",
@@ -58,16 +58,16 @@ export class Fixtures {
     });
     mockRepo.setup((x) => x.getCollections(TypeMoq.It.isAny(), TypeMoq.It.isAnyNumber(), TypeMoq.It.isAnyNumber()))
       .returns((x, y) => {
-        let c: Collection = Fixtures.GetCollection();
+        let c: ICollection = Fixtures.GetCollection();
         return Promise.resolve([c]);
     });
     mockRepo.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      let c: Collection = Fixtures.GetCollection();
+      let c: ICollection = Fixtures.GetCollection();
       return Promise.resolve(c);
     });
     mockRepo.setup((x) => x.getProducts(TypeMoq.It.isAny()))
       .returns((x, y) => {
-        let p: Product = Fixtures.GetTestProduct();
+        let p: IProduct = Fixtures.GetTestProduct();
         return Promise.resolve([p]);
     });
     mockRepo.setup((x) => x.storeProduct(TypeMoq.It.isAny())).returns((x, y) => {
