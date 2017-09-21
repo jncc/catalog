@@ -1,6 +1,5 @@
-import * as ajv from "ajv";
-import * as ajvasync from "ajv-async";
 import * as ValidationHelper from "../../validation/validationHelper";
+import * as ValidatorFactory from "../../validation/validatorFactory";
 import * as Footprint from "../components/footprint";
 import * as Metadata from "../components/metadata";
 
@@ -13,9 +12,7 @@ export interface ICollection {
 }
 
 export function validate(collection: ICollection) {
-  let validator = ajv({ async: "es7", allErrors: true, formats: "full" });
-  let asyncValidator = ajvasync(validator);
-
+  let asyncValidator = ValidatorFactory.getAsyncValidator({ async: "es7", allErrors: true, formats: "full" });
   let collectionSchemaValidator = asyncValidator.compile(Schema);
   let errors: string[] = new Array<string>();
 

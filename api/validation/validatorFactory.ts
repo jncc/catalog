@@ -3,8 +3,8 @@ import * as ajvasync from "ajv-async";
 
 import { DateValidator } from "../validation/dateValidator";
 
-export function getValidator() {
-    let validator = ajv({ allErrors: true, formats: "full" });
+export function getValidator(options: any = {allErrors: true, formats: "full"}) {
+    let validator = ajv(options);
 
     validator.addMetaSchema(require("ajv/lib/refs/json-schema-draft-04.json"));
     validator.addKeyword("fullDateValidation", {
@@ -26,6 +26,9 @@ export function getValidator() {
     return validator;
   }
 
-export function getAsyncValidator() {
-  return ajvasync(getValidator());
+export function getAsyncValidator(options: any = {}) {
+  if (options === undefined || (Object.keys(options).length === 0 && options.constructor === Object)) {
+    return ajvasync(getValidator());
+  }
+  return ajvasync(getValidator(options));
 }

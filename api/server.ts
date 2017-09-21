@@ -1,4 +1,3 @@
-import * as ajv from "ajv";
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as Collection from "./definitions/collection/collection";

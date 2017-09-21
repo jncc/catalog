@@ -6,8 +6,6 @@ import * as wellknown from "wellknown";
 
 import { Query } from "../../query";
 
-import mochainline = require("mocha-inline");
-
 export abstract class RequestValidator {
   protected static validateRequestParameter(query: Query, errors: string[]) {
     if (!query.collection.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {

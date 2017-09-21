@@ -1,5 +1,3 @@
-import * as ajv from "ajv";
-import * as ajvasync from "ajv-async";
 import "mocha";
 
 import * as Collection from "../definitions/collection/collection";

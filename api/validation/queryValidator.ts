@@ -1,4 +1,3 @@
-import * as ajv from "ajv";
 import * as Query from "../query";
 import * as ValidationHelper from "../validation/validationHelper";
 import * as ValidatorFactory from "./validatorFactory";
