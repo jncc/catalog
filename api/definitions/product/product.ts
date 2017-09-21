@@ -13,7 +13,7 @@ export interface Product {
   metadata: Metadata.Metadata,
   properties: Properties.Properties,
   data: Data.Data,
-  footprint: Footprint.Footprint
+  footprint: Footprint.IFootprint
 };
 
 export const Schema = {

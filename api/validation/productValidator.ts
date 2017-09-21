@@ -1,37 +1,66 @@
-/* tslint:disable */
-import { CatalogRepository } from "../repository/catalogRepository";
-import * as Product from "../definitions/product/product";
-import * as Collection from "../definitions/collection/collection";
 import * as ajv from "ajv";
 import * as ajvasync from "ajv-async";
+import "mocha";
+
+import * as Collection from "../definitions/collection/collection";
 import * as Footprint from "../definitions/components/footprint";
 import * as Metadata from "../definitions/components/metadata";
-import * as Properties from "../definitions/product/components/properties";
 import * as Data from "../definitions/product/components/data/data";
-import * as DataServices from "../definitions/product/components/data/services";
 import * as DataFiles from "../definitions/product/components/data/files";
+import * as DataServices from "../definitions/product/components/data/services";
+import * as Properties from "../definitions/product/components/properties";
+import * as Product from "../definitions/product/product";
+import { CatalogRepository } from "../repository/catalogRepository";
+import { DateValidator } from "./dateValidator";
 import * as ValidationHelper from "./validationHelper";
 import * as ValidatorFactory from "./validatorFactory";
-import { DateValidator } from "./dateValidator"
 
-//test reqs
-import "mocha";
+// Test reqs
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as TypeMoq from "typemoq";
 import { Fixtures } from "../test/fixtures";
 
-//test setup
+// Test setup
+// tslint:disable-next-line:no-var-requires
 require("mocha-inline")();
 chai.use(chaiAsPromised);
 
 export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
+  public validate(product: Product.Product): Promise<string[]> {
+    let asyncValidator = ValidatorFactory.getAsyncValidator();
+
+    let productSchemaValidator = asyncValidator.compile(Product.Schema);
+    let errors: string[] = new Array<string>();
+
+    return new Promise<string[]>((resolve, reject) => {
+      productSchemaValidator(product)
+        .then(() => this.nonSchemaValidation(product, errors))
+        .then((e) => {
+          if (errors.length === 0) {
+            resolve(errors);
+          } else {
+            reject(errors);
+          }
+        })
+        .catch((e) => {
+          if ("errors" in e) {
+            // Return from an AJV promise
+            errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
+          } else {
+            // Return from a nonSchemaValidation promise
+            errors = errors.concat(e);
+          }
+          reject(errors);
+        });
+    });
+  }
 
   private validateProductProperties(collection: Collection.Collection, product: Product.Product, errors: string[]): Promise<string[]> {
-    if (collection.productsSchema == "") {
-      return Promise.resolve(errors)
+    if (collection.productsSchema === "") {
+      return Promise.resolve(errors);
     }
 
     let asyncValidator = ValidatorFactory.getAsyncValidator();
@@ -40,12 +69,12 @@ export class ProductValidator {
 
     let promise = new Promise<string[]>((resolve, reject) => {
       propertiesSchemaValidator(product.properties)
-        .then(e => {
+        .then(() => {
           resolve();
-        }).catch(e => {
+        }).catch((e) => {
           errors = errors.concat(ValidationHelper.reduceErrors(e.errors, "properties"));
           reject(errors);
-        })
+        });
     });
 
     return promise;
@@ -58,43 +87,13 @@ export class ProductValidator {
     // Run additional validation on metadata
     errors = Metadata.nonSchemaValidation(product.metadata, errors);
     // Validate product properties according to its collection properties_schema
-    return this.repository.checkCollectionNameExists(errors, product.collectionName).then(check => {
-      return this.repository.getCollection(product.collectionName).then(c => {
+    return this.repository.checkCollectionNameExists(errors, product.collectionName).then((check) => {
+      return this.repository.getCollection(product.collectionName).then((c) => {
         return this.validateProductProperties(c, product, errors);
-      })
+      });
     });
   }
-
-
-  validate(product: Product.Product): Promise<string[]> {
-    let asyncValidator = ValidatorFactory.getAsyncValidator();
-
-    let productSchemaValidator = asyncValidator.compile(Product.Schema);
-    let errors: string[] = new Array<string>();
-
-    return new Promise<string[]>((resolve, reject) => {
-      productSchemaValidator(product)
-        .then(e => this.nonSchemaValidation(product, errors))
-        .then(e => {
-          if (errors.length == 0) {
-            resolve(errors);
-          } else {
-            reject(errors);
-          }
-        })
-        .catch(e => {
-          if ("errors" in e) {
-            // Return from an AJV promise
-            errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
-          } else {
-            // Return from a nonSchemaValidation promise
-            errors = errors.concat(e);
-          }
-          reject(errors);
-        })
-    });
-  };
-};
+}
 
 // Tests
 
@@ -108,7 +107,7 @@ describe("Product validator", () => {
 
     return chai.expect(validator.validate(p))
       .to.be.fulfilled
-      .and.eventually.be.an('array').that.is.empty;
+      .and.eventually.be.an("array").that.is.empty;
   });
 
   it("should not validate if no product name", () => {
@@ -144,7 +143,7 @@ describe("Product validator", () => {
   // TODO: Using isAny but really should be an array if we can figure it out
   it("should not validate a product with an invalid collection name", () => {
     let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
       return Promise.reject(x);
     });
 
@@ -200,8 +199,8 @@ describe("Metadata validator", () => {
   it("should not validate metadata keyword with no value", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.keywords = [{
-      "value": "",
-      "vocab": "vocab"
+      value: "",
+      vocab: "vocab"
     }];
 
     return chai.expect(validator.validate(p)).to.be.rejected
@@ -212,8 +211,8 @@ describe("Metadata validator", () => {
   it("should not validate metadata keyword with a defined vocab but with no value", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.keywords = [{
-      "value": "value",
-      "vocab": ""
+      value: "value",
+      vocab: ""
     }];
 
     return chai.expect(validator.validate(p)).to.be.rejected
@@ -224,7 +223,7 @@ describe("Metadata validator", () => {
   it("should validate metadata keyword with a value and no vocab", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.keywords = [{
-      "value": "value"
+      value: "value"
     }];
 
     return chai.expect(validator.validate(p)).to.be.fulfilled;
@@ -233,8 +232,8 @@ describe("Metadata validator", () => {
   it("should validate metadata keyword with a value and vocab", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.keywords = [{
-      "value": "value",
-      "vocab": "vocab"
+      value: "value",
+      vocab: "vocab"
     }];
 
     return chai.expect(validator.validate(p)).to.be.fulfilled;
@@ -243,8 +242,8 @@ describe("Metadata validator", () => {
   it("should not validate metadata temporalExtent without a valid begin and end date-time", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.temporalExtent = {
-      "begin": "not-date",
-      "end": "not-date"
+      begin: "not-date",
+      end: "not-date"
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
@@ -308,9 +307,9 @@ describe("Metadata validator", () => {
   it("should not validate metadata without a valid responsibleOrganisation, name, email and role (email minimum)", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.responsibleOrganisation = {
-      "name": "",
-      "email": "not-an-email",
-      "role": ""
+      name: "",
+      email: "not-an-email",
+      role: ""
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
@@ -375,9 +374,9 @@ describe("Metadata validator", () => {
   it("should not validate metadata without a valid metadataPointOfContact, name, email and role (email minimum)", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.metadataPointOfContact = {
-      "name": "",
-      "email": "not-an-email",
-      "role": ""
+      name: "",
+      email: "not-an-email",
+      role: ""
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
@@ -399,10 +398,10 @@ describe("Metadata validator", () => {
   it("should not validate metadata with an invalid boundingBox", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.boundingBox = {
-      "north": 57.7062934711795,
-      "south": 57.7960680443262,
-      "east": -4.0203233299185,
-      "west": -3.85220733512446
+      north: 57.7062934711795,
+      south: 57.7960680443262,
+      east: -4.0203233299185,
+      west: -3.85220733512446
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
@@ -608,19 +607,19 @@ describe("Footprint Validator", () => {
   it("should not validate a invalid GeoJSON blob", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = {
-      "type": "Bobbins",
-      "coordinates": [
+      type: "Bobbins",
+      coordinates: [
         [-3.252708444643698, 55.01808601299337],
         [-3.096345813599173, 55.01959554822891],
         [-3.098805121795129, 55.1094396249146],
         [-3.25551820944467, 55.10792506925024],
         [-3.252708444643698, 55.01808601299337]
       ],
-      "crs": {
-        "properties": {
-          "name": "mine"
+      crs: {
+        properties: {
+          name: "mine"
         },
-        "type": "name"
+        type: "name"
       }
     };
 
@@ -631,19 +630,19 @@ describe("Footprint Validator", () => {
   it("should not validate a non Multipolygon footprint", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = {
-      "type": "Polygon",
-      "coordinates": [[
+      type: "Polygon",
+      coordinates: [[
         [-3.252708444643698, 55.01808601299337],
         [-3.096345813599173, 55.01959554822891],
         [-3.098805121795129, 55.1094396249146],
         [-3.25551820944467, 55.10792506925024],
         [-3.252708444643698, 55.01808601299337]
       ]],
-      "crs": {
-        "properties": {
-          "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+      crs: {
+        properties: {
+          name: "urn:ogc:def:crs:OGC:1.3:CRS84"
         },
-        "type": "name"
+        type: "name"
       }
     };
 
@@ -655,7 +654,7 @@ describe("Footprint Validator", () => {
   it("should validate a missing CRS, replacing it with default for pushing into Postgres", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = Fixtures.GetFootprint();
-    delete p.footprint["crs"];
+    delete p.footprint.crs;
 
     return chai.expect(validator.validate(p)).to.be.fulfilled;
   });
@@ -663,7 +662,7 @@ describe("Footprint Validator", () => {
   it("should not validate a non WGS84 CRS", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = Fixtures.GetFootprint();
-    p.footprint["crs"]["properties"]["name"] = "EPSG:27700";
+    p.footprint.crs.properties.name = "EPSG:27700";
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
@@ -673,7 +672,7 @@ describe("Footprint Validator", () => {
   it("should validate a CRS as EPSG:4326", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = Fixtures.GetFootprint();
-    p.footprint["crs"]["properties"]["name"] = "EPSG:4326";
+    p.footprint.crs.properties.name = "EPSG:4326";
 
     return chai.expect(validator.validate(p)).to.be.fulfilled;
   });
@@ -681,7 +680,7 @@ describe("Footprint Validator", () => {
   it("should validate a CRS as urn:ogc:def:crs:OGC:1.3:CRS84", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = Fixtures.GetFootprint();
-    p.footprint["crs"]["properties"]["name"] = "urn:ogc:def:crs:OGC:1.3:CRS84";
+    p.footprint.crs.properties.name = "urn:ogc:def:crs:OGC:1.3:CRS84";
 
     return chai.expect(validator.validate(p)).to.be.fulfilled;
   });
@@ -689,7 +688,7 @@ describe("Footprint Validator", () => {
   it("should validate a CRS as urn:ogc:def:crs:EPSG::4326", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = Fixtures.GetFootprint();
-    p.footprint["crs"]["properties"]["name"] = "urn:ogc:def:crs:EPSG::4326";
+    p.footprint.crs.properties.name = "urn:ogc:def:crs:EPSG::4326";
 
     return chai.expect(validator.validate(p)).to.be.fulfilled;
   });
@@ -698,40 +697,40 @@ describe("Footprint Validator", () => {
 describe("Product Properties Validator", () => {
   let mockRepo = Fixtures.GetMockRepo();
   let validator = new ProductValidator(mockRepo.object);
-  let mr: TypeMoq.IMock<CatalogRepository>
+  let mr: TypeMoq.IMock<CatalogRepository>;
 
   beforeEach(() => {
     mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup(x => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
       return Promise.resolve(x);
     });
-  })
+  });
 
   it("should validate a product with an valid properties collection", () => {
 
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "required": ["externalId"],
-        "properties": {
-          "externalId": {
-            "type": "integer"
+        type: "object",
+        title: "Properties",
+        $async: true,
+        $schema: "http://json-schema.org/draft-04/schema#",
+        required: ["externalId"],
+        properties: {
+          externalId: {
+            type: "integer"
           }
         },
-        "additionalProperties": false
+        additionalProperties: false
       };
       return Promise.resolve(c);
-    })
+    });
 
     let v2 = new ProductValidator(mr.object);
 
     const product = Fixtures.GetTestProduct();
     product.properties = {
-      "externalId": 1145234
+      externalId: 1145234
     };
 
     return chai.expect(v2.validate(product)).to.be.fulfilled;
@@ -739,25 +738,25 @@ describe("Product Properties Validator", () => {
 
   it("should validate a product with an valid properties collection - formatted string types", () => {
 
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "required": ["externalId"],
-        "properties": {
-          "externalId": {
-            "type": "string",
-            "format": "uuid"
+        type: "object",
+        title: "Properties",
+        $async: true,
+        $schema: "http://json-schema.org/draft-04/schema#",
+        required: ["externalId"],
+        properties: {
+          externalId: {
+            type: "string",
+            format: "uuid"
           },
-          "datetime": {
-            "type": "string",
-            "format": "date-time"
+          datetime: {
+            type: "string",
+            format: "date-time"
           }
         },
-        "additionalProperties": false
+        additionalProperties: false
       };
       return Promise.resolve(c);
     });
@@ -766,8 +765,8 @@ describe("Product Properties Validator", () => {
 
     const product = Fixtures.GetTestProduct();
     product.properties = {
-      "externalId": "cdc1c5c4-0940-457e-8583-e1cd45b0a5a3",
-      "datetime": "2017-06-28T00:00:00Z"
+      externalId: "cdc1c5c4-0940-457e-8583-e1cd45b0a5a3",
+      datetime: "2017-06-28T00:00:00Z"
     };
 
     return chai.expect(v2.validate(product)).to.be.fulfilled;
@@ -775,31 +774,31 @@ describe("Product Properties Validator", () => {
 
   it("should not validate a product with an invalid properties collection - non-matching definitions", () => {
 
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "required": ["externalId"],
-        "properties": {
-          "externalId": {
-            "type": "string",
-            "minLength": 1
+        type: "object",
+        title: "Properties",
+        $async: true,
+        $schema: "http://json-schema.org/draft-04/schema#",
+        required: ["externalId"],
+        properties: {
+          externalId: {
+            type: "string",
+            minLength: 1
           }
         },
-        "additionalProperties": false
+        additionalProperties: false
       };
       return Promise.resolve(c);
     });
 
-    let v2 = new ProductValidator(mr.object)
+    let v2 = new ProductValidator(mr.object);
 
     const product = Fixtures.GetTestProduct();
     product.properties = {
-      "externalId": 1145234
-    }
+      externalId: 1145234
+    };
 
     return chai.expect(v2.validate(product)).to.be.rejected
       .and.eventually.have.length(1)
@@ -808,25 +807,25 @@ describe("Product Properties Validator", () => {
 
   it("should not validate a product with an bad properties collection - formatted string types", () => {
 
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "required": ["externalId"],
-        "properties": {
-          "externalId": {
-            "type": "string",
-            "format": "uuid"
+        type: "object",
+        title: "Properties",
+        $async: true,
+        $schema: "http://json-schema.org/draft-04/schema#",
+        required: ["externalId"],
+        properties: {
+          externalId: {
+            type: "string",
+            format: "uuid"
           },
-          "datetime": {
-            "type": "string",
-            "format": "date-time"
+          datetime: {
+            type: "string",
+            format: "date-time"
           }
         },
-        "additionalProperties": false
+        additionalProperties: false
       };
       return Promise.resolve(c);
     });
@@ -835,33 +834,33 @@ describe("Product Properties Validator", () => {
 
     const product = Fixtures.GetTestProduct();
     product.properties = {
-      "externalId": "not-a-uuid",
-      "datetime": "2017-06-28"
+      externalId: "not-a-uuid",
+      datetime: "2017-06-28"
     };
 
     return chai.expect(v2.validate(product)).to.be.rejected
       .and.eventually.have.length(2)
       .and.contain('properties.externalId | should match format "uuid"')
-      .and.contain('properties.datetime | should match format "date-time"');;
+      .and.contain('properties.datetime | should match format "date-time"');
   });
 
   it("should not validate a product with an invalid properties collection - missing definitions", () => {
 
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "required": ["externalId"],
-        "properties": {
-          "externalId": {
-            "type": "string",
-            "minLength": 1
+        type: "object",
+        title: "Properties",
+        $async: true,
+        $schema: "http://json-schema.org/draft-04/schema#",
+        required: ["externalId"],
+        properties: {
+          externalId: {
+            type: "string",
+            minLength: 1
           }
         },
-        "additionalProperties": false
+        additionalProperties: false
       };
       return Promise.resolve(c);
     });
@@ -878,18 +877,18 @@ describe("Product Properties Validator", () => {
 
   it("Should not validate invalid dates", () => {
 
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "fullDateValidation": true
+        type: "object",
+        title: "Properties",
+        $async: true,
+        $schema: "http://json-schema.org/draft-04/schema#",
+        properties: {
+          date: {
+            type: "string",
+            format: "date-time",
+            fullDateValidation: true
           },
         },
       };
@@ -904,23 +903,23 @@ describe("Product Properties Validator", () => {
     };
 
     return chai.expect(v2.validate(product)).to.be.rejected
-      .and.eventually.have.length(1)
-  })
+      .and.eventually.have.length(1);
+  });
 
   it("Should validate valid dates", () => {
 
-    mr.setup(x => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: Collection.Collection = Fixtures.GetCollection();
       c.productsSchema = {
-        "type": "object",
-        "title": "Properties",
-        "$async": true,
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "fullDateValidation": true
+        type: "object",
+        title: "Properties",
+        $async: true,
+        $schema: "http://json-schema.org/draft-04/schema#",
+        properties: {
+          date: {
+            type: "string",
+            format: "date-time",
+            fullDateValidation: true
           },
         },
       };
@@ -934,6 +933,6 @@ describe("Product Properties Validator", () => {
       date: "2015-02-12T00:00:00Z"
     };
 
-    return chai.expect(v2.validate(product)).to.eventually.be.empty
-  })
-})
+    return chai.expect(v2.validate(product)).to.eventually.be.empty;
+  });
+});

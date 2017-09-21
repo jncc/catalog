@@ -1,15 +1,15 @@
 import * as ajv from "ajv";
-import * as ajvasync from "ajv-async"
-import * as ValidationHelper from "../../validation/validationHelper"
-import * as Metadata from "../components/metadata"
-import * as Footprint from "../components/footprint"
+import * as ajvasync from "ajv-async";
+import * as ValidationHelper from "../../validation/validationHelper";
+import * as Footprint from "../components/footprint";
+import * as Metadata from "../components/metadata";
 
 export interface Collection {
   id: string,
   name: string,
   metadata: Metadata.Metadata,
   productsSchema: any,
-  footprint: Footprint.Footprint
+  footprint: Footprint.IFootprint
 };
 
 export function validate(collection: Collection) {
