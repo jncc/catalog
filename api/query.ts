@@ -29,7 +29,6 @@ export class Query {
   public footprint: string = "";
   public spatialop: string = "";
   public terms: ITerm[] = [];
-  public types: any = {};
   public productName: string = "*";
 
   // todo: type request

@@ -4,49 +4,170 @@ import * as chai from "chai"; // test reqs
 import * as chaiAsPromised from "chai-as-promised";
 
 
-import { Query } from "../../query";
+import { Query, ITerm, ALLOWED_OPERATORS } from "../../query";
 import { CatalogRepository } from "../../repository/catalogRepository";
 import { Fixtures } from "../../test/fixtures";
-import { QueryValidator } from "../queryValidator";
 import { RequestValidator } from "./requestValidator";
+import * as ValidationHelper from "../validationHelper";
+import * as ValidatorFactory from "../validatorFactory";
+import { ICollection } from "../../definitions/collection/collection"
 
 export class ProductRequestValidator extends RequestValidator {
   public static validate(query: Query, catalogRepository: CatalogRepository): Promise<string[]> {
     return new Promise((resolve, reject) => {
       let errors: string[] = [];
 
-      if (!query.collection.match(/^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/)) {
-        // tslint:disable-next-line:max-line-length
-        errors.push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"');
-      }
       if (query.footprint !== "") {
         this.validateFootprint(query.footprint, errors);
       }
+
       if (query.spatialop !== "") {
         this.validateSpatialOp(query.spatialop, errors);
       }
 
-      if (query.terms.length > 0) {
+      if (this.validCollectionNameFormat(query,errors) && query.terms.length > 0) {
+
         catalogRepository.getCollection(query.collection).then((collection) => {
-          if (collection !== undefined) {
-            query.types = QueryValidator.extractQueryDataTypes(collection.productsSchema, query);
-            QueryValidator.validateQueryParams(collection.productsSchema, query.terms).then((x) => {
-              resolve(errors);
-            }).catch((err) => {
-              reject(errors.concat(err));
-            });
+          if (collection == undefined) {
+            errors.push("searchParam | collection must exist")
           } else {
-            reject(["searchParam | collection must exist"]);
+            let queryDataTypes = this.extractQueryDataTypes(collection.productsSchema, query)
+            let validationSchema = this.getValidationSchema(collection.productsSchema);
+            let extractedQueryParams = this.getExtractedQueryParams(query.terms);
+            
+            this.validateExtractedQueryParams(validationSchema, extractedQueryParams, errors)
+            //todo: rework this.
+            this.validateQueryOperations(query, queryDataTypes)
           }
-        });
-      } else {
-        if (errors.length > 0) {
+        })    
+      }
+
+      if (errors.length > 0) {
           reject(errors);
-        } else {
+      } else {
           resolve(errors);
+      }
+    });
+  }
+  
+  private static validCollectionNameFormat(query: Query, errors: string[]): boolean {
+    let isvalid = true
+    if (!query.collection.match(/^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/)) {
+      // tslint:disable-next-line:max-line-length
+      errors.push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"');
+      isvalid = false
+    }
+
+    return isvalid;
+  }
+
+  public static extractQueryDataTypes(schema: any, query: Query): any {
+    let properties = query.terms.map((term) => term.property);
+    let tm: any = {};
+
+    properties.filter((item, position) => properties.indexOf(item) === position).forEach((property) => {
+      if (schema.properties.hasOwnProperty(property)) {
+        if (schema.properties[property].type === "string") {
+          if (schema.properties[property].hasOwnProperty("format") && ["date", "date-time"].indexOf(schema.properties[property].format) >= 0) {
+            tm[property] = schema.properties[property].format;
+          } else {
+            tm[property] = "string";
+          }
+        } else if (schema.properties[property].type === "number") {
+          tm[property] = "double";
+        } else if (schema.properties[property].type === "integer") {
+          tm[property] = "int";
         }
       }
     });
+
+    return tm;
+  }
+
+  //todo: not called anywhere??
+  public static validateQueryOperations(query: Query, extracted: any[]): string[] {
+    let queryValid: boolean = true;
+    let errors: string[] = [];
+
+    let valid: boolean = false;
+    let error: string = "";
+
+    query.terms.forEach((element) => {
+      [valid, error] = this.validateOperationAgainstType(extracted[element.value], element);
+      if (!valid) {
+        queryValid = false;
+        errors.push(error);
+      }
+    });
+
+    return errors;
+  }
+
+  /**
+   * Returns the properties validation schema for this collection without a required
+   * block so that individual elements can be validated
+   *
+   * @param schema The base properties schema of a collection
+   * @returns A JSON schema for use in validating individual query parameters
+   */
+  private static getValidationSchema(schema: any) {
+    delete schema.required;
+    return schema;
+  }
+
+  /**
+   * Extracts each query param as an individual element to be validated individually
+   *
+   * @param params A JSON object containing the query params
+   * @returns An array of individual JSON objects to be validated
+   */
+  private static getExtractedQueryParams(params: ITerm[]) {
+    let extracted: any[] = [];
+
+    params.forEach((element) => {
+      let current = {};
+      current[element.property] = element.value;
+      extracted.push(current);
+    });
+
+    return extracted;
+  }
+
+  /**
+   * Validates an array of extracted query parameters against a supplied JSON schema, returns
+   * a promise for the result of the validation
+   *
+   * @param schema A properties schema to validate against
+   * @param extractedQueryParams An array of extracted query objects
+   * @returns A promise, if validation fails, promise is rejected, if it validates then promise is fulfilled
+   */
+  private static validateExtractedQueryParams(schema: any, extractedQueryParams: any[], errors: string[]) {
+      let validator = ValidatorFactory.getValidator();
+
+      let propertySchemaValidator = validator.compile(schema);
+
+      extractedQueryParams.forEach((param) => {
+        let valid = propertySchemaValidator(param);
+        if (!valid) {
+          errors.concat(ValidationHelper.reduceErrors(validator.errors, ""));
+        }
+      });
+  }
+
+  private static validateOperationAgainstType(type: any[], queryElement: ITerm): [boolean, string] {
+    let propType = type[queryElement.property];
+    let op = queryElement.operation;
+    let allowed = ALLOWED_OPERATORS.default;
+
+    if (propType in ALLOWED_OPERATORS) {
+      allowed = ALLOWED_OPERATORS[propType];
+    }
+
+    if (op in allowed) {
+      return [true, ""];
+    }
+
+    return [false, `Operator must be one of ${allowed} for ${propType}`];
   }
 }
 
