@@ -5,10 +5,8 @@ import { CatalogRepository } from "../repository/catalogRepository";
 import * as chai from "chai";
 import * as fs from "fs";
 import "mocha";
+import "mocha-inline";
 import * as TypeMoq from "typemoq";
-
-// tslint:disable-next-line:no-var-requires
-require("mocha-inline")();
 
 export class Fixtures {
   public static GetTestProduct(): IProduct {

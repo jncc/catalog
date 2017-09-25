@@ -1,7 +1,4 @@
-import * as chai from "chai"; // test reqs
-import * as chaiAsPromised from "chai-as-promised";
 import * as geojson from "geojson";
-import "mocha"; // test reqs
 import * as wellknown from "wellknown";
 
 import { Query } from "../../query";

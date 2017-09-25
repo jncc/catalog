@@ -1,6 +1,7 @@
+import "mocha"; // test reqs
+import "mocha-inline";
 import * as chai from "chai"; // test reqs
 import * as chaiAsPromised from "chai-as-promised";
-import "mocha"; // test reqs
 
 import { Query } from "../../query";
 import { CatalogRepository } from "../../repository/catalogRepository";
@@ -30,6 +31,10 @@ export class CollectionRequestValidator extends RequestValidator {
     });
   }
 }
+
+// Test setup
+// tslint:disable-next-line:no-var-requires
+chai.use(chaiAsPromised);
 
 describe("Collection Request Validator", () => {
   let p = "*test/valid/pat*h/1/2/345aa*";

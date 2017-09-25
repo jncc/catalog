@@ -1,5 +1,3 @@
-import "mocha";
-
 import * as Collection from "../definitions/collection/collection";
 import * as Footprint from "../definitions/components/footprint";
 import * as Metadata from "../definitions/components/metadata";
@@ -14,15 +12,12 @@ import * as ValidationHelper from "./validationHelper";
 import * as ValidatorFactory from "./validatorFactory";
 
 // Test reqs
+import "mocha";
+import "mocha-inline";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as TypeMoq from "typemoq";
 import { Fixtures } from "../test/fixtures";
-
-// Test setup
-// tslint:disable-next-line:no-var-requires
-require("mocha-inline")();
-chai.use(chaiAsPromised);
 
 export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
@@ -94,6 +89,9 @@ export class ProductValidator {
 }
 
 // Tests
+// Test setup
+// tslint:disable-next-line:no-var-requires
+chai.use(chaiAsPromised);
 
 describe("Product validator", () => {
 

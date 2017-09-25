@@ -1,8 +1,6 @@
 import * as chai from "chai";
 import "mocha";
-
-// tslint:disable-next-line:no-var-requires
-require("mocha-inline")();
+import "mocha-inline";
 
 export class DateValidator {
   public static validateDate(dateString: string, fieldName: string, errors: string[]): boolean {
