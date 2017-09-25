@@ -19,6 +19,8 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as TypeMoq from "typemoq";
 import { Fixtures } from "../test/fixtures";
 
+//todo - Valdate that the collection has a properly defined schema if the product has properties.
+
 export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
