@@ -3,7 +3,6 @@ import "mocha-inline";
 import * as chai from "chai"; // test reqs
 import * as chaiAsPromised from "chai-as-promised";
 
-
 import { Query, ITerm, ALLOWED_OPERATORS } from "../../query";
 import { CatalogRepository } from "../../repository/catalogRepository";
 import { Fixtures } from "../../test/fixtures";
@@ -31,13 +30,12 @@ export class ProductRequestValidator extends RequestValidator {
           if (collection == undefined) {
             errors.push("searchParam | collection must exist")
           } else {
-            let queryDataTypes = this.extractQueryDataTypes(collection.productsSchema, query)
+            query.types = this.extractQueryDataTypes(collection.productsSchema, query)
             let validationSchema = this.getValidationSchema(collection.productsSchema);
-            let extractedQueryParams = this.getExtractedQueryParams(query.terms);
+            let queryParams = this.getQueryParams(query.terms);
             
-            this.validateExtractedQueryParams(validationSchema, extractedQueryParams, errors)
-            //todo: rework this.
-            this.validateQueryOperations(query, queryDataTypes)
+            this.validateQueryParams(validationSchema, queryParams, errors)
+            this.validateQueryOperations(query, query.types, errors)
           }
         })    
       }
@@ -84,19 +82,23 @@ export class ProductRequestValidator extends RequestValidator {
     return tm;
   }
 
-  //todo: not called anywhere??
-  public static validateQueryOperations(query: Query, extracted: any[]): string[] {
+  public static validateQueryOperations(query: Query, queryDataTypes: any[], errors: string[]): string[] {
     let queryValid: boolean = true;
-    let errors: string[] = [];
 
     let valid: boolean = false;
     let error: string = "";
 
-    query.terms.forEach((element) => {
-      [valid, error] = this.validateOperationAgainstType(extracted[element.value], element);
-      if (!valid) {
-        queryValid = false;
-        errors.push(error);
+    query.terms.forEach((term) => {
+      let propType = queryDataTypes[term.value][term.property];
+      let op = term.operation;
+      let allowed = ALLOWED_OPERATORS.default;
+
+      if (propType in ALLOWED_OPERATORS) {
+        allowed = ALLOWED_OPERATORS[propType];
+      }
+  
+      if (!(op in allowed)) {
+         errors.push(`${term.property} | Operator must be one of ${allowed} for ${propType}`)
       }
     });
 
@@ -121,7 +123,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param params A JSON object containing the query params
    * @returns An array of individual JSON objects to be validated
    */
-  private static getExtractedQueryParams(params: ITerm[]) {
+  private static getQueryParams(params: ITerm[]) {
     let extracted: any[] = [];
 
     params.forEach((element) => {
@@ -141,7 +143,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param extractedQueryParams An array of extracted query objects
    * @returns A promise, if validation fails, promise is rejected, if it validates then promise is fulfilled
    */
-  private static validateExtractedQueryParams(schema: any, extractedQueryParams: any[], errors: string[]) {
+  private static validateQueryParams(schema: any, extractedQueryParams: any[], errors: string[]) {
       let validator = ValidatorFactory.getValidator();
 
       let propertySchemaValidator = validator.compile(schema);
@@ -152,22 +154,6 @@ export class ProductRequestValidator extends RequestValidator {
           errors.concat(ValidationHelper.reduceErrors(validator.errors, ""));
         }
       });
-  }
-
-  private static validateOperationAgainstType(type: any[], queryElement: ITerm): [boolean, string] {
-    let propType = type[queryElement.property];
-    let op = queryElement.operation;
-    let allowed = ALLOWED_OPERATORS.default;
-
-    if (propType in ALLOWED_OPERATORS) {
-      allowed = ALLOWED_OPERATORS[propType];
-    }
-
-    if (op in allowed) {
-      return [true, ""];
-    }
-
-    return [false, `Operator must be one of ${allowed} for ${propType}`];
   }
 }
 

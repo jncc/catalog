@@ -1,6 +1,5 @@
 import * as squel from "squel";
 import * as Query from "../query";
-import * as QueryValidator from "../validation/queryValidator";
 
 import { ICollection } from "../definitions/collection/collection";
 import { IProduct } from "../definitions/product/product";
