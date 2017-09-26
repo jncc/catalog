@@ -1,0 +1,36 @@
+{
+    "type": "object",
+    "title": "properties",
+    "$async": true,
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+        "externalId",
+        "osgbGridRef"
+    ],
+    "properties": {
+        "externalId": {
+            "type": "string"
+        },
+        "osgbGridRef": {
+            "type": "string"
+        },
+        "stringType": {
+            "type": "string"
+        },
+        "intType": {
+            "type": "integer"
+        },
+        "numberType": {
+            "type": "number"
+        },
+        "dateType": {
+            "type": "string",
+            "format": "date"
+        },
+        "dateTimeType": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "additionalProperties": false
+}

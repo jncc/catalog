@@ -14,6 +14,11 @@ export class Fixtures {
     return JSON.parse(content);
   }
 
+  public static GetTestPropertySchema(): any {
+    let content = fs.readFileSync("./api/test/collectionSchema.json", "utf8");
+    return JSON.parse(content);
+  }
+
   public static GetFootprint(): any {
     return {
       type: "MultiPolygon",
@@ -39,12 +44,7 @@ export class Fixtures {
       name: "test/collection",
       metadata: this.GetTestProduct().metadata,
       footprint: this.GetTestProduct().footprint,
-      productsSchema: {
-        type: "object",
-        title: "Properties",
-        $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#"
-      }
+      productsSchema: this.GetTestPropertySchema()
     };
   }
 
