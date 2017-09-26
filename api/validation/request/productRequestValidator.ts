@@ -1,7 +1,7 @@
 import "mocha"; // test reqs
-import "mocha-inline";
+import "mocha-inline"; // test reqs
 import * as chai from "chai"; // test reqs
-import * as chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised"; // test reqs
 
 import { Query, ITerm, ALLOWED_OPERATORS } from "../../query";
 import { CatalogRepository } from "../../repository/catalogRepository";
@@ -32,9 +32,9 @@ export class ProductRequestValidator extends RequestValidator {
           } else {
             query.types = this.extractQueryDataTypes(collection.productsSchema, query)
             let validationSchema = this.getValidationSchema(collection.productsSchema);
-            let queryParams = this.getQueryParams(query.terms);
+            let queryValues = this.getQueryValues(query.terms);
             
-            this.validateQueryParams(validationSchema, queryParams, errors)
+            this.validateQueryValues(validationSchema, queryValues, errors)
             this.validateQueryOperations(query, query.types, errors)
           }
         })    
@@ -82,7 +82,7 @@ export class ProductRequestValidator extends RequestValidator {
     return tm;
   }
 
-  public static validateQueryOperations(query: Query, queryDataTypes: any[], errors: string[]): string[] {
+  public static validateQueryOperations(query: Query, queryDataTypes: any[], errors: string[]) {
     let queryValid: boolean = true;
 
     let valid: boolean = false;
@@ -101,8 +101,6 @@ export class ProductRequestValidator extends RequestValidator {
          errors.push(`${term.property} | Operator must be one of ${allowed} for ${propType}`)
       }
     });
-
-    return errors;
   }
 
   /**
@@ -123,7 +121,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param params A JSON object containing the query params
    * @returns An array of individual JSON objects to be validated
    */
-  private static getQueryParams(params: ITerm[]) {
+  private static getQueryValues(params: ITerm[]) {
     let extracted: any[] = [];
 
     params.forEach((element) => {
@@ -143,7 +141,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param extractedQueryParams An array of extracted query objects
    * @returns A promise, if validation fails, promise is rejected, if it validates then promise is fulfilled
    */
-  private static validateQueryParams(schema: any, extractedQueryParams: any[], errors: string[]) {
+  private static validateQueryValues(schema: any, extractedQueryParams: any[], errors: string[]) {
       let validator = ValidatorFactory.getValidator();
 
       let propertySchemaValidator = validator.compile(schema);
