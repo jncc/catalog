@@ -16,34 +16,37 @@ export class ProductRequestValidator extends RequestValidator {
     return new Promise((resolve, reject) => {
       let errors: string[] = [];
 
-      if (query.footprint !== "") {
-        this.validateFootprint(query.footprint, errors);
-      }
-
-      if (query.spatialop !== "") {
-        this.validateSpatialOp(query.spatialop, errors);
-      }
-
-      if (this.validCollectionNameFormat(query,errors) && query.terms.length > 0) {
-
-        catalogRepository.getCollection(query.collection).then((collection) => {
+      if (this.validCollectionNameFormat(query,errors)) {
+        catalogRepository.getCollection(query.collection).then((collection)  => {
           if (collection == undefined) {
             errors.push("searchParam | collection must exist")
           } else {
-            query.types = this.extractQueryDataTypes(collection.productsSchema, query)
-            let validationSchema = this.getValidationSchema(collection.productsSchema);
-            let queryValues = this.getQueryValues(query.terms);
-            
-            this.validateQueryValues(validationSchema, queryValues, errors)
-            this.validateQueryOperations(query, query.types, errors)
-          }
-        })    
-      }
 
-      if (errors.length > 0) {
-          reject(errors);
+            if (query.footprint !== "") {
+              this.validateFootprint(query.footprint, errors);
+            }
+      
+            if (query.spatialop !== "") {
+              this.validateSpatialOp(query.spatialop, errors);
+            }
+            if (query.terms.length > 0) {
+              query.types = this.extractQueryDataTypes(collection.productsSchema, query)
+              let validationSchema = this.getValidationSchema(collection.productsSchema);
+              let queryValues = this.getQueryValues(query.terms);
+              
+              this.validateQueryValues(validationSchema, queryValues, errors)
+              this.validateQueryOperations(query, errors)
+            }
+          }
+
+          if (errors.length > 0) {
+            reject(errors);
+          } else {
+            resolve(errors);
+          }
+        })
       } else {
-          resolve(errors);
+        reject(errors);
       }
     });
   }
@@ -59,7 +62,7 @@ export class ProductRequestValidator extends RequestValidator {
     return isvalid;
   }
 
-  public static extractQueryDataTypes(schema: any, query: Query): any {
+  private static extractQueryDataTypes(schema: any, query: Query): any {
     let properties = query.terms.map((term) => term.property);
     let tm: any = {};
 
@@ -82,24 +85,23 @@ export class ProductRequestValidator extends RequestValidator {
     return tm;
   }
 
-  public static validateQueryOperations(query: Query, queryDataTypes: any[], errors: string[]) {
+  private static validateQueryOperations(query: Query, errors: string[]) {
     let queryValid: boolean = true;
-
     let valid: boolean = false;
-    let error: string = "";
 
     query.terms.forEach((term) => {
-      let propType = queryDataTypes[term.value][term.property];
+      let propType = query.types[term.property];
       let op = term.operation;
       let allowed = ALLOWED_OPERATORS.default;
 
       if (propType in ALLOWED_OPERATORS) {
         allowed = ALLOWED_OPERATORS[propType];
       }
-  
-      if (!(op in allowed)) {
-         errors.push(`${term.property} | Operator must be one of ${allowed} for ${propType}`)
+      
+      if (allowed.indexOf(op) == -1) {
+        errors.push(`${term.property} | Operator must be one of ${allowed} for ${propType}`)
       }
+      
     });
   }
 
@@ -244,8 +246,25 @@ describe("Product Request Validator", () => {
   });
 
   it("should validate a date term with a valid operator", () => {
+    let results: Promise<string[]>[] = [];
 
+    [">", ">=", "=", "=<", "<"].forEach((op) => {
+      results.push(ProductRequestValidator.validate(new Query(p,{ 
+        terms: [{ property: "dateType",
+                  operation: op,
+                  value: "2016-10-07"}] 
+      }), mockRepo))
+    });
+
+    return chai.expect(Promise.all(results)).to.be.fulfilled;
+  });
+  
+  it("should not validate a date term with an invalid operator", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p,{ 
+      terms: [{ property: "dateType",
+                operation: "invalidOp",
+                value: "2016-10-07"}] 
+    }), mockRepo)).to.be.rejected;
   })
-
 
 });

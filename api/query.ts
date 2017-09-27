@@ -1,19 +1,9 @@
 export const ALLOWED_OPERATORS = {
-  "date-time": {
-    allowed: [">", ">=", "=", "=<", "<"]
-  },
-  "date": {
-    allowed: [">", ">=", "=", "=<", "<"]
-  },
-  "int": {
-    allowed: [">", ">=", "=", "=<", "<"]
-  },
-  "double": {
-    allowed: [">", ">=", "=", "=<", "<"]
-  },
-  "default": {
-    allowed: ["="]
-  }
+  "date-time": [">", ">=", "=", "=<", "<"],
+  "date": [">", ">=", "=", "=<", "<"],
+  "int": [">", ">=", "=", "=<", "<"],
+  "double": [">", ">=", "=", "=<", "<"],
+  "default": ["="]
 };
 
 export interface ITerm {
