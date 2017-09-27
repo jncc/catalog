@@ -157,6 +157,7 @@ export class ProductRequestValidator extends RequestValidator {
 
     extractedQueryParams.forEach((param) => {
       let valid = propertySchemaValidator(param);
+      console.log("here ", valid)
       if (!valid) {
         errors.concat(ValidationHelper.reduceErrors(validator.errors, ""));
       }
@@ -317,6 +318,17 @@ describe("Product Request Validator", () => {
     }), mockRepo)).to.be.rejected
       .and.eventually.have.lengthOf(1)
       .and.contain('dateType | Operator must be one of >,>=,=,=<,< for date');
+  })
+
+  it("should not validate a date term with an invalid date", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "dateType",
+        operation: "=",
+        value: "not a date"
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1);
   })
 
 });

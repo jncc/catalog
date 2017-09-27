@@ -247,17 +247,22 @@ describe("Metadata validator", () => {
     };
 
     return chai.expect(validator.validate(p)).to.be.rejected
-      .and.eventually.have.length(2)
+      .and.eventually.have.length(4)
       .and.contain('metadata.temporalExtent.begin | should match format \"date-time\"')
-      .and.contain('metadata.temporalExtent.end | should match format \"date-time\"');
+      .and.contain('metadata.temporalExtent.begin | should pass "fullDateValidation" keyword validation')
+      .and.contain('metadata.temporalExtent.end | should match format \"date-time\"')
+      .and.contain('metadata.temporalExtent.end | should pass "fullDateValidation" keyword validation');
   });
 
   it("should not validate metadata datasetReferenceDate that is not a date-time or a date", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.datasetReferenceDate = "not-a-date-string";
 
+    console.log(validator.validate(p))
+
     return chai.expect(validator.validate(p)).to.be.rejected
-      .and.eventually.have.length(3)
+      .and.eventually.have.length(4)
+      .and.contain('metadata.datasetReferenceDate | should pass "fullDateValidation" keyword validation')
       .and.contain('metadata.datasetReferenceDate | should match format \"date-time\"')
       .and.contain('metadata.datasetReferenceDate | should match format \"date\"')
       .and.contain("metadata.datasetReferenceDate | should match exactly one schema in oneOf");
@@ -350,8 +355,11 @@ describe("Metadata validator", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.metadataDate = "not-a-date-string";
 
+    console.log(validator.validate(p))
+
     return chai.expect(validator.validate(p)).to.be.rejected
-      .and.eventually.have.length(3)
+      .and.eventually.have.length(4)
+      .and.contain('metadata.metadataDate | should pass "fullDateValidation" keyword validation')
       .and.contain('metadata.metadataDate | should match format \"date-time\"')
       .and.contain('metadata.metadataDate | should match format \"date\"')
       .and.contain("metadata.metadataDate | should match exactly one schema in oneOf");

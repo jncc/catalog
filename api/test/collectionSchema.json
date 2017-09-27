@@ -25,11 +25,13 @@
         },
         "dateType": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "fullDateValidation": "true"
         },
         "dateTimeType": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "fullDateValidation": "true"
         }
     },
     "additionalProperties": false

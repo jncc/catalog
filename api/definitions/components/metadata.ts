@@ -90,7 +90,8 @@ export const Schema = {
         oneOf: [
           { format: "date-time" },
           { format: "date" }
-        ]
+        ],
+        fullDateValidation: true
       },
       lineage: {
         type: "string",
@@ -128,7 +129,8 @@ export const Schema = {
         oneOf: [
           { format: "date-time" },
           { format: "date" }
-        ]
+        ],
+        fullDateValidation: true
       },
       metadataPointOfContact: {
         $ref: "#/definitions/metadata/metadataPointOfContact"
@@ -162,11 +164,13 @@ export const Schema = {
     properties: {
       begin: {
         type: "string",
-        format: "date-time"
+        format: "date-time",
+        fullDateValidation: true
       },
       end: {
         type: "string",
-        format: "date-time"
+        format: "date-time",
+        fullDateValidation: true
       }
     },
     required: ["begin", "end"]
