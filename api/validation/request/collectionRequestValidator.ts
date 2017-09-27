@@ -56,11 +56,12 @@ describe("Collection Request Validator", () => {
   });
 
   it("should validate a valid spatialOp", () => {
-    ["within", "intersects", "overlaps"].forEach((x) => {
-      return chai.expect(CollectionRequestValidator.validate(new Query(p, { spatialop: x }), mockRepo))
-        .to.be.fulfilled
-        .and.eventually.be.an("array").that.is.empty;
-    });
+    let results: Promise<string[]>[] = [];
+    ["within", "intersects", "overlaps"].forEach((op) => {
+      results.push(CollectionRequestValidator.validate(new Query(p, { spatialop: op }), mockRepo))
+    })
+
+    return chai.expect(Promise.all(results)).to.be.fulfilled;
   });
 
   it("should not validate an invalid spatialOp", () => {
@@ -109,55 +110,4 @@ describe("Collection Request Validator", () => {
       .and.eventually.have.lengthOf(1)
       .and.contain("footprint | is not a closed polygon");
   });
-
-  // it("should validate a valid fromCaptureDate", () => {
-  //   ["2014-01-04",
-  //     "2014-01-05T06:34:23Z"].forEach((x) => {
-  //       chai.expect(
-  //         CollectionRequestValidator.validate(new Query(p, { fromCaptureDate: x, toCaptureDate: "2017-01-01" }), mockRepo))
-  //         .to.be.empty;
-  //     });
-  // });
-
-  // it("should validate a valid toCaptureDate", () => {
-  //   ["2014-01-04",
-  //     "2014-01-05T06:34:23Z"].forEach((x) => {
-  //       chai.expect(
-  //         RequestValidator.validate(new Query(p, { fromCaptureDate: "2010-01-01", toCaptureDate: x }), mockRepo))
-  //         .to.be.empty;
-  //     });
-  // });
-
-  // it("should not validate and improperly formated capture date", () => {
-  //   chai.expect(
-  //     RequestValidator.validate(new Query(p, { fromCaptureDate: "01-01-2012", toCaptureDate: "2016-01-01" }), mockRepo))
-  //     .to.have.length(1)
-  //     .and.contain("fromCaptureDate | is not a valid date time format");
-  // });
-
-  // it("should not validate an invalid date", () => {
-  //   chai.expect(
-  //     RequestValidator.validate(new Query(p, { fromCaptureDate: "2015-02-29", toCaptureDate: "2016-01-01" }), mockRepo))
-  //     .to.have.length(1)
-  //     .and.contain("fromCaptureDate | is not a valid date");
-  // });
-
-  // it("should not validate a fromCaptureDate without a toCaptureDate", () => {
-  //   chai.expect(RequestValidator.validate(new Query(p, { fromCaptureDate: "2016-01-01" }), mockRepo))
-  //     .to.have.length(1)
-  //     .and.contain("toCaptureDate | both a from and to capture date must be specified");
-  // });
-
-  // it("should not validate a toCaptureDate without a fromCaptureDate", () => {
-  //   chai.expect(RequestValidator.validate(new Query(p, { toCaptureDate: "2016-01-01" }), mockRepo))
-  //     .to.have.length(1)
-  //     .and.contain("fromCaptureDate | both a from and to capture date must be specified");
-  // });
-
-  // it("should not validate a toCaptureDate before a fromCaptureDate", () => {
-  //   chai.expect(
-  //     RequestValidator.validate(new Query(p, { toCaptureDate: "2016-01-01", fromCaptureDate: "2017-01-01" }), mockRepo))
-  //     .to.have.length(1)
-  //     .and.contain("fromCaptureDate | toCaptureDate must be greater than or equal to fromCaptureDate");
-  // });
 });

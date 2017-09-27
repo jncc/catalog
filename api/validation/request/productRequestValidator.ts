@@ -188,11 +188,12 @@ describe("Product Request Validator", () => {
   });
 
   it("should validate a valid spatialOp", () => {
-    ["within", "intersects", "overlaps"].forEach((x) => {
-      return chai.expect(ProductRequestValidator.validate(new Query(p, { spatialop: x }), mockRepo))
-        .to.be.fulfilled
-        .and.eventually.an("array").that.is.empty;
-    });
+    let results: Promise<string[]>[] = [];
+    ["within", "intersects", "overlaps"].forEach((op) => {
+      results.push(ProductRequestValidator.validate(new Query(p, { spatialop: op }), mockRepo))
+    })
+
+    return chai.expect(Promise.all(results)).to.be.fulfilled;
   });
 
   it("should not validate an invalid spatialOp", () => {
@@ -242,5 +243,9 @@ describe("Product Request Validator", () => {
       .and.contain("footprint | is not a closed polygon");
   });
 
-  
+  it("should validate a date term with a valid operator", () => {
+
+  })
+
+
 });
