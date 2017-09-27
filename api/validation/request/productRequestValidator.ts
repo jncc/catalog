@@ -16,8 +16,8 @@ export class ProductRequestValidator extends RequestValidator {
     return new Promise((resolve, reject) => {
       let errors: string[] = [];
 
-      if (this.validCollectionNameFormat(query,errors)) {
-        catalogRepository.getCollection(query.collection).then((collection)  => {
+      if (this.validCollectionNameFormat(query, errors)) {
+        catalogRepository.getCollection(query.collection).then((collection) => {
           if (collection == undefined) {
             errors.push("searchParam | collection must exist")
           } else {
@@ -25,7 +25,7 @@ export class ProductRequestValidator extends RequestValidator {
             if (query.footprint !== "") {
               this.validateFootprint(query.footprint, errors);
             }
-      
+
             if (query.spatialop !== "") {
               this.validateSpatialOp(query.spatialop, errors);
             }
@@ -33,7 +33,7 @@ export class ProductRequestValidator extends RequestValidator {
               query.types = this.extractQueryDataTypes(collection.productsSchema, query)
               let validationSchema = this.getValidationSchema(collection.productsSchema);
               let queryValues = this.getQueryValues(query.terms);
-              
+
               this.validateQueryValues(validationSchema, queryValues, errors)
               this.validateQueryOperations(query, errors)
             }
@@ -50,7 +50,7 @@ export class ProductRequestValidator extends RequestValidator {
       }
     });
   }
-  
+
   private static validCollectionNameFormat(query: Query, errors: string[]): boolean {
     let isvalid = true
     if (!query.collection.match(/^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/)) {
@@ -97,11 +97,18 @@ export class ProductRequestValidator extends RequestValidator {
       if (propType in ALLOWED_OPERATORS) {
         allowed = ALLOWED_OPERATORS[propType];
       }
-      
+
       if (allowed.indexOf(op) == -1) {
-        errors.push(`${term.property} | Operator must be one of ${allowed} for ${propType}`)
+        let errormsg = `${term.property} | Operator must be `
+        if (allowed.length > 1) {
+          errormsg = errormsg.concat(`one of ${allowed.reduce((x,y)=>{return `${x},${y}`})} `)
+        } else {
+          errormsg = errormsg.concat(`${allowed[0]} `)
+        }
+        errormsg = errormsg.concat(`for ${propType}`)
+        errors.push(errormsg)
       }
-      
+
     });
   }
 
@@ -144,16 +151,16 @@ export class ProductRequestValidator extends RequestValidator {
    * @returns A promise, if validation fails, promise is rejected, if it validates then promise is fulfilled
    */
   private static validateQueryValues(schema: any, extractedQueryParams: any[], errors: string[]) {
-      let validator = ValidatorFactory.getValidator();
+    let validator = ValidatorFactory.getValidator();
 
-      let propertySchemaValidator = validator.compile(schema);
+    let propertySchemaValidator = validator.compile(schema);
 
-      extractedQueryParams.forEach((param) => {
-        let valid = propertySchemaValidator(param);
-        if (!valid) {
-          errors.concat(ValidationHelper.reduceErrors(validator.errors, ""));
-        }
-      });
+    extractedQueryParams.forEach((param) => {
+      let valid = propertySchemaValidator(param);
+      if (!valid) {
+        errors.concat(ValidationHelper.reduceErrors(validator.errors, ""));
+      }
+    });
   }
 }
 
@@ -245,26 +252,71 @@ describe("Product Request Validator", () => {
       .and.contain("footprint | is not a closed polygon");
   });
 
+  it("should validate a string term with an = operator", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "stringType",
+        operation: "=",
+        value: "some value"
+      }]
+    }), mockRepo)).to.be.fulfilled
+      .and.eventually.be.an('array').that.is.empty;
+  })
+
+  it("should not validate a string term with other operators", () => {
+    let results: Promise<string[]>[] = [];
+
+    [">", ">=", "=<", "<"].forEach((op) => {
+      results.push(ProductRequestValidator.validate(new Query(p, {
+        terms: [{
+          property: "stringType",
+          operation: op,
+          value: "some value"
+        }]
+      }), mockRepo))
+    });
+
+    return chai.expect(Promise.all(results)).to.be.rejected;
+  });
+
+  it("should not validate a string term with an invalid operator", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "stringType",
+        operation: "invalidOp",
+        value: "some value"
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('stringType | Operator must be = for string');
+  })
+
   it("should validate a date term with a valid operator", () => {
     let results: Promise<string[]>[] = [];
 
     [">", ">=", "=", "=<", "<"].forEach((op) => {
-      results.push(ProductRequestValidator.validate(new Query(p,{ 
-        terms: [{ property: "dateType",
-                  operation: op,
-                  value: "2016-10-07"}] 
+      results.push(ProductRequestValidator.validate(new Query(p, {
+        terms: [{
+          property: "dateType",
+          operation: op,
+          value: "2016-10-07"
+        }]
       }), mockRepo))
     });
 
     return chai.expect(Promise.all(results)).to.be.fulfilled;
   });
-  
+
   it("should not validate a date term with an invalid operator", () => {
-    return chai.expect(ProductRequestValidator.validate(new Query(p,{ 
-      terms: [{ property: "dateType",
-                operation: "invalidOp",
-                value: "2016-10-07"}] 
-    }), mockRepo)).to.be.rejected;
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "dateType",
+        operation: "invalidOp",
+        value: "2016-10-07"
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('dateType | Operator must be one of >,>=,=,=<,< for date');
   })
 
 });
