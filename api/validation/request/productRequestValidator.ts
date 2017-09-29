@@ -20,6 +20,7 @@ export class ProductRequestValidator extends RequestValidator {
         catalogRepository.getCollection(query.collection).then((collection) => {
           if (collection == undefined) {
             errors.push("searchParam | collection must exist")
+            reject(errors);
           } else {
 
             if (query.footprint !== "") {
@@ -29,21 +30,33 @@ export class ProductRequestValidator extends RequestValidator {
             if (query.spatialop !== "") {
               this.validateSpatialOp(query.spatialop, errors);
             }
+
             if (query.terms.length > 0) {
               query.types = this.extractQueryDataTypes(collection.productsSchema, query)
               let validationSchema = this.getValidationSchema(collection.productsSchema);
               let queryValues = this.getQueryValues(query.terms);
 
-              this.validateQueryValues(validationSchema, queryValues, errors)
-              this.validateQueryOperations(query, errors)
+              this.validateQueryValues(validationSchema, queryValues).then(() => {
+                this.validateQueryOperations(query, errors)
+
+                if (errors.length > 0) {
+                  reject(errors);
+                } else {
+                  resolve(errors);
+                }
+              }).catch((valueErrors) => {
+                reject(errors.concat(valueErrors))
+              })
+
+            } else {
+              if (errors.length > 0) {
+                reject(errors);
+              } else {
+                resolve(errors);
+              }
             }
           }
 
-          if (errors.length > 0) {
-            reject(errors);
-          } else {
-            resolve(errors);
-          }
         })
       } else {
         reject(errors);
@@ -101,7 +114,7 @@ export class ProductRequestValidator extends RequestValidator {
       if (allowed.indexOf(op) == -1) {
         let errormsg = `${term.property} | Operator must be `
         if (allowed.length > 1) {
-          errormsg = errormsg.concat(`one of ${allowed.reduce((x,y)=>{return `${x},${y}`})} `)
+          errormsg = errormsg.concat(`one of ${allowed.reduce((x, y) => { return `${x},${y}` })} `)
         } else {
           errormsg = errormsg.concat(`${allowed[0]} `)
         }
@@ -150,17 +163,32 @@ export class ProductRequestValidator extends RequestValidator {
    * @param extractedQueryParams An array of extracted query objects
    * @returns A promise, if validation fails, promise is rejected, if it validates then promise is fulfilled
    */
-  private static validateQueryValues(schema: any, extractedQueryParams: any[], errors: string[]) {
-    let validator = ValidatorFactory.getValidator();
+  private static validateQueryValues(schema: any, extractedQueryParams: any[]): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      let validator = ValidatorFactory.getValidator();
+      let propertySchemaValidator = validator.compile(schema);
+      let promisedValidations: Promise<any>[] = []
+      let errors: string[] = []
 
-    let propertySchemaValidator = validator.compile(schema);
+      extractedQueryParams.forEach((param) => {
+        let promisedResult = propertySchemaValidator(param);
+        promisedValidations.push(promisedResult);
+      });
 
-    extractedQueryParams.forEach((param) => {
-      let valid = propertySchemaValidator(param);
-      console.log("here ", valid)
-      if (!valid) {
-        errors.concat(ValidationHelper.reduceErrors(validator.errors, ""));
-      }
+      Promise.all(promisedValidations).then((r) => {
+        console.log("validate query value ok ", r)
+        resolve(errors);
+      }).catch((e) => {
+
+        console.log("stuff failed", e)
+        e.forEach((error) => {
+          if (error) {
+            errors.push(ValidationHelper.reduceError(error, ""));
+          }
+        })
+
+        reject(errors)
+      });
     });
   }
 }

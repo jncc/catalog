@@ -25,7 +25,7 @@ export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
   public validate(product: Product.IProduct): Promise<string[]> {
-    let asyncValidator = ValidatorFactory.getAsyncValidator();
+    let asyncValidator = ValidatorFactory.getValidator();
 
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
     let errors: string[] = new Array<string>();
@@ -58,7 +58,7 @@ export class ProductValidator {
       return Promise.resolve(errors);
     }
 
-    let asyncValidator = ValidatorFactory.getAsyncValidator();
+    let asyncValidator = ValidatorFactory.getValidator();
 
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 

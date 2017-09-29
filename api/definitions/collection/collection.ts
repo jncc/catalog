@@ -12,11 +12,11 @@ export interface ICollection {
 }
 
 export function validate(collection: ICollection) {
-  let asyncValidator = ValidatorFactory.getAsyncValidator();
+  let asyncValidator = ValidatorFactory.getValidator();
   let collectionSchemaValidator = asyncValidator.compile(Schema);
   let errors: string[] = new Array<string>();
 
-  let promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     collectionSchemaValidator(collection).then((e) => {
       if (errors.length === 0) {
         resolve([true]);
@@ -28,8 +28,6 @@ export function validate(collection: ICollection) {
       reject(errors);
     });
   });
-
-  return promise;
 }
 
 export const Schema = {
