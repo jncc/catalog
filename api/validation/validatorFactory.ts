@@ -23,7 +23,5 @@ export function getValidator(options: any = { allErrors: true, formats: "full" }
     }
   });
 
-  return ajvasync(getValidator(options));;
+  return ajvasync(validator);
 }
-
-

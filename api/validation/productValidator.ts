@@ -103,8 +103,6 @@ describe("Product validator", () => {
   it("should validate a valid product", () => {
     let p = Fixtures.GetTestProduct();
 
-    validator.validate(p).catch((x) => console.log(x))
-
     return chai.expect(validator.validate(p))
       .to.be.fulfilled
       .and.eventually.be.an("array").that.is.empty;
@@ -258,8 +256,6 @@ describe("Metadata validator", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.datasetReferenceDate = "not-a-date-string";
 
-    console.log(validator.validate(p))
-
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(4)
       .and.contain('metadata.datasetReferenceDate | should pass "fullDateValidation" keyword validation')
@@ -354,8 +350,6 @@ describe("Metadata validator", () => {
   it("should not validate metadata with a metadataDate that is not a date-time or a date", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.metadataDate = "not-a-date-string";
-
-    console.log(validator.validate(p))
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(4)

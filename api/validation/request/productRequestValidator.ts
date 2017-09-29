@@ -175,20 +175,26 @@ export class ProductRequestValidator extends RequestValidator {
         promisedValidations.push(promisedResult);
       });
 
-      Promise.all(promisedValidations).then((r) => {
-        console.log("validate query value ok ", r)
-        resolve(errors);
-      }).catch((e) => {
+      // Allows us to catch all promise failures from the Promise.all command below,
+      // returns array of resolved promises, errors appear as arrays, resolved promises
+      // return as any;
+      // https://stackoverflow.com/questions/40851454/is-it-possible-to-catch-all-rejected-promises-in-promise-all
+      let caughtPromises = promisedValidations.map(promise => promise.catch((x) => x.errors));
 
-        console.log("stuff failed", e)
-        e.forEach((error) => {
-          if (error) {
-            errors.push(ValidationHelper.reduceError(error, ""));
+      Promise.all(caughtPromises)
+        .then(results => {
+          results.filter(x => x instanceof Array)
+          .forEach((e) => {
+            let msgs = ValidationHelper.reduceErrors(e)
+            msgs.forEach((m) => errors.push(m))
+          })
+
+          if (errors.length > 0) {
+            reject(errors)
+          } else {
+            resolve(errors)
           }
         })
-
-        reject(errors)
-      });
     });
   }
 }
@@ -356,7 +362,9 @@ describe("Product Request Validator", () => {
         value: "not a date"
       }]
     }), mockRepo)).to.be.rejected
-      .and.eventually.have.lengthOf(1);
+      .and.eventually.have.lengthOf(2)
+      .and.contain('dateType | should match format "date"')
+      .and.contain('dateType | should pass "fullDateValidation" keyword validation')
   })
 
 });

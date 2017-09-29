@@ -12,6 +12,7 @@ export function reduceError(error: any, prependPath?: string) {
 }
 
 export function reduceErrors(errors: any, prependPath?: string) {
+
   let reduced = new Array<string>();
   if (errors !== undefined) {
     for (let error of errors) {
