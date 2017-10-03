@@ -184,10 +184,10 @@ export class ProductRequestValidator extends RequestValidator {
       Promise.all(caughtPromises)
         .then(results => {
           results.filter(x => x instanceof Array)
-          .forEach((e) => {
-            let msgs = ValidationHelper.reduceErrors(e)
-            msgs.forEach((m) => errors.push(m))
-          })
+            .forEach((e) => {
+              let msgs = ValidationHelper.reduceErrors(e)
+              msgs.forEach((m) => errors.push(m))
+            })
 
           if (errors.length > 0) {
             reject(errors)
@@ -367,4 +367,124 @@ describe("Product Request Validator", () => {
       .and.contain('dateType | should pass "fullDateValidation" keyword validation')
   })
 
+  it("should validate a datetime term with a valid operator", () => {
+    let results: Promise<string[]>[] = [];
+
+    [">", ">=", "=", "=<", "<"].forEach((op) => {
+      results.push(ProductRequestValidator.validate(new Query(p, {
+        terms: [{
+          property: "dateTimeType",
+          operation: op,
+          value: "2016-10-07T00:00:00Z"
+        }]
+      }), mockRepo))
+    });
+
+    return chai.expect(Promise.all(results)).to.be.fulfilled;
+  });
+
+  it("should not validate a datetime term with an invalid operator", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "dateTimeType",
+        operation: "invalidOp",
+        value: "2016-10-07T00:00:00Z"
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('dateTimeType | Operator must be one of >,>=,=,=<,< for date-time');
+  })
+
+  it("should not validate a datetime term with an invalid datetime", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "dateTimeType",
+        operation: "=",
+        value: "2016-10-07"
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('dateTimeType | should match format "date-time"');
+  })
+
+  it("should validate an int term with a valid operator", () => {
+    let results: Promise<string[]>[] = [];
+
+    [">", ">=", "=", "=<", "<"].forEach((op) => {
+      results.push(ProductRequestValidator.validate(new Query(p, {
+        terms: [{
+          property: "intType",
+          operation: op,
+          value: 234
+        }]
+      }), mockRepo))
+    });
+
+    return chai.expect(Promise.all(results)).to.be.fulfilled;
+  });
+
+  it("should not validate an int term with an invalid operator", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "intType",
+        operation: "!=",
+        value: 234
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('intType | Operator must be one of >,>=,=,=<,< for int');
+  })
+
+  it("should not validate an int term with an invalid int", () => {
+
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "intType",
+        operation: "=",
+        value: 12.5
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('intType | should be integer');
+  })
+
+  it("should validate a number term with a valid operator", () => {
+    let results: Promise<string[]>[] = [];
+
+    [">", ">=", "=", "=<", "<"].forEach((op) => {
+      results.push(ProductRequestValidator.validate(new Query(p, {
+        terms: [{
+          property: "numberType",
+          operation: op,
+          value: 34.34
+        }]
+      }), mockRepo))
+    });
+
+    return chai.expect(Promise.all(results)).to.be.fulfilled;
+  });
+
+  it("should not validate a number term with an invalid operator", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "numberType",
+        operation: ">>",
+        value: 34.34
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('numberType | Operator must be one of >,>=,=,=<,< for double');
+  })
+
+  it("should not validate a number term with an invalid number", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "numberType",
+        operation: "=",
+        value: "1234x"
+      }]
+    }), mockRepo)).to.be.rejected
+      .and.eventually.have.lengthOf(1)
+      .and.contain('numberType | should be number');
+  });
 });
