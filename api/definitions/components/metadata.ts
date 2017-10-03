@@ -1,52 +1,52 @@
-export interface Metadata {
-  title: string,
-  abstract: string,
-  topicCategory: string,
-  keywords: Keyword[],
-  temporalExtent: TemporalExtent,
-  datasetReferenceDate: string,
-  lineage: string,
-  resourceLocator: string,
-  additionalInformationSource: string,
-  dataFormat: string,
-  responsibleOrganisation: ResponsibleParty,
-  limitationsOnPublicAccess: string,
-  useConstraints: string,
-  spatialReferenceSystem: string,
-  extent: Extent[],
-  metadataDate: string,
-  metadataPointOfContact: ResponsibleParty,
-  resourceType: string,
-  boundingBox: BoundingBox
-};
+export interface IMetadata {
+  title: string;
+  abstract: string;
+  topicCategory: string;
+  keywords: IKeyword[];
+  temporalExtent: ITemporalExtent;
+  datasetReferenceDate: string;
+  lineage: string;
+  resourceLocator: string;
+  additionalInformationSource: string;
+  dataFormat: string;
+  responsibleOrganisation: IResponsibleParty;
+  limitationsOnPublicAccess: string;
+  useConstraints: string;
+  spatialReferenceSystem: string;
+  extent: IExtent[];
+  metadataDate: string;
+  metadataPointOfContact: IResponsibleParty;
+  resourceType: string;
+  boundingBox: IBoundingBox;
+}
 
-export interface Keyword {
-  value: string,
-  vocab?: string
-};
+export interface IKeyword {
+  value: string;
+  vocab?: string;
+}
 
-export interface TemporalExtent {
-  begin: string,
-  end: string
-};
+export interface ITemporalExtent {
+  begin: string;
+  end: string;
+}
 
-export interface ResponsibleParty {
-  name: string,
-  email: string,
-  role: string
-};
+export interface IResponsibleParty {
+  name: string;
+  email: string;
+  role: string;
+}
 
-export interface Extent {
-  value: string,
-  authority: string
-};
+export interface IExtent {
+  value: string;
+  authority: string;
+}
 
-export interface BoundingBox {
-  north: number,
-  south: number,
-  east: number,
-  west: number
-};
+export interface IBoundingBox {
+  north: number;
+  south: number;
+  east: number;
+  west: number;
+}
 
 export function nonSchemaValidation(metadata, errors) {
   if (metadata.boundingBox.north <= metadata.boundingBox.south) {
@@ -57,172 +57,176 @@ export function nonSchemaValidation(metadata, errors) {
   }
 
   return errors;
-};
+}
 
 export const Schema = {
-  "metadata": {
-    "type": "object",
-    "properties": {
-      "title": {
-        "type": "string",
-        "minLength": 1
+  metadata: {
+    type: "object",
+    properties: {
+      title: {
+        type: "string",
+        minLength: 1
       },
-      "abstract": {
-        "type": "string",
-        "minLength": 1
+      abstract: {
+        type: "string",
+        minLength: 1
       },
-      "topicCategory": {
-        "type": "string",
-        "minLength": 1
+      topicCategory: {
+        type: "string",
+        minLength: 1
       },
-      "keywords": {
-        "type": "array",
-        "minItems": 1,
-        "items": {
-          "$ref": "#/definitions/metadata/keyword"
+      keywords: {
+        type: "array",
+        minItems: 1,
+        items: {
+          $ref: "#/definitions/metadata/keyword"
         }
       },
-      "temporalExtent": {
-        "$ref": "#/definitions/metadata/temporalExtent"
+      temporalExtent: {
+        $ref: "#/definitions/metadata/temporalExtent"
       },
-      "datasetReferenceDate": {
-        "type": "string",
-        "oneOf": [
-          { "format": "date-time" },
-          { "format": "date" }
-        ]
+      datasetReferenceDate: {
+        type: "string",
+        oneOf: [
+          { format: "date-time" },
+          { format: "date" }
+        ],
+        fullDateValidation: true
       },
-      "lineage": {
-        "type": "string",
-        "minLength": 1
+      lineage: {
+        type: "string",
+        minLength: 1
       },
-      "resourceLocator": {
-        "type": "string",
-        "format": "uri"
+      resourceLocator: {
+        type: "string",
+        format: "uri"
       },
-      "additionalInformationSource": {
-        "type": "string",
-        "minLength": 1
+      additionalInformationSource: {
+        type: "string",
+        minLength: 1
       },
-      "dataFormat": {
-        "type": "string",
-        "minLength": 1
+      dataFormat: {
+        type: "string",
+        minLength: 1
       },
-      "responsibleOrganisation": {
-        "$ref": "#/definitions/metadata/responsibleOrganisation",
+      responsibleOrganisation: {
+        $ref: "#/definitions/metadata/responsibleOrganisation",
       },
-      "limitationsOnPublicAccess": {
-        "type": "string",
-        "minLength": 1
+      limitationsOnPublicAccess: {
+        type: "string",
+        minLength: 1
       },
-      "useConstraints": {
-        "type": "string",
-        "minLength": 1
+      useConstraints: {
+        type: "string",
+        minLength: 1
       },
-      "spatialReferenceSystem": {
-        "type": "string",
-        "minLength": 1
+      spatialReferenceSystem: {
+        type: "string",
+        minLength: 1
       },
-      "metadataDate": {
-        "type": "string",
-        "oneOf": [
-          { "format": "date-time" },
-          { "format": "date" }
-        ]
+      metadataDate: {
+        type: "string",
+        oneOf: [
+          { format: "date-time" },
+          { format: "date" }
+        ],
+        fullDateValidation: true
       },
-      "metadataPointOfContact": {
-        "$ref": "#/definitions/metadata/metadataPointOfContact"
+      metadataPointOfContact: {
+        $ref: "#/definitions/metadata/metadataPointOfContact"
       },
-      "resourceType": {
-        "type": "string",
-        "minLength": "1"
+      resourceType: {
+        type: "string",
+        minLength: "1"
       },
-      "boundingBox": {
-        "$ref": "#/definitions/metadata/boundingBox"
+      boundingBox: {
+        $ref: "#/definitions/metadata/boundingBox"
       }
     },
-    "required": ["title", "boundingBox"]
+    required: ["title", "boundingBox"]
   },
-  "keyword": {
-    "type": "object",
-    "properties": {
-      "value": {
-        "type": "string",
-        "minLength": 1
+  keyword: {
+    type: "object",
+    properties: {
+      value: {
+        type: "string",
+        minLength: 1
       },
-      "vocab": {
-        "type": "string",
-        "minLength": 1
+      vocab: {
+        type: "string",
+        minLength: 1
       }
     },
-    "required": ["value"]
+    required: ["value"]
   },
-  "temporalExtent": {
-    "type": "object",
-    "properties": {
-      "begin": {
-        "type": "string",
-        "format": "date-time"
+  temporalExtent: {
+    type: "object",
+    properties: {
+      begin: {
+        type: "string",
+        format: "date-time",
+        fullDateValidation: true
       },
-      "end": {
-        "type": "string",
-        "format": "date-time"
+      end: {
+        type: "string",
+        format: "date-time",
+        fullDateValidation: true
       }
     },
-    "required": ["begin", "end"]
+    required: ["begin", "end"]
   },
-  "responsibleOrganisation": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "minLength": 1
+  responsibleOrganisation: {
+    type: "object",
+    properties: {
+      name: {
+        type: "string",
+        minLength: 1
       },
-      "email": {
-        "type": "string",
-        "format": "email"
+      email: {
+        type: "string",
+        format: "email"
       },
-      "role": {
-        "type": "string",
-        "minLength": 1
+      role: {
+        type: "string",
+        minLength: 1
       }
     },
-    "required": ["email"]
+    required: ["email"]
   },
-  "metadataPointOfContact": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "minLength": 1
+  metadataPointOfContact: {
+    type: "object",
+    properties: {
+      name: {
+        type: "string",
+        minLength: 1
       },
-      "email": {
-        "type": "string",
-        "format": "email"
+      email: {
+        type: "string",
+        format: "email"
       },
-      "role": {
-        "type": "string",
-        "pattern": "^metadataPointOfContact$"
+      role: {
+        type: "string",
+        pattern: "^metadataPointOfContact$"
       }
     },
-    "required": ["name", "email", "role"]
+    required: ["name", "email", "role"]
   },
-  "boundingBox": {
-    "type": "object",
-    "properties": {
-      "north": {
-        "type": "number",
+  boundingBox: {
+    type: "object",
+    properties: {
+      north: {
+        type: "number",
       },
-      "south": {
-        "type": "number",
+      south: {
+        type: "number",
       },
-      "east": {
-        "type": "number",
+      east: {
+        type: "number",
       },
-      "west": {
-        "type": "number",
+      west: {
+        type: "number",
       }
     },
-    "required": ["north", "south", "east", "west"]
+    required: ["north", "south", "east", "west"]
   }
 };

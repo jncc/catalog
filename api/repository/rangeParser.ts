@@ -1,10 +1,5 @@
+// tslint:disable:no-empty
 export class RangeParser {
-    IsRange(term: string) {
-
-    }
-
-    parseRange(term: string) {
-
-    }
+    public IsRange(term: string) { }
+    public parseRange(term: string) { }
 }
-

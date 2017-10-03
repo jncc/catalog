@@ -1,12 +1,13 @@
 
 import * as pgPromise from "pg-promise";
-import { IMain, IDatabase } from "pg-promise";
+import { IDatabase, IMain } from "pg-promise";
 
 /* Singleton database client. */
 export class Database {
 
-    public readonly connection: IDatabase<any>
-    private static _instance: Database;
+  // tslint:disable-next-line:variable-name
+  private static _instance: Database;
+  public readonly connection: IDatabase<any>;
 
     constructor() {
         let pgp = pgPromise();
@@ -21,4 +22,3 @@ export class Database {
         return Database._instance;
     }
 }
-

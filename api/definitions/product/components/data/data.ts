@@ -1,46 +1,46 @@
-import { s3file, ftp } from "./files";
-import { wms, wfs } from "./services";
+import { IFTP, IS3file } from "./files";
+import { IWFS, IWMS } from "./services";
 
-export interface Data {
-  product: DataGroup,
-  [x: string]: DataGroup
+export interface IData {
+  product: IDataGroup;
+  [x: string]: IDataGroup;
 }
 
-export interface DataGroup {
-    s3?: s3file,
-    ftp?: ftp
-    wms?: wms,
-    wfs?: wfs
-};
+export interface IDataGroup {
+    s3?: IS3file;
+    ftp?: IFTP;
+    wms?: IWMS;
+    wfs?: IWFS;
+}
 
 export const Schema = {
-  "data": {
-    "type": "object",
-    "additionalProperties": false,
-    "patternProperties": {
+  data: {
+    type: "object",
+    additionalProperties: false,
+    patternProperties: {
       "^[A-Za-z0-9]+$": {
-        "$ref": "#/definitions/data/datagroup"
+        $ref: "#/definitions/data/datagroup"
       }
     },
-    "required": ["product"]
+    required: ["product"]
   },
-  "datagroup": {
-    "type": "object",
-    "additionalProperties": false,
-    "minProperties": 1,
-    "properties": {
-      "s3": {
-        "$ref": "#/definitions/files/s3file"
+  datagroup: {
+    type: "object",
+    additionalProperties: false,
+    minProperties: 1,
+    properties: {
+      s3: {
+        $ref: "#/definitions/files/s3file"
       },
-      "ftp": {
-        "$ref": "#/definitions/files/ftp"
+      ftp: {
+        $ref: "#/definitions/files/ftp"
       },
-      "wms": {
-        "$ref": "#/definitions/services/wms"
+      wms: {
+        $ref: "#/definitions/services/wms"
       },
-      "wfs": {
-        "$ref": "#/definitions/services/wfs"
+      wfs: {
+        $ref: "#/definitions/services/wfs"
       }
     }
   },
-}
+};
