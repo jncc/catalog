@@ -14,6 +14,9 @@ Install Typescript and Yarn
     npm i -g typescript
     npm i -g yarn
 
+Install Sphinx for documentation
+    pip install Sphinx
+
 Database access parameters such as server location and authentication are provided through environment variables. A selection of scripts is available in /scripts folder.
 
 Save a copy outside of source control and edit.
