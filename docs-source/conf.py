@@ -168,5 +168,9 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-
+# Define substitutions used thoughout the documentation here
+rst_epilog = """
+.. |siteUrl| replace:: catalogsite.url
+.. |siteProtocol| replace:: http
+"""
 

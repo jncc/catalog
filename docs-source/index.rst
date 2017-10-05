@@ -14,14 +14,15 @@ Welcome to Catalog's documentation!
    api/ingestion
    data/collection
    data/product
+   data/metadata
    examples/data_upload_script
    examples/data_harvesting_script
 
 
 
-Indices and tables
-==================
+.. Indices and tables
+   ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`
