@@ -1,0 +1,82 @@
+Data Ingestion
+**************
+
+The following api methods are used for data ingestion.
+
+Validate Product
+================
+
+Request
+-------
+
+Validates a product without ingesting it.  Only 1 pruduct can be submitted for validation on each call to the method.
+
+.. csv-table::
+   :header: "Method", "URL"
+   :widths: 20, 20
+
+   "POST", "/validate/product"
+
+Payload
+^^^^^^^
+
+A product conforming to the JSON product schema. :ref:`product_schema`
+
+Result
+------
++--------+-----------------------------------------------------------------------------------------+
+| Status | Response                                                                                |
++--------+-----------------------------------------------------------------------------------------+
+| 200    | Indicates a valid product                                                               |
+|        |                                                                                         |
+|        | No data is returned                                                                     |
++--------+-----------------------------------------------------------------------------------------+
+| 400    | An array of errors.                                                                     |
+|        |                                                                                         |
+|        | Example:                                                                                |
+|        |                                                                                         |
+|        | [ name | should match pattern "^([A-Za-z0-9-_.])+$"' ]                                  |
++--------+-----------------------------------------------------------------------------------------+
+
+* All properties of the input payload are validated where possible
+* Multiple errors may be returned for the same property
+* Nested properties are delimited by a dot, ie metadata.title.
+
+Add Product
+===========
+
+Request
+-------
+
+Validates a product and ingests the product into the collection specified in the collectionName field
+
+.. csv-table::
+   :header: "Method", "URL"
+   :widths: 20, 20
+
+   "POST", "/add/product"
+
+Payload
+^^^^^^^
+
+A product conforming to the JSON product schema. :ref:`product_schema`
+
+Result
+------
++--------+-----------------------------------------------------------------------------------------+
+| Status | Response                                                                                |
++--------+-----------------------------------------------------------------------------------------+
+| 200    | Indicates a valid product                                                               |
+|        |                                                                                         |
+|        | No data is returned                                                                     |
++--------+-----------------------------------------------------------------------------------------+
+| 400    | An array of errors.                                                                     |
+|        |                                                                                         |
+|        | Example:                                                                                |
+|        |                                                                                         |
+|        | [ name | should match pattern "^([A-Za-z0-9-_.])+$"' ]                                  |
++--------+-----------------------------------------------------------------------------------------+
+
+* All properties of the input payload are validated where possible
+* Multiple errors may be returned for the same property
+* Nested properties are delimited by a dot, ie metadata.title.

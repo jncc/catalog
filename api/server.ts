@@ -78,7 +78,7 @@ app.post(`/search/product`, async (req, res) => {
   });
 });
 
-app.post(`/validate`, async (req, res) => {
+app.post(`/validate/product`, async (req, res) => {
   let product: Product.IProduct = req.body;
   let productValidtor = new ProductValidator(catalogRepository);
 

@@ -8,9 +8,11 @@ npm-debug.log
 
 # build output
 built/
+docs/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 *.lock
+

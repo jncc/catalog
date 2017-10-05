@@ -8,7 +8,8 @@
     "compile": "tsc --outDir built",
     "build": "npm run clean && npm run compile",
     "dev": "npm run build && nodemon built/server.js",
-    "test": "mocha -r ts-node/register \"api/**/*.ts\""
+    "test": "mocha -r ts-node/register \"api/**/*.ts\"",
+    "build-docs": "python -msphinx docs-source docs"
   },
   "repository": {
     "type": "git",
