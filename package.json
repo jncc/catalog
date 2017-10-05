@@ -6,10 +6,11 @@
   "scripts": {
     "clean": "rimraf built",
     "compile": "tsc --outDir built",
-    "build": "npm run clean && npm run compile",
-    "dev": "npm run build && nodemon built/server.js",
+    "build-api": "yarn run clean && yarn run compile",
+    "dev": "yarn run build && nodemon built/server.js",
     "test": "mocha -r ts-node/register \"api/**/*.ts\"",
-    "build-docs": "python -msphinx docs-source docs"
+    "build-docs": "python -msphinx docs-source docs",
+    "build": "yarn run build-api && yarn run build-docs"
   },
   "repository": {
     "type": "git",
