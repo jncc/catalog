@@ -31,7 +31,7 @@ export class ProductRequestValidator extends RequestValidator {
               this.validateSpatialOp(query.spatialop, errors);
             }
 
-            if (query.terms.length > 0) {
+            if (query.terms.length > 0 && this.validateTermStructure(query.terms, errors)) {
               query.types = this.extractQueryDataTypes(collection.productsSchema, query)
               let validationSchema = this.getValidationSchema(collection.productsSchema);
               let queryValues = this.getQueryValues(query.terms);
@@ -62,6 +62,31 @@ export class ProductRequestValidator extends RequestValidator {
         reject(errors);
       }
     });
+  }
+
+  private static validateTermStructure(terms: ITerm[], errors: string[]): boolean {
+    let valid = true
+
+    terms.forEach((term, index)=> {
+      let p = `query.terms[${index}]`
+
+      if(!term.property) {
+        errors.push(`${p} | A property must be defined`)
+        valid = false
+      }
+
+      if(!term.operation) {
+        errors.push(`${p} | An operation must be defined`)
+        valid = false
+      }
+
+      if(!term.value) {
+        errors.push(`${p} | A value must be defined`)
+        valid = false
+      }
+    })
+
+    return valid
   }
 
   private static validCollectionNameFormat(query: Query, errors: string[]): boolean {
@@ -286,6 +311,42 @@ describe("Product Request Validator", () => {
       .and.eventually.have.lengthOf(1)
       .and.contain("footprint | is not a closed polygon");
   });
+
+  it("should not validate a term without a property defined", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "",
+        operation: "=",
+        value: "some value"
+      }]
+    }), mockRepo)).to.be.rejected
+    .and.eventually.have.lengthOf(1)
+    .and.contain("query.terms[0] | A property must be defined")
+  })
+
+  it("should not validate a term without an operator defined", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "stringType",
+        operation: "",
+        value: "some value"
+      }]
+    }), mockRepo)).to.be.rejected
+    .and.eventually.have.lengthOf(1)
+    .and.contain("query.terms[0] | An operation must be defined")
+  })
+
+  it("should not validate a term without a value defined", () => {
+    return chai.expect(ProductRequestValidator.validate(new Query(p, {
+      terms: [{
+        property: "stringType",
+        operation: "=",
+        value: ""
+      }]
+    }), mockRepo)).to.be.rejected
+    .and.eventually.have.lengthOf(1)
+    .and.contain("query.terms[0] | A value must be defined")
+  })
 
   it("should validate a string term with an = operator", () => {
     return chai.expect(ProductRequestValidator.validate(new Query(p, {
