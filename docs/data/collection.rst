@@ -14,7 +14,7 @@ Collection schema
    "footprint", "The geoJson footprint of the collection. This should give a broad perspective of the the area covered by the data in the collection, for example a bounding box. See `Collection Footprint`_", "Yes"
 
 Collection name
----------------
+===============
 
 Collection names are arbitary strings which can consist of letters, numbers, an underscore (_) or a forward strike (/). The only constraint is that they must be unique.
 
