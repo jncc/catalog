@@ -2,6 +2,7 @@ import * as chai from "chai";
 import "mocha";
 import "mocha-inline";
 
+//todo: get rid of this
 require("mocha-inline")();
 
 export class DateValidator {
