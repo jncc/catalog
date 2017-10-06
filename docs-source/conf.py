@@ -172,5 +172,6 @@ texinfo_documents = [
 rst_epilog = """
 .. |siteUrl| replace:: catalogsite.url
 .. |siteProtocol| replace:: http
+.. |geoJson| replace:: `GeoJSON <http://geojson.org/>`__
+.. |jsonSchemaVersion| replace:: draft 04
 """
-

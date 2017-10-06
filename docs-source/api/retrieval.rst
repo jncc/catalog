@@ -33,7 +33,12 @@ This URL returns a array of collection objects for all collections that begin wi
 Result
 ------
 
-An array of matching collections. See :ref:`collection_schema`.
+.. csv-table::
+   :header: "Status", "Response"
+   :widths: 20, 70
+
+   "200", "Success. An array of products. See :ref:`collection_schema`"
+   "400", "Failure. The query was invalid, an array of query validation errors is returned"
 
 .. _search_product:
 
@@ -64,7 +69,7 @@ The payload consists of a json query object with the following fields:
 
    "collection", "A properly formatted collection name :ref:`collection_schema`", "Yes"
    "productName", "A pattern for the product name. Can include the * wildcard", No
-   "footprint", "A geospatial search filter in `GeoJSON <http://geojson.org/>`_ format and WSG84 projection", "No"
+   "footprint", "A geospatial search filter in |geoJson| format and WSG84 projection", "No"
    "spatialOp", "The spatial operation to perform with the footprint (within | intersects | overlaps)", "No, defaults to intersects"
    "terms", "An array of property term filters", "No"
    "limit", "The total number of products to return. For paging", "No, defaults to 50"

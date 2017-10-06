@@ -2,7 +2,6 @@
 
 Product schema
 **************
-A product defines a
 
 .. csv-table::
    :header: "Field", "Description", Required
@@ -14,7 +13,7 @@ A product defines a
    "metadata", "Gemini metadata related to the product. See: `Product Metadata`_", "Yes"
    "properties", "An object containing the identifying properties of the product. These properties are used for identifying the product in a search. See `Product Properties`_", "Determined by the configuration of the collection"
    "data", "A collection of links to files and services that make up the product data. See `Product Data`_", "Yes"
-   "footprint", "The footprint of the product in GeoJSON format. `GeoJSON <http://geojson.org/>`_", "Yes"
+   "footprint", "The footprint of the product in GeoJSON format. |geoJson|", "Yes"
 
 * The product name must be unique within the collection.
 * There is a minimum requirement for Gemini metadata to be included with the product.
@@ -61,7 +60,60 @@ The following example property element contains three searchable properties, ext
 Product Data
 ============
 
-The data section contains links to the data related to the product. A product may have one or more files. A simple example would be a shapefile or a wms link. Some products may have more then one associated file or many files
+The data section contains links to the data related to the product. A simple example would be a shapefile or a wms link. A product may have one or more data sources. For example a shape file, a WMS link or some related documents.
+
+Links are organised into groups. The default product group must always exist. Each group can contain one of the following link types.
+
+S3
+---
+
+A link to an file stored in Amazon S3 storage.
+
+.. csv-table::
+   :header: "Field", "Description", Required
+   :widths: 20, 70, 40
+
+   "key", "The S3 Key that uniquely identifies the file in the bucket", "Yes"
+   "bucket", "The S3 bucket in which the file is stored", "Yes"
+   "region", "The bucket region", "Yes"
+   "type", "The MIME type of the file", "No"
+
+FTP
+---
+
+A link to a file stored on an FTP server.
+
+.. csv-table::
+   :header: "Field", "Description", Required
+   :widths: 20, 70, 40
+
+   "server", "The url of the server", "Yes"
+   "path", "The full path to the file", "Yes"
+   "type", "The MIME type of the file", "No"
+
+WMS
+---
+
+A link to a WMS service serving up the product data.
+
+.. csv-table::
+   :header: "Field", "Description", Required
+   :widths: 20, 70, 40
+
+   "url", "The full URL to the product data including any parameters required to select it", "Yes"
+   "name", "The name of the layer", "Yes"
+
+WFS
+---
+
+A link to a WFS service serving up the product data.
+
+.. csv-table::
+   :header: "Field", "Description", Required
+   :widths: 20, 70, 40
+
+   "url", "The full URL to the product data including any parameters required to select it", "Yes"
+   "name", "The name of the layer", "Yes"
 
 Examples
 --------
@@ -76,15 +128,28 @@ Examples
         "region": "eu-west-1"
       }
     }
-  },
+  }
 
 Product Footprint
 =================
 
-The product
+The geospatial footprint of the product in |geoJson|. This should be as detailed as possible to enable accurate geospatial searches.
+
+**Note** All footprints should be in EPSG:4326. This can be specified by adding a crs element to the geojson. If it is omitted it will be added automatically. If the data is in the wrong projection it may cause ingestion or errors or anomalies when searching.
+
+.. code-block:: javascript
+
+    "crs": {
+      "properties": {
+        "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+      },
+      "type": "name"
+    }
 
 Example Product
 ===============
+
+The following is a example of a valid product.
 
 .. literalinclude:: /../api/test/product.json
    :language: javascript
