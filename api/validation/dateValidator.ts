@@ -2,6 +2,8 @@ import * as chai from "chai";
 import "mocha";
 import "mocha-inline";
 
+require("mocha-inline")();
+
 export class DateValidator {
   public static validateDate(dateString: string, fieldName: string, errors: string[]): boolean {
     let isValid = true;
