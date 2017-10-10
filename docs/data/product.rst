@@ -1,4 +1,4 @@
-.. _product_schema:
+﻿.. _product_schema:
 
 Product schema
 **************
@@ -31,9 +31,9 @@ See :ref:`metadata_schema`
 Product Properties
 ==================
 
-The defining properties of the product, other then it's footprint. For example the temporal range the product covers. All properties in a collection should have the same property schema and requiremnts. The schema of the properties is defined at the collection level. See :ref:`product_property_schema`.
+The defining properties of the product, other then it's footprint. For example the temporal range the product covers. All properties in a collection should have the same property schema and requirements. The schema of the properties is defined at the collection level. See :ref:`product_property_schema`.
 
-The properties are used when searching for products using the /search/product api end point. Searchable properties should be simple scaler attributes such as a string, number or date. See :ref:`search_product`.
+The properties are used when searching for products using the /search/product API end point. Searchable properties should be simple scaler attributes such as a string, number or date. See :ref:`search_product`.
 
 There is no reason why the properties of a product cannot also contain complex elements. However such property elements cannot be searched on and would only serve to hold additional data about the product.
 

@@ -1,4 +1,4 @@
-.. _collection_schema:
+﻿.. _collection_schema:
 
 Collection schema
 *****************
@@ -24,7 +24,7 @@ However they we suggest they should represent an organisational structure as fol
 
 Where x/y/z are for product specific differentiation.
 
-It's suggested that the version number is added when products are depricated.
+It's suggested that the version number is added when products are deprecated.
 Version numbers start at 1 except in very special cases as these are all release products.
 
 Ie

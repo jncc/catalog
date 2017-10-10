@@ -1,9 +1,9 @@
-.. _metadata_schema:
+﻿.. _metadata_schema:
 
 Gemini Metadata Schema
 **********************
 
-Metadata is stored in the `Gemini standard <http://www.agi.org.uk/agi-groups/standards-committee/uk-gemini>`_. The implemenation of which is yet to be finalised.
+Metadata is stored in the `Gemini standard <http://www.agi.org.uk/agi-groups/standards-committee/uk-gemini>`_. The implementation of which is yet to be finalised.
 
 This schema should be considered work in progress.
 
