@@ -1,4 +1,4 @@
-Data retrieval
+﻿Data retrieval
 **************
 
 The following api methods are used to retrieve data from the catalog.
@@ -17,7 +17,7 @@ Search the collections.
 
    "GET", "/search/collections/{collection pattern}"
 
-The collection pattern can be a specific collection name or a pattern containing the `*` wildcard.
+The collection pattern can be a specific collection name or a pattern containing the `*` wild-card.
 
 Example
 """""""
@@ -73,7 +73,7 @@ The payload consists of a json query object with the following fields:
    "spatialOp", "The spatial operation to perform with the footprint (within | intersects | overlaps)", "No, defaults to intersects"
    "terms", "An array of property term filters", "No"
    "limit", "The total number of products to return. For paging", "No, defaults to 50"
-   "offset", "For paging results. For example to exculde the first 50 results set this value to 50", "No, defaults to 0, ie the first page of results."
+   "offset", "For paging results. For example to exclude the first 50 results set this value to 50", "No, defaults to 0, i.e. the first page of results."
 
 Property filter terms
 """""""""""""""""""""

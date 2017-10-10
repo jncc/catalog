@@ -1,7 +1,7 @@
-Data Ingestion
+﻿Data Ingestion
 **************
 
-The following api methods are used for data ingestion.
+The following API methods are used for data ingestion.
 
 Validate Product
 ================
@@ -9,7 +9,7 @@ Validate Product
 Request
 -------
 
-Validates a product without ingesting it.  Only 1 pruduct can be submitted for validation on each call to the method.
+Validates a product without ingesting it.  Only 1 product can be submitted for validation on each call to the method.
 
 .. csv-table::
    :header: "Method", "URL"
@@ -40,7 +40,7 @@ Result
 
 * All properties of the input payload are validated where possible
 * Multiple errors may be returned for the same property
-* Nested properties are delimited by a dot, ie metadata.title.
+* Nested properties are delimited by a dot, eg metadata.title.
 
 Add Product
 ===========
@@ -48,7 +48,7 @@ Add Product
 Request
 -------
 
-Validates a product and ingests the product into the collection specified in the collectionName field
+Validates a product and ingests the product into the collection specified in the collectionName field. Only 1 product can be submitted for ingestion on each call to the method.
 
 .. csv-table::
    :header: "Method", "URL"
