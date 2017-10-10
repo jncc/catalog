@@ -3,7 +3,11 @@
 Gemini Metadata Schema
 **********************
 
-  title: string;
+Metadata is stored in the `Gemini standard <http://www.agi.org.uk/agi-groups/standards-committee/uk-gemini>`_. The implemenation of which is yet to be finalised.
+
+This schema should be considered work in progress.
+
+..  title: string;
   abstract: string;
   topicCategory: string;
   keywords: IKeyword[];
@@ -24,29 +28,31 @@ Gemini Metadata Schema
   resourceType: string;
   boundingBox
 
-Metadata keywords
-=================
+.. Metadata keywords
+.. =================
 
-  value: string;
+..  value: string;
   vocab: string;
 
-Responsible Party
-=================
+.. Responsible Party
+.. =================
 
-  name: string;
+..  name: string;
   email: string;
   role: string;
 
-Extent
-======
+.. Extent
+.. ======
 
-  value: string;
+..  value: string;
   authority: string;
 
-export interface IBoundingBox {
-  north: number;
+.. BoundingBox
+.. ===========
+
+..  north: number;
   south: number;
   east: number;
   west: number;
-}
+
 
