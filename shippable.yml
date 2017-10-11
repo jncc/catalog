@@ -1,8 +1,8 @@
 language: node_js
 
 # not sure why i used an old node.js - todo update to v6 / latest
-#node_js:
-#  - 4.2.3
+node_js:
+  - 8.6.0
 
 # only build master and all branches beginning with "beta"
 branches:
