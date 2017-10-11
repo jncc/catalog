@@ -1,0 +1,33 @@
+language: node_js
+
+# not sure why i used an old node.js - todo update to v6 / latest
+#node_js:
+#  - 4.2.3
+
+# only build master and all branches beginning with "beta"
+branches:
+  only:
+    - master # - beta*
+#    - dockerless
+
+build:
+  ci:
+    - pip install sphinx
+    - npm install
+    - npm run build:prod # todo: run tests too
+    - pip install --upgrade botocore # workaround https://github.com/Shippable/support/issues/3304
+    - pip install setuptools==34.0.1
+
+integrations:
+  deploy:
+    - integrationName: "aws-jncc-prod-subscription-integration"
+      type: aws
+      target: eb_paas
+      platform: "Node.js"
+      application_name: Catalog
+      env_name: jncc-catalog-env
+      region: "eu-west-1"
+
+env:
+  - secure: RCFwAApjc9yfgUDC1hJTnpN2QqCbRFbrlSxNDUEvimiFazI2imjzRzLQa/hDx7QafooO6YEgt9dlVwe0RmUStHJdyuVDzXcBhex53ym9LDlHRHeYutl33xFgKFrkK9lNsia6is9tQfCuBsbwNTE+BN6csvk2SznQl+BTqRqXjN8bNSAEItR4cAyKe2gNznNEnn0vQMi8feT6jdHfNZAHpLnhr7LMvKhGrDbx7RDXl4N0rFEy6C9BGQQ6H89IfcWNEj79YtPon13Xjxjx5vWjFp8g1x3CxFcuZ1/QE8HWGU6EyCw76vpIFghspzf0sXs+cpJrFhY5fxyty+LyzXEBoQ==
+
