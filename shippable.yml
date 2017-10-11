@@ -13,8 +13,8 @@ branches:
 build:
   ci:
     - pip install sphinx
-    - npm install
-    - npm run build # todo: run tests too
+    - yarn install
+    - yarn run build # todo: run tests too
     - pip install --upgrade botocore # workaround https://github.com/Shippable/support/issues/3304
     - pip install setuptools==34.0.1
 

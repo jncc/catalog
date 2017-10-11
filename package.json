@@ -10,7 +10,8 @@
     "dev": "npm run build && nodemon built/api/server.js",
     "test": "mocha -r ts-node/register \"api/**/*.ts\"",
     "build-docs": "python -msphinx docs built/docs",
-    "build": "npm run build-api && npm run build-docs"
+    "build": "npm run build-api && npm run build-docs",
+    "start": "node built/api/server.js"
   },
   "repository": {
     "type": "git",
