@@ -2,7 +2,7 @@ language: node_js
 
 # not sure why i used an old node.js - todo update to v6 / latest
 node_js:
-  - 8.6.0
+  - 8.2.1
 
 # only build master and all branches beginning with "beta"
 branches:
@@ -14,7 +14,7 @@ build:
   ci:
     - pip install sphinx
     - npm install
-    - npm run build:prod # todo: run tests too
+    - npm run build # todo: run tests too
     - pip install --upgrade botocore # workaround https://github.com/Shippable/support/issues/3304
     - pip install setuptools==34.0.1
 
