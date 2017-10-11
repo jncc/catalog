@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./built/",
+    "outDir": "./built/api",
     "sourceMap": true,
     "module": "commonjs",
     "target": "es6",

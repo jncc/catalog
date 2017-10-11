@@ -17,7 +17,7 @@ export class Query {
   public limit: number = 50;
   public collection: string = "";
   public footprint: string = "";
-  public spatialop: string = "";
+  public spatialop: string = "intersects";
   public terms: ITerm[] = [];
   public types: any = {};
   public productName: string = "*";

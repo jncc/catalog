@@ -3,5 +3,17 @@
     // hide the build output from the file explorer
     "files.exclude": {
         "built": true
-    }
+    },
+    "restructuredtext.linter.sphinxDirectives": ["toctree","literalinclude"],
+    "restructuredtext.linter.sphinxTextRoles": ["doc", "ref"],
+    "restructuredtext.builtDocumentationPath" : "${workspaceRoot}/docs",
+    "restructuredtext.confPath"               : "${workspaceRoot}/docs-source",
+    "restructuredtext.updateOnTextChanged"    : "true",
+    "restructuredtext.sphinxBuildPath": null,
+    "cSpell.words": [
+        "epilog",
+        "osgb",
+        "rst",
+        "wildcard"
+    ]
 }
