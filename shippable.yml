@@ -27,7 +27,3 @@ integrations:
       application_name: Catalog
       env_name: jncc-catalog-env
       region: "eu-west-1"
-
-env:
-  - secure: GgB6SZxjRZWCvsGSEnhXgFT/sNQMlOh2J2kVKbsQW7uS6qAPGASwT54o0doi9665o0pM7VLL6NQpt8VQBnw9cvjdxNL4C8A2SvDV5229Ki4pP5IOYBQ6hFs0jGybC1pR6e0JumHF0uwrgS6fKEBwSdfd1X/6gl1/LV9Ot6yBVZxBg0JujRmDna/T+HGud4Wr8A0Mx8XKUbK3gKCetzyUgBZzs2wZftyVVq8PpCAPpMwPs/j/Lu+f2BqdVPK8OQ/KZkmcd44GksFFdUajjl9skRIPq87jNfMHu+xr8njpaqbnkQYAbfK0hLc9wPYBROWouiKtEZir6kPBArUYzVP9gQ==
-
