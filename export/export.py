@@ -1,0 +1,69 @@
+import requests
+import pprint
+import sys
+import os
+
+
+pp = pprint.PrettyPrinter()
+
+catalogUrl = 'http://172.31.6.72/'
+outputFolder = './output/'
+
+def getProducts(query):
+  queryUrl = catalogUrl + 'search/product'
+
+  try:
+    r = requests.post(queryUrl, json=query)
+    result = r.json()
+    return result['result']
+  except requests.exceptions.RequestException as e:
+    print(e)
+    sys.exit(1)
+
+def downloadProducts(products):
+  if not os.path.exists(outputFolder):
+        os.makedirs(outputFolder)
+
+  for product in products:
+    s3Preview = product['data']['preview']['s3']
+
+    bucket = s3Preview['bucket']
+    key = s3Preview['key']
+    region = s3Preview['region']
+    fileType = s3Preview['type']
+
+    # These products are available direct from the bucket for public download. We can get them with a url.
+    downloadUrl = 'https://s3-' + region + '.amazonaws.com/' + bucket + '/' + key
+    file = downloadUrl.rsplit('/', 1)[-1]
+    outputPath = outputFolder + file
+
+    try:
+      print('Downloading: ' + file)
+      r = requests.get(downloadUrl, stream=True)
+      with open(outputPath, 'wb') as f:
+        for chunk in r.iter_content(1024):
+            f.write(chunk)
+    except requests.exceptions.RequestException as e:
+      print('Could not download: ' + downloadUrl)
+      pp.pprint(e)
+
+
+if __name__ == '__main__':
+    query = {
+      'collection': 'sentinel/1/ard/backscatter/osgb',
+      'terms': [
+        {
+        'property': 'begin',
+        'operation': '>=',
+        'value': '2016-08-04T00:00:00Z'
+        },
+        {
+        'property': 'end',
+        'operation': '=<',
+        'value': '2016-08-05T00:00:00Z'
+        }]
+    }
+
+    products = getProducts(query)
+    downloadProducts(products)
+
