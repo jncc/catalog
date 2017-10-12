@@ -3,14 +3,13 @@ import pprint
 import sys
 import os
 
-
 pp = pprint.PrettyPrinter()
 
-catalogUrl = 'http://172.31.6.72/'
-outputFolder = './output/'
+CATALOG_URL = 'http://172.31.6.72/'
+OUTPUT_FOLDER = './output/'
 
 def getProducts(query):
-  queryUrl = catalogUrl + 'search/product'
+  queryUrl = CATALOG_URL + 'search/product'
 
   try:
     r = requests.post(queryUrl, json=query)
@@ -21,8 +20,8 @@ def getProducts(query):
     sys.exit(1)
 
 def downloadProducts(products):
-  if not os.path.exists(outputFolder):
-        os.makedirs(outputFolder)
+  if not os.path.exists(OUTPUT_FOLDER):
+        os.makedirs(OUTPUT_FOLDER)
 
   for product in products:
     s3Preview = product['data']['preview']['s3']
@@ -35,7 +34,7 @@ def downloadProducts(products):
     # These products are available direct from the bucket for public download. We can get them with a url.
     downloadUrl = 'https://s3-' + region + '.amazonaws.com/' + bucket + '/' + key
     file = downloadUrl.rsplit('/', 1)[-1]
-    outputPath = outputFolder + file
+    outputPath = OUTPUT_FOLDER + file
 
     try:
       print('Downloading: ' + file)

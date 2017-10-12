@@ -16,7 +16,7 @@ Catalog Docs
    data/product
    data/metadata
    examples/data_upload_script
-   examples/data_harvesting_script
+   examples/data_retrieval_script
 
 Background
 ==========
