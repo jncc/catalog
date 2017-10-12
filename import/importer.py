@@ -83,27 +83,29 @@ class Importer:
             raise ValueError('Product %s was not imported, error returned from API: %s'
                              % (product['name'], resp.text))
 
-    def import_collection(self, collection):
-        """
-        Import a collection from a JSON blob
 
-        Keyword arguments:
-        collection      -- A JSON blob to import as a collection
-        """
-        products = collection['products']
-        del collection['products']
+    # Not yet implemented.
+    # def import_collection(self, collection):
+    #     """
+    #     Import a collection from a JSON blob
 
-        resp = requests.post(
-            urljoin(self.api_base_url, 'collection/add'), data=collection)
-        if not resp.ok:
-            raise ValueError('Product %s was not imported, error returned from API: %s'
-                             % (collection['metadata']['title'], resp.text()))
+    #     Keyword arguments:
+    #     collection      -- A JSON blob to import as a collection
+    #     """
+    #     products = collection['products']
+    #     del collection['products']
 
-        json_resp = json.loads(resp.text)
+    #     resp = requests.post(
+    #         urljoin(self.api_base_url, '/add/collection'), data=collection)
+    #     if not resp.ok:
+    #         raise ValueError('Product %s was not imported, error returned from API: %s'
+    #                          % (collection['metadata']['title'], resp.text()))
 
-        for product in products:
-            product['collectionName'] = json_resp['name']
-            self.import_product(product)
+    #     json_resp = json.loads(resp.text)
+
+    #     for product in products:
+    #         product['collectionName'] = json_resp['name']
+    #         self.import_product(product)
 
     def do_import(self):
         """
