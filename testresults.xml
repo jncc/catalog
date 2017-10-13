@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.8930000000000001" tests="3" failures="0">
+  <testsuite name="Date Validator" timestamp="2017-10-13T09:06:47" tests="3" file="/home/petemontgomery/Work/catalog/api/definitions/collection/collection.ts" failures="0" time="0.004">
+    <testcase name="Date Validator should validate a valid date" time="0.001" classname="should validate a valid date">
+    </testcase>
+    <testcase name="Date Validator should not validate an improperly formated date" time="0.002" classname="should not validate an improperly formated date">
+    </testcase>
+    <testcase name="Date Validator should not validate an invalid date" time="0.001" classname="should not validate an invalid date">
+    </testcase>
+  </testsuite>
+</testsuites>
+

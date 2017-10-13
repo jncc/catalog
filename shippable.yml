@@ -15,6 +15,8 @@ build:
     - pip install sphinx
     - yarn install
     - ./node_modules/mocha/bin/mocha --reporter mocha-junit-reporter -r ts-node/register ./api/**/*.ts --reporter-options mochaFile=shippable/testresults/testresults.xml
+    - mkdir -p shippable/testresults
+    - cp ./testresults.xml shippable/testresults
     - yarn run build
     - pip install --upgrade botocore # workaround https://github.com/Shippable/support/issues/3304
     - pip install setuptools==34.0.1
