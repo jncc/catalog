@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.8930000000000001" tests="3" failures="0">
-  <testsuite name="Date Validator" timestamp="2017-10-13T09:06:47" tests="3" file="/home/petemontgomery/Work/catalog/api/definitions/collection/collection.ts" failures="0" time="0.004">
+<testsuites name="Mocha Tests" time="0.9990000000000002" tests="91" failures="0">
+  <testsuite name="Root Suite" timestamp="2017-10-13T11:00:13" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Date Validator" timestamp="2017-10-13T11:00:13" tests="3" file="/home/petemontgomery/Work/catalog/api/definitions/collection/collection.ts" failures="0" time="0.004">
     <testcase name="Date Validator should validate a valid date" time="0.001" classname="should validate a valid date">
     </testcase>
     <testcase name="Date Validator should not validate an improperly formated date" time="0.002" classname="should not validate an improperly formated date">
@@ -8,5 +10,196 @@
     <testcase name="Date Validator should not validate an invalid date" time="0.001" classname="should not validate an invalid date">
     </testcase>
   </testsuite>
+  <testsuite name="Test fixtures" timestamp="2017-10-13T11:00:13" tests="1" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0">
+    <testcase name="Test fixtures GetTestProduct should return the product from ./api/test/product.json" time="0" classname="GetTestProduct should return the product from ./api/test/product.json">
+    </testcase>
+  </testsuite>
+  <testsuite name="Product validator" timestamp="2017-10-13T11:00:13" tests="5" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0.155">
+    <testcase name="Product validator should validate a valid product" time="0.066" classname="should validate a valid product">
+    </testcase>
+    <testcase name="Product validator should not validate if no product name" time="0.029" classname="should not validate if no product name">
+    </testcase>
+    <testcase name="Product validator should not validate if no collection name" time="0.011" classname="should not validate if no collection name">
+    </testcase>
+    <testcase name="Product validator should not validate and invalid collection name" time="0.014" classname="should not validate and invalid collection name">
+    </testcase>
+    <testcase name="Product validator should not validate a product with an invalid collection name" time="0.035" classname="should not validate a product with an invalid collection name">
+    </testcase>
+  </testsuite>
+  <testsuite name="Metadata validator" timestamp="2017-10-13T11:00:13" tests="25" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0.31000000000000016">
+    <testcase name="Metadata validator should not validate a missing metadata title" time="0.019" classname="should not validate a missing metadata title">
+    </testcase>
+    <testcase name="Metadata validator should not validate a missing metadata abstract" time="0.016" classname="should not validate a missing metadata abstract">
+    </testcase>
+    <testcase name="Metadata validator should not validate a missing metadata topicCategory" time="0.014" classname="should not validate a missing metadata topicCategory">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with an empty keywords array" time="0.013" classname="should not validate metadata with an empty keywords array">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata keyword with no value" time="0.011" classname="should not validate metadata keyword with no value">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata keyword with a defined vocab but with no value" time="0.018" classname="should not validate metadata keyword with a defined vocab but with no value">
+    </testcase>
+    <testcase name="Metadata validator should validate metadata keyword with a value and no vocab" time="0.016" classname="should validate metadata keyword with a value and no vocab">
+    </testcase>
+    <testcase name="Metadata validator should validate metadata keyword with a value and vocab" time="0.016" classname="should validate metadata keyword with a value and vocab">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata temporalExtent without a valid begin and end date-time" time="0.011" classname="should not validate metadata temporalExtent without a valid begin and end date-time">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata datasetReferenceDate that is not a date-time or a date" time="0.008" classname="should not validate metadata datasetReferenceDate that is not a date-time or a date">
+    </testcase>
+    <testcase name="Metadata validator should validate metadata datasetReferenceDate as a date string" time="0.013" classname="should validate metadata datasetReferenceDate as a date string">
+    </testcase>
+    <testcase name="Metadata validator should validate metadata datasetRefernceDate as a date-time string" time="0.014" classname="should validate metadata datasetRefernceDate as a date-time string">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with an empty lineage string" time="0.013" classname="should not validate metadata with an empty lineage string">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with a non uri resourceLocator string" time="0.009" classname="should not validate metadata with a non uri resourceLocator string">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with an empty additionalInformationSource" time="0.009" classname="should not validate metadata with an empty additionalInformationSource">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata without a valid responsibleOrganisation, name, email and role (email minimum)" time="0.01" classname="should not validate metadata without a valid responsibleOrganisation, name, email and role (email minimum)">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with empty limitationsOnPublicAccess" time="0.011" classname="should not validate metadata with empty limitationsOnPublicAccess">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with empty useConstraints" time="0.011" classname="should not validate metadata with empty useConstraints">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with empty spatialReferenceSystem" time="0.008" classname="should not validate metadata with empty spatialReferenceSystem">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with a metadataDate that is not a date-time or a date" time="0.01" classname="should not validate metadata with a metadataDate that is not a date-time or a date">
+    </testcase>
+    <testcase name="Metadata validator should validate metadata with metadataDate as a date string" time="0.012" classname="should validate metadata with metadataDate as a date string">
+    </testcase>
+    <testcase name="Metadata validator should validate metadata with a metadataDate as a date-time string" time="0.017" classname="should validate metadata with a metadataDate as a date-time string">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata without a valid metadataPointOfContact, name, email and role (email minimum)" time="0.009" classname="should not validate metadata without a valid metadataPointOfContact, name, email and role (email minimum)">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with empty resourceType" time="0.008" classname="should not validate metadata with empty resourceType">
+    </testcase>
+    <testcase name="Metadata validator should not validate metadata with an invalid boundingBox" time="0.014" classname="should not validate metadata with an invalid boundingBox">
+    </testcase>
+  </testsuite>
+  <testsuite name="Data Validator" timestamp="2017-10-13T11:00:14" tests="10" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0.12299999999999998">
+    <testcase name="Data Validator should not validate an s3 data group with missing region" time="0.015" classname="should not validate an s3 data group with missing region">
+    </testcase>
+    <testcase name="Data Validator should not validate an s3 data group with missing bucket" time="0.009" classname="should not validate an s3 data group with missing bucket">
+    </testcase>
+    <testcase name="Data Validator should not validate an s3 data group with missing key" time="0.009" classname="should not validate an s3 data group with missing key">
+    </testcase>
+    <testcase name="Data Validator should validate an s3 data group with additonal ^.*data$ properties" time="0.012" classname="should validate an s3 data group with additonal ^.*data$ properties">
+    </testcase>
+    <testcase name="Data Validator should not validate an ftp data group with an invalid server URI" time="0.013" classname="should not validate an ftp data group with an invalid server URI">
+    </testcase>
+    <testcase name="Data Validator should not validate an ftp data group with missing path" time="0.01" classname="should not validate an ftp data group with missing path">
+    </testcase>
+    <testcase name="Data Validator should validate an ftp data group with a server as a hostname" time="0.013" classname="should validate an ftp data group with a server as a hostname">
+    </testcase>
+    <testcase name="Data Validator should validate an ftp data group with a server as a uri" time="0.012" classname="should validate an ftp data group with a server as a uri">
+    </testcase>
+    <testcase name="Data Validator should validate an ftp data group with a server as a ipv4" time="0.015" classname="should validate an ftp data group with a server as a ipv4">
+    </testcase>
+    <testcase name="Data Validator should validate an ftp data group with a server as a ipv6" time="0.015" classname="should validate an ftp data group with a server as a ipv6">
+    </testcase>
+  </testsuite>
+  <testsuite name="Footprint Validator" timestamp="2017-10-13T11:00:14" tests="7" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0.11399999999999999">
+    <testcase name="Footprint Validator should not validate a invalid GeoJSON blob" time="0.014" classname="should not validate a invalid GeoJSON blob">
+    </testcase>
+    <testcase name="Footprint Validator should not validate a non Multipolygon footprint" time="0.017" classname="should not validate a non Multipolygon footprint">
+    </testcase>
+    <testcase name="Footprint Validator should validate a missing CRS, replacing it with default for pushing into Postgres" time="0.016" classname="should validate a missing CRS, replacing it with default for pushing into Postgres">
+    </testcase>
+    <testcase name="Footprint Validator should not validate a non WGS84 CRS" time="0.012" classname="should not validate a non WGS84 CRS">
+    </testcase>
+    <testcase name="Footprint Validator should validate a CRS as EPSG:4326" time="0.012" classname="should validate a CRS as EPSG:4326">
+    </testcase>
+    <testcase name="Footprint Validator should validate a CRS as urn:ogc:def:crs:OGC:1.3:CRS84" time="0.026" classname="should validate a CRS as urn:ogc:def:crs:OGC:1.3:CRS84">
+    </testcase>
+    <testcase name="Footprint Validator should validate a CRS as urn:ogc:def:crs:EPSG::4326" time="0.017" classname="should validate a CRS as urn:ogc:def:crs:EPSG::4326">
+    </testcase>
+  </testsuite>
+  <testsuite name="Product Properties Validator" timestamp="2017-10-13T11:00:14" tests="7" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0.113">
+    <testcase name="Product Properties Validator should validate a product with an valid properties collection" time="0.021" classname="should validate a product with an valid properties collection">
+    </testcase>
+    <testcase name="Product Properties Validator should validate a product with an valid properties collection - formatted string types" time="0.018" classname="should validate a product with an valid properties collection - formatted string types">
+    </testcase>
+    <testcase name="Product Properties Validator should not validate a product with an invalid properties collection - non-matching definitions" time="0.013" classname="should not validate a product with an invalid properties collection - non-matching definitions">
+    </testcase>
+    <testcase name="Product Properties Validator should not validate a product with an bad properties collection - formatted string types" time="0.016" classname="should not validate a product with an bad properties collection - formatted string types">
+    </testcase>
+    <testcase name="Product Properties Validator should not validate a product with an invalid properties collection - missing definitions" time="0.016" classname="should not validate a product with an invalid properties collection - missing definitions">
+    </testcase>
+    <testcase name="Product Properties Validator Should not validate invalid dates" time="0.014" classname="Should not validate invalid dates">
+    </testcase>
+    <testcase name="Product Properties Validator Should validate valid dates" time="0.015" classname="Should validate valid dates">
+    </testcase>
+  </testsuite>
+  <testsuite name="Collection Request Validator" timestamp="2017-10-13T11:00:14" tests="7" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0.005">
+    <testcase name="Collection Request Validator should validate a valid search path" time="0.001" classname="should validate a valid search path">
+    </testcase>
+    <testcase name="Collection Request Validator should not validate an invalid search path" time="0" classname="should not validate an invalid search path">
+    </testcase>
+    <testcase name="Collection Request Validator should validate a valid spatialOp" time="0" classname="should validate a valid spatialOp">
+    </testcase>
+    <testcase name="Collection Request Validator should not validate an invalid spatialOp" time="0" classname="should not validate an invalid spatialOp">
+    </testcase>
+    <testcase name="Collection Request Validator should validate a valid WKT footprint" time="0.002" classname="should validate a valid WKT footprint">
+    </testcase>
+    <testcase name="Collection Request Validator should not validate an ivalid WKT footprint" time="0.001" classname="should not validate an ivalid WKT footprint">
+    </testcase>
+    <testcase name="Collection Request Validator should not validate a WKT footprint that is not a closed polygon" time="0.001" classname="should not validate a WKT footprint that is not a closed polygon">
+    </testcase>
+  </testsuite>
+  <testsuite name="Product Request Validator" timestamp="2017-10-13T11:00:14" tests="26" file="/home/petemontgomery/Work/catalog/api/server.ts" failures="0" time="0.17500000000000002">
+    <testcase name="Product Request Validator should validate a valid search path" time="0.002" classname="should validate a valid search path">
+    </testcase>
+    <testcase name="Product Request Validator should not validate an wildcard search path" time="0" classname="should not validate an wildcard search path">
+    </testcase>
+    <testcase name="Product Request Validator should not validate an invalid search path" time="0.001" classname="should not validate an invalid search path">
+    </testcase>
+    <testcase name="Product Request Validator should validate a valid spatialOp" time="0" classname="should validate a valid spatialOp">
+    </testcase>
+    <testcase name="Product Request Validator should not validate an invalid spatialOp" time="0.001" classname="should not validate an invalid spatialOp">
+    </testcase>
+    <testcase name="Product Request Validator should validate a valid WKT footprint" time="0" classname="should validate a valid WKT footprint">
+    </testcase>
+    <testcase name="Product Request Validator should not validate an ivalid WKT footprint" time="0" classname="should not validate an ivalid WKT footprint">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a WKT footprint that is not a closed polygon" time="0.001" classname="should not validate a WKT footprint that is not a closed polygon">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a term without a property defined" time="0.001" classname="should not validate a term without a property defined">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a term without an operator defined" time="0" classname="should not validate a term without an operator defined">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a term without a value defined" time="0.001" classname="should not validate a term without a value defined">
+    </testcase>
+    <testcase name="Product Request Validator should validate a string term with an = operator" time="0.006" classname="should validate a string term with an = operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a string term with other operators" time="0.017" classname="should not validate a string term with other operators">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a string term with an invalid operator" time="0.006" classname="should not validate a string term with an invalid operator">
+    </testcase>
+    <testcase name="Product Request Validator should validate a date term with a valid operator" time="0.025" classname="should validate a date term with a valid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a date term with an invalid operator" time="0.005" classname="should not validate a date term with an invalid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a date term with an invalid date" time="0.006" classname="should not validate a date term with an invalid date">
+    </testcase>
+    <testcase name="Product Request Validator should validate a datetime term with a valid operator" time="0.026" classname="should validate a datetime term with a valid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a datetime term with an invalid operator" time="0.007" classname="should not validate a datetime term with an invalid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a datetime term with an invalid datetime" time="0.007" classname="should not validate a datetime term with an invalid datetime">
+    </testcase>
+    <testcase name="Product Request Validator should validate an int term with a valid operator" time="0.022" classname="should validate an int term with a valid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate an int term with an invalid operator" time="0.004" classname="should not validate an int term with an invalid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate an int term with an invalid int" time="0.006" classname="should not validate an int term with an invalid int">
+    </testcase>
+    <testcase name="Product Request Validator should validate a number term with a valid operator" time="0.022" classname="should validate a number term with a valid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a number term with an invalid operator" time="0.004" classname="should not validate a number term with an invalid operator">
+    </testcase>
+    <testcase name="Product Request Validator should not validate a number term with an invalid number" time="0.005" classname="should not validate a number term with an invalid number">
+    </testcase>
+  </testsuite>
 </testsuites>
-
