@@ -19,12 +19,18 @@ def getProducts(query):
 
         getNextPage = True
 
+        # Iterate though each page of results until no results are returned
         while getNextPage:
             query["offset"] = offset
             query["limit"] = limit
+
             r = requests.post(queryUrl, json=query)
-            result = r.json()
-            p = result['result']
+
+            # A json payload is returned, convert to python dictionary
+            body = r.json()
+
+            # The array of products results is in the result key
+            p = r.json()['result']
 
             if p:
                 products = products + [x for x in p if x not in products]
@@ -52,6 +58,7 @@ def downloadProducts(products):
         fileType = s3Preview['type']
 
         # These products are available direct from the bucket for public download. We can get them with a url.
+        # Otherwise we would use the Amazon boto library to authenticate and connect to the bucket.
         downloadUrl = 'https://s3-' + region + '.amazonaws.com/' + bucket + '/' + key
         file = downloadUrl.rsplit('/', 1)[-1]
         outputPath = OUTPUT_FOLDER + file
@@ -68,6 +75,10 @@ def downloadProducts(products):
 
 
 if __name__ == '__main__':
+    # Construct a query object that:
+    # - Requests all items in the 'sentinel/1/ard/backscatter/osgb' collection
+    # - that have a begin date >= 2016-08-04
+    # - and an end date =< 2016-08-05
     query = {
         'collection': 'sentinel/1/ard/backscatter/osgb',
         'terms': [
