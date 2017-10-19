@@ -26,10 +26,8 @@ def getProducts(query):
 
             r = requests.post(queryUrl, json=query)
 
-            # A json payload is returned, convert to python dictionary
-            body = r.json()
-
-            # The array of products results is in the result key
+            # A json payload is returned. Converting to a python dictionary
+            # enables us to get the products from the result key.
             p = r.json()['result']
 
             if p:
