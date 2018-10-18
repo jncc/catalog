@@ -1,4 +1,4 @@
-import { IFTP, IS3file } from "./files";
+import { IFTP, IS3file, IHTTP } from "./files";
 import { IWFS, IWMS } from "./services";
 
 export interface IData {
@@ -9,6 +9,7 @@ export interface IData {
 export interface IDataGroup {
     s3?: IS3file;
     ftp?: IFTP;
+    http?: IHTTP;
     wms?: IWMS;
     wfs?: IWFS;
 }
@@ -35,6 +36,9 @@ export const Schema = {
       ftp: {
         $ref: "#/definitions/files/ftp"
       },
+      http: {
+        $ref: "#/definitions/files/http"
+      },
       wms: {
         $ref: "#/definitions/services/wms"
       },
@@ -42,5 +46,5 @@ export const Schema = {
         $ref: "#/definitions/services/wfs"
       }
     }
-  },
+  }
 };

@@ -2,12 +2,20 @@ export interface IS3file {
   key: string;
   bucket: string;
   region: string;
+  size?: number;
   type?: string;
 }
 
 export interface IFTP {
   server: string;
   path: string;
+  size?: number;
+  type?: string;
+}
+
+export interface IHTTP {
+  url: string;
+  size?: number;
   type?: string;
 }
 
@@ -27,6 +35,10 @@ export const Schema = {
       region: {
         type: "string",
         minLength: 1
+      },
+      size: {
+        type: "integer",
+        minimum: 1
       },
       type: {
         type: "string",
@@ -51,11 +63,34 @@ export const Schema = {
         type: "string",
         minLength: 1
       },
+      size: {
+        type: "integer",
+        minimum: 1
+      },
       type: {
         type: "string",
         minLength: 1
       }
     },
     required: ["server", "path"]
+  },
+  http: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      url: {
+        type: "string",
+        format: "url"
+      },
+      size: {
+        type: "integer",
+        minimum: 1
+      },
+      type: {
+        type: "string",
+        minLength: 1
+      }
+    },
+    required: ["url"]
   }
 };
