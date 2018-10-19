@@ -25,7 +25,7 @@ export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
   public validate(product: Product.IProduct): Promise<string[]> {
-    let asyncValidator = ValidatorFactory.getValidator();
+    let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
 
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
     let errors: string[] = new Array<string>();
@@ -58,7 +58,7 @@ export class ProductValidator {
       return Promise.resolve(errors);
     }
 
-    let asyncValidator = ValidatorFactory.getValidator();
+    let asyncValidator = ValidatorFactory.getValidator(collection.productsSchema.$schema);
 
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 
@@ -189,9 +189,10 @@ describe("Metadata validator", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.keywords = [];
 
+    validator.validate(p).then(value => console.log(value))
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.include("metadata.keywords | should NOT have less than 1 items");
+      .and.include("metadata.keywords | should NOT have fewer than 1 items");
   });
 
   it("should not validate metadata keyword with no value", () => {
@@ -782,7 +783,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -815,7 +816,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -839,6 +840,8 @@ describe("Product Properties Validator", () => {
       externalId: "not-a-uuid",
       datetime: "2017-06-28"
     };
+
+    v2.validate(product).then(value => console.log(value));
 
     return chai.expect(v2.validate(product)).to.be.rejected
       .and.eventually.have.length(2)
@@ -916,7 +919,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         properties: {
           date: {
             type: "string",

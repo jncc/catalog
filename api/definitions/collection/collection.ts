@@ -12,7 +12,7 @@ export interface ICollection {
 }
 
 export function validate(collection: ICollection) {
-  let asyncValidator = ValidatorFactory.getValidator();
+  let asyncValidator = ValidatorFactory.getValidator(Schema.$schema);
   let collectionSchemaValidator = asyncValidator.compile(Schema);
   let errors: string[] = new Array<string>();
 

@@ -3,18 +3,15 @@ import * as ajvasync from "ajv-async";
 
 import { DateValidator } from "../validation/dateValidator";
 
-export function getValidator(options: any = { allErrors: true, formats: "full" }) {
+export function getValidator(schemaVersion:String = "", options: any = { allErrors: true, formats: "full" }) {
   // Fix for mixed json schema versions, older schemas need some extra bits
   let metaSchemaVersion = 7;
 
-  if ("schemaVersion" in options) {
-    if (options.schemaVersion == "http://json-schema.org/draft-04/schema#") {
-      options.schemaId = 'id';
-      metaSchemaVersion = 4
-    } else if (options.schemaVersion == "http://json-schema.org/draft-6/schema#") {
-      metaSchemaVersion = 6
-    }
-    delete options.schemaVersion;
+  if (schemaVersion == "http://json-schema.org/draft-04/schema#") {
+    options.schemaId = 'id';
+    metaSchemaVersion = 4
+  } else if (schemaVersion == "http://json-schema.org/draft-6/schema#") {
+    metaSchemaVersion = 6
   }
 
   let validator = ajv(options);
