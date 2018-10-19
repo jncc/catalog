@@ -189,7 +189,6 @@ describe("Metadata validator", () => {
     let p = Fixtures.GetTestProduct();
     p.metadata.keywords = [];
 
-    validator.validate(p).then(value => console.log(value))
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
       .and.include("metadata.keywords | should NOT have fewer than 1 items");
@@ -717,7 +716,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -747,7 +746,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -841,8 +840,6 @@ describe("Product Properties Validator", () => {
       datetime: "2017-06-28"
     };
 
-    v2.validate(product).then(value => console.log(value));
-
     return chai.expect(v2.validate(product)).to.be.rejected
       .and.eventually.have.length(2)
       .and.contain('properties.externalId | should match format "uuid"')
@@ -857,7 +854,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -888,7 +885,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         properties: {
           date: {
             type: "string",
