@@ -1,13 +1,8 @@
 import * as Collection from "../definitions/collection/collection";
 import * as Footprint from "../definitions/components/footprint";
 import * as Metadata from "../definitions/components/metadata";
-import * as Data from "../definitions/product/components/data/data";
-import * as DataFiles from "../definitions/product/components/data/files";
-import * as DataServices from "../definitions/product/components/data/services";
-import * as Properties from "../definitions/product/components/properties";
 import * as Product from "../definitions/product/product";
 import { CatalogRepository } from "../repository/catalogRepository";
-import { DateValidator } from "./dateValidator";
 import * as ValidationHelper from "./validationHelper";
 import * as ValidatorFactory from "./validatorFactory";
 
