@@ -9,6 +9,7 @@
     "trailing-comma": false,
     "object-literal-sort-keys": false,
     "no-empty-interface": false,
-    "max-line-length": false
+    "max-line-length": false,
+    "ordered-imports": false
   }
 }

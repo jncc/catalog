@@ -1,13 +1,8 @@
 import * as Collection from "../definitions/collection/collection";
 import * as Footprint from "../definitions/components/footprint";
 import * as Metadata from "../definitions/components/metadata";
-import * as Data from "../definitions/product/components/data/data";
-import * as DataFiles from "../definitions/product/components/data/files";
-import * as DataServices from "../definitions/product/components/data/services";
-import * as Properties from "../definitions/product/components/properties";
 import * as Product from "../definitions/product/product";
 import { CatalogRepository } from "../repository/catalogRepository";
-import { DateValidator } from "./dateValidator";
 import * as ValidationHelper from "./validationHelper";
 import * as ValidatorFactory from "./validatorFactory";
 
@@ -25,7 +20,7 @@ export class ProductValidator {
   constructor(private repository: CatalogRepository) { }
 
   public validate(product: Product.IProduct): Promise<string[]> {
-    let asyncValidator = ValidatorFactory.getValidator();
+    let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
 
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
     let errors: string[] = new Array<string>();
@@ -58,7 +53,7 @@ export class ProductValidator {
       return Promise.resolve(errors);
     }
 
-    let asyncValidator = ValidatorFactory.getValidator();
+    let asyncValidator = ValidatorFactory.getValidator(collection.productsSchema.$schema);
 
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 
@@ -191,7 +186,7 @@ describe("Metadata validator", () => {
 
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
-      .and.include("metadata.keywords | should NOT have less than 1 items");
+      .and.include("metadata.keywords | should NOT have fewer than 1 items");
   });
 
   it("should not validate metadata keyword with no value", () => {
@@ -716,7 +711,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -746,7 +741,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -782,7 +777,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -815,7 +810,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -854,7 +849,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         required: ["externalId"],
         properties: {
           externalId: {
@@ -885,7 +880,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         properties: {
           date: {
             type: "string",
@@ -916,7 +911,7 @@ describe("Product Properties Validator", () => {
         type: "object",
         title: "Properties",
         $async: true,
-        $schema: "http://json-schema.org/draft-04/schema#",
+        $schema: "http://json-schema.org/draft-07/schema#",
         properties: {
           date: {
             type: "string",

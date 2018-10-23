@@ -186,7 +186,7 @@ export class ProductRequestValidator extends RequestValidator {
    */
   private static validateQueryValues(schema: any, extractedQueryParams: any[]): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      let validator = ValidatorFactory.getValidator({schemaVersion: schema.$schema, allErrors: true, formats: "full" });
+      let validator = ValidatorFactory.getValidator(schema.$schema);
       let propertySchemaValidator = validator.compile(schema);
       let promisedValidations: Promise<any>[] = []
       let errors: string[] = []

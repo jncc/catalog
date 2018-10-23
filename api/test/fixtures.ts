@@ -19,6 +19,16 @@ export class Fixtures {
     return JSON.parse(content);
   }
 
+  public static GetV4TestPropertySchema(): any {
+    let content = fs.readFileSync("./api/test/collectionSchema.v4.json", "utf8");
+    return JSON.parse(content);
+  }
+
+  public static GetV6TestPropertySchema(): any {
+    let content = fs.readFileSync("./api/test/collectionSchema.v6.json", "utf8");
+    return JSON.parse(content);
+  }
+
   public static GetFootprint(): any {
     return {
       type: "MultiPolygon",
@@ -48,17 +58,51 @@ export class Fixtures {
     };
   }
 
-  public static GetMockRepo(): TypeMoq.IMock<CatalogRepository> {
+  public static GetCollectionV4(): ICollection {
+    return {
+      id: "3bfc0280-5708-40ee-aef4-df3ddeb4fd21",
+      name: "test/collection",
+      metadata: this.GetTestProduct().metadata,
+      footprint: this.GetTestProduct().footprint,
+      productsSchema: this.GetV4TestPropertySchema()
+    };
+  }
+
+  public static GetCollectionV6(): ICollection {
+    return {
+      id: "3bfc0280-5708-40ee-aef4-df3ddeb4fd21",
+      name: "test/collection",
+      metadata: this.GetTestProduct().metadata,
+      footprint: this.GetTestProduct().footprint,
+      productsSchema: this.GetV6TestPropertySchema()
+    };
+  }
+
+  public static GetMockRepo(version:number = 7): TypeMoq.IMock<CatalogRepository> {
     let mockRepo = TypeMoq.Mock.ofType(CatalogRepository);
 
     mockRepo.setup((x) => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
       return Promise.resolve(x);
     });
-    mockRepo.setup((x) => x.getCollections(TypeMoq.It.isAny(), TypeMoq.It.isAnyNumber(), TypeMoq.It.isAnyNumber()))
-      .returns((x, y) => {
-        let c: ICollection = Fixtures.GetCollection();
-        return Promise.resolve([c]);
-    });
+    if (version == 4) {
+      mockRepo.setup((x) => x.getCollections(TypeMoq.It.isAny(), TypeMoq.It.isAnyNumber(), TypeMoq.It.isAnyNumber()))
+        .returns((x, y) => {
+          let c: ICollection = Fixtures.GetCollectionV4();
+          return Promise.resolve([c]);
+      });
+    } else if (version == 6) {
+      mockRepo.setup((x) => x.getCollections(TypeMoq.It.isAny(), TypeMoq.It.isAnyNumber(), TypeMoq.It.isAnyNumber()))
+        .returns((x, y) => {
+          let c: ICollection = Fixtures.GetCollectionV6();
+          return Promise.resolve([c]);
+      });
+    } else {
+      mockRepo.setup((x) => x.getCollections(TypeMoq.It.isAny(), TypeMoq.It.isAnyNumber(), TypeMoq.It.isAnyNumber()))
+        .returns((x, y) => {
+          let c: ICollection = Fixtures.GetCollection();
+          return Promise.resolve([c]);
+      });
+    }
     mockRepo.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: ICollection = Fixtures.GetCollection();
       return Promise.resolve(c);
