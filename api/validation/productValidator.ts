@@ -595,6 +595,87 @@ describe("Data Validator", () => {
 
     return chai.expect(validator.validate(p)).to.be.fulfilled;
   });
+
+  it("should validate an http data group with a valid url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        http: {
+          url: "https://test.com/test.zip",
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.fulfilled;
+  });
+
+  it("should not validate an http data group with an invalid url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        http: {
+          url: "IAM_BAD!",
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p))
+      .to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].http.url | should match format "url"');
+  });
+
+  it("should validate a data group with a valid size and type", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        http: {
+          url: "http://test.com/test.zip",
+          size: 1231455,
+          type: "application/zip"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p))
+      .to.be.fulfilled;
+  });
+
+  it("should not validate a data group with an invalid size", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        http: {
+          url: "http://test.com/test.zip",
+          size: -1231455,
+          type: "application/zip"
+        }
+      }
+    };
+    validator.validate(p).then(x => console.log(x));
+    return chai.expect(validator.validate(p))
+      .to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].http.size | should be >= 1');
+  });
+
+  it("should not validate a data group with empty type", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        http: {
+          url: "http://test.com/test.zip",
+          size: 1231455,
+          type: ""
+        }
+      }
+    };
+    validator.validate(p).then(x => console.log(x));
+    return chai.expect(validator.validate(p))
+      .to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].http.type | should NOT be shorter than 1 characters');
+  });
 });
 
 describe("Footprint Validator", () => {
