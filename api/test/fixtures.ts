@@ -90,7 +90,7 @@ export class Fixtures {
           let c: ICollection = Fixtures.GetCollectionV4();
           return Promise.resolve([c]);
       });
-    } else if (version == 4) {
+    } else if (version == 6) {
       mockRepo.setup((x) => x.getCollections(TypeMoq.It.isAny(), TypeMoq.It.isAnyNumber(), TypeMoq.It.isAnyNumber()))
         .returns((x, y) => {
           let c: ICollection = Fixtures.GetCollectionV6();
