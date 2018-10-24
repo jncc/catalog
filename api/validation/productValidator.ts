@@ -652,7 +652,7 @@ describe("Data Validator", () => {
         }
       }
     };
-    validator.validate(p).then(x => console.log(x));
+
     return chai.expect(validator.validate(p))
       .to.be.rejected
       .and.eventually.have.length(1)
@@ -670,7 +670,7 @@ describe("Data Validator", () => {
         }
       }
     };
-    validator.validate(p).then(x => console.log(x));
+
     return chai.expect(validator.validate(p))
       .to.be.rejected
       .and.eventually.have.length(1)
