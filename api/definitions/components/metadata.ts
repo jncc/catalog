@@ -189,6 +189,27 @@ export const Schema = {
       role: {
         type: "string",
         minLength: 1
+      },
+      address: {
+        type: "object",
+        properties: {
+          deliveryPoint: {
+            type: "string",
+            minLength: 1
+          },
+          city: {
+            type: "string",
+            minLength: 1
+          },
+          postalCode: {
+            type: "string",
+            minLength: 1
+          },
+          country: {
+            type: "string",
+            minLength: 1
+          }
+        }
       }
     },
     required: ["email"]
@@ -207,6 +228,27 @@ export const Schema = {
       role: {
         type: "string",
         pattern: "^metadataPointOfContact$"
+      },
+      address: {
+        type: "object",
+        properties: {
+          deliveryPoint: {
+            type: "string",
+            minLength: 1
+          },
+          city: {
+            type: "string",
+            minLength: 1
+          },
+          postalCode: {
+            type: "string",
+            minLength: 1
+          },
+          country: {
+            type: "string",
+            minLength: 1
+          }
+        }
       }
     },
     required: ["name", "email", "role"]
