@@ -54,7 +54,6 @@ export class ProductValidator {
     }
 
     let asyncValidator = ValidatorFactory.getValidator(collection.productsSchema.$schema);
-
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 
     let promise = new Promise<string[]>((resolve, reject) => {
