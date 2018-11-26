@@ -8,7 +8,7 @@ node_js:
 branches:
   only:
     - master # - beta*
-#    - dockerless
+    - test
 
 build:
   ci:

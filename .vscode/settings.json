@@ -15,5 +15,6 @@
         "osgb",
         "rst",
         "wildcard"
-    ]
+    ],
+    "python.linting.pylintEnabled": false
 }
