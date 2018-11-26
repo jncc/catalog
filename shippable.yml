@@ -27,5 +27,5 @@ integrations:
       target: eb_paas
       platform: "Node.js"
       application_name: Catalog
-      env_name: jncc-catalog-env
+      env_name: jncc-catalog-$BRANCH
       region: "eu-west-1"
