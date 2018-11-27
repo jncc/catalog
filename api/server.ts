@@ -30,6 +30,12 @@ class Result {
   public promisedResult: Promise<any>;
 }
 
+app.get(`/test`, async (req, res) => {
+  res.json({
+    result: 'Catalog Is Here'
+  });
+});
+
 app.get(`/search/collection/*?`, async (req, res) => {
   let query = new Query(req.params[0], req.query);
   let reqErrors = CollectionRequestValidator.validate(query, catalogRepository).then(() => {
