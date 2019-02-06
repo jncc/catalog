@@ -57,7 +57,6 @@ export class ProductValidator {
     let asyncValidator = ValidatorFactory.getValidator(collection.productsSchema.$schema);
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 
-    //***************** */
     let propValidator = propertiesSchemaValidator(product.properties);
 
     if (typeof propValidator.then === 'function') {
@@ -70,27 +69,12 @@ export class ProductValidator {
         });
       });
     } else {
-      await propertiesSchemaValidator(product.properties)
+      let valid = await propertiesSchemaValidator(product.properties);
       if (propertiesSchemaValidator.errors) {
         return Promise.reject(errors.concat(ValidationHelper.reduceErrors(propertiesSchemaValidator.errors, "properties")));
       }
     }
     return Promise.resolve(errors);
-    //***************** */
-
-    // let promise = new Promise<string[]>((resolve, reject) => {
-    //   propertiesSchemaValidator(product.properties)
-    //     .then((x) => {
-    //       console.log(x);
-    //       resolve();
-    //     }).catch((e) => {
-    //       console.log(e);
-    //       errors = errors.concat(ValidationHelper.reduceErrors(e.errors, "properties"));
-    //       reject(errors);
-    //     });
-    // });
-    //
-    //return promise;
   }
 
   private nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
