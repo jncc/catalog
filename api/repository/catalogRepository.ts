@@ -78,7 +78,6 @@ export class CatalogRepository {
       // Add optional arguments and filters
       baseQuery = this.buildQuery(baseQuery, query);
       // Run and return results
-      console.log(baseQuery.toParam());
       return t.any(baseQuery.toParam());
     }).catch((error) => {
       console.log("database error : " + error);

@@ -7,6 +7,7 @@ export interface IData {
 }
 
 export interface IDataGroup {
+    title: String;
     s3?: IS3file;
     ftp?: IFTP;
     http?: IHTTP;
@@ -28,8 +29,13 @@ export const Schema = {
   datagroup: {
     type: "object",
     additionalProperties: false,
-    minProperties: 1,
+    minProperties: 2,
+    required: ["title"],
     properties: {
+      title: {
+        type: "string",
+        minLength: 1
+      },
       s3: {
         $ref: "#/definitions/files/s3file"
       },
