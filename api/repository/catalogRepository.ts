@@ -236,14 +236,13 @@ export class CatalogRepository {
     // Do spatial search
     if (query.spatialop !== "") {
       if (query.spatialop === "within") {
-        baseQuery.where("ST_Within(ST_GeomFromText(?, 4326), ?)", query.footprint, propNameString);
+        baseQuery.where("ST_Within(ST_GeomFromText(?, 4326), footprint)", query.footprint);
       } else if (query.spatialop === "overlaps") {
-        baseQuery.where("ST_Overlaps(ST_GeomFromText(?, 4326), ?)", query.footprint, propNameString);
+        baseQuery.where("ST_Overlaps(ST_GeomFromText(?, 4326), footprint)", query.footprint);
       } else {
-        baseQuery.where("ST_Intersects(ST_GeomFromText(?, 4326), ?)", query.footprint, propNameString);
+        baseQuery.where("ST_Intersects(ST_GeomFromText(?, 4326), footprint)", query.footprint);
       }
     }
-
     return baseQuery;
   }
 
