@@ -78,7 +78,6 @@ export class CatalogRepository {
       // Add optional arguments and filters
       baseQuery = this.buildQuery(baseQuery, query);
       // Run and return results
-      console.log(baseQuery.toParam());
       return t.any(baseQuery.toParam());
     }).catch((error) => {
       console.log("database error : " + error);
@@ -88,16 +87,18 @@ export class CatalogRepository {
 
   public storeProduct(product: IProduct): Promise<string> {
     return Database.instance.connection.task((t) => {
+      let squelPostgres = squel.useFlavour('postgres');
       return t.one("select id from collection where name = $1", product.collectionName, (x) => x && x.id)
         .then((collectionId) => {
-          return t.one(squel.insert({ numberedParameters: true })
+          return t.one(squelPostgres.insert()
             .into("product")
             .set("collection_id", collectionId)
-            .set("metadata", product.metadata)
-            .set("properties", product.properties)
-            .set("data", product.data)
-            .set("footprint", squel.str("ST_SetSRID(ST_GeomFromGeoJSON(?), 4326)", product.footprint))
-            .set("name", product.name).toParam(), (x) => x.id);
+            .set("metadata", JSON.stringify(product.metadata))
+            .set("properties", JSON.stringify(product.properties))
+            .set("data", JSON.stringify(product.data))
+            .set("footprint", squelPostgres.str("ST_SetSRID(ST_GeomFromGeoJSON(?), 4326)", JSON.stringify(product.footprint)))
+            .set("name", product.name).returning("id")
+            .toString(), null, (x) => x.id);
           // return t.one("INSERT INTO product(collection_id, metadata, properties, data, footprint, name) \
           //           VALUES ($1, $2, $3, $4, ST_SetSRID(ST_GeomFromGeoJSON($5), 4326), $6) \
           //           RETURNING id",

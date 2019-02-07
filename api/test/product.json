@@ -53,6 +53,7 @@
   },
   "data": {
     "product": {
+      "title": "LiDAR for Scotland Phase I DTM NH87",
       "s3": {
         "key": "/processed/DTM/gridded/27700/10000/DTM_NH87.tif",
         "bucket": "lidar-1",

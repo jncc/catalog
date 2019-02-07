@@ -120,9 +120,11 @@ app.post(`/add/product`, async (req, res) => {
   });
 });
 
-// start the express web server
-app.listen(env.port, () => {
-  console.log(`it's ` + new Date().toISOString());
-  console.log(`app.server is listening on: http://localhost:${env.port}`);
-  console.log(`node environment is ${env.name}`);
-});
+if (!module.parent) {
+  // start the express web server
+  app.listen(env.port, () => {
+    console.log(`it's ` + new Date().toISOString());
+    console.log(`app.server is listening on: http://localhost:${env.port}`);
+    console.log(`node environment is ${env.name}`);
+  });
+}

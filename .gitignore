@@ -15,3 +15,5 @@ built/
 !.elasticbeanstalk/*.global.yml
 *.lock
 
+# Ignore changes to set_env scripts
+scripts/set_env.*

@@ -9,7 +9,6 @@ import { Fixtures } from "../../test/fixtures";
 import { RequestValidator } from "./requestValidator";
 import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
-import { ICollection } from "../../definitions/collection/collection"
 
 export class ProductRequestValidator extends RequestValidator {
   public static validate(query: Query, catalogRepository: CatalogRepository): Promise<string[]> {
@@ -38,7 +37,6 @@ export class ProductRequestValidator extends RequestValidator {
 
               this.validateQueryValues(validationSchema, queryValues).then(() => {
                 this.validateQueryOperations(query, errors)
-
                 if (errors.length > 0) {
                   reject(errors);
                 } else {
@@ -47,7 +45,6 @@ export class ProductRequestValidator extends RequestValidator {
               }).catch((valueErrors) => {
                 reject(errors.concat(valueErrors))
               })
-
             } else {
               if (errors.length > 0) {
                 reject(errors);
@@ -56,7 +53,6 @@ export class ProductRequestValidator extends RequestValidator {
               }
             }
           }
-
         })
       } else {
         reject(errors);
@@ -190,7 +186,7 @@ export class ProductRequestValidator extends RequestValidator {
    */
   private static validateQueryValues(schema: any, extractedQueryParams: any[]): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      let validator = ValidatorFactory.getValidator();
+      let validator = ValidatorFactory.getValidator(schema.$schema);
       let propertySchemaValidator = validator.compile(schema);
       let promisedValidations: Promise<any>[] = []
       let errors: string[] = []
