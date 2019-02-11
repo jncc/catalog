@@ -58,6 +58,29 @@ export class CatalogRepository {
     });
   }
 
+  public getProductsTotal(query: Query.Query): Promise<number> {
+    // Replace wildcard characters in the name
+    let productName = query.productName.replace(/\*/g, "%");
+
+    return Database.instance.connection.task((t) => {
+      // Build base query
+      let baseQuery = squel.select({ numberedParameters: true })
+        .from("product_view")
+        .field("count(*)", 'total')
+        // .where("full_name LIKE ?", collectionName)
+        .where("collection_name = ?", query.collection)
+        .where("name LIKE ?", productName)
+
+      // Add optional arguments and filters
+      baseQuery = this.buildQuery(baseQuery, query);
+      // Run and return results
+      return t.any(baseQuery.toParam());
+    }).catch((error) => {
+      console.log("database error : " + error);
+      throw new Error(error);
+    });
+  }
+
   public getProducts(query: Query.Query): Promise<IProduct[]> {
     // Replace wildcard characters in the name
     let productName = query.productName.replace(/\*/g, "%");
@@ -68,6 +91,7 @@ export class CatalogRepository {
         .from("product_view")
         .field("id").field("name").field("collection_name", "collectionName").field("metadata")
         .field("properties").field("data").field("ST_AsGeoJSON(footprint)", "footprint")
+        .field("count(*) OVER()", "full_count")
         // .where("full_name LIKE ?", collectionName)
         .where("collection_name = ?", query.collection)
         .where("name LIKE ?", productName)
