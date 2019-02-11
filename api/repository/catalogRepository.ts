@@ -91,7 +91,6 @@ export class CatalogRepository {
         .from("product_view")
         .field("id").field("name").field("collection_name", "collectionName").field("metadata")
         .field("properties").field("data").field("ST_AsGeoJSON(footprint)", "footprint")
-        .field("count(*) OVER()", "full_count")
         // .where("full_name LIKE ?", collectionName)
         .where("collection_name = ?", query.collection)
         .where("name LIKE ?", productName)
