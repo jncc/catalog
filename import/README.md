@@ -30,7 +30,7 @@ An example of running the service against a live catalog is as follows;
 
 The JSON file format is essentially an array of individual items to be ingested;
 
-'''json
+```
 [
   {
     "id": "GUID", // ID for product
@@ -61,11 +61,11 @@ The JSON file format is essentially an array of individual items to be ingested;
     }
   }
 ]
-'''
+```
 
 ### Metadata Format
 
-'''json
+```
 {
   "title": "Product Title",
   "abstract": "Product Abstract",
@@ -123,7 +123,7 @@ The JSON file format is essentially an array of individual items to be ingested;
     },
     "spatialReferenceSystem": "EPSG:27700" // Spatial reference info of data, EPSG code preferred but not forced
   }
-'''
+```
 
 ### Data Types
 
@@ -131,7 +131,7 @@ The JSON file format is essentially an array of individual items to be ingested;
 
 ##### HTTP
 
-'''json
+```
 {
   "product": {
     "title": ...,
@@ -142,11 +142,11 @@ The JSON file format is essentially an array of individual items to be ingested;
     }
   }
 }
-'''
+```
 
 ##### FTP
 
-'''json
+```
 {
   "product": {
     "title": ...,
@@ -158,11 +158,11 @@ The JSON file format is essentially an array of individual items to be ingested;
     }
   }
 }
-'''
+```
 
 ##### S3
 
-'''json
+```
 {
   "product": {
     "title": ...,
@@ -175,13 +175,13 @@ The JSON file format is essentially an array of individual items to be ingested;
     }
   }
 }
-'''
+```
 
 #### Services
 
 ##### OGC web services
 
-'''json
+```
 {
   "product": {
     "title": ...,
@@ -191,13 +191,13 @@ The JSON file format is essentially an array of individual items to be ingested;
     }
   }
 }
-'''
+```
 
 ##### Catalog service
 
 This is a more abstract link, to allow products to link with other collections / products directly (not currently enforcing referential integrity) i.e. wms service linked to collection of individual tile downloads
 
-'''json
+```
 {
   "product":{
     "title": ...,
@@ -207,4 +207,4 @@ This is a more abstract link, to allow products to link with other collections /
     }
   }
 }
-'''
+```
