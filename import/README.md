@@ -28,7 +28,7 @@ An example of running the service against a live catalog is as follows;
 
 ## Scottish LIDAR generator example code
 
-There is a existing `scottish-json-gen-v2.py` file that generates json as required for this import process by crawling a known file format (Scottish lidar) as used in remotesensing.scot.gov. It needs a consumable list of OSGB grid references GeoJSON (10k, 5k and 1k in this case) to generate the various json collections involved, these are included in ./import/grids folder for convenience in this case.
+There is a existing `scottish-json-gen-v2.py` file that generates json as required for this import process by crawling a known file format (Scottish lidar) as used in remotesensing.scot.gov. It needs a consumable list of OSGB grid references GeoJSON (10k, 5k and 1k in this case) to generate the various json collections involved, these are not included due to file size but can be relatively easilly generated if needed.
 
 To run the script you just need to provide the following arguments;
 
