@@ -26,6 +26,27 @@ An example of running the service against a live catalog is as follows;
 
 `python3 importer.py -i input.json -a local-catalog.com -p --dbhost localhost --dbport 5432 --dbuser postgres --dbpass postgres`
 
+## Scottish LIDAR generator example code
+
+There is a existing `scottish-json-gen-v2.py` file that generates json as required for this import process by crawling a known file format (Scottish lidar) as used in remotesensing.scot.gov. It needs a consumable list of OSGB grid references GeoJSON (10k, 5k and 1k in this case) to generate the various json collections involved, these are included in ./import/grids folder for convenience in this case.
+
+To run the script you just need to provide the following arguments;
+
+- `-b` - S3 bucket to scan
+- `-r` - S3 bucket region
+- `-p` - AWS profile to use to provide permissions
+- `-g` - Appropriate GeoJSON file for this collection i.e. 10k / 5k / 1k
+- `--path` - The S3 bucket prefix to scan over i.e. folder containing collection
+- `-c` - The collection name for this run (Must exist)
+- `-i` - The collection ID for this run (Must exist)
+- `-o` - The output file path / filename
+
+In this example the phase-1/2 DSM/DTM collections only require a 10k grid, while phase-1-laz requires 1k and phase-2-laz requires 5k.
+
+To run just adapt the following example to what you are doing;
+
+`python3 scottish-json-gen-v2.py -b bucketname -r eu-west-1 -p scanProfile -g ./grids/osgb.10k.generated.geojson --path /phase/1/dsm -c scotland-gov/lidar/phase/1/dsm -i guid -o phase-1-dsm.json`
+
 ## JSON file format
 
 The JSON file format is essentially an array of individual items to be ingested;
