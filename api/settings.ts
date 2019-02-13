@@ -1,4 +1,8 @@
+import * as dotenv from 'dotenv';
+
 export function getEnvironmentSettings(env: string) {
+  dotenv.config();
+
   if (env === "development") {
     return {
       name: env,
