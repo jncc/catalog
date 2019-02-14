@@ -2,7 +2,7 @@ language: node_js
 
 # not sure why i used an old node.js - todo update to v6 / latest
 node_js:
-  - 10.15.0
+  - 8.15.0
 
 # only build master and all branches beginning with "beta"
 branches:
@@ -14,6 +14,7 @@ build:
   ci:
     - pip install sphinx
     - yarn install
+    - find ./node_modules/ -exec touch {} +
     - ./node_modules/mocha/bin/mocha "./api/**/!(server).ts"  --reporter mocha-junit-reporter -r ts-node/register --reporter-options mochaFile=shippable/testresults/testresults.xml
     - cat ./shippable/testresults/testresults.xml
     - yarn run build
