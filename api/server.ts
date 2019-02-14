@@ -64,18 +64,23 @@ app.post(`/search/product`, async (req, res) => {
   let query = new Query(req.body.collection, req.body);
 
   ProductRequestValidator.validate(query, catalogRepository).then(() => {
-    catalogRepository.getProducts(query).then((result) => {
-      res.json({
-        query: query,
-        result: result
-      });
-    }).catch((error) => {
-      res.status(500);
-      res.json({
-        query: query,
-        errors: error.message
-      });
-    });
+    catalogRepository.getProductsTotal(query)
+      .then((total) => { query.total = total[0].total })
+      .then(() => catalogRepository.getProducts(query)
+        .then((result) => {
+          res.json({
+            query: query,
+            result: result
+          });
+        }).catch((error) => {
+          console.error(error.message)
+          res.status(500);
+          res.json({
+            query: query,
+            errors: "A database error has occurred"
+          });
+        })
+      )
   }).catch((errors) => {
     res.status(400);
     res.json({

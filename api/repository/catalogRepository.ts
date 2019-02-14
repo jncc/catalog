@@ -58,6 +58,29 @@ export class CatalogRepository {
     });
   }
 
+  public getProductsTotal(query: Query.Query): Promise<number> {
+    // Replace wildcard characters in the name
+    let productName = query.productName.replace(/\*/g, "%");
+
+    return Database.instance.connection.task((t) => {
+      // Build base query
+      let baseQuery = squel.select({ numberedParameters: true })
+        .from("product_view")
+        .field("count(*)", 'total')
+        // .where("full_name LIKE ?", collectionName)
+        .where("collection_name = ?", query.collection)
+        .where("name LIKE ?", productName)
+
+      // Add optional arguments and filters
+      baseQuery = this.buildQuery(baseQuery, query);
+      // Run and return results
+      return t.any(baseQuery.toParam());
+    }).catch((error) => {
+      console.log("database error : " + error);
+      throw new Error(error);
+    });
+  }
+
   public getProducts(query: Query.Query): Promise<IProduct[]> {
     // Replace wildcard characters in the name
     let productName = query.productName.replace(/\*/g, "%");
@@ -78,7 +101,6 @@ export class CatalogRepository {
       // Add optional arguments and filters
       baseQuery = this.buildQuery(baseQuery, query);
       // Run and return results
-      console.log(baseQuery.toParam());
       return t.any(baseQuery.toParam());
     }).catch((error) => {
       console.log("database error : " + error);
@@ -237,14 +259,13 @@ export class CatalogRepository {
     // Do spatial search
     if (query.spatialop !== "") {
       if (query.spatialop === "within") {
-        baseQuery.where("ST_Within(ST_GeomFromText(?, 4326), ?)", query.footprint, propNameString);
+        baseQuery.where("ST_Within(ST_GeomFromText(?, 4326), footprint)", query.footprint);
       } else if (query.spatialop === "overlaps") {
-        baseQuery.where("ST_Overlaps(ST_GeomFromText(?, 4326), ?)", query.footprint, propNameString);
+        baseQuery.where("ST_Overlaps(ST_GeomFromText(?, 4326), footprint)", query.footprint);
       } else {
-        baseQuery.where("ST_Intersects(ST_GeomFromText(?, 4326), ?)", query.footprint, propNameString);
+        baseQuery.where("ST_Intersects(ST_GeomFromText(?, 4326), footprint)", query.footprint);
       }
     }
-
     return baseQuery;
   }
 

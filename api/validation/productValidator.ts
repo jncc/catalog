@@ -25,9 +25,9 @@ export class ProductValidator {
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
     let errors: string[] = new Array<string>();
 
-    return new Promise<string[]>((resolve, reject) => {
+    return new Promise<string[]>(async (resolve, reject) => {
       productSchemaValidator(product)
-        .then(() => this.nonSchemaValidation(product, errors))
+        .then(async () => await this.nonSchemaValidation(product, errors))
         .then((e) => {
           if (errors.length === 0) {
             resolve(errors);
@@ -36,6 +36,7 @@ export class ProductValidator {
           }
         })
         .catch((e) => {
+          console.log(e)
           if ("errors" in e) {
             // Return from an AJV promise
             errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
@@ -48,7 +49,7 @@ export class ProductValidator {
     });
   }
 
-  private validateProductProperties(collection: Collection.ICollection, product: Product.IProduct, errors: string[]): Promise<string[]> {
+  private async validateProductProperties(collection: Collection.ICollection, product: Product.IProduct, errors: string[]): Promise<string[]> {
     if (collection.productsSchema === "") {
       return Promise.resolve(errors);
     }
@@ -56,17 +57,24 @@ export class ProductValidator {
     let asyncValidator = ValidatorFactory.getValidator(collection.productsSchema.$schema);
     let propertiesSchemaValidator = asyncValidator.compile(collection.productsSchema);
 
-    let promise = new Promise<string[]>((resolve, reject) => {
-      propertiesSchemaValidator(product.properties)
-        .then(() => {
+    let propValidator = propertiesSchemaValidator(product.properties);
+
+    if (typeof propValidator.then === 'function') {
+      return new Promise<string[]>((resolve, reject) => {
+        propValidator.then((x) => {
           resolve();
         }).catch((e) => {
           errors = errors.concat(ValidationHelper.reduceErrors(e.errors, "properties"));
           reject(errors);
         });
-    });
-
-    return promise;
+      });
+    } else {
+      let valid = await propertiesSchemaValidator(product.properties);
+      if (propertiesSchemaValidator.errors) {
+        return Promise.reject(errors.concat(ValidationHelper.reduceErrors(propertiesSchemaValidator.errors, "properties")));
+      }
+    }
+    return Promise.resolve(errors);
   }
 
   private nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
@@ -415,6 +423,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         s3: {
           region: "",
           bucket: "missing-region",
@@ -432,6 +441,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         s3: {
           region: "missing-bucket",
           bucket: "",
@@ -449,6 +459,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         s3: {
           region: "missing-key",
           bucket: "missing-key",
@@ -466,6 +477,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         s3: {
           region: "test",
           bucket: "test",
@@ -473,6 +485,7 @@ describe("Data Validator", () => {
         }
       },
       preview: {
+        title: "test-title",
         s3: {
           region: "test",
           bucket: "test",
@@ -508,6 +521,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         ftp: {
           server: "",
           path: "/mising/server.file"
@@ -527,6 +541,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         ftp: {
           server: "missing.path.com",
           path: ""
@@ -543,6 +558,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         ftp: {
           server: "hostname.present",
           path: "path/to/file.txt"
@@ -557,6 +573,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         ftp: {
           server: "ftp://hostname.present:24",
           path: "path/to/file.txt"
@@ -571,6 +588,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         ftp: {
           server: "192.168.1.1",
           path: "path/to/file.txt"
@@ -585,6 +603,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         ftp: {
           server: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           path: "path/to/file.txt"
@@ -599,6 +618,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         http: {
           url: "https://test.com/test.zip",
         }
@@ -612,6 +632,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         http: {
           url: "IAM_BAD!",
         }
@@ -628,6 +649,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         http: {
           url: "http://test.com/test.zip",
           size: 1231455,
@@ -644,6 +666,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         http: {
           url: "http://test.com/test.zip",
           size: -1231455,
@@ -662,6 +685,7 @@ describe("Data Validator", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
+        title: "test-title",
         http: {
           url: "http://test.com/test.zip",
           size: 1231455,
