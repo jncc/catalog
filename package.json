@@ -12,6 +12,7 @@
     "test": "mocha -r ts-node/register \"api/**/*.ts\"",
     "build:docs": "python -msphinx docs built/docs",
     "build": "npm run build:api && npm run build:docs",
+    "build:docker": "npm run build && docker build -t jncc/catalog .",
     "start": "node built/api/server.js"
   },
   "repository": {

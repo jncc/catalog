@@ -7,7 +7,7 @@ export function getEnvironmentSettings(env: string) {
     return {
       name: env,
       dev: true,
-      port: 5000,
+      port: 8888,
       dir: ""
     };
   } else {
@@ -15,7 +15,7 @@ export function getEnvironmentSettings(env: string) {
       name: env,
       dev: false,
       port: 8081,  // elastic beanstalk: the default nginx configuration forwards traffic to an upstream server named nodejs at 127.0.0.1:8081
-      // dir: 'built/app.client'
+      dir: 'built'
     };
   }
 }

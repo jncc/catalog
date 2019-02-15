@@ -1,8 +1,6 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
-import * as Collection from "./definitions/collection/collection";
 import * as Product from "./definitions/product/product";
-import * as ValidationHelper from "./validation/validationHelper";
 
 import { Query } from "./query";
 import { CatalogRepository } from "./repository/catalogRepository";
@@ -19,22 +17,7 @@ process.on("unhandledRejection", (r) => console.log(r));
 
 // parse json body requests
 app.use(bodyParser.json());
-
-enum SearchType {
-  product,
-  collection,
-}
-
-class Result {
-  public query: Query;
-  public promisedResult: Promise<any>;
-}
-
-app.get(`/test`, async (req, res) => {
-  res.json({
-    result: 'Catalog Is Here'
-  });
-});
+app.use('/docs', express.static('./built/docs'))
 
 app.get(`/search/collection/*?`, async (req, res) => {
   let query = new Query(req.params[0], req.query);

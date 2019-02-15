@@ -30,10 +30,9 @@ Database access parameters such as server location and authentication are provid
 
 Save a copy outside of source control and edit.
 
-For linux set_env.sh:
-    soruce set_env.sh
+Either fill in a .env file with the appropriate Environment values or add the apporpriate variables to your system environment, all required variables are listed in .env.example
 
-You're good to go. 
+You're good to go.
 
     yarn install
     yarn run dev
@@ -45,8 +44,8 @@ Tip: It's often handy to run the Typescript compiler `tsc` to quickly check for 
 Run Tests
     yarn run tests
 
-
 ## Documentation
+
 Docs follow this template:
 https://docs.google.com/document/d/1HSQ3Fe77hnthw8hizqvXJU-qGEPHavMkctvCCadkVbY/edit?pli=1#
 
