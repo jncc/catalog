@@ -14,5 +14,8 @@ RUN npm install
 # Bundle app source
 ADD built built
 
+# Copy log rotation script
+COPY ./config/application.logrotate /etc/logrotate.d/application
+
 EXPOSE 8081
 CMD [ "npm", "start" ]

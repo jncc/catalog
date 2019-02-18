@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": 1,
+  "Image": {
+    "Name": "jncc/catalog"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 8081,
+      "HostPort": 80
+    }
+  ]
+}
