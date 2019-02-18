@@ -11,16 +11,8 @@ COPY package*.json ./
 
 RUN npm install
 
-#RUN apt update
-#RUN apt install python-pip -y
-#RUN pip install sphinx sphinx-autobuild
-
-#ADD docs docs
-
-#RUN npm run-script build
-
 # Bundle app source
 ADD built built
 
-EXPOSE 8080
+EXPOSE 8081
 CMD [ "npm", "start" ]

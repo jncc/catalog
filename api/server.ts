@@ -2,6 +2,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as Product from "./definitions/product/product";
 
+import { Logger } from "./logging/logger";
 import { Query } from "./query";
 import { CatalogRepository } from "./repository/catalogRepository";
 import { getEnvironmentSettings } from "./settings";
@@ -11,9 +12,10 @@ import { ProductRequestValidator } from "./validation/request/productRequestVali
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
-let catalogRepository = new CatalogRepository();
+let logger = Logger.Logger();
+let catalogRepository = new CatalogRepository(logger);
 
-process.on("unhandledRejection", (r) => console.log(r));
+process.on("unhandledRejection", (r) => logger.warning(r));
 
 // parse json body requests
 app.use(bodyParser.json());
@@ -109,10 +111,8 @@ app.post(`/add/product`, async (req, res) => {
 });
 
 if (!module.parent) {
-  // start the express web server
   app.listen(env.port, () => {
-    console.log(`it's ` + new Date().toISOString());
-    console.log(`app.server is listening on: http://localhost:${env.port}`);
-    console.log(`node environment is ${env.name}`);
+    logger.info(`app.server is listening on: http://localhost:${env.port}`);
+    logger.info(`node environment is ${env.name}`);
   });
 }

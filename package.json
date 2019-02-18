@@ -36,7 +36,8 @@
     "mocha-inline": "0.0.2",
     "pg-promise": "8.5.0",
     "squel": "5.12.2",
-    "wellknown": "0.5.0"
+    "wellknown": "0.5.0",
+    "winston": "3.2.1"
   },
   "devDependencies": {
     "@types/body-parser": "1.17.0",
