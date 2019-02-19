@@ -1,4 +1,4 @@
-/usr/src/app/logs/combined.log {
+/var/log/catalog/catalog.log {
   daily
   dateext
   missingok
