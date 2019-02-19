@@ -2,12 +2,12 @@ language: node_js
 
 # not sure why i used an old node.js - todo update to v6 / latest
 node_js:
-  - 8.15.0
+  - 7.1.4
 
 # only build master and all branches beginning with "beta"
 branches:
   only:
-    - master # - beta*
+    - master
     - test
 
 build:
@@ -18,17 +18,3 @@ build:
     - ./node_modules/mocha/bin/mocha "./api/**/!(server).ts"  --reporter mocha-junit-reporter -r ts-node/register --reporter-options mochaFile=shippable/testresults/testresults.xml
     - cat ./shippable/testresults/testresults.xml
     - yarn run build
-    - pip install --upgrade botocore # workaround https://github.com/Shippable/support/issues/3304
-    - pip install setuptools==34.0.1
-    - pip install --upgrade awscli
-    - pip install --upgrade awsebcli
-
-integrations:
-  deploy:
-    - integrationName: "shippable-iam-role"
-      type: aws
-      target: eb_paas
-      platform: "Node.js"
-      application_name: Catalog
-      env_name: jncc-catalog-$BRANCH
-      region: "eu-west-1"
