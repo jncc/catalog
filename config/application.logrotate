@@ -6,4 +6,5 @@
   compress
   delaycompress
   notifempty
+  olddir /var/log/catalog/rotated/
 }

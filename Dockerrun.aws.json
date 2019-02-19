@@ -8,5 +8,6 @@
       "ContainerPort": 8081,
       "HostPort": 80
     }
-  ]
+  ],
+  "Logging": "/var/log/catalog/"
 }
