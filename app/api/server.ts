@@ -1,9 +1,8 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
-import * as Collection from "./definitions/collection/collection";
 import * as Product from "./definitions/product/product";
-import * as ValidationHelper from "./validation/validationHelper";
 
+import { Logger } from "./logging/logger";
 import { Query } from "./query";
 import { CatalogRepository } from "./repository/catalogRepository";
 import { getEnvironmentSettings } from "./settings";
@@ -13,28 +12,18 @@ import { ProductRequestValidator } from "./validation/request/productRequestVali
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
-let catalogRepository = new CatalogRepository();
+let logger = Logger.Logger();
+let catalogRepository = new CatalogRepository(logger);
 
-process.on("unhandledRejection", (r) => console.log(r));
+process.on("unhandledRejection", (r) => logger.warning(r));
 
 // parse json body requests
 app.use(bodyParser.json());
+app.use('/docs', express.static('./built/docs'))
 
-enum SearchType {
-  product,
-  collection,
-}
-
-class Result {
-  public query: Query;
-  public promisedResult: Promise<any>;
-}
-
-app.get(`/test`, async (req, res) => {
-  res.json({
-    result: 'Catalog Is Here'
-  });
-});
+app.get('/alive', async (req, res) => {
+  res.send('Hello from catalog')
+})
 
 app.get(`/search/collection/*?`, async (req, res) => {
   let query = new Query(req.params[0], req.query);
@@ -64,18 +53,23 @@ app.post(`/search/product`, async (req, res) => {
   let query = new Query(req.body.collection, req.body);
 
   ProductRequestValidator.validate(query, catalogRepository).then(() => {
-    catalogRepository.getProducts(query).then((result) => {
-      res.json({
-        query: query,
-        result: result
-      });
-    }).catch((error) => {
-      res.status(500);
-      res.json({
-        query: query,
-        errors: error.message
-      });
-    });
+    catalogRepository.getProductsTotal(query)
+      .then((total) => { query.total = total[0].total })
+      .then(() => catalogRepository.getProducts(query)
+        .then((result) => {
+          res.json({
+            query: query,
+            result: result
+          });
+        }).catch((error) => {
+          console.error(error.message)
+          res.status(500);
+          res.json({
+            query: query,
+            errors: "A database error has occurred"
+          });
+        })
+      )
   }).catch((errors) => {
     res.status(400);
     res.json({
@@ -121,10 +115,8 @@ app.post(`/add/product`, async (req, res) => {
 });
 
 if (!module.parent) {
-  // start the express web server
   app.listen(env.port, () => {
-    console.log(`it's ` + new Date().toISOString());
-    console.log(`app.server is listening on: http://localhost:${env.port}`);
-    console.log(`node environment is ${env.name}`);
+    logger.info(`app.server is listening on: http://localhost:${env.port}`);
+    logger.info(`node environment is ${env.name}`);
   });
 }

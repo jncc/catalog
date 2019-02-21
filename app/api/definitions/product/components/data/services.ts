@@ -6,6 +6,11 @@ export interface IOGC {
 export interface IWMS extends IOGC { }
 export interface IWFS extends IOGC { }
 
+export interface ICatalog {
+  collection: string;
+  product?: string;
+}
+
 export const Schema = {
   wms: {
     $ref: "#/definitions/services/ogc"
@@ -27,5 +32,20 @@ export const Schema = {
       }
     },
     required: ["url", "name"]
+  },
+  collection: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      collection: {
+        type: "string",
+        minLength: 1
+      },
+      product: {
+        type: "string",
+        minLength: 1
+      }
+    },
+    required: ["collection"]
   }
 };

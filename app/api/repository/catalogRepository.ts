@@ -5,10 +5,17 @@ import { ICollection } from "../definitions/collection/collection";
 import { IProduct } from "../definitions/product/product";
 
 import { Database } from "./database";
+import * as winston from "winston";
 
 // todo: handle database errors nicely
 
 export class CatalogRepository {
+  logger: winston.Logger;
+
+  constructor(logger: winston.Logger) {
+    this.logger = logger;
+  }
+
   public getCollections(query: Query.Query, limit: number, offset: number): Promise<ICollection[]> {
     let collectionName = query.collection.replace(/\*/g, "%");
     return Database.instance.connection.task((t) => {
@@ -24,7 +31,8 @@ export class CatalogRepository {
       baseQuery = this.buildQuery(baseQuery, query);
       return t.any(baseQuery.toParam());
     }).catch((error) => {
-      throw new Error(error);
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
     });
   }
 
@@ -38,8 +46,8 @@ export class CatalogRepository {
 
       return t.oneOrNone(baseQuery.toParam());
     }).catch((error) => {
-      console.log("database error : " + error);
-      throw new Error(error);
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
     });
   }
 
@@ -53,8 +61,31 @@ export class CatalogRepository {
           return errors;
         });
     }).catch((error) => {
-      console.log("database error : " + error);
-      throw new Error(error);
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
+    });
+  }
+
+  public getProductsTotal(query: Query.Query): Promise<number> {
+    // Replace wildcard characters in the name
+    let productName = query.productName.replace(/\*/g, "%");
+
+    return Database.instance.connection.task((t) => {
+      // Build base query
+      let baseQuery = squel.select({ numberedParameters: true })
+        .from("product_view")
+        .field("count(*)", 'total')
+        // .where("full_name LIKE ?", collectionName)
+        .where("collection_name = ?", query.collection)
+        .where("name LIKE ?", productName)
+
+      // Add optional arguments and filters
+      baseQuery = this.buildQuery(baseQuery, query);
+      // Run and return results
+      return t.any(baseQuery.toParam());
+    }).catch((error) => {
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
     });
   }
 
@@ -80,8 +111,8 @@ export class CatalogRepository {
       // Run and return results
       return t.any(baseQuery.toParam());
     }).catch((error) => {
-      console.log("database error : " + error);
-      throw new Error(error);
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
     });
   }
 
@@ -106,8 +137,8 @@ export class CatalogRepository {
           //   (x) => x.id);
         });
     }).catch((error) => {
-      console.log("database error : " + error);
-      throw new Error(error);
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
     });
   }
 
@@ -273,8 +304,12 @@ export class CatalogRepository {
     return Database.instance.connection.task((t) => {
       return t.one("select st_asgeojson(st_forcerhr(st_geomfromgeojson($1)))", [geojson]);
     }).catch((error) => {
-      console.log("database error : " + error);
-      throw new Error(error);
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
     });
+  }
+
+  private createDatabaseError(error: any): Error {
+    return new Error("A database error has occurred");
   }
 }

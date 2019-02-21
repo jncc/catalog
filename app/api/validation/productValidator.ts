@@ -36,7 +36,6 @@ export class ProductValidator {
           }
         })
         .catch((e) => {
-          console.log(e)
           if ("errors" in e) {
             // Return from an AJV promise
             errors = errors.concat(ValidationHelper.reduceErrors(e.errors));

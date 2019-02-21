@@ -21,6 +21,7 @@ export class Query {
   public terms: ITerm[] = [];
   public types: any = {};
   public productName: string = "*";
+  public total: number = 0;
 
   // todo: type request
   constructor(requestParameter: string, queryParams: any) {

@@ -17,3 +17,6 @@ built/
 
 # Ignore changes to set_env scripts
 scripts/set_env.*
+
+# Ignore logging outputs
+logs/*
