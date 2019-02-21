@@ -1,4 +1,4 @@
-# catalog
+# Catalog
 Metadata and data product catalogue.
 
 ## Development
@@ -55,3 +55,19 @@ yarn run build-docs
 
 Table generator is handy for building complex tables.
 http://www.tablesgenerator.com/text_tables
+
+## Docker container
+
+### Build container
+
+To build the docker container simply run `yarn run build:docker` while in the base directory and this should build the application and then a docker container based off of that called jncc/catalog. 
+
+### Pull Container
+
+This image is currently being hosted at docker hub under our JNCC account if you want to pull a particular verison (1.0.0 - 1.0.4 currently) or just the latest run `docker pull jncc/catalog:latest`.
+
+### Run container
+
+If you need to run the container locally for testing you can run with the following command `docker run -p 9001:8081 -d --env-file .env jncc/catalog` where the `--env-file .env` parameter points to a .env with all the configuration required as in the `.env.example` file. 
+
+This will run a container with the port exposed at `http://localhost:8001`.
