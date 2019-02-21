@@ -38,7 +38,5 @@ RUN yarn install && \
 # COPY config/etc/logrotate.d/application/application.logrotate /etc/logrotate.d/application
 
 
-ENV NODE_ENV production
-
 EXPOSE 8081
 CMD [ "node", "built/api/server.js" ]
