@@ -70,4 +70,6 @@ This image is currently being hosted at docker hub under our JNCC account if you
 
 If you need to run the container locally for testing you can run with the following command `docker run -p 9001:8081 -d --env-file .env jncc/catalog` where the `--env-file .env` parameter points to a .env with all the configuration required as in the `.env.example` file. 
 
+The `NODE_ENV` environment varaible must not be set to `developement` when its being supplied to the docker container however as this is an option only for local development outside the docker container
+
 This will run a container with the port exposed at `http://localhost:9001`.
