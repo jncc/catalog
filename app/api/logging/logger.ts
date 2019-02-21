@@ -14,14 +14,11 @@ export class Logger {
               winston.format.timestamp(),
               winston.format.json()
             )
-          })
+          }),
+          new winston.transports.Console({format: winston.format.simple()})
         ]
       });
-    }
-
-    if (process.env.NODE_ENV !== 'production') {
-      this.singletonLogger.add(new winston.transports.Console({format: winston.format.simple()}));
-    }
+    }  
 
     this.singletonLogger.info(`Log level is ${process.env.LOG_LEVEL}`)
     this.singletonLogger.info(`Log Location is ${process.env.LOG_LOCATION}`)

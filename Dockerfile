@@ -3,19 +3,40 @@ FROM node:10.15.1
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
-#ADD api api
+RUN apt update && apt -y upgrade && \
+    apt -y install python3-pip && \
+    ln -s /usr/bin/pip3 /usr/bin/pip && \
+    ln -sf /usr/bin/python3 /usr/bin/python && \
+    pip install sphinx sphinx-autobuild && \
+    npm i -g typescript yarn
 
-RUN npm install
+COPY app .
 
-# Bundle app source
-ADD built built
+RUN yarn install && \
+    yarn build 
+    
+    # && \
+    # mkdir -p /app/built && \
+    # cp -r ./built/ /app/built/ && \
+    # cp ./package.json /app 
+    
+    # && \
+    # rm -rf /usr/src/app
 
-# Copy log rotation script
-COPY ./config/application.logrotate /etc/logrotate.d/application
+# # Install app dependencies
+# # A wildcard is used to ensure both package.json AND package-lock.json are copied
+# # where available (npm@5+)
+# COPY package*.json ./
+# #ADD api api
+
+# RUN npm install
+
+# # Bundle app source
+# ADD built built
+
+# # Copy log rotation script
+# COPY config/etc/logrotate.d/application/application.logrotate /etc/logrotate.d/application
+
 
 EXPOSE 8081
-CMD [ "npm", "start" ]
+CMD [ "node", "built/api/server.js" ]

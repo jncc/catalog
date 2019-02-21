@@ -21,6 +21,10 @@ process.on("unhandledRejection", (r) => logger.warning(r));
 app.use(bodyParser.json());
 app.use('/docs', express.static('./built/docs'))
 
+app.get('/alive', async (req, res) => {
+  res.send('Hello from catalog')
+})
+
 app.get(`/search/collection/*?`, async (req, res) => {
   let query = new Query(req.params[0], req.query);
   let reqErrors = CollectionRequestValidator.validate(query, catalogRepository).then(() => {
