@@ -34,6 +34,7 @@ Either fill in a .env file with the appropriate Environment values or add the ap
 
 You're good to go.
 
+    cd ./app
     yarn install
     yarn run dev
 
@@ -44,7 +45,31 @@ Tip: It's often handy to run the Typescript compiler `tsc` to quickly check for 
 Run Tests
     yarn run tests
 
-## Documentation
+# Database setup
+
+* Install postgres package.
+* Install postgis package.
+
+* su to the postgres user
+
+    sudo su - postgres
+
+* create the database
+
+    psql -c "CREATE DATABASE catalog;"
+    psql -d catalog -f ./setup-scripts/database-scripts/postgis/database.sql 
+    psql -d catalog -f ./setup-scripts/database-scripts/postgis/collection.sql 
+    psql -d catalog -f ./setup-scripts/database-scripts/postgis/product.sql 
+    psql -d catalog -f ./setup-scripts/database-scripts/postgis/product_view.sql 
+
+* create the user with a password (CHANGE THE PASSWORD BELOW)
+
+    psql -d catalog -c "CREATE USER catalog WITH ENCRYPTED PASSWORD 'password';"
+    psql -d catalog -c "GRANT connect ON DATABASE catalog TO catalog;"
+    psql -d catalog -c "GRANT usage ON SCHEMA public TO catalog;"
+    psql -d catalog -c "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO catalog;"
+
+## Online Documentation
 
 Docs follow this template:
 https://docs.google.com/document/d/1HSQ3Fe77hnthw8hizqvXJU-qGEPHavMkctvCCadkVbY/edit?pli=1#
@@ -68,7 +93,13 @@ This image is currently being hosted at docker hub under our JNCC account if you
 
 ### Run container
 
-If you need to run the container locally for testing you can run with the following command `docker run -p 9001:8081 -d --env-file .env jncc/catalog` where the `--env-file .env` parameter points to a .env with all the configuration required as in the `.env.example` file. 
+If you need to run the container locally for testing you can run with the following command: `
+
+*NB - Run from the project root*
+
+    docker run -p 9001:8081 -d --env-file .env jncc/catalog
+
+where the `--env-file .env` parameter points to a .env with all the configuration required as in the `.env.example` file. 
 
 The `NODE_ENV` environment varaible **must not** be set to `developement` when its being supplied to the docker container however as this is an option only for local development outside the docker container
 
