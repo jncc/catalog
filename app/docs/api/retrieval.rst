@@ -15,7 +15,7 @@ Search the collections.
    :header: "Method", "URL"
    :widths: 20, 20
 
-   "GET", "/search/collections/{collection pattern}"
+   "GET", "/search/collection/{collection pattern}"
 
 The collection pattern can be a specific collection name or a pattern containing the `*` wild-card.
 
@@ -24,11 +24,11 @@ Example
 
 This URL returns a collection objects for the 'sentinel/1/ard/backscatter/osgb'
 
-  |siteProtocol|://|siteUrl|/search/collections/sentinel/1/ard/backscatter/osgb
+  |siteProtocol|://|siteUrl|/search/collection/sentinel/1/ard/backscatter/osgb
 
 This URL returns a array of collection objects for all collections that begin with sentinel and contain /backscatter/
 
-  |siteProtocol|://|siteUrl|/search/collections/sentinel/\*/backscatter/\*
+  |siteProtocol|://|siteUrl|/search/collection/sentinel/\*/backscatter/\*
 
 Result
 ------
@@ -56,7 +56,7 @@ Search the collections.
    :header: "Method", "URL"
    :widths: 20, 20
 
-   "POST", "/search/products/"
+   "POST", "/search/product/"
 
 Payload
 """""""

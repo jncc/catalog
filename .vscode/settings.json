@@ -7,7 +7,7 @@
     "restructuredtext.linter.sphinxDirectives": ["toctree","literalinclude"],
     "restructuredtext.linter.sphinxTextRoles": ["doc", "ref"],
     "restructuredtext.builtDocumentationPath" : "${workspaceRoot}/docs",
-    "restructuredtext.confPath"               : "${workspaceRoot}/docs-source",
+    "restructuredtext.confPath"               : "${workspaceFolder}/docs-source",
     "restructuredtext.updateOnTextChanged"    : "true",
     "restructuredtext.sphinxBuildPath": null,
     "cSpell.words": [
