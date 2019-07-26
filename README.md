@@ -69,6 +69,7 @@ Run Tests
     psql -d catalog -c "GRANT usage ON SCHEMA public TO catalog;"
     psql -d catalog -c "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO catalog;"
 
+
 ## Online Documentation
 
 Docs follow this template:
@@ -85,7 +86,11 @@ http://www.tablesgenerator.com/text_tables
 
 ### Build container
 
-To build the docker container simply run `yarn run build:docker` while in the base directory and this should build the application and then a docker container based off of that called jncc/catalog. 
+To build the docker container simply run: 
+
+    yarn run build:docker
+
+while in the app directory and this should build the application and then a docker container based off of that called jncc/catalog. 
 
 ### Pull Container
 
@@ -104,3 +109,22 @@ where the `--env-file .env` parameter points to a .env with all the configuratio
 The `NODE_ENV` environment varaible **must not** be set to `developement` when its being supplied to the docker container however as this is an option only for local development outside the docker container
 
 This will run a container with the port exposed at `http://localhost:9001`.
+
+### Local postgres with Docker
+
+Postgres will by default only listen to the localhost (127.0.0.1) and probably hasn't been configured to do anything else on a development machine. However docker vm's run on there own network and postgres must be configured to interact with this.
+
+Get the docker network :
+
+    ifconfig docker0 | grep inet
+
+This will give an output as follows: 
+
+    inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+    inet6 fe80::42:54ff:feab:e808  prefixlen 64  scopeid 0x20<link>
+
+In this case Postgres needs to listen on 172.17.0.1 and accept authenticated connections from the 172.17.0.1/16 ip address range before it will work with docker.
+
+
+
+
