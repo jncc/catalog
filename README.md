@@ -102,7 +102,7 @@ If you need to run the container locally for testing you can run with the follow
 
 *NB - Run from the project root*
 
-    docker run -p 9001:8081 -d --env-file .env jncc/catalog -t catalog
+    docker run -p 9001:8081 -d --env-file .env jncc/catalog --name catalog_api
 
 where the `--env-file .env` parameter points to a .env with all the configuration required as in the `.env.example` file. 
 
