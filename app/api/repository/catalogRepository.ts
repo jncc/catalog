@@ -17,18 +17,19 @@ export class CatalogRepository {
   }
 
   public getCollections(query: Query.Query, limit: number, offset: number): Promise<ICollection[]> {
-    let collectionName = query.collection.replace(/\*/g, "%");
     return Database.instance.connection.task((t) => {
       let baseQuery = squel.select({ numberedParameters: true })
         .from("collection")
         .field("id").field("name").field("metadata").field("products_schema", "productsSchema")
         .field("ST_AsGeoJSON(footprint)", "footprint")
-        .where("name LIKE ?", collectionName)
         .order("name")
         .limit(limit)
         .offset(offset);
 
+      baseQuery = this.buildLikeQuery(baseQuery, "name", query.collection);
+
       baseQuery = this.buildQuery(baseQuery, query);
+
       return t.any(baseQuery.toParam());
     }).catch((error) => {
       this.logger.error("database error : " + error);
@@ -67,9 +68,6 @@ export class CatalogRepository {
   }
 
   public getProductsTotal(query: Query.Query): Promise<number> {
-    // Replace wildcard characters in the name
-    let productName = query.productName.replace(/\*/g, "%");
-
     return Database.instance.connection.task((t) => {
       // Build base query
       let baseQuery = squel.select({ numberedParameters: true })
@@ -77,8 +75,9 @@ export class CatalogRepository {
         .field("count(*)", 'total')
         // .where("full_name LIKE ?", collectionName)
         .where("collection_name = ?", query.collection)
-        .where("name LIKE ?", productName)
 
+      // Add like query for name if applicable
+      baseQuery = this.buildLikeQuery(baseQuery, "name", query.productName);
       // Add optional arguments and filters
       baseQuery = this.buildQuery(baseQuery, query);
       // Run and return results
@@ -90,21 +89,20 @@ export class CatalogRepository {
   }
 
   public getProducts(query: Query.Query): Promise<IProduct[]> {
-    // Replace wildcard characters in the name
-    let productName = query.productName.replace(/\*/g, "%");
-
     return Database.instance.connection.task((t) => {
       // Build base query
       let baseQuery = squel.select({ numberedParameters: true })
         .from("product_view")
         .field("id").field("name").field("collection_name", "collectionName").field("metadata")
         .field("properties").field("data").field("ST_AsGeoJSON(footprint)", "footprint")
-        // .where("full_name LIKE ?", collectionName)
+        // .where("full_name LIKE ?", collectionName) <--Don't do this, it leads to ambiguous results as the diversity of collctions increases
         .where("collection_name = ?", query.collection)
-        .where("name LIKE ?", productName)
         .order("full_name")
         .limit(query.limit)
         .offset(query.offset);
+
+      // Add like query on product name
+      baseQuery = this.buildLikeQuery(baseQuery,"name", query.productName)
 
       // Add optional arguments and filters
       baseQuery = this.buildQuery(baseQuery, query);
@@ -130,17 +128,32 @@ export class CatalogRepository {
             .set("footprint", squelPostgres.str("ST_SetSRID(ST_GeomFromGeoJSON(?), 4326)", JSON.stringify(product.footprint)))
             .set("name", product.name).returning("id")
             .toString(), null, (x) => x.id);
-          // return t.one("INSERT INTO product(collection_id, metadata, properties, data, footprint, name) \
-          //           VALUES ($1, $2, $3, $4, ST_SetSRID(ST_GeomFromGeoJSON($5), 4326), $6) \
-          //           RETURNING id",
-          //   [collectionId, product.metadata, product.properties, product.data, product.footprint, product.name],
-          //   (x) => x.id);
         });
     }).catch((error) => {
       this.logger.error("database error : " + error);
       throw this.createDatabaseError(error);
     });
   }
+
+  /**
+   * Build a like condition if required for a named field determined by
+   * the test value containing a *
+   *
+   * @param baseQuery The base SQUEL query to build upon
+   * @param propName The fieldName to create the condition for
+   * @param term The value to test for wildcards
+   */
+  public buildLikeQuery(baseQuery: any, propName: string, term: string) {
+    if (term.indexOf("*") > -1) {
+      let likeTerm = term.replace(/\*/g, "%");
+      baseQuery.where(propName + " LIKE ?", likeTerm)
+    } else {
+      baseQuery.where(propName + " = ?", term)
+    }
+
+    return baseQuery
+  }
+
 
   /**
    * Build a date time query for a property with a given name
@@ -189,6 +202,7 @@ export class CatalogRepository {
 
     return baseQuery;
   }
+
 
   /**
    * Build an integer query for a property with a given name

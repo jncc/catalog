@@ -9,7 +9,7 @@
     "build:api": "npm run clean && npm run compile",
     "dev": "npm run build && nodemon built/api/server.js",
     "dev-debug": "npm run build && nodemon --inspect built/api/server.js",
-    "test": "mocha -r ts-node/register \"api/**/*.ts\"",
+    "test": "npm run build:api && mocha -r ts-node/register \"api/**/*.ts\"",
     "build:docs": "python -msphinx docs built/docs",
     "build": "npm run build:api && npm run build:docs",
     "build:docker": "npm run build && cd .. && docker build -t jncc/catalog .",

@@ -19,4 +19,4 @@ built/
 scripts/set_env.*
 
 # Ignore logging outputs
-logs/*
+app/logs/*
