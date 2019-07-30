@@ -57,10 +57,10 @@ Run Tests
 * create the database
 
     psql -c "CREATE DATABASE catalog;"
-    psql -d catalog -f ./setup-scripts/database-scripts/postgis/database.sql 
-    psql -d catalog -f ./setup-scripts/database-scripts/postgis/collection.sql 
-    psql -d catalog -f ./setup-scripts/database-scripts/postgis/product.sql 
-    psql -d catalog -f ./setup-scripts/database-scripts/postgis/product_view.sql 
+    psql -d catalog -f ./dev/database/setup-scripts/database.sql
+    psql -d catalog -f ./dev/database/setup-scripts/collection.sql
+    psql -d catalog -f ./dev/database/setup-scripts/product.sql
+    psql -d catalog -f ./dev/database/setup-scripts/product_view.sql
 
 * create the user with a password (CHANGE THE PASSWORD BELOW)
 
@@ -125,6 +125,8 @@ This will give an output as follows:
 
 In this case Postgres needs to listen on 172.17.0.1 and accept authenticated connections from the 172.17.0.1/16 ip address range before it will work with docker.
 
+### Work-in-progress - containerizing the database
 
-
-
+docker build .
+docker run -d -p 6060:5432 {image-id}
+docker exec -it {container-name} /bin/bash -c "/setup/setup.sh"
