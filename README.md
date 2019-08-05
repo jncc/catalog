@@ -127,6 +127,5 @@ In this case Postgres needs to listen on 172.17.0.1 and accept authenticated con
 
 ### Work-in-progress - containerizing the database
 
-docker build .
-docker run -d -p 6060:5432 {image-id}
+docker-compose up
 docker exec -it {container-name} /bin/bash -c "/setup/setup.sh"

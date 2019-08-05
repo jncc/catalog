@@ -1,0 +1,22 @@
+version: '3'
+services:
+  database:
+    build: ./database
+    ports:
+      - "6060:5432"
+    volumes:
+      - './.temp/catalog-db-data:/var/lib/postgresql/data'
+  api:
+    build: ../
+    ports:
+      - "6080:8081"
+    environment:
+      - PGUSER=catalog
+      - PGPASSWORD=catalog123
+      - PGHOST=database
+      - PGPORT=5432
+      - PGDATABASE=catalog
+      - PGSSL=false
+      - LOG_LEVEL=info
+      - LOG_LOCATION=/var/log/catalog/catalog.log
+

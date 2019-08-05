@@ -2,6 +2,9 @@
 # node environment variable file
 .env
 
+# our own docker mounts
+.temp
+
 # npm
 node_modules/
 npm-debug.log
