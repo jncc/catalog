@@ -1,0 +1,78 @@
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:09:43.138Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:09:43.140Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:09:43.152Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:09:43.153Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:26:55.580Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:26:55.582Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:26:55.594Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:26:55.595Z"}
+{"level":"warn","timestamp":"2019-08-05T14:27:00.610Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:30:39.764Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:30:39.766Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:30:39.779Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:30:39.780Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:35:55.848Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:35:55.850Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:35:55.860Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:35:55.860Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:04:54.149Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:04:54.151Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:04:54.164Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:04:54.164Z"}
+{"level":"warn","timestamp":"2019-08-05T15:05:01.159Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:06:17.622Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:06:17.624Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:06:17.634Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:06:17.635Z"}
+{"level":"warn","timestamp":"2019-08-05T15:06:22.191Z"}
+{"level":"warn","timestamp":"2019-08-05T15:07:25.575Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:14:42.331Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:14:42.333Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:14:42.345Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:14:42.345Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:15:23.855Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:15:23.857Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:15:23.868Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:15:23.868Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:15:40.631Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:15:40.633Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:15:40.644Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:15:40.644Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:19:26.109Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:19:26.111Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:19:26.122Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:19:26.122Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:20:49.243Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:20:49.244Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:20:49.256Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:20:49.256Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:23:48.261Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:23:48.263Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:23:48.275Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:23:48.275Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:26:51.013Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:26:51.015Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:26:51.026Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:26:51.027Z"}
+{"level":"warn","timestamp":"2019-08-05T15:33:00.776Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:34:02.234Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:34:02.236Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:34:02.248Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:34:02.248Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:37:28.582Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:37:28.585Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:37:28.600Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:37:28.600Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:47:42.570Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:47:42.573Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:47:42.584Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:47:42.584Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-06T22:39:47.096Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-06T22:39:47.100Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-06T22:39:47.116Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-06T22:39:47.116Z"}
+{"level":"warn","timestamp":"2019-08-06T22:41:24.040Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-07T06:45:14.115Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-07T06:45:14.117Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-07T06:45:14.135Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-07T06:45:14.135Z"}
