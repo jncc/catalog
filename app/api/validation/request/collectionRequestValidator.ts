@@ -4,12 +4,11 @@ import * as chai from "chai"; // test reqs
 import * as chaiAsPromised from "chai-as-promised";
 
 import { Query } from "../../query";
-import { CatalogRepository } from "../../repository/catalogRepository";
 import { Fixtures } from "../../test/fixtures";
 import { RequestValidator } from "./requestValidator";
 
 export class CollectionRequestValidator extends RequestValidator {
-  public static validate(query: Query, catalogRepository: CatalogRepository): Promise<string[]> {
+  public static validate(query: Query): Promise<string[]> {
     return new Promise((resolve, reject) => {
       let errors: string[] = [];
 

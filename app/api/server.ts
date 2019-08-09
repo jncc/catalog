@@ -16,7 +16,7 @@ import { CollectionQueries } from "./repository/collectionQueries";
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
 let logger = Logger.Logger();
-let catalogRepository = new CatalogRepository(logger);
+// let catalogRepository = new CatalogRepository(logger);
 let productQueries = new ProductQueries();
 let collectionQueries = new CollectionQueries();
 
@@ -34,7 +34,7 @@ app.post(`/search/collectionsContainingProduct`, async (req, res) => {
   let requestParameter = req.params[0];
   let query = new Query(req.body.collection, req.body);
 
-  ProductRequestValidator.validate(query, catalogRepository, collectionQueries).then(() => {
+  ProductRequestValidator.validate(query, collectionQueries).then(() => {
     productQueries.getCountOfProductsByCollection(query)
       .then((result) => {
         res.json({
@@ -54,8 +54,8 @@ app.post(`/search/collectionsContainingProduct`, async (req, res) => {
 
 app.get(`/search/collection/*?`, async (req, res) => {
   let query = new Query(req.params[0], req.query);
-  let reqErrors = CollectionRequestValidator.validate(query, catalogRepository).then(() => {
-    catalogRepository.getCollections(query, 50, 0).then((results) => {
+  let reqErrors = CollectionRequestValidator.validate(query).then(() => {
+    collectionQueries.getCollections(query, 50, 0).then((results) => {
       res.json({
         query: query,
         result: results
@@ -79,7 +79,7 @@ app.post(`/search/product`, async (req, res) => {
   let requestParameter = req.params[0];
   let query = new Query(req.body.collection, req.body);
 
-  ProductRequestValidator.validate(query, catalogRepository).then(() => {
+  ProductRequestValidator.validate(query, collectionQueries).then(() => {
     catalogRepository.getProductsTotal(query)
       .then((total) => { query.total = total[0].total })
       .then(() => productQueries.getProducts(query)
