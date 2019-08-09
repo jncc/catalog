@@ -1,6 +1,7 @@
 
 # node environment variable file
-.env
+.env*
+!.env.example
 
 # npm
 node_modules/

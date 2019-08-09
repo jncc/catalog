@@ -9,13 +9,18 @@ import { getEnvironmentSettings } from "./settings";
 import { ProductValidator } from "./validation/productValidator";
 import { CollectionRequestValidator } from "./validation/request/collectionRequestValidator";
 import { ProductRequestValidator } from "./validation/request/productRequestValidator";
+import { ProductQueries } from "./repository/productQueries";
+import { CollectionQueries } from "./repository/collectionQueries";
+
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
 let logger = Logger.Logger();
 let catalogRepository = new CatalogRepository(logger);
+let productQueries = new ProductQueries();
+let collectionQueries = new CollectionQueries();
 
-process.on("unhandledRejection", (r) => logger.warning(r));
+process.on("unhandledRejection", (r) => logger.warn(r));
 
 // parse json body requests
 app.use(bodyParser.json());
@@ -24,6 +29,28 @@ app.use('/docs', express.static('./built/docs'))
 app.get('/alive', async (req, res) => {
   res.send('Hello from catalog')
 })
+
+app.post(`/search/collectionsContainingProduct`, async (req, res) => {
+  let requestParameter = req.params[0];
+  let query = new Query(req.body.collection, req.body);
+
+  ProductRequestValidator.validate(query, catalogRepository, collectionQueries).then(() => {
+    productQueries.getCountOfProductsByCollection(query)
+      .then((result) => {
+        res.json({
+          query: query,
+          result: result
+        });
+      }).catch((error) => {
+        console.error(error.message)
+        res.status(500);
+        res.json({
+          query: query,
+          errors: "A database error has occurred"
+        });
+      });
+  });
+});
 
 app.get(`/search/collection/*?`, async (req, res) => {
   let query = new Query(req.params[0], req.query);
@@ -55,7 +82,7 @@ app.post(`/search/product`, async (req, res) => {
   ProductRequestValidator.validate(query, catalogRepository).then(() => {
     catalogRepository.getProductsTotal(query)
       .then((total) => { query.total = total[0].total })
-      .then(() => catalogRepository.getProducts(query)
+      .then(() => productQueries.getProducts(query)
         .then((result) => {
           res.json({
             query: query,

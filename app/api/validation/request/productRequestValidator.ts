@@ -5,57 +5,73 @@ import * as chaiAsPromised from "chai-as-promised"; // test reqs
 
 import { Query, ITerm, ALLOWED_OPERATORS } from "../../query";
 import { CatalogRepository } from "../../repository/catalogRepository";
+import { CollectionQueries } from "../../repository/collectionQueries";
 import { Fixtures } from "../../test/fixtures";
 import { RequestValidator } from "./requestValidator";
 import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
+import { EROFS } from "constants";
 
 export class ProductRequestValidator extends RequestValidator {
-  public static validate(query: Query, catalogRepository: CatalogRepository): Promise<string[]> {
+  public static validate(query: Query, catalogRepository: CatalogRepository, collectionQueries: CollectionQueries): Promise<string[]> {
     return new Promise((resolve, reject) => {
       let errors: string[] = [];
 
-      if (this.validCollectionNameFormat(query, errors)) {
-        catalogRepository.getCollection(query.collection).then((collection) => {
-          if (collection == undefined) {
-            errors.push("searchParam | collection must exist")
-            reject(errors);
+      if (query.collections.length == 0) {
+        errors.push("searchParam | collections must be defined")
+        reject(errors);
+      } else {
+        query.collections.forEach(collection => {
+          catalogRepository.getCollection(collection).then(c => {
+            if (c == undefined) {
+              errors.push("searchParam | collection must exist")
+              reject(errors);
+            }
+          });
+        });
+      }
+
+      if (! collectionQueries.checkMatchingProductSchema(query.collections)) {
+        errors.push("searchParam | all collections must have the same product schema")
+      }
+
+      if (query.footprint !== "") {
+        this.validateFootprint(query.footprint, errors);
+      }
+
+      if (query.spatialop !== "") {
+        this.validateSpatialOp(query.spatialop, errors);
+      }
+
+      let productsSchema = {};
+      collectionQueries.getCollection(query.collections[0])
+        .then(r => {
+          if (r == undefined) {
+            throw new Error("searchParam ! Error getting product property schema");
           } else {
-
-            if (query.footprint !== "") {
-              this.validateFootprint(query.footprint, errors);
-            }
-
-            if (query.spatialop !== "") {
-              this.validateSpatialOp(query.spatialop, errors);
-            }
-
-            if (query.terms.length > 0 && this.validateTermStructure(query.terms, errors)) {
-              query.types = this.extractQueryDataTypes(collection.productsSchema, query)
-              let validationSchema = this.getValidationSchema(collection.productsSchema);
-              let queryValues = this.getQueryValues(query.terms);
-
-              this.validateQueryValues(validationSchema, queryValues).then(() => {
-                this.validateQueryOperations(query, errors)
-                if (errors.length > 0) {
-                  reject(errors);
-                } else {
-                  resolve(errors);
-                }
-              }).catch((valueErrors) => {
-                reject(errors.concat(valueErrors))
-              })
-            } else {
-              if (errors.length > 0) {
-                reject(errors);
-              } else {
-                resolve(errors);
-              }
-            }
+            productsSchema = r.productsSchema;
           }
         })
-      } else {
+
+      if (query.terms.length > 0 && this.validateTermStructure(query.terms, errors)) {
+        query.types = this.extractQueryDataTypes(productsSchema, query)
+        let validationSchema = this.getValidationSchema(productsSchema);
+        let queryValues = this.getQueryValues(query.terms);
+
+        this.validateQueryValues(validationSchema, queryValues).then(() => {
+          this.validateQueryOperations(query, errors)
+          if (errors.length > 0) {
+            reject(errors);
+          } else {
+            resolve(errors);
+          }
+        }).catch((valueErrors) => {
+          reject(errors.concat(valueErrors));
+        })
+      } else if (errors.length > 0) {
         reject(errors);
+      } else {
+        resolve(errors);
       }
     });
   }

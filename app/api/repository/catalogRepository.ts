@@ -4,7 +4,7 @@ import * as Query from "../query";
 import { ICollection } from "../definitions/collection/collection";
 import { IProduct } from "../definitions/product/product";
 
-import { Database } from "./database";
+import { sqelDatabase } from "./sqelDatabase";
 import * as winston from "winston";
 
 // todo: handle database errors nicely
@@ -17,7 +17,7 @@ export class CatalogRepository {
   }
 
   public getCollections(query: Query.Query, limit: number, offset: number): Promise<ICollection[]> {
-    return Database.instance.connection.task((t) => {
+    return sqelDatabase.instance.connection.task((t) => {
       let baseQuery = squel.select({ numberedParameters: true })
         .from("collection")
         .field("id").field("name").field("metadata").field("products_schema", "productsSchema")
@@ -38,7 +38,7 @@ export class CatalogRepository {
   }
 
   public getCollection(name: string): Promise<ICollection> {
-    return Database.instance.connection.task((t) => {
+    return sqelDatabase.instance.connection.task((t) => {
       let baseQuery = squel.select({ numberedParameters: true })
         .from("collection")
         .field("id").field("name").field("metadata").field("products_schema", "productsSchema")
@@ -53,7 +53,7 @@ export class CatalogRepository {
   }
 
   public checkCollectionNameExists(errors: string[], collectionName: string): Promise<string[]> {
-    return Database.instance.connection.task((t) => {
+    return sqelDatabase.instance.connection.task((t) => {
       return t.oneOrNone("select name from collection where name = $1", [collectionName], (x) => x && x.name)
         .then((name) => {
           if (name === null || name === undefined) {
@@ -68,7 +68,7 @@ export class CatalogRepository {
   }
 
   public getProductsTotal(query: Query.Query): Promise<number> {
-    return Database.instance.connection.task((t) => {
+    return sqelDatabase.instance.connection.task((t) => {
       // Build base query
       let baseQuery = squel.select({ numberedParameters: true })
         .from("product_view")
@@ -89,7 +89,7 @@ export class CatalogRepository {
   }
 
   public getProducts(query: Query.Query): Promise<IProduct[]> {
-    return Database.instance.connection.task((t) => {
+    return sqelDatabase.instance.connection.task((t) => {
       // Build base query
       let baseQuery = squel.select({ numberedParameters: true })
         .from("product_view")
@@ -115,7 +115,7 @@ export class CatalogRepository {
   }
 
   public storeProduct(product: IProduct): Promise<string> {
-    return Database.instance.connection.task((t) => {
+    return sqelDatabase.instance.connection.task((t) => {
       let squelPostgres = squel.useFlavour('postgres');
       return t.one("select id from collection where name = $1", product.collectionName, (x) => x && x.id)
         .then((collectionId) => {
@@ -315,7 +315,7 @@ export class CatalogRepository {
   }
 
   private geometryForceRHR(geojson: any): Promise<string> {
-    return Database.instance.connection.task((t) => {
+    return sqelDatabase.instance.connection.task((t) => {
       return t.one("select st_asgeojson(st_forcerhr(st_geomfromgeojson($1)))", [geojson]);
     }).catch((error) => {
       this.logger.error("database error : " + error);
