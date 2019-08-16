@@ -52,20 +52,20 @@ export class CatalogRepository {
   //   });
   // }
 
-  // public checkCollectionNameExists(errors: string[], collectionName: string): Promise<string[]> {
-  //   return sqelDatabase.instance.connection.task((t) => {
-  //     return t.oneOrNone("select name from collection where name = $1", [collectionName], (x) => x && x.name)
-  //       .then((name) => {
-  //         if (name === null || name === undefined) {
-  //           errors.push(" | collection name does not exist in the database");
-  //         }
-  //         return errors;
-  //       });
-  //   }).catch((error) => {
-  //     this.logger.error("database error : " + error);
-  //     throw this.createDatabaseError(error);
-  //   });
-  // }
+  public checkCollectionNameExists(errors: string[], collectionName: string): Promise<string[]> {
+    return sqelDatabase.instance.connection.task((t) => {
+      return t.oneOrNone("select name from collection where name = $1", [collectionName], (x) => x && x.name)
+        .then((name) => {
+          if (name === null || name === undefined) {
+            errors.push(" | collection name does not exist in the database");
+          }
+          return errors;
+        });
+    }).catch((error) => {
+      this.logger.error("database error : " + error);
+      throw this.createDatabaseError(error);
+    });
+  }
 
   // public getProductsTotal(query: query.Query): Promise<number> {
   //   return sqelDatabase.instance.connection.task((t) => {

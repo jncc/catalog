@@ -54,22 +54,22 @@ export function getValidator(schemaVersion:String = "", options: any = { allErro
 // Tests
 // Test setup
 // tslint:disable-next-line:no-var-requires
-chai.use(chaiAsPromised);
+// chai.use(chaiAsPromised);
 
-describe("Legacy json schema spec support", () => {
-  it("should support draft-04 spec schemas", () => {
-    let mockRepo = Fixtures.GetMockRepo(4);
-    let validator = new ProductValidator(mockRepo.object);
-    return chai.expect(validator.validate(Fixtures.GetTestProduct()))
-      .to.be.fulfilled
-      .and.eventually.be.an("array").that.is.empty;
-  });
+// describe("Legacy json schema spec support", () => {
+//   it("should support draft-04 spec schemas", () => {
+//     let mockRepo = Fixtures.GetMockRepo(4);
+//     let validator = new ProductValidator(mockRepo.object);
+//     return chai.expect(validator.validate(Fixtures.GetTestProduct()))
+//       .to.be.fulfilled
+//       .and.eventually.be.an("array").that.is.empty;
+//   });
 
-  it("should support draft-06 spec schemas", () => {
-    let mockRepo = Fixtures.GetMockRepo(6);
-    let validator = new ProductValidator(mockRepo.object);
-    return chai.expect(validator.validate(Fixtures.GetTestProduct()))
-      .to.be.fulfilled
-      .and.eventually.be.an("array").that.is.empty;
-  });
-});
+//   it("should support draft-06 spec schemas", () => {
+//     let mockRepo = Fixtures.GetMockRepo(6);
+//     let validator = new ProductValidator(mockRepo.object);
+//     return chai.expect(validator.validate(Fixtures.GetTestProduct()))
+//       .to.be.fulfilled
+//       .and.eventually.be.an("array").that.is.empty;
+//   });
+// });

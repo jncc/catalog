@@ -80,8 +80,8 @@ app.post(`/search/product`, async (req, res) => {
   let query = new Query(req.body.collection, req.body);
 
   ProductRequestValidator.validate(query, collectionQueries).then(() => {
-    catalogRepository.getProductsTotal(query)
-      .then((total) => { query.total = total[0].total })
+    productQueries.getProductsTotal(query)
+      .then((total) => { query.total = total.totalProducts })
       .then(() => productQueries.getProducts(query)
         .then((result) => {
           res.json({
@@ -107,7 +107,7 @@ app.post(`/search/product`, async (req, res) => {
 
 app.post(`/validate/product`, async (req, res) => {
   let product: Product.IProduct = req.body;
-  let productValidtor = new ProductValidator(catalogRepository);
+  let productValidtor = new ProductValidator(collectionQueries);
 
   productValidtor.validate(product)
     .then((result) => {
@@ -119,27 +119,27 @@ app.post(`/validate/product`, async (req, res) => {
 });
 
 // store the query and give me a key for it
-app.post(`/add/product`, async (req, res) => {
-  let product: Product.IProduct = req.body;
-  let productValidtor = new ProductValidator(catalogRepository);
+// app.post(`/add/product`, async (req, res) => {
+//   let product: Product.IProduct = req.body;
+//   let productValidtor = new ProductValidator(productQueries, collectionQueries);
 
-  // todo check product exists
+//   // todo check product exists
 
-  productValidtor.validate(product).then((result) => {
-    try {
-      catalogRepository.storeProduct(product).then((productId) => {
-        res.json({ productId: productId });
-      }).catch((error) => {
-        res.status(500);
-      });
-    } catch (e) {
-      res.sendStatus(500);
-    }
-  }).catch((result) => {
-    res.statusCode = 400;
-    res.send(result);
-  });
-});
+//   productValidtor.validate(product).then((result) => {
+//     try {
+//       catalogRepository.storeProduct(product).then((productId) => {
+//         res.json({ productId: productId });
+//       }).catch((error) => {
+//         res.status(500);
+//       });
+//     } catch (e) {
+//       res.sendStatus(500);
+//     }
+//   }).catch((result) => {
+//     res.statusCode = 400;
+//     res.send(result);
+//   });
+// });
 
 if (!module.parent) {
   app.listen(env.port, () => {

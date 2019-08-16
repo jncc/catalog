@@ -16,8 +16,11 @@ export class ProductQueries {
 
 
   // Todo - Convert to new knex query
-  public getProductsTotal(query: query.Query): Promise<number> {
-    throw new Error("Not implmented")
+  public getProductsTotal(query: query.Query) {
+    let dbQuery = this.getBaseQuery(query)
+      .count("*", {as: 'totalProducts'})
+
+    return dbQuery;
   }
 
   public getProducts(query: query.Query): Promise<IProduct[]> {
