@@ -4,7 +4,6 @@ import * as chai from "chai"; // test reqs
 import * as chaiAsPromised from "chai-as-promised"; // test reqs
 
 import { Query, ITerm, ALLOWED_OPERATORS } from "../../query";
-import { CatalogRepository } from "../../repository/catalogRepository";
 import { CollectionQueries } from "../../repository/collectionQueries";
 import { Fixtures } from "../../test/fixtures";
 import { RequestValidator } from "./requestValidator";

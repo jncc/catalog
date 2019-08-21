@@ -4,7 +4,6 @@ import * as Product from "./definitions/product/product";
 
 import { Logger } from "./logging/logger";
 import { Query } from "./query";
-import { CatalogRepository } from "./repository/catalogRepository";
 import { getEnvironmentSettings } from "./settings";
 import { ProductValidator } from "./validation/productValidator";
 import { CollectionRequestValidator } from "./validation/request/collectionRequestValidator";
