@@ -1,78 +1,221 @@
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:09:43.138Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:09:43.140Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:09:43.152Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:09:43.153Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:26:55.580Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:26:55.582Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:26:55.594Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:26:55.595Z"}
-{"level":"warn","timestamp":"2019-08-05T14:27:00.610Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:30:39.764Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:30:39.766Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:30:39.779Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:30:39.780Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T14:35:55.848Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T14:35:55.850Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T14:35:55.860Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T14:35:55.860Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:04:54.149Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:04:54.151Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:04:54.164Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:04:54.164Z"}
-{"level":"warn","timestamp":"2019-08-05T15:05:01.159Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:06:17.622Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:06:17.624Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:06:17.634Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:06:17.635Z"}
-{"level":"warn","timestamp":"2019-08-05T15:06:22.191Z"}
-{"level":"warn","timestamp":"2019-08-05T15:07:25.575Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:14:42.331Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:14:42.333Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:14:42.345Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:14:42.345Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:15:23.855Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:15:23.857Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:15:23.868Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:15:23.868Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:15:40.631Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:15:40.633Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:15:40.644Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:15:40.644Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:19:26.109Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:19:26.111Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:19:26.122Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:19:26.122Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:20:49.243Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:20:49.244Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:20:49.256Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:20:49.256Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:23:48.261Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:23:48.263Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:23:48.275Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:23:48.275Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:26:51.013Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:26:51.015Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:26:51.026Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:26:51.027Z"}
-{"level":"warn","timestamp":"2019-08-05T15:33:00.776Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:34:02.234Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:34:02.236Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:34:02.248Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:34:02.248Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:37:28.582Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:37:28.585Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:37:28.600Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:37:28.600Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-05T15:47:42.570Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-05T15:47:42.573Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-05T15:47:42.584Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-05T15:47:42.584Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-06T22:39:47.096Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-06T22:39:47.100Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-06T22:39:47.116Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-06T22:39:47.116Z"}
-{"level":"warn","timestamp":"2019-08-06T22:41:24.040Z"}
-{"message":"Log level is info","level":"info","timestamp":"2019-08-07T06:45:14.115Z"}
-{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-07T06:45:14.117Z"}
-{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-07T06:45:14.135Z"}
-{"message":"node environment is development","level":"info","timestamp":"2019-08-07T06:45:14.135Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:39:40.845Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:39:40.847Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-20T23:39:40.857Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-20T23:39:40.858Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:39:41.952Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:39:41.952Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:39:42.040Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:39:42.042Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:41:59.817Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:41:59.820Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-20T23:41:59.832Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-20T23:41:59.833Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:42:04.993Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:42:04.994Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:42:05.085Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:42:05.086Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:44:19.266Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:44:19.268Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-20T23:44:19.281Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-20T23:44:19.281Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:44:34.375Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:44:34.375Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:44:34.464Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:44:34.465Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:53:02.848Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:53:02.850Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-20T23:53:02.861Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-20T23:53:02.862Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:53:10.204Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:53:10.204Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:53:10.284Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:53:10.285Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:56:37.244Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:56:37.246Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-20T23:56:37.257Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-20T23:56:37.257Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-20T23:57:16.573Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-20T23:57:16.573Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:57:16.666Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-20T23:57:16.666Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T00:01:12.725Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T00:01:12.727Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T00:01:12.737Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T00:01:12.738Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T00:01:17.328Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T00:01:17.329Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T00:01:17.406Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T00:01:17.407Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T00:03:20.039Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T00:03:20.041Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T00:03:20.053Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T00:03:20.053Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T00:03:24.326Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T00:03:24.327Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T00:03:24.408Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T00:03:24.409Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T09:16:58.294Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T09:16:58.296Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T09:16:58.308Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T09:16:58.308Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T09:17:02.881Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T09:17:02.882Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:02.972Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:02.973Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:16.033Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:16.034Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:26.437Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:26.437Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:47.494Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:17:47.495Z"}
+{"message":["searchParam | all collections must have the same product schema"],"level":"warn","timestamp":"2019-08-21T09:18:00.358Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:18:00.374Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:18:00.376Z"}
+{"name":"error","length":187,"severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"collection.products_schema\".","position":"80","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:18:00.387Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:18:00.390Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:19:40.271Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:19:40.302Z"}
+{"name":"error","length":187,"severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"collection.products_schema\".","position":"80","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:19:40.307Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:19:40.314Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T09:25:19.709Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T09:25:19.711Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T09:25:19.723Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T09:25:19.723Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T09:25:31.498Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T09:25:31.498Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:25:31.601Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:25:31.602Z"}
+{"name":"error","length":187,"severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"collection.products_schema\".","position":"80","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:25:31.605Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:25:31.605Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T09:56:05.358Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T09:56:05.360Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T09:56:05.370Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T09:56:05.370Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T09:56:10.680Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T09:56:10.680Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:56:10.775Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:56:10.776Z"}
+{"name":"error","length":187,"severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"collection.products_schema\".","position":"80","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:56:10.776Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T09:56:10.778Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T10:00:03.702Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T10:00:03.704Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T10:00:03.715Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T10:00:03.715Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T10:00:09.245Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T10:00:09.246Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T10:00:09.342Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T10:00:09.343Z"}
+{"name":"error","length":187,"severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"collection.products_schema\".","position":"80","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T10:00:09.343Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T10:00:09.343Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:36:44.300Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:36:44.302Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T12:36:44.313Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T12:36:44.313Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:36:49.899Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:36:49.900Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:36:50.014Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:36:50.015Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:36:50.015Z"}
+{"name":"error","length":187,"severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"collection.products_schema\".","position":"80","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:36:50.015Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:41:34.274Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:41:34.276Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T12:41:34.287Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T12:41:34.287Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:41:39.150Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:41:39.151Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:41:39.262Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:41:39.263Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:41:39.263Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:43:39.392Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:43:39.394Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T12:43:39.407Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T12:43:39.407Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:43:50.241Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:43:50.241Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:43:50.354Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:43:50.355Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:43:50.358Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:44:41.266Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:44:41.268Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T12:44:41.285Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T12:44:41.285Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:44:47.779Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:44:47.779Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:44:47.905Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:44:47.908Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:44:47.908Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:45:50.773Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:45:50.775Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T12:45:50.790Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T12:45:50.790Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:45:55.419Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:45:55.420Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:45:55.530Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:45:55.531Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:45:55.531Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:46:58.516Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:46:58.519Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T12:46:58.531Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T12:46:58.531Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:47:06.282Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:47:06.282Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:47:06.387Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:47:06.390Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:47:06.393Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:47:40.585Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:47:40.587Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T12:47:40.598Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T12:47:40.599Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T12:47:45.363Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T12:47:45.363Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:47:45.468Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:47:45.468Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T12:47:45.471Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:01:30.145Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:01:30.147Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T14:01:30.157Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T14:01:30.157Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:01:42.339Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:01:42.339Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:01:42.447Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:01:42.449Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:01:42.452Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:02:16.330Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:02:16.332Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T14:02:16.344Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T14:02:16.344Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:02:21.148Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:02:21.148Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:02:21.263Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:02:21.263Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:02:21.267Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:03:00.065Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:03:00.067Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T14:03:00.080Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T14:03:00.080Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:03:04.560Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:03:04.561Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:03:04.683Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:03:04.684Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:03:04.688Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:04:40.131Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:04:40.133Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T14:04:40.160Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T14:04:40.162Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:04:53.911Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:04:53.912Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:04:54.024Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:04:54.027Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:04:54.029Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:57:59.162Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:57:59.164Z"}
+{"message":"app.server is listening on: http://localhost:8081","level":"info","timestamp":"2019-08-21T14:57:59.176Z"}
+{"message":"node environment is development","level":"info","timestamp":"2019-08-21T14:57:59.176Z"}
+{"message":"Log level is info","level":"info","timestamp":"2019-08-21T14:58:07.221Z"}
+{"message":"Log Location is catalog.log","level":"info","timestamp":"2019-08-21T14:58:07.221Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:58:07.343Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:58:07.343Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:58:07.343Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:59:18.537Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:59:18.551Z"}
+{"name":"error","length":110,"severity":"ERROR","code":"42703","position":"136","file":"parse_relation.c","line":"3294","routine":"errorMissingColumn","level":"warn","timestamp":"2019-08-21T14:59:18.559Z"}

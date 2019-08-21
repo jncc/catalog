@@ -11,6 +11,7 @@ import { CollectionRequestValidator } from "./validation/request/collectionReque
 import { ProductRequestValidator } from "./validation/request/productRequestValidator";
 import { ProductQueries } from "./repository/productQueries";
 import { CollectionQueries } from "./repository/collectionQueries";
+import { ProductStore } from "./repository/productStore";
 
 
 let app = express();
@@ -29,28 +30,6 @@ app.use('/docs', express.static('./built/docs'))
 app.get('/alive', async (req, res) => {
   res.send('Hello from catalog')
 })
-
-app.post(`/search/collectionsContainingProduct`, async (req, res) => {
-  let requestParameter = req.params[0];
-  let query = new Query(req.body.collection, req.body);
-
-  ProductRequestValidator.validate(query, collectionQueries).then(() => {
-    productQueries.getCountOfProductsByCollection(query)
-      .then((result) => {
-        res.json({
-          query: query,
-          result: result
-        });
-      }).catch((error) => {
-        console.error(error.message)
-        res.status(500);
-        res.json({
-          query: query,
-          errors: "A database error has occurred"
-        });
-      });
-  });
-});
 
 app.get(`/search/collection/*?`, async (req, res) => {
   let query = new Query(req.params[0], req.query);
@@ -75,28 +54,67 @@ app.get(`/search/collection/*?`, async (req, res) => {
   });
 });
 
+app.post(`/search/productCount`, async (req, res) => {
+  let query = new Query(req.body.collection, req.body);
+
+  ProductRequestValidator.validate(query, collectionQueries).then(() => {
+    productQueries.getProductCount(query)
+      .then((result) => {
+        res.json({
+          query: query,
+          result: result
+        });
+      }).catch((error) => {
+        console.error(error.message)
+        res.status(500);
+        res.json({
+          query: query,
+          errors: "A database error has occurred"
+        });
+      });
+  });
+});
+
+app.post(`/search/productCount/byCollection`, async (req, res) => {
+  let query = new Query(req.body.collection, req.body);
+
+  ProductRequestValidator.validate(query, collectionQueries).then(() => {
+    productQueries.getProductCountByCollection(query)
+      .then((result) => {
+        res.json({
+          query: query,
+          result: result
+        });
+      }).catch((error) => {
+        console.error(error.message)
+        res.status(500);
+        res.json({
+          query: query,
+          errors: "A database error has occurred"
+        });
+      });
+  });
+});
+
 app.post(`/search/product`, async (req, res) => {
   let requestParameter = req.params[0];
   let query = new Query(req.body.collection, req.body);
 
   ProductRequestValidator.validate(query, collectionQueries).then(() => {
-    productQueries.getProductsTotal(query)
-      .then((total) => { query.total = total.totalProducts })
-      .then(() => productQueries.getProducts(query)
-        .then((result) => {
-          res.json({
-            query: query,
-            result: result
-          });
-        }).catch((error) => {
-          console.error(error.message)
-          res.status(500);
-          res.json({
-            query: query,
-            errors: "A database error has occurred"
-          });
-        })
-      )
+    productQueries.getProducts(query)
+      .then((result) => {
+        res.json({
+          query: query,
+          result: result
+        });
+      }).catch((error) => {
+        console.error(error.message)
+        res.status(500);
+        res.json({
+          query: query,
+          errors: "A database error has occurred"
+        });
+      })
   }).catch((errors) => {
     res.status(400);
     res.json({
@@ -119,27 +137,42 @@ app.post(`/validate/product`, async (req, res) => {
 });
 
 // store the query and give me a key for it
-// app.post(`/add/product`, async (req, res) => {
-//   let product: Product.IProduct = req.body;
-//   let productValidtor = new ProductValidator(productQueries, collectionQueries);
+app.post(`/add/product`, async (req, res) => {
+  let product: Product.IProduct = req.body;
+  let productValidtor = new ProductValidator(collectionQueries);
 
-//   // todo check product exists
+  // todo check product exists
 
-//   productValidtor.validate(product).then((result) => {
-//     try {
-//       catalogRepository.storeProduct(product).then((productId) => {
-//         res.json({ productId: productId });
-//       }).catch((error) => {
-//         res.status(500);
-//       });
-//     } catch (e) {
-//       res.sendStatus(500);
-//     }
-//   }).catch((result) => {
-//     res.statusCode = 400;
-//     res.send(result);
-//   });
-// });
+  throw new Error("Not implemented")
+
+  // try {
+  //   await productValidtor.validate(product);
+  // } catch ((result) => {
+  //   res.statusCode = 400;
+  //   res.send(result);
+  //   return;
+  // });
+
+  // let store = new ProductStore();
+
+  // var id = await store.storeProduct(product);
+
+
+  // productValidtor.validate(product).then((result) => {
+  //   try {
+  //     store.storeProduct(product).then((productId) => {
+  //       res.json({ productId: productId });
+  //     }).catch((error) => {
+  //       res.status(500);
+  //     });
+  //   } catch (e) {
+  //     res.sendStatus(500);
+  //   }
+  // }).catch((result) => {
+  //   res.statusCode = 400;
+  //   res.send(result);
+  // });
+});
 
 if (!module.parent) {
   app.listen(env.port, () => {

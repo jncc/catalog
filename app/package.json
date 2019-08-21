@@ -13,7 +13,7 @@
     "build:docs": "python -msphinx docs built/docs",
     "build": "npm run build:api && npm run build:docs",
     "build:docker": "npm run build && cd .. && docker build -t jncc/catalog .",
-    "start": "yarn run build && node built/api/server.js"
+    "start": "node built/api/server.js"
   },
   "repository": {
     "type": "git",

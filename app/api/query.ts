@@ -21,7 +21,6 @@ export class Query {
   public terms: ITerm[] = [];
   public types: any = {};
   public productName: string = "";
-  public total: number = 0;
 
   //todo get rid of this
   public get collection() : string {
@@ -33,7 +32,9 @@ export class Query {
   }
   // todo: type request
   constructor(requestParameter: string, queryParams: any) {
-    this.collections.unshift(requestParameter);
+    if (requestParameter !== undefined){
+      this.collections.unshift(requestParameter);
+    }
 
     if ("footprint" in queryParams) {
       this.footprint = queryParams.footprint;
@@ -56,7 +57,7 @@ export class Query {
     }
 
     if ("collections" in queryParams) {
-      this.collections.push(queryParams.collections)
+      this.collections.push.apply(this.collections, queryParams.collections)
     }
 
   }

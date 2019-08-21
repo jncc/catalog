@@ -19,7 +19,7 @@ export class Database {
       },
       log: {
         warn(message) {
-          logger.warn(message);
+          //logger.warn(message);
         },
         error(message) {
           logger.error(message);

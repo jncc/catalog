@@ -5,11 +5,19 @@ import { IProduct } from "../definitions/product/product";
 
 export class ProductQueries {
 
-  public getCountOfProductsByCollection(query: query.Query): Promise<any> {
+  public getProductCount(query: query.Query): Promise<any> {
     let dbQuery = this.getBaseQuery(query)
-      .select("collectionName")
-      .count("*", {as: 'products'})
-      .groupBy("collectionName")
+      .count("id", {as: 'products'})
+
+    return dbQuery;
+  }
+
+  public getProductCountByCollection(query: query.Query): Promise<any> {
+    let dbQuery = this.getProductCount(query) as knex.QueryBuilder
+
+    dbQuery = dbQuery
+      .select({collectionName: 'collection_name'})
+      .groupBy("collection_name")
 
     return dbQuery;
   }
@@ -18,7 +26,9 @@ export class ProductQueries {
   // Todo - Convert to new knex query
   public getProductsTotal(query: query.Query) {
     let dbQuery = this.getBaseQuery(query)
-      .count("*", {as: 'totalProducts'})
+      .count("id", {as: 'totalProducts'})
+
+    console.log(dbQuery.toSQL())
 
     return dbQuery;
   }
@@ -47,18 +57,20 @@ export class ProductQueries {
 
     let baseQuery = qb<IProduct>("product_view")
       .modify(qb => {
-        if (query.collections.length = 1) {
+        if (query.collections.length == 1) {
           qb.where("collection_name", query.collections[0]);
         } else if (query.collections.length > 1) {
           qb.whereIn("collection_name", query.collections);
         }
       })
       .modify(qb => {
-        if (query.productName.indexOf("*") > -1) {
-          let likeTerm = query.productName.replace(/\*/g, "%");
-          qb.where("name", "LIKE", likeTerm)
-        } else {
-          qb.where("name", query.productName)
+        if (query.productName !== "") {
+          if (query.productName.indexOf("*") > -1) {
+            let likeTerm = query.productName.replace(/\*/g, "%");
+            qb.where("name", "LIKE", likeTerm)
+          } else {
+            qb.where("name", query.productName)
+          }
         }
       })
       .modify(qb => {

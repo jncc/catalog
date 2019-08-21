@@ -4,30 +4,20 @@ import * as query from "../query";
 
 export class CollectionQueries {
 
-  public checkMatchingProductSchema(collections:string[]): Boolean {
+  public checkMatchingProductSchema(collections:string[]) {
     let qb = Database.instance.queryBuilder;
 
-    let result = false;
+    let schemaQuery =  qb("collection")
+    .select("products_schema")
+    .where("name", collections[0]);
 
-    if (collections.length == 1) {
-      result = true;
-    } else {
-      qb("collection")
-      .count("*", {as: 'exceptions'})
-      .whereIn("name", collections)
-      .where("productsSchema", () => {
-        qb<ICollection>("collection")
-        .select("productsSchema")
-        .where("name", collections[0])
-      })
-      .then(r => {
-        if (r["excpetions"] == 0) result = true;
-      })
-    }
+    let query = qb<{exceptions: number}>("collection")
+    .count("*", {as: 'exceptions'})
+    .whereIn("name", collections)
+    .where("products_schema", "!=", schemaQuery);
 
-    return result;
+    return query;
   }
-
 
   public getCollection(name: string): Promise<ICollection | undefined> {
     let qb = Database.instance.queryBuilder;

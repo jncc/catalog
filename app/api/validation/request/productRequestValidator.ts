@@ -31,9 +31,12 @@ export class ProductRequestValidator extends RequestValidator {
         });
       }
 
-      if (! collectionQueries.checkMatchingProductSchema(query.collections)) {
-        errors.push("searchParam | all collections must have the same product schema")
-      }
+      collectionQueries.checkMatchingProductSchema(query.collections)
+        .then(r => {
+          if (r[0].exceptions > 0) {
+            errors.push("searchParam | all collections must have the same product schema");
+          }
+        })
 
       if (query.footprint !== "") {
         this.validateFootprint(query.footprint, errors);
