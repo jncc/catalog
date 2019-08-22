@@ -53,7 +53,7 @@ app.get(`/search/collection/*?`, async (req, res) => {
   });
 });
 
-app.post(`/search/productCount`, async (req, res) => {
+app.post(`/search/product/count`, async (req, res) => {
   let query = new Query(req.body.collection, req.body);
 
   ProductRequestValidator.validate(query, collectionQueries).then(() => {
@@ -74,7 +74,7 @@ app.post(`/search/productCount`, async (req, res) => {
   });
 });
 
-app.post(`/search/productCount/byCollection`, async (req, res) => {
+app.post(`/search/product/countByCollection`, async (req, res) => {
   let query = new Query(req.body.collection, req.body);
 
   ProductRequestValidator.validate(query, collectionQueries).then(() => {

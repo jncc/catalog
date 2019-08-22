@@ -125,7 +125,3 @@ This will give an output as follows:
 
 In this case Postgres needs to listen on 172.17.0.1 and accept authenticated connections from the 172.17.0.1/16 ip address range before it will work with docker.
 
-
-
-
-https://vincit.github.io/objection.js/

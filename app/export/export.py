@@ -78,7 +78,7 @@ if __name__ == '__main__':
     # - that have a begin date >= 2016-08-04
     # - and an end date =< 2016-08-05
     query = {
-        'collection': 'sentinel/1/ard/backscatter/osgb',
+        'collections': ['sentinel/1/ard/backscatter/osgb'],
         'terms': [
             {
                 'property': 'begin',
