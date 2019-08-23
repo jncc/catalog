@@ -2,40 +2,43 @@ import "mocha"; // test reqs
 import "mocha-inline"; // test reqs
 import * as chai from "chai"; // test reqs
 import * as chaiAsPromised from "chai-as-promised"; // test reqs
-
-import { Query, ITerm, ALLOWED_OPERATORS } from "../../query";
-import { CollectionQueries } from "../../repository/collectionQueries";
 import { Fixtures } from "../../test/fixtures";
+import { EROFS } from "constants";
+
+import { ProductQuery, ITerm, ALLOWED_OPERATORS } from "../../query/productQuery";
+import { CollectionQueries } from "../../repository/collectionQueries";
 import { RequestValidator } from "./requestValidator";
 import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
-import { EROFS } from "constants";
 
 export class ProductRequestValidator extends RequestValidator {
-  public static validate(query: Query, collectionQueries: CollectionQueries): Promise<string[]> {
-    return new Promise((resolve, reject) => {
+  public static async validate(query: ProductQuery, collectionQueries: CollectionQueries): Promise<string[]> {
+    return new Promise<string[]>(async (resolve, reject) => {
       let errors: string[] = [];
 
       if (query.collections.length == 0) {
         errors.push("searchParam | collections must be defined")
         reject(errors);
       } else {
-        query.collections.forEach(collection => {
-          collectionQueries.getCollection(collection).then(c => {
-            if (c == undefined) {
+        for (let name of query.collections) {
+          if (name.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+            let collection = await collectionQueries.getCollection(name);
+
+            if (collection == undefined) {
               errors.push("searchParam | collection must exist")
               reject(errors);
             }
-          });
-        });
+          } else {
+            errors.push(`searchParam | collection ${name} does not match the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"`)
+          }
+        }
       }
 
-      collectionQueries.checkMatchingProductSchema(query.collections)
-        .then(r => {
-          if (r[0].exceptions > 0) {
-            errors.push("searchParam | all collections must have the same product schema");
-          }
-        })
+      let nonMatchingCollections = await collectionQueries.checkMatchingProductSchema(query.collections)
+
+      if (nonMatchingCollections[0].count > 0) {
+        errors.push("searchParam | all collections must have the same product schema");
+      }
 
       if (query.footprint !== "") {
         this.validateFootprint(query.footprint, errors);
@@ -46,31 +49,30 @@ export class ProductRequestValidator extends RequestValidator {
       }
 
       let productsSchema = {};
-      collectionQueries.getCollection(query.collections[0])
-        .then(r => {
-          if (r == undefined) {
-            throw new Error("searchParam ! Error getting product property schema");
-          } else {
-            productsSchema = r.productsSchema;
-          }
-        })
+      let firstCollection = await collectionQueries.getCollection(query.collections[0])
+
+      if (firstCollection == undefined) {
+        throw new Error("searchParam ! Error getting product property schema");
+      } else {
+        productsSchema = firstCollection.productsSchema;
+      }
 
       if (query.terms.length > 0 && this.validateTermStructure(query.terms, errors)) {
         query.types = this.extractQueryDataTypes(productsSchema, query)
         let validationSchema = this.getValidationSchema(productsSchema);
         let queryValues = this.getQueryValues(query.terms);
 
-        this.validateQueryValues(validationSchema, queryValues).then(() => {
-          this.validateQueryOperations(query, errors)
-          if (errors.length > 0) {
-            reject(errors);
-          } else {
-            resolve(errors);
-          }
-        }).catch((valueErrors) => {
-          reject(errors.concat(valueErrors));
-        })
-      } else if (errors.length > 0) {
+        try {
+          await this.validateQueryValues(validationSchema, queryValues)
+        } catch (queryValueErrors) {
+          errors.concat (queryValueErrors);
+          reject(errors);
+        }
+
+        await this.validateQueryOperations(query, errors);
+      }
+
+      if (errors.length > 0) {
         reject(errors);
       } else {
         resolve(errors);
@@ -103,18 +105,18 @@ export class ProductRequestValidator extends RequestValidator {
     return valid
   }
 
-  private static validCollectionNameFormat(query: Query, errors: string[]): boolean {
-    let isvalid = true
-    if (!query.collection.match(/^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/)) {
-      // tslint:disable-next-line:max-line-length
-      errors.push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"');
-      isvalid = false
-    }
+  // private static validCollectionNameFormat(query: ProductQuery, errors: string[]): boolean {
+  //   let isvalid = true
+  //   if (!query.collection.match(/^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$/)) {
+  //     // tslint:disable-next-line:max-line-length
+  //     errors.push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$"');
+  //     isvalid = false
+  //   }
 
-    return isvalid;
-  }
+  //   return isvalid;
+  // }
 
-  private static extractQueryDataTypes(schema: any, query: Query): any {
+  private static extractQueryDataTypes(schema: any, query: ProductQuery): any {
     let properties = query.terms.map((term) => term.property);
     let tm: any = {};
 
@@ -137,7 +139,7 @@ export class ProductRequestValidator extends RequestValidator {
     return tm;
   }
 
-  private static validateQueryOperations(query: Query, errors: string[]) {
+  private static validateQueryOperations(query: ProductQuery, errors: string[]) {
     let queryValid: boolean = true;
     let valid: boolean = false;
 

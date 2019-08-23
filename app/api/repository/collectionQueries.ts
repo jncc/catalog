@@ -1,6 +1,7 @@
 import { Database } from  "./database"
 import { ICollection } from "../definitions/collection/collection"
-import * as query from "../query";
+import { CollectionQuery } from "../query/collectionQuery";
+
 
 export class CollectionQueries {
 
@@ -11,7 +12,7 @@ export class CollectionQueries {
     .select("products_schema")
     .where("name", collections[0]);
 
-    let query = qb<{exceptions: number}>("collection")
+    let query = qb<{count: number}>("collection")
     .count("*", {as: 'exceptions'})
     .whereIn("name", collections)
     .where("products_schema", "!=", schemaQuery);
@@ -30,17 +31,17 @@ export class CollectionQueries {
         {productsSchema: "products_schema"},
         {footprint: qb.raw("ST_AsGeoJSON(footprint)")}
       )
-      .where("name = ?", name)
+      .where("name", name)
       .first();
 
     return dbQuery;
   }
 
-  public getCollections(query: query.Query, limit: number, offset: number): Promise<ICollection[]> {
+  public getCollections(query: CollectionQuery): Promise<ICollection[]> {
     let qb = Database.instance.queryBuilder;
 
-    let dbQuery =  qb<ICollection>("collection")
-      .columns(
+    let dbQuery = qb<ICollection>("collection")
+      .column(
         "id",
         "name",
         "metadata",
@@ -52,10 +53,9 @@ export class CollectionQueries {
           let likeTerm = query.collection.replace(/\*/g, "%");
           qb.where("name", "LIKE", likeTerm)
         } else {
-          qb.where("name", query.productName)
+          qb.where("name", query.collection)
         }
       })
-      .where("name = ?", name)
       .select();
 
       return dbQuery;

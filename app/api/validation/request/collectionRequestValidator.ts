@@ -3,31 +3,19 @@ import "mocha-inline";
 import * as chai from "chai"; // test reqs
 import * as chaiAsPromised from "chai-as-promised";
 
-import { Query } from "../../query";
 import { Fixtures } from "../../test/fixtures";
 import { RequestValidator } from "./requestValidator";
+import { CollectionQuery } from "../../query/collectionQuery";
 
 export class CollectionRequestValidator extends RequestValidator {
-  public static validate(query: Query): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-      let errors: string[] = [];
+  public static validate(query: CollectionQuery): string[] {
+    let errors: string[] = []
 
-      if (!query.collection.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-        reject(['searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"']);
-      }
-      if (query.footprint !== "") {
-        this.validateFootprint(query.footprint, errors);
-      }
-      if (query.spatialop !== "") {
-        this.validateSpatialOp(query.spatialop, errors);
-      }
+    if (!query.collection.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+      errors.push('searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"')
+    }
 
-      if (errors.length > 0) {
-        reject(errors);
-      } else {
-        resolve(errors);
-      }
-    });
+    return errors;
   }
 }
 

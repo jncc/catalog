@@ -12,7 +12,7 @@ export interface ITerm {
   value: string;
 }
 
-export class Query {
+export class ProductQuery {
   public offset: number = 0;
   public limit: number = 50;
   public collections: string[] = [];
@@ -22,19 +22,8 @@ export class Query {
   public types: any = {};
   public productName: string = "";
 
-  //todo get rid of this
-  public get collection() : string {
-    if (this.collections.length == 1){
-      return this.collections[0];
-    } else {
-      throw new Error("More then one collection defined in query");
-    }
-  }
   // todo: type request
-  constructor(requestParameter: string, queryParams: any) {
-    if (requestParameter !== undefined){
-      this.collections.unshift(requestParameter);
-    }
+  constructor(queryParams: any) {
 
     if ("footprint" in queryParams) {
       this.footprint = queryParams.footprint;

@@ -15,6 +15,7 @@ export class ProductStore {
   public async storeProduct(product: IProduct): Promise<any[]> {
     let qb = Database.instance.queryBuilder;
 
+
     let collection = await qb<ICollection>("collection").where("name", product.collectionName).first("id")
 
     if (collection === undefined) {

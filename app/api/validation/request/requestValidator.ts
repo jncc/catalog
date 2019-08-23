@@ -1,14 +1,15 @@
 import * as geojson from "geojson";
 import * as wellknown from "wellknown";
 
-import { Query } from "../../query";
+import { ProductQuery } from "../../query/productQuery";
 
 export abstract class RequestValidator {
-  protected static validateRequestParameter(query: Query, errors: string[]) {
-    if (!query.collection.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-      errors.push(
-        'searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"');
+  protected static validateRequestParameter(query: string) {
+    let error = ""
+    if (!query.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
+      error = 'searchParam | should be a path matching the pattern "^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$"';
     }
+    return error
   }
 
   protected static validateFootprint(param: string, errors: string[]) {

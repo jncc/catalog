@@ -1,18 +1,18 @@
 import * as knex from 'knex';
-import * as query from "../query";
+import * as query from "../query/productQuery";
 import { Database } from  "./database"
 import { IProduct } from "../definitions/product/product";
 
 export class ProductQueries {
 
-  public getProductCount(query: query.Query): Promise<any> {
+  public getProductCount(query: query.ProductQuery): Promise<any> {
     let dbQuery = this.getBaseQuery(query)
       .count("id", {as: 'products'})
 
     return dbQuery;
   }
 
-  public getProductCountByCollection(query: query.Query): Promise<any> {
+  public getProductCountByCollection(query: query.ProductQuery): Promise<any> {
     let dbQuery = this.getProductCount(query) as knex.QueryBuilder
 
     dbQuery = dbQuery
@@ -22,18 +22,15 @@ export class ProductQueries {
     return dbQuery;
   }
 
-
   // Todo - Convert to new knex query
-  public getProductsTotal(query: query.Query) {
+  public getProductsTotal(query: query.ProductQuery) {
     let dbQuery = this.getBaseQuery(query)
       .count("id", {as: 'totalProducts'})
-
-    console.log(dbQuery.toSQL())
 
     return dbQuery;
   }
 
-  public getProducts(query: query.Query): Promise<IProduct[]> {
+  public getProducts(query: query.ProductQuery): Promise<IProduct[]> {
     let qb = Database.instance.queryBuilder;
 
     let dbQuery = this.getBaseQuery(query)
@@ -52,7 +49,7 @@ export class ProductQueries {
     return dbQuery;
   }
 
-  private getBaseQuery(query: query.Query): knex.QueryBuilder<IProduct, any> {
+  private getBaseQuery(query: query.ProductQuery): knex.QueryBuilder<IProduct, any> {
     let qb = Database.instance.queryBuilder;
 
     let baseQuery = qb<IProduct>("product_view")
