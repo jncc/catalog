@@ -6,13 +6,13 @@ import { Fixtures } from "../../test/fixtures";
 import { EROFS } from "constants";
 
 import { ProductQuery, ITerm, ALLOWED_OPERATORS } from "../../query/productQuery";
-import { CollectionQueries } from "../../repository/collectionQueries";
+import { CollectionStore } from "../../repository/collectionStore";
 import { RequestValidator } from "./requestValidator";
 import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
 
 export class ProductRequestValidator extends RequestValidator {
-  public static async validate(query: ProductQuery, collectionQueries: CollectionQueries): Promise<string[]> {
+  public static async validate(query: ProductQuery): Promise<string[]> {
     return new Promise<string[]>(async (resolve, reject) => {
       let errors: string[] = [];
 
@@ -22,7 +22,7 @@ export class ProductRequestValidator extends RequestValidator {
       } else {
         for (let name of query.collections) {
           if (name.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-            let collection = await collectionQueries.getCollection(name);
+            let collection = await CollectionStore.getCollection(name);
 
             if (collection == undefined) {
               errors.push("searchParam | collection must exist")
@@ -34,7 +34,7 @@ export class ProductRequestValidator extends RequestValidator {
         }
       }
 
-      let nonMatchingCollections = await collectionQueries.checkMatchingProductSchema(query.collections)
+      let nonMatchingCollections = await CollectionStore.checkMatchingProductSchema(query.collections)
 
       if (nonMatchingCollections[0].count > 0) {
         errors.push("searchParam | all collections must have the same product schema");
@@ -49,7 +49,7 @@ export class ProductRequestValidator extends RequestValidator {
       }
 
       let productsSchema = {};
-      let firstCollection = await collectionQueries.getCollection(query.collections[0])
+      let firstCollection = await CollectionStore.getCollection(query.collections[0])
 
       if (firstCollection == undefined) {
         throw new Error("searchParam ! Error getting product property schema");

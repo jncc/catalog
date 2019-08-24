@@ -2,8 +2,7 @@ import * as Collection from "../definitions/collection/collection";
 import * as Footprint from "../definitions/components/footprint";
 import * as Metadata from "../definitions/components/metadata";
 import * as Product from "../definitions/product/product";
-import { ProductQueries } from "../repository/productQueries";
-import { CollectionQueries} from "../repository/collectionQueries";
+import { CollectionStore} from "../repository/collectionStore";
 import * as ValidationHelper from "./validationHelper";
 import * as ValidatorFactory from "./validatorFactory";
 
@@ -18,8 +17,6 @@ import { Fixtures } from "../test/fixtures";
 //todo - Valdate that the collection has a properly defined schema if the product has properties.
 
 export class ProductValidator {
-  constructor(private collectionQueries: CollectionQueries) { }
-
   public validate(product: Product.IProduct): Promise<string[]> {
     let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
 
@@ -77,8 +74,6 @@ export class ProductValidator {
     return Promise.resolve(errors);
   }
 
-
-
   private nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
     // Fix common issues with footprint and validate it
     product.footprint = Footprint.fixCommonIssues(product.footprint);
@@ -86,7 +81,7 @@ export class ProductValidator {
     // Run additional validation on metadata
     errors = Metadata.nonSchemaValidation(product.metadata, errors);
     // Validate product properties according to its collection properties_schema
-    return this.collectionQueries.getCollection(product.collectionName).then((collection) => {
+    return CollectionStore.getCollection(product.collectionName).then((collection) => {
       if (collection === null || collection === undefined) {
         errors.push(" | collection name does not exist in the database");
         return errors;
