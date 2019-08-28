@@ -8,6 +8,8 @@ import "mocha-inline";
 import * as TypeMoq from "typemoq";
 import { CollectionStore } from "../repository/collectionStore";
 import { ProductStore } from "../repository/productStore";
+import { ProductQuery } from "../query/productQuery";
+import { CollectionQuery } from "../query/collectionQuery";
 
 export class Fixtures {
   public static GetTestProduct(): IProduct {
@@ -81,10 +83,10 @@ export class Fixtures {
 
 
   public static GetMockCollectionQueries(version: number = 7): TypeMoq.IMock<CollectionStore> {
-    let mockRepo = TypeMoq.Mock.ofType(CollectionStore);
+    let mockRepo: TypeMoq.IMock<CollectionStore> = TypeMoq.Mock.ofType<CollectionStore>();
 
     if (version == 4) {
-      mockRepo.setup((x) => x.getCollections(TypeMoq.It.isAny()))
+      mockRepo.setup(x => x.getCollections(TypeMoq.It.isAny()))
         .returns((x, y) => {
           let c: ICollection = Fixtures.GetCollectionV4();
           return Promise.resolve([c]);
@@ -111,19 +113,38 @@ export class Fixtures {
   }
 
   public static GetMockProductQueries(version:number = 7): TypeMoq.IMock<ProductStore> {
-    let mockRepo = TypeMoq.Mock.ofType(ProductStore);
-
+    let mockRepo: TypeMoq.IMock<ProductStore> = TypeMoq.Mock.ofType<ProductStore>();
 
     mockRepo.setup((x) => x.getProducts(TypeMoq.It.isAny()))
       .returns((x, y) => {
         let p: IProduct = Fixtures.GetTestProduct();
         return Promise.resolve([p]);
-    });
-    mockRepo.setup((x) => x.storeProduct(TypeMoq.It.isAny())).returns((x, y) => {
-      return Promise.resolve(Fixtures.GetTestProduct().id);
-    });
+      });
+
+    mockRepo.setup((x) => x.getProductCount(TypeMoq.It.isAny()))
+      .returns((x, y) => {
+        let p = Fixtures.GetTestCount();
+        return Promise.resolve([p])
+      });
+
+    mockRepo.setup((x) => x.getProductCountByCollection(TypeMoq.It.isAny()))
+      .returns((x, y) => {
+        let p = Fixtures.GetTestCountByCollection();
+        return Promise.resolve([p])
+      });
+
+
+    // mockRepo.setup((x) => x.storeProduct(TypeMoq.It.isAny())).returns((x, y) => {
+    //   return Promise.resolve(Fixtures.GetTestProduct().id);
+    // });
 
     return mockRepo;
+  }
+  static GetTestCountByCollection() {
+    throw new Error("Method not implemented.");
+  }
+  static GetTestCount() {
+    throw new Error("Method not implemented.");
   }
 }
 

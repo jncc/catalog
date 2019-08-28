@@ -14,6 +14,9 @@ import { ProductStore } from "./repository/productStore";
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
+let productStore = new ProductStore();
+let collectionStore = new CollectionStore();
+let productRequestValidator = new ProductRequestValidator(collectionStore);
 let logger = Logger.Logger();
 
 process.on("unhandledRejection", (r) => logger.warn(r));
@@ -53,7 +56,7 @@ app.get(`/search/collection/*?`, async (req, res) => {
   } else {
 
     try {
-      let collections = await CollectionStore.getCollections(query);
+      let collections = await collectionStore.getCollections(query);
 
       res.json({
         query: query,
@@ -90,7 +93,7 @@ app.post(`/search/product/count`, async (req, res) => {
   }
 
   try {
-    await ProductRequestValidator.validate(query)
+    await productRequestValidator.validate(query)
   } catch (errors) {
     res.status(400);
     res.json({
@@ -102,7 +105,7 @@ app.post(`/search/product/count`, async (req, res) => {
   }
 
   try {
-    let productCount = await ProductStore.getProductCount(query);
+    let productCount = await productStore.getProductCount(query);
 
     res.json({
       query: query,
@@ -137,7 +140,7 @@ app.post(`/search/product/countByCollection`, async (req, res) => {
   }
 
   try {
-    await ProductRequestValidator.validate(query)
+    await productRequestValidator.validate(query)
   } catch (errors) {
     res.status(400);
     res.json({
@@ -149,7 +152,7 @@ app.post(`/search/product/countByCollection`, async (req, res) => {
   }
 
   try {
-    let countByCollection = await ProductStore.getProductCountByCollection(query)
+    let countByCollection = await productStore.getProductCountByCollection(query)
 
     res.json({
       query: query,
@@ -183,7 +186,7 @@ app.post(`/search/product`, async (req, res) => {
   }
 
   try {
-    await ProductRequestValidator.validate(query)
+    await productRequestValidator.validate(query)
   } catch (errors) {
     res.status(400);
     res.json({
@@ -194,7 +197,7 @@ app.post(`/search/product`, async (req, res) => {
   }
 
   try {
-    let products = await ProductStore.getProducts(query)
+    let products = await productStore.getProducts(query)
 
     res.json({
       query: query,
@@ -214,7 +217,7 @@ app.post(`/search/product`, async (req, res) => {
 
 app.post(`/validate/product`, async (req, res) => {
   let product: Product.IProduct = req.body;
-  let productValidtor = new ProductValidator();
+  let productValidtor = new ProductValidator(collectionStore);
 
   try {
     await productValidtor.validate(product)
@@ -229,7 +232,7 @@ app.post(`/validate/product`, async (req, res) => {
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
   let product: Product.IProduct = req.body;
-  let productValidtor = new ProductValidator();
+  let productValidtor = new ProductValidator(collectionStore);
 
   // todo check product exists
 

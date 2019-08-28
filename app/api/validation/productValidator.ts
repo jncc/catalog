@@ -17,6 +17,14 @@ import { Fixtures } from "../test/fixtures";
 //todo - Valdate that the collection has a properly defined schema if the product has properties.
 
 export class ProductValidator {
+  collectionStore: CollectionStore;
+
+  constructor(collectionStore: CollectionStore) {
+    this.collectionStore = collectionStore;
+  }
+
+
+
   public validate(product: Product.IProduct): Promise<string[]> {
     let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
 
@@ -81,7 +89,7 @@ export class ProductValidator {
     // Run additional validation on metadata
     errors = Metadata.nonSchemaValidation(product.metadata, errors);
     // Validate product properties according to its collection properties_schema
-    return CollectionStore.getCollection(product.collectionName).then((collection) => {
+    return this.collectionStore.getCollection(product.collectionName).then((collection) => {
       if (collection === null || collection === undefined) {
         errors.push(" | collection name does not exist in the database");
         return errors;

@@ -6,15 +6,15 @@ import { ICollection } from '../definitions/collection/collection';
 
 export class ProductStore {
 
-  public static getProductCount(query: query.ProductQuery): Promise<any> {
+  public getProductCount(query: query.ProductQuery): Promise<any> {
     let dbQuery = ProductStore.getBaseQuery(query)
       .count("id", {as: 'products'})
 
     return dbQuery;
   }
 
-  public static getProductCountByCollection(query: query.ProductQuery): Promise<any> {
-    let dbQuery = ProductStore.getProductCount(query) as knex.QueryBuilder
+  public getProductCountByCollection(query: query.ProductQuery): Promise<any> {
+    let dbQuery = this.getProductCount(query) as knex.QueryBuilder
 
     dbQuery = dbQuery
       .select({collectionName: 'collection_name'})
@@ -24,14 +24,14 @@ export class ProductStore {
   }
 
   // Todo - Convert to new knex query
-  public static getProductsTotal(query: query.ProductQuery) {
+  public getProductsTotal(query: query.ProductQuery) {
     let dbQuery = ProductStore.getBaseQuery(query)
       .count("id", {as: 'totalProducts'})
 
     return dbQuery;
   }
 
-  public static getProducts(query: query.ProductQuery): Promise<IProduct[]> {
+  public getProducts(query: query.ProductQuery): Promise<IProduct[]> {
     let qb = Database.instance.queryBuilder;
 
     let dbQuery = ProductStore.getBaseQuery(query)

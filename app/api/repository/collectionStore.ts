@@ -4,7 +4,7 @@ import { CollectionQuery } from "../query/collectionQuery";
 
 export class CollectionStore {
 
-  public static checkMatchingProductSchema(collections:string[]) {
+  public checkMatchingProductSchema(collections:string[]) {
     let qb = Database.instance.queryBuilder;
 
     let schemaQuery =  qb("collection")
@@ -19,7 +19,7 @@ export class CollectionStore {
     return query;
   }
 
-  public static getCollection(name: string): Promise<ICollection | undefined> {
+  public getCollection(name: string): Promise<ICollection | undefined> {
     let qb = Database.instance.queryBuilder;
 
     let dbQuery =  qb<ICollection>("collection")
@@ -36,7 +36,7 @@ export class CollectionStore {
     return dbQuery;
   }
 
-  public static getCollections(query: CollectionQuery): Promise<ICollection[]> {
+  public getCollections(query: CollectionQuery): Promise<ICollection[]> {
     let qb = Database.instance.queryBuilder;
 
     let dbQuery = qb<ICollection>("collection")

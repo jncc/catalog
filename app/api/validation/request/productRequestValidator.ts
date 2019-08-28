@@ -12,7 +12,15 @@ import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
 
 export class ProductRequestValidator extends RequestValidator {
-  public static async validate(query: ProductQuery): Promise<string[]> {
+  collectionStore: CollectionStore;
+
+  constructor(collectionStore: CollectionStore) {
+    super();
+    this.collectionStore = collectionStore
+  }
+
+  public async validate(query: ProductQuery): Promise<string[]> {
+
     return new Promise<string[]>(async (resolve, reject) => {
       let errors: string[] = [];
 
@@ -22,7 +30,7 @@ export class ProductRequestValidator extends RequestValidator {
       } else {
         for (let name of query.collections) {
           if (name.match(/^(([A-Za-z0-9\-\_\.\*]+)(\/))*([A-Za-z0-9\-\_\.\*])+$/)) {
-            let collection = await CollectionStore.getCollection(name);
+            let collection = await this.collectionStore.getCollection(name);
 
             if (collection == undefined) {
               errors.push("searchParam | collection must exist")
@@ -34,7 +42,7 @@ export class ProductRequestValidator extends RequestValidator {
         }
       }
 
-      let nonMatchingCollections = await CollectionStore.checkMatchingProductSchema(query.collections)
+      let nonMatchingCollections = await this.collectionStore.checkMatchingProductSchema(query.collections)
 
       if (nonMatchingCollections[0].count > 0) {
         errors.push("searchParam | all collections must have the same product schema");
@@ -49,7 +57,7 @@ export class ProductRequestValidator extends RequestValidator {
       }
 
       let productsSchema = {};
-      let firstCollection = await CollectionStore.getCollection(query.collections[0])
+      let firstCollection = await this.collectionStore.getCollection(query.collections[0])
 
       if (firstCollection == undefined) {
         throw new Error("searchParam ! Error getting product property schema");
@@ -80,7 +88,7 @@ export class ProductRequestValidator extends RequestValidator {
     });
   }
 
-  private static validateTermStructure(terms: ITerm[], errors: string[]): boolean {
+  private validateTermStructure(terms: ITerm[], errors: string[]): boolean {
     let valid = true
 
     terms.forEach((term, index)=> {
@@ -116,7 +124,7 @@ export class ProductRequestValidator extends RequestValidator {
   //   return isvalid;
   // }
 
-  private static extractQueryDataTypes(schema: any, query: ProductQuery): any {
+  private extractQueryDataTypes(schema: any, query: ProductQuery): any {
     let properties = query.terms.map((term) => term.property);
     let tm: any = {};
 
@@ -139,7 +147,7 @@ export class ProductRequestValidator extends RequestValidator {
     return tm;
   }
 
-  private static validateQueryOperations(query: ProductQuery, errors: string[]) {
+  private validateQueryOperations(query: ProductQuery, errors: string[]) {
     let queryValid: boolean = true;
     let valid: boolean = false;
 
@@ -173,7 +181,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param schema The base properties schema of a collection
    * @returns A JSON schema for use in validating individual query parameters
    */
-  private static getValidationSchema(schema: any) {
+  private getValidationSchema(schema: any) {
     delete schema.required;
     return schema;
   }
@@ -184,7 +192,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param params A JSON object containing the query params
    * @returns An array of individual JSON objects to be validated
    */
-  private static getQueryValues(params: ITerm[]) {
+  private getQueryValues(params: ITerm[]) {
     let extracted: any[] = [];
 
     params.forEach((element) => {
@@ -204,7 +212,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param extractedQueryParams An array of extracted query objects
    * @returns A promise, if validation fails, promise is rejected, if it validates then promise is fulfilled
    */
-  private static validateQueryValues(schema: any, extractedQueryParams: any[]): Promise<string[]> {
+  private validateQueryValues(schema: any, extractedQueryParams: any[]): Promise<string[]> {
     return new Promise((resolve, reject) => {
       let validator = ValidatorFactory.getValidator(schema.$schema);
       let propertySchemaValidator = validator.compile(schema);
@@ -245,18 +253,18 @@ export class ProductRequestValidator extends RequestValidator {
 // chai.use(chaiAsPromised);
 
 // describe("Product Request Validator", () => {
-//   let p = "test/valid/path/1/2/345aa";
-//   let mockRepo = Fixtures.GetMockRepo().object;
+//   let q = {collections: ["test/valid/path/1/2/345aa"]};
+//   let mockRepo = Fixtures.GetMockProductQueries
 
 //   it("should validate a valid search path", () => {
-//     return chai.expect(ProductRequestValidator.validate(new Query(p, {}), mockRepo))
+//     return chai.expect(ProductRequestValidator.validate(new ProductQuery(q)))
 //       .to.be.fulfilled
 //       .and.eventually.be.an("array").that.is.empty;
 //   });
 
 //   it("should not validate an wildcard search path", () => {
-//     let reqParam = "*test/valid/pat*h/1/2/345aa*";
-//     return chai.expect(ProductRequestValidator.validate(new Query(reqParam, {}), mockRepo))
+//     let qstar = {collections: ["*test/valid/pat*h/1/2/345aa*"]};
+//     return chai.expect(ProductRequestValidator.validate(new ProductQuery(qstar)))
 //       .to.be.rejected
 //       .and.eventually.have.lengthOf(1)
 //       .and.contain(
@@ -264,8 +272,8 @@ export class ProductRequestValidator extends RequestValidator {
 //   });
 
 //   it("should not validate an invalid search path", () => {
-//     let reqParam = "\\\\test/inv%%alid/path/1/2/345aa";
-//     return chai.expect(ProductRequestValidator.validate(new Query(reqParam, {}), mockRepo))
+//     let qWrong = {collections: "\\\\test/inv%%alid/path/1/2/345aa"};
+//     return chai.expect(ProductRequestValidator.validate(new ProductQuery(qWrong))
 //       .to.be.rejected
 //       .and.eventually.have.lengthOf(1)
 //       .and.contain(
@@ -275,14 +283,14 @@ export class ProductRequestValidator extends RequestValidator {
 //   it("should validate a valid spatialOp", () => {
 //     let results: Promise<string[]>[] = [];
 //     ["within", "intersects", "overlaps"].forEach((op) => {
-//       results.push(ProductRequestValidator.validate(new Query(p, { spatialop: op }), mockRepo))
+//       results.push(ProductRequestValidator.validate(new ProductQuery({ spatialop: op })))
 //     })
 
 //     return chai.expect(Promise.all(results)).to.be.fulfilled;
 //   });
 
 //   it("should not validate an invalid spatialOp", () => {
-//     return chai.expect(ProductRequestValidator.validate(new Query(p, { spatialop: "bobbins" }), mockRepo))
+//     return chai.expect(ProductRequestValidator.validate(new ProductQuery({ spatialop: "bobbins" })))
 //       .to.be.rejected
 //       .and.eventually.have.lengthOf(1)
 //       .and.contain("spatialop | should be one of 'within', 'intersects', 'overlaps'");
@@ -296,7 +304,7 @@ export class ProductRequestValidator extends RequestValidator {
 //       "-2.2043681144714355 53.691726603500705," +
 //       "-2.2043681144714355 53.692260240428965))";
 
-//     return chai.expect(ProductRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+//     return chai.expect(ProductRequestValidator.validate(new ProductQuery({ footprint: footprint })))
 //       .to.be.fulfilled
 //       .and.eventually.be.an("array").that.is.empty;
 //   });
@@ -309,7 +317,7 @@ export class ProductRequestValidator extends RequestValidator {
 //       "-2.2043681144714355 53.691726603500705," +
 //       "-2.2043681144714355))";
 
-//     return chai.expect(ProductRequestValidator.validate(new Query(p, { footprint: footprint }), mockRepo))
+//     return chai.expect(ProductRequestValidator.validate(new Query({ footprint: footprint })))
 //       .to.be.rejected
 //       .and.eventually.have.lengthOf(1)
 //       .and.contain("footprint | is not valid WKT");
