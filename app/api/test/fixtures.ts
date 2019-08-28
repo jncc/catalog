@@ -82,7 +82,7 @@ export class Fixtures {
   }
 
 
-  public static GetMockCollectionQueries(version: number = 7): TypeMoq.IMock<CollectionStore> {
+  public static GetMockCollectionStore(version: number = 7): TypeMoq.IMock<CollectionStore> {
     let mockRepo: TypeMoq.IMock<CollectionStore> = TypeMoq.Mock.ofType<CollectionStore>();
 
     if (version == 4) {
