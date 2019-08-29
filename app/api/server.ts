@@ -33,7 +33,7 @@ app.get(`/search/collection/*?`, async (req, res) => {
   let query: CollectionQuery;
 
   try {
-    query = new CollectionQuery(req.params[0]);
+    query = new CollectionQuery({collection: req.params[0]});
   } catch (error) {
     logger.error(error)
 
