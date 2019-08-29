@@ -25,7 +25,7 @@ export class CollectionRequestValidator extends RequestValidator {
 
 describe("Collection Request Validator", () => {
   let p = "*test/valid/pat*h/1/2/345aa*";
-  let mockRepo = Fixtures.GetMockProductQueries().object;
+  let mockRepo = Fixtures.GetMockProductStore().object;
 
   it("should validate a valid search path", () => {
     return chai.expect(CollectionRequestValidator.validate(new CollectionQuery(p)))

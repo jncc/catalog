@@ -112,7 +112,7 @@ export class Fixtures {
     return mockRepo;
   }
 
-  public static GetMockProductQueries(version:number = 7): TypeMoq.IMock<ProductStore> {
+  public static GetMockProductStore(version:number = 7): TypeMoq.IMock<ProductStore> {
     let mockRepo: TypeMoq.IMock<ProductStore> = TypeMoq.Mock.ofType<ProductStore>();
 
     mockRepo.setup((x) => x.getProducts(TypeMoq.It.isAny()))
