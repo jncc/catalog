@@ -82,21 +82,23 @@ export class ProductValidator {
     return Promise.resolve(errors);
   }
 
-  private nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
+  private async nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
+
     // Fix common issues with footprint and validate it
     product.footprint = Footprint.fixCommonIssues(product.footprint);
     errors = Footprint.nonSchemaValidation(product.footprint, errors);
     // Run additional validation on metadata
     errors = Metadata.nonSchemaValidation(product.metadata, errors);
     // Validate product properties according to its collection properties_schema
-    return this.collectionStore.getCollection(product.collectionName).then((collection) => {
-      if (collection === null || collection === undefined) {
-        errors.push(" | collection name does not exist in the database");
-        return errors;
-      } else {
-        return this.validateProductProperties(collection as Collection.ICollection, product, errors);
-      }
-    });
+
+    let collection = await this.collectionStore.getCollection(product.collectionName);
+
+    if (collection === undefined || collection === null) {
+      errors.push(" | collection name does not exist in the database");
+      return errors;
+    } else {
+      return this.validateProductProperties(collection as Collection.ICollection, product, errors);
+    }
   }
 }
 
@@ -147,12 +149,10 @@ describe("Product validator", () => {
       .and.include('collectionName | should match pattern "^(([A-Za-z0-9\_\-]+)(\/))*([A-Za-z0-9\_\-])+$"');
   });
 
-  // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
-  // TODO: Using isAny but really should be an array if we can figure it out
-  it("should not validate a product with an invalid collection name", () => {
+  it("should not validate a product with a non existant collection name", () => {
     let mr = TypeMoq.Mock.ofType(CollectionStore);
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.reject(x);
+      return Promise.reject("not exist");
     });
 
     let v2 = new ProductValidator(mr.object);
