@@ -3,6 +3,9 @@
 .env*
 !.env.example
 
+# our own docker mounts
+.temp
+
 # npm
 node_modules/
 npm-debug.log
