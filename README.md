@@ -1,9 +1,10 @@
 # Catalog
+
 Metadata and data product catalogue.
 
 ## Development
 
-The catalog is a Node.js REST server application written in Typescript.
+The catalog API is a Node.js REST server application written in Typescript.
 
 Install Node.js (Note: Ubuntu requires the `nodejs-legacy` package to create a `node` symlink
 https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
@@ -11,20 +12,24 @@ https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-di
     apt install nodejs-legacy
 
 Install Typescript and Yarn
+
     npm i -g typescript
     npm i -g yarn
 
 Install Sphinx for documentation
+
     pip install sphinx sphinx-autobuild
 
     For linting:
     pip install restructuredtext-lint
 
-    Install the reStructuredText extension for vs code by searching for:
-      restructuredtext publisher:"LeXtudio"
+Install the reStructuredText extension for vs code by searching for:
 
-    Further configuration for the plugin can be found here:
-    https://github.com/vscode-restructuredtext/vscode-restructuredtext/blob/master/docs/sphinx.md
+    restructuredtext publisher:"LeXtudio"
+
+Further configuration for the plugin can be found here: https://github.com/vscode-restructuredtext/vscode-restructuredtext/blob/master/docs/sphinx.md
+
+## Environment variables
 
 Database access parameters such as server location and authentication are provided through environment variables. A selection of scripts is available in /scripts folder.
 
@@ -35,26 +40,26 @@ Either fill in a .env file with the appropriate Environment values or add the ap
 You're good to go.
 
     cd ./app
-    yarn install
-    yarn run dev
+    yarn
+    yarn dev
 
 A browser window will open at http://localhost:5000
 
-Tip: It's often handy to run the Typescript compiler `tsc` to quickly check for compile errors.
+> Tip: It's often handy to run the Typescript compiler `yarn compile` to quickly check for compile errors.
 
-Run Tests
-    yarn run tests
+Don't forget the tests!
 
-# Database setup
+    yarn test
 
-* Install postgres package.
-* Install postgis package.
+## Database setup
 
-* su to the postgres user
+- Install postgres package.
+- Install postgis package.
+- su to the postgres user
 
     sudo su - postgres
 
-* create the database
+- create the database
 
     psql -c "CREATE DATABASE catalog;"
     psql -d catalog -f ./dev/database/setup-scripts/database.sql
@@ -62,45 +67,36 @@ Run Tests
     psql -d catalog -f ./dev/database/setup-scripts/product.sql
     psql -d catalog -f ./dev/database/setup-scripts/product_view.sql
 
-* create the user with a password (CHANGE THE PASSWORD BELOW)
+- create the user with a password (CHANGE THE PASSWORD BELOW)
 
     psql -d catalog -c "CREATE USER catalog WITH ENCRYPTED PASSWORD 'password';"
     psql -d catalog -c "GRANT connect ON DATABASE catalog TO catalog;"
     psql -d catalog -c "GRANT usage ON SCHEMA public TO catalog;"
     psql -d catalog -c "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO catalog;"
 
+## Online documentation
 
-## Online Documentation
-
-Docs follow this template:
+The Catalog API has documentation generator. Docs follow this template:
 https://docs.google.com/document/d/1HSQ3Fe77hnthw8hizqvXJU-qGEPHavMkctvCCadkVbY/edit?pli=1#
 
-to build docs run: 
+to build docs, run
 
-yarn run build-docs
+    yarn docs
 
 Table generator is handy for building complex tables.
 http://www.tablesgenerator.com/text_tables
 
-## Docker container
+## Docker
 
-### Build container
+To build the docker container simply run:
 
-To build the docker container simply run: 
+    yarn docker
 
-    yarn run build:docker
-
-while in the app directory and this should build the application and then a docker container based off of that called jncc/catalog. 
-
-### Pull Container
+while in the app directory and this should build an image called jncc/catalog.
 
 This image is currently being hosted at docker hub under our JNCC account if you want to pull a particular verison (1.0.0 - 1.0.4 currently) or just the latest run `docker pull jncc/catalog:latest`.
 
-### Run container
-
-If you need to run the container locally for testing you can run with the following command: `
-
-*NB - Run from the project root*
+If you need to run the container locally for testing you can run with the following command: *NB - Run from the project root*
 
     docker run --name catalog_api -p 9001:8081 -d --env-file .env jncc/catalog 
 

@@ -6,14 +6,11 @@
   "scripts": {
     "clean": "rimraf built",
     "compile": "tsc --outDir built/api",
-    "build:api": "npm run clean && npm run compile",
-    "dev": "npm run build && nodemon built/api/server.js",
-    "dev-debug": "npm run build && nodemon --inspect built/api/server.js",
-    "test": "npm run build:api && mocha -r ts-node/register \"api/**/*.ts\"",
-    "build:docs": "python -msphinx docs built/docs",
-    "build": "npm run build:api && npm run build:docs",
-    "build:docker": "npm run build && cd .. && docker build -t jncc/catalog .",
-    "start": "node built/api/server.js"
+    "dev": "npm run compile && nodemon built/api/server.js",
+    "test": "npm run compile && mocha -r ts-node/register \"api/**/*.ts\"",
+    "docs": "python -msphinx docs built/docs",
+    "build": "npm run clean && npm run compile && npm run docs",
+    "docker": "cd .. && docker build -t jncc/catalog ."
   },
   "repository": {
     "type": "git",
