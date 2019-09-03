@@ -43,11 +43,7 @@ You're good to go.
     yarn
     yarn dev
 
-A browser window will open at http://localhost:5000
-
-> Tip: It's often handy to run the Typescript compiler `yarn compile` to quickly check for compile errors.
-
-Don't forget the tests!
+This will run the API server. Don't forget the tests!
 
     yarn test
 
@@ -121,7 +117,11 @@ This will give an output as follows:
 
 In this case Postgres needs to listen on 172.17.0.1 and accept authenticated connections from the 172.17.0.1/16 ip address range before it will work with docker.
 
-### Work-in-progress - containerizing the database
+## Work-in-progress - containerizing the database
 
 docker-compose up
 docker exec -it dev_database_1 /bin/bash -c "/setup/setup.sh"
+
+## Work-in-progress - debugging the API tests
+
+There is a .vscode/launch.json configuration called `Mocha Tests` for debugging the tests. Not used much yet.
