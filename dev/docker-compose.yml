@@ -10,6 +10,8 @@ services:
     build: ../
     ports:
       - "6080:8081"
+    volumes:
+      - './.temp/api-log:/var/log/catalog'
     environment:
       - PGUSER=catalog
       - PGPASSWORD=catalog123

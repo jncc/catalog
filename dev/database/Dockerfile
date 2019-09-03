@@ -5,4 +5,3 @@ WORKDIR /setup
 COPY ./setup-scripts .
 RUN chmod +x ./setup.sh
 COPY ./data .
-RUN /setup/setup.sh

@@ -119,8 +119,22 @@ In this case Postgres needs to listen on 172.17.0.1 and accept authenticated con
 
 ## Work-in-progress - containerizing the database
 
-docker-compose up
-docker exec -it dev_database_1 /bin/bash -c "/setup/setup.sh"
+Launch a database instance with an API:
+
+    cd dev
+    docker-compose build
+
+Use `up` and `down` to run the images.
+
+    docker-compose up
+
+An API should be running on http://localhost:6080/alive
+
+Load the example data in:
+
+    docker exec -it dev_database_1 /bin/bash -c "/setup/setup.sh"
+
+To clean up, remove the `.temp` dir.
 
 ## Work-in-progress - debugging the API tests
 
