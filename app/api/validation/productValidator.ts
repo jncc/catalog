@@ -25,32 +25,43 @@ export class ProductValidator {
 
 
 
-  public validate(product: Product.IProduct): Promise<string[]> {
+  public async validate(product: Product.IProduct): Promise<string[]> {
     let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
 
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
     let errors: string[] = new Array<string>();
 
     return new Promise<string[]>(async (resolve, reject) => {
-      productSchemaValidator(product)
-        .then(async () => await this.nonSchemaValidation(product, errors))
-        .then((e) => {
-          if (errors.length === 0) {
-            resolve(errors);
-          } else {
-            reject(errors);
-          }
-        })
-        .catch((e) => {
-          if ("errors" in e) {
-            // Return from an AJV promise
-            errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
-          } else {
-            // Return from a nonSchemaValidation promise
-            errors = errors.concat(e);
-          }
+      try {
+        await productSchemaValidator(product);
+      } catch (e) {
+        if ("errors" in e) {
+          // Return from an AJV promise
+          errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
           reject(errors);
-        });
+          return;
+        } else {
+          throw new Error(e);
+        }
+      }
+
+      errors = Footprint.nonSchemaValidation(product.footprint, errors);
+      // Run additional validation on metadata
+      errors = Metadata.nonSchemaValidation(product.metadata, errors);
+      // Validate product properties according to its collection properties_schema
+
+      let collection = await this.collectionStore.getCollection(product.collectionName);
+
+      if (collection === undefined || collection === null) {
+        errors.push(" | collection name does not exist in the database");
+        reject(errors);
+        return;
+      }
+
+      let propertyErrors = await this.validateProductProperties(collection as Collection.ICollection, product, errors);
+
+
+      resolve(errors);
     });
   }
 
@@ -65,7 +76,11 @@ export class ProductValidator {
     let propValidator = propertiesSchemaValidator(product.properties);
 
     if (typeof propValidator.then === 'function') {
-      return new Promise<string[]>((resolve, reject) => {
+      return new Promise<string[]>(async (resolve, reject) => {
+        await propValidator();
+
+
+
         propValidator.then((x) => {
           resolve();
         }).catch((e) => {
@@ -82,24 +97,6 @@ export class ProductValidator {
     return Promise.resolve(errors);
   }
 
-  private async nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
-
-    // Fix common issues with footprint and validate it
-    product.footprint = Footprint.fixCommonIssues(product.footprint);
-    errors = Footprint.nonSchemaValidation(product.footprint, errors);
-    // Run additional validation on metadata
-    errors = Metadata.nonSchemaValidation(product.metadata, errors);
-    // Validate product properties according to its collection properties_schema
-
-    let collection = await this.collectionStore.getCollection(product.collectionName);
-
-    if (collection === undefined || collection === null) {
-      errors.push(" | collection name does not exist in the database");
-      return errors;
-    } else {
-      return this.validateProductProperties(collection as Collection.ICollection, product, errors);
-    }
-  }
 }
 
 // Tests
