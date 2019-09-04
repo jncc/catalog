@@ -11,6 +11,7 @@ import { ProductRequestValidator } from "./validation/request/productRequestVali
 import { CollectionStore } from "./repository/collectionStore";
 import { CollectionQuery } from "./query/collectionQuery";
 import { ProductStore } from "./repository/productStore";
+import * as Footprint from "./definitions/components/footprint";
 
 let app = express();
 let env = getEnvironmentSettings(app.settings.env);
@@ -219,6 +220,10 @@ app.post(`/validate/product`, async (req, res) => {
   let product: Product.IProduct = req.body;
   let productValidtor = new ProductValidator(collectionStore);
 
+  if ("footprint" in product) {
+    product.footprint = Footprint.fixCRS(product.footprint);
+  }
+
   try {
     await productValidtor.validate(product)
     res.sendStatus(200);
@@ -237,6 +242,10 @@ app.post(`/add/product`, async (req, res) => {
   // todo check product exists
 
   throw new Error("Not implemented")
+
+  if ("footprint" in product) {
+    product.footprint = Footprint.fixCRS(product.footprint);
+  }
 
   try {
     await productValidtor.validate(product);

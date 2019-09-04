@@ -15,7 +15,7 @@ export interface IFootprint {
   crs: ICRS;
 }
 
-export function fixCommonIssues(footprint: any) {
+export function fixCRS(footprint: any) {
   // If CRS does not exist then push in default so it can be added to database
   if (footprint.crs === undefined) {
     // errors.push("footprint.crs | CRS must be specified")
