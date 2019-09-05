@@ -25,8 +25,8 @@ export class ProductValidator {
 
   public async validate(product: Product.IProduct): Promise<string[]> {
     let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
-
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
+
     let errors: string[] = new Array<string>();
 
     return new Promise<string[]>(async (resolve, reject) => {
@@ -809,9 +809,6 @@ describe("Product Properties Validator", () => {
 
   beforeEach(() => {
     mr = TypeMoq.Mock.ofType(CollectionStore);
-    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.resolve(x);
-    });
   });
 
   it("should validate a product with an valid properties collection", () => {
