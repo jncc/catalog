@@ -23,8 +23,6 @@ export class ProductValidator {
     this.collectionStore = collectionStore;
   }
 
-
-
   public async validate(product: Product.IProduct): Promise<string[]> {
     let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
 
@@ -32,9 +30,8 @@ export class ProductValidator {
     let errors: string[] = new Array<string>();
 
     return new Promise<string[]>(async (resolve, reject) => {
-      try {
-        await productSchemaValidator(product);
-      } catch (e) {
+
+      await productSchemaValidator(product).catch((e) => {
         if ("errors" in e) {
           // Return from an AJV promise
           errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
@@ -43,25 +40,30 @@ export class ProductValidator {
         } else {
           throw new Error(e);
         }
-      }
+      });
 
       errors = Footprint.nonSchemaValidation(product.footprint, errors);
       // Run additional validation on metadata
       errors = Metadata.nonSchemaValidation(product.metadata, errors);
       // Validate product properties according to its collection properties_schema
 
-      let collection = await this.collectionStore.getCollection(product.collectionName);
+      let collection = await this.collectionStore.getCollection(product.collectionName)
 
       if (collection === undefined || collection === null) {
-        errors.push(" | collection name does not exist in the database");
+        errors.push(`collectionName | ${product.collectionName} does not exist in the database`);
+
         reject(errors);
         return;
       }
 
-      let propertyErrors = await this.validateProductProperties(collection as Collection.ICollection, product, errors);
+      await this.validateProductProperties(collection as Collection.ICollection, product, errors)
+            .catch((e) => errors = e);
 
-
-      resolve(errors);
+      if (errors.length == 0) {
+        resolve(errors);
+      } else {
+        reject(errors);
+      }
     });
   }
 
@@ -75,12 +77,9 @@ export class ProductValidator {
 
     let propValidator = propertiesSchemaValidator(product.properties);
 
+    //propValidator.then is sometimes a boolean not a function.?? MD discovery
     if (typeof propValidator.then === 'function') {
       return new Promise<string[]>(async (resolve, reject) => {
-        await propValidator();
-
-
-
         propValidator.then((x) => {
           resolve();
         }).catch((e) => {
@@ -149,14 +148,17 @@ describe("Product validator", () => {
   it("should not validate a product with a non existant collection name", () => {
     let mr = TypeMoq.Mock.ofType(CollectionStore);
     mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.reject("not exist");
+      return Promise.resolve(undefined);
     });
 
     let v2 = new ProductValidator(mr.object);
 
     const product = Fixtures.GetTestProduct();
 
-    return chai.expect(v2.validate(product)).to.be.rejected;
+    return chai.expect(v2.validate(product)).to.be.rejected
+      .and.eventually.be.an("array")
+      .that.has.lengthOf(1)
+      .and.include("collectionName | scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/10000 does not exist in the database")
   });
 });
 
@@ -757,12 +759,12 @@ describe("Footprint Validator", () => {
       .and.contain("footprint.type | should be 'MultiPolygon'");
   });
 
-  it("should validate a missing CRS, replacing it with default for pushing into Postgres", () => {
+  it("should not validate a missing CRS", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = Fixtures.GetFootprint();
     delete p.footprint.crs;
 
-    return chai.expect(validator.validate(p)).to.be.fulfilled;
+    return chai.expect(validator.validate(p)).to.be.rejected;
   });
 
   it("should not validate a non WGS84 CRS", () => {

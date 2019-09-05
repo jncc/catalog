@@ -2,6 +2,16 @@ import { Database } from  "./database"
 import { ICollection } from "../definitions/collection/collection"
 import { CollectionQuery } from "../query/collectionQuery";
 
+// Test reqs
+import "mocha";
+import "mocha-inline";
+import * as chai from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as TypeMoq from "typemoq";
+import { Fixtures } from "../test/fixtures";
+import { doesNotReject } from "assert";
+import * as dotenv from 'dotenv';
+
 export class CollectionStore {
 
   public checkMatchingProductSchema(collections:string[]) {
@@ -61,3 +71,25 @@ export class CollectionStore {
 
     }
 }
+
+//requires a database
+describe.skip("Collection store", () => {
+  dotenv.config({path: '../.env'});
+
+  let c = new CollectionStore();
+
+  it("should return a collection from the database", () => {
+    return chai.expect(c.getCollection("scotland-gov/lidar/phase-2/dsm"))
+      .to.be.fulfilled
+      .and.eventually.be.an("object")
+      .that.has.deep.property("name", "scotland-gov/lidar/phase-2/dsm")
+  });
+
+  it("should not return a collection that does not exist", () => {
+    return chai.expect(c.getCollection("not/real"))
+      .to.be.fulfilled
+      .and.eventually.equal(undefined);
+  });
+
+});
+
