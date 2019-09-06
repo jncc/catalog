@@ -103,6 +103,25 @@ export class ProductValidator {
 // tslint:disable-next-line:no-var-requires
 chai.use(chaiAsPromised);
 
+describe("Legacy json schema spec support", () => {
+  it("should support draft-04 spec schemas", () => {
+    let mockRepo = Fixtures.GetMockCollectionStore(4);
+    let validator = new ProductValidator(mockRepo.object);
+    return chai.expect(validator.validate(Fixtures.GetTestProduct()))
+      .to.be.fulfilled
+      .and.eventually.be.an("array").that.is.empty;
+  });
+
+  it("should support draft-06 spec schemas", () => {
+    let mockRepo = Fixtures.GetMockCollectionStore(6);
+    let validator = new ProductValidator(mockRepo.object);
+    return chai.expect(validator.validate(Fixtures.GetTestProduct()))
+      .to.be.fulfilled
+      .and.eventually.be.an("array").that.is.empty;
+  });
+});
+
+
 describe("Product validator", () => {
 
   let mockRepo = Fixtures.GetMockCollectionStore();
@@ -1039,3 +1058,5 @@ describe("Product Properties Validator", () => {
     return chai.expect(v2.validate(product)).to.eventually.be.empty;
   });
 });
+
+

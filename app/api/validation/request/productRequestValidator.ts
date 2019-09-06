@@ -77,12 +77,12 @@ export class ProductRequestValidator extends RequestValidator {
         try {
           await this.validateQueryValues(validationSchema, queryValues)
         } catch (queryValueErrors) {
-          errors.concat (queryValueErrors);
+          errors = errors.concat(queryValueErrors as string[]);
           reject(errors);
           return;
         }
 
-        await this.validateQueryOperations(query, errors);
+        this.validateQueryOperations(query, errors);
       }
 
       if (errors.length > 0) {
@@ -206,6 +206,7 @@ export class ProductRequestValidator extends RequestValidator {
    * @param extractedQueryParams An array of extracted query objects
    * @returns A promise, if validation fails, promise is rejected, if it validates then promise is fulfilled
    */
+
   private validateQueryValues(schema: any, extractedQueryParams: any[]): Promise<string[]> {
     return new Promise((resolve, reject) => {
       let validator = ValidatorFactory.getValidator(schema.$schema);
@@ -246,7 +247,7 @@ export class ProductRequestValidator extends RequestValidator {
 // tslint:disable-next-line:no-var-requires
 chai.use(chaiAsPromised);
 
-describe.only("Product Request Validator", () => {
+describe("Product Request Validator", () => {
   let q = {};
   let mockRepo  = Fixtures.GetMockCollectionStore().object
   let validator = new ProductRequestValidator(mockRepo);
@@ -298,8 +299,6 @@ describe.only("Product Request Validator", () => {
   });
 
   it("should validate a valid WKT footprint", () => {
-    console.log("q is this: ", q)
-
     let footprint =
       "POLYGON((-2.2043681144714355 53.692260240428965," +
       "-2.203187942504883 53.692260240428965," +
@@ -446,7 +445,7 @@ describe.only("Product Request Validator", () => {
       .and.contain('dateType | Operator must be one of >,>=,=,=<,< for date');
   })
 
-  it.only("should not validate a date term with an invalid date", () => {
+  it("should not validate a date term with an invalid date", () => {
     q["terms"] = [{
       property: "dateType",
       operation: "=",
