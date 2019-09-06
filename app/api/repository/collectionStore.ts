@@ -75,39 +75,39 @@ export class CollectionStore {
 }
 
 //requires a database
-describe.skip("Collection store", () => {
-  dotenv.config({path: '../.env'});
+// describe("Collection store", () => {
+//   dotenv.config({path: '../.env'});
 
-  let c = new CollectionStore();
+//   let c = new CollectionStore();
 
-  it("should return a collection from the database", () => {
-    return chai.expect(c.getCollection("scotland-gov/lidar/phase-2/dsm"))
-      .to.be.fulfilled
-      .and.eventually.be.an("object")
-      .that.has.deep.property("name", "scotland-gov/lidar/phase-2/dsm")
-  });
+//   it("should return a collection from the database", () => {
+//     return chai.expect(c.getCollection("scotland-gov/lidar/phase-2/dsm"))
+//       .to.be.fulfilled
+//       .and.eventually.be.an("object")
+//       .that.has.deep.property("name", "scotland-gov/lidar/phase-2/dsm")
+//   });
 
-  it("should not return a collection that does not exist", () => {
-    return chai.expect(c.getCollection("not/real"))
-      .to.be.fulfilled
-      .and.eventually.equal(undefined);
-  });
+//   it("should not return a collection that does not exist", () => {
+//     return chai.expect(c.getCollection("not/real"))
+//       .to.be.fulfilled
+//       .and.eventually.equal(undefined);
+//   });
 
-  it("should return a zero count for collections with identical product scheams", () => {
-    let collections = ["scotland-gov/lidar/phase-2/dsm","scotland-gov/lidar/phase-2/dtm"]
+//   it("should return a zero count for collections with identical product scheams", () => {
+//     let collections = ["scotland-gov/lidar/phase-2/dsm","scotland-gov/lidar/phase-2/dtm"]
 
-    return chai.expect(c.countCollectionsWithNonMatchingProductSchema(collections))
-      .to.be.fulfilled
-      .and.eventually.equal(0);
-  })
+//     return chai.expect(c.countCollectionsWithNonMatchingProductSchema(collections))
+//       .to.be.fulfilled
+//       .and.eventually.equal(0);
+//   })
 
-  it("should return a non zero count for collections with identical product scheams", () => {
-    let collections = ["scotland-gov/lidar/phase-2/dsm","scotland-gov/lidar/ogc"]
+//   it("should return a non zero count for collections with identical product scheams", () => {
+//     let collections = ["scotland-gov/lidar/phase-2/dsm","scotland-gov/lidar/ogc"]
 
-    return chai.expect(c.countCollectionsWithNonMatchingProductSchema(collections))
-      .to.be.fulfilled
-      .and.eventually.be.greaterThan(0)
-  })
+//     return chai.expect(c.countCollectionsWithNonMatchingProductSchema(collections))
+//       .to.be.fulfilled
+//       .and.eventually.be.greaterThan(0)
+//   })
 
-});
+// });
 
