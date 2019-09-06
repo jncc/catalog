@@ -10,7 +10,9 @@ import { CollectionStore } from "../../repository/collectionStore";
 import { RequestValidator } from "./requestValidator";
 import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
+import * as TypeMoq from "typemoq";
 import { IMock } from "typemoq";
+import { ProductValidator } from "../productValidator";
 
 export class ProductRequestValidator extends RequestValidator {
   collectionStore: CollectionStore;
@@ -46,10 +48,12 @@ export class ProductRequestValidator extends RequestValidator {
         return;
       }
 
-      let count = await this.collectionStore.countCollectionsWithNonMatchingProductSchema(query.collections)
+      if (query.collections.length > 1) {
+        let count = await this.collectionStore.countCollectionsWithNonMatchingProductSchema(query.collections)
 
-      if (count > 0) {
-        errors.push("searchParam | all collections must have the same product schema");
+        if (count > 0) {
+          errors.push("searchParam | all collections must have the same product schema");
+        }
       }
 
       if (query.footprint !== "") {
@@ -60,11 +64,16 @@ export class ProductRequestValidator extends RequestValidator {
         this.validateSpatialOp(query.spatialop, errors);
       }
 
+      if (errors.length > 0) {
+        reject(errors);
+        return;
+      }
+
       let productsSchema = {};
       let firstCollection = await this.collectionStore.getCollection(query.collections[0])
 
       if (firstCollection == undefined) {
-        throw new Error("searchParam ! Error getting product property schema");
+        throw new Error("searchParam | Error getting product property schema");
       } else {
         productsSchema = firstCollection.productsSchema;
       }
@@ -249,20 +258,21 @@ chai.use(chaiAsPromised);
 
 describe("Product Request Validator", () => {
   let q = {};
-  let mockRepo  = Fixtures.GetMockCollectionStore().object
-  let validator = new ProductRequestValidator(mockRepo);
+  let mockRepo  = Fixtures.GetMockCollectionStore()
+  let repo = mockRepo.object
+  let validator = new ProductRequestValidator(repo);
 
   beforeEach(() => {
     q = {collections: ["test/valid/path/1/2/345aa"]};
   })
 
-  it("should validate a valid search path", () => {
+  it("should validate a valid array of collections", () => {
     return chai.expect(validator.validate(new ProductQuery(q)))
       .to.be.fulfilled
       .and.eventually.be.an("array").that.is.empty;
   });
 
-  it("should not validate an wildcard search path", () => {
+  it("should not validate a collection name containing wildcards", () => {
     let qstar = {collections: ["*test/valid/pat*h/1/2/345aa*"]};
     return chai.expect(validator.validate(new ProductQuery(qstar)))
       .to.be.rejected
@@ -271,13 +281,39 @@ describe("Product Request Validator", () => {
       'searchParam | collection *test/valid/pat*h/1/2/345aa* should be a path matching the pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
   });
 
-  it("should not validate an invalid search path", () => {
+  it("should not validate an invalid collection name", () => {
     let qWrong = {collections: ["\\\\test/inv%%alid/path/1/2/345aa"]};
     return chai.expect(validator.validate(new ProductQuery(qWrong)))
       .to.be.rejected
       .and.eventually.have.lengthOf(1)
       .and.contain(
       'searchParam | collection \\\\test/inv%%alid/path/1/2/345aa should be a path matching the pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
+  });
+
+  it("should validate a set of collections whose the product schemas match", () => {
+    let q = {collections: ["test/valid/path/1/2/345a", "test/valid/path/1/2/345b"]}
+
+    return chai.expect(validator.validate(new ProductQuery(q))).to.be.fulfilled;
+  });
+
+  it("should not validate a set of collections whose product schema do not match", () => {
+    let q = {collections: ["test/valid/path/1/2/345a", "test/valid/path/1/2/345b"]}
+
+    //void existing mock definition.
+    void(mockRepo.object.countCollectionsWithNonMatchingProductSchema(["x"]));
+
+    mockRepo.setup((x) => x.countCollectionsWithNonMatchingProductSchema(TypeMoq.It.isAny())).returns((x, y) => {
+      return Promise.resolve(1);
+    })
+
+    let v = new ProductRequestValidator(mockRepo.object);
+
+    return chai.expect(v.validate(new ProductQuery(q)))
+      .to.be.rejected
+      .and.eventually.be.an("array")
+      .that.has.lengthOf(1)
+      .and.contain("searchParam | all collections must have the same product schema")
+
   });
 
   it("should validate a valid spatialOp", () => {
