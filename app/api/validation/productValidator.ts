@@ -803,8 +803,6 @@ describe("Footprint Validator", () => {
 });
 
 describe("Product Properties Validator", () => {
-  let mockRepo = Fixtures.GetMockCollectionStore();
-  let validator = new ProductValidator(mockRepo.object);
   let mr: TypeMoq.IMock<CollectionStore>;
 
   beforeEach(() => {
