@@ -61,16 +61,6 @@ export class Fixtures {
     };
   }
 
-  public static GetCollectionV4(): ICollection {
-    return {
-      id: "3bfc0280-5708-40ee-aef4-df3ddeb4fd21",
-      name: "test/collection",
-      metadata: this.GetTestProduct().metadata,
-      footprint: this.GetTestProduct().footprint,
-      productsSchema: this.GetV4TestPropertySchema()
-    };
-  }
-
   public static GetCollectionV6(): ICollection {
     return {
       id: "3bfc0280-5708-40ee-aef4-df3ddeb4fd21",
@@ -81,6 +71,15 @@ export class Fixtures {
     };
   }
 
+  public static GetCollectionV4(): ICollection {
+    return {
+      id: "3bfc0280-5708-40ee-aef4-df3ddeb4fd21",
+      name: "test/collection",
+      metadata: this.GetTestProduct().metadata,
+      footprint: this.GetTestProduct().footprint,
+      productsSchema: this.GetV4TestPropertySchema()
+    };
+  }
 
   public static GetMockCollectionStore(version: number = 7): TypeMoq.IMock<CollectionStore> {
     let mockRepo: TypeMoq.IMock<CollectionStore> = TypeMoq.Mock.ofType<CollectionStore>();
@@ -104,10 +103,15 @@ export class Fixtures {
           return Promise.resolve([c]);
       });
     }
+
     mockRepo.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
       let c: ICollection = Fixtures.GetCollection();
       return Promise.resolve(c);
     });
+
+    mockRepo.setup((x) => x.countCollectionsWithNonMatchingProductSchema(TypeMoq.It.isAny())).returns((x, y) => {
+      return Promise.resolve(0);
+    })
 
     return mockRepo;
   }

@@ -14,7 +14,7 @@ import * as dotenv from 'dotenv';
 
 export class CollectionStore {
 
-  public checkMatchingProductSchema(collections:string[]) {
+  public countCollectionsWithNonMatchingProductSchema(collections:string[]): Promise<number> {
     let qb = Database.instance.queryBuilder;
 
     let schemaQuery =  qb("collection")
@@ -26,7 +26,9 @@ export class CollectionStore {
     .whereIn("name", collections)
     .where("products_schema", "!=", schemaQuery);
 
-    return query;
+    return query.then((r) => {
+      return parseInt(r[0].exceptions as string)
+    });
   }
 
   public getCollection(name: string): Promise<ICollection | undefined> {
@@ -90,6 +92,22 @@ describe.skip("Collection store", () => {
       .to.be.fulfilled
       .and.eventually.equal(undefined);
   });
+
+  it("should return a zero count for collections with identical product scheams", () => {
+    let collections = ["scotland-gov/lidar/phase-2/dsm","scotland-gov/lidar/phase-2/dtm"]
+
+    return chai.expect(c.countCollectionsWithNonMatchingProductSchema(collections))
+      .to.be.fulfilled
+      .and.eventually.equal(0);
+  })
+
+  it("should return a non zero count for collections with identical product scheams", () => {
+    let collections = ["scotland-gov/lidar/phase-2/dsm","scotland-gov/lidar/ogc"]
+
+    return chai.expect(c.countCollectionsWithNonMatchingProductSchema(collections))
+      .to.be.fulfilled
+      .and.eventually.be.greaterThan(0)
+  })
 
 });
 
