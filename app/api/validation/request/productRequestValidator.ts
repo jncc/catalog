@@ -290,6 +290,18 @@ describe("Product Request Validator", () => {
       'searchParam | collection \\\\test/inv%%alid/path/1/2/345aa should be a path matching the pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
   });
 
+  it("should return multiple errors for multiple invalid collection names", () => {
+    let q = {collections: ["test/valid/path/1/2/345aa", "*test/valid/pat*h/1/2/345aa*", "\\\\test/inv%%alid/path/1/2/345aa"]}
+
+    return chai.expect(validator.validate(new ProductQuery(q)))
+      .to.be.rejected
+      .and.eventually.have.lengthOf(2)
+      .and.contain(
+      'searchParam | collection \\\\test/inv%%alid/path/1/2/345aa should be a path matching the pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+      .and.contain(
+        'searchParam | collection *test/valid/pat*h/1/2/345aa* should be a path matching the pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"');
+  });
+
   it("should validate a set of collections whose the product schemas match", () => {
     let q = {collections: ["test/valid/path/1/2/345a", "test/valid/path/1/2/345b"]}
 
