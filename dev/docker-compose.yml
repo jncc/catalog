@@ -18,7 +18,6 @@ services:
       - PGHOST=database
       - PGPORT=5432
       - PGDATABASE=catalog
-      - PGSSL=false
       - LOG_LEVEL=info
       - LOG_LOCATION=/var/log/catalog/catalog.log
 
