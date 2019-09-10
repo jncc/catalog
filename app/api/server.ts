@@ -27,7 +27,14 @@ app.use(bodyParser.json());
 app.use('/docs', express.static('./built/docs'))
 
 app.get('/alive', async (req, res) => {
-  res.send('Hello from catalog')
+  res.send('Hello from catalog!')
+})
+
+// enable CORS for all requests
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
 })
 
 app.get(`/search/collection/*?`, async (req, res) => {
