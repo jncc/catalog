@@ -11,8 +11,7 @@ import { RequestValidator } from "./requestValidator";
 import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
 import * as TypeMoq from "typemoq";
-import { IMock } from "typemoq";
-import { ProductValidator } from "../productValidator";
+
 
 export class ProductRequestValidator extends RequestValidator {
   collectionStore: CollectionStore;

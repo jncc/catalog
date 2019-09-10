@@ -241,8 +241,6 @@ app.post(`/add/product`, async (req, res) => {
 
   // todo check product exists
 
-  throw new Error("Not implemented")
-
   if ("footprint" in product) {
     product.footprint = Footprint.fixCRS(product.footprint);
   }
@@ -255,24 +253,15 @@ app.post(`/add/product`, async (req, res) => {
     return;
   };
 
+  try {
 
-  // var id = await store.storeProduct(product);
+    var productId = await productStore.storeProduct(product);
+    res.status(200);
+    res.json({ productId: productId });
 
-
-  // productValidtor.validate(product).then((result) => {
-  //   try {
-  //     store.storeProduct(product).then((productId) => {
-  //       res.json({ productId: productId });
-  //     }).catch((error) => {
-  //       res.status(500);
-  //     });
-  //   } catch (e) {
-  //     res.sendStatus(500);
-  //   }
-  // }).catch((result) => {
-  //   res.statusCode = 400;
-  //   res.send(result);
-  // });
+  } catch {
+    res.sendStatus(500);
+  }
 });
 
 if (!module.parent) {
