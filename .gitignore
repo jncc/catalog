@@ -24,3 +24,4 @@ scripts/set_env.*
 
 # Ignore logging outputs
 app/logs/*
+app/yarn-error.log
