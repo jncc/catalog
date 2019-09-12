@@ -82,6 +82,8 @@ class Importer:
         if not resp.ok:
             raise ValueError('Product %s was not imported, error returned from API: %s'
                              % (product['name'], resp.text))
+        else:
+          print('New id %s' % resp.text)
 
 
     # Not yet implemented.
