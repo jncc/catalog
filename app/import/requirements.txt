@@ -1,2 +1,2 @@
 requests>=2.20.0
-Shapely==1.5.17.post1
+Shapely
