@@ -8,7 +8,7 @@ export class Database {
   constructor() {
     let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
 
-    let logger = Logger.Logger()
+    let logger = Logger.GetLog()
 
     this.queryBuilder = knex({
       client: 'pg',

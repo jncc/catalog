@@ -18,7 +18,7 @@ let env = getEnvironmentSettings(app.settings.env);
 let productStore = new ProductStore();
 let collectionStore = new CollectionStore();
 let productRequestValidator = new ProductRequestValidator(collectionStore);
-let logger = Logger.Logger();
+let logger = Logger.GetLog();
 
 process.on("unhandledRejection", (r) => logger.warn(r));
 
