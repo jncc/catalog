@@ -109,23 +109,27 @@ export class ProductStore {
     return baseQuery;
   }
 
-  public async storeProduct(product: IProduct): Promise<any[]> {
+  public async storeProduct(product: IProduct): Promise<number> {
     let qb = Database.instance.queryBuilder;
     let collection = await qb<ICollection>("collection").where("name", product.collectionName).first("id")
 
     if (collection === undefined) {
       throw new Error("error retriving collection")
     } else {
-      let x = qb("product").insert({
-        collection_id: collection.id,
-        metadata: JSON.stringify(product.metadata),
-        properties: JSON.stringify(product.properties),
-        data: JSON.stringify(product.data),
-        footprint: qb.raw("ST_SetSRID(ST_GeomFromGeoJSON(?), 4326)", JSON.stringify(product.footprint)),
-        name: product.name
-      }).returning("id")
+      let query = qb("product")
+        .returning("id")
+        .insert({
+          collection_id: collection.id,
+          metadata: JSON.stringify(product.metadata),
+          properties: JSON.stringify(product.properties),
+          data: JSON.stringify(product.data),
+          footprint: qb.raw("ST_SetSRID(ST_GeomFromGeoJSON(?), 4326)", JSON.stringify(product.footprint)),
+          name: product.name
+        })
 
-      return x;
+      return query.then((r) => {
+        return (r as number[])[0];
+      });
     }
   }
 

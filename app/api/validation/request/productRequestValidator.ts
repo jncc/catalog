@@ -1,16 +1,17 @@
-import "mocha"; // test reqs
-import "mocha-inline"; // test reqs
-import * as chai from "chai"; // test reqs
-import * as chaiAsPromised from "chai-as-promised"; // test reqs
-import { Fixtures } from "../../test/fixtures";
-import { EROFS } from "constants";
 
 import { ProductQuery, ITerm, ALLOWED_OPERATORS } from "../../query/productQuery";
 import { CollectionStore } from "../../repository/collectionStore";
 import { RequestValidator } from "./requestValidator";
 import * as ValidationHelper from "../validationHelper";
 import * as ValidatorFactory from "../validatorFactory";
+
+import "mocha"; // test reqs
+import "mocha-inline"; // test reqs
+import * as chai from "chai"; // test reqs
+import * as chaiAsPromised from "chai-as-promised"; // test reqs
+import { Fixtures } from "../../test/fixtures";
 import * as TypeMoq from "typemoq";
+
 
 
 export class ProductRequestValidator extends RequestValidator {
