@@ -14,21 +14,17 @@ import { ProductStore } from "./repository/productStore";
 import * as Footprint from "./definitions/components/footprint";
 
 let app = express();
-let env = getEnvironmentSettings(app.settings.env);
+let env = getEnvironmentSettings();
 let productStore = new ProductStore();
 let collectionStore = new CollectionStore();
 let productRequestValidator = new ProductRequestValidator(collectionStore);
-let logger = Logger.GetLog();
+let log = Logger.GetLog();
 
-process.on("unhandledRejection", (r) => logger.warn(r));
+process.on("unhandledRejection", (r) => log.warn(r));
 
 // parse json body requests
 app.use(bodyParser.json());
 app.use('/docs', express.static('./built/docs'))
-
-app.get('/alive', async (req, res) => {
-  res.send('Hello from catalog!')
-})
 
 // enable CORS for all requests
 app.use((req, res, next) => {
@@ -37,13 +33,31 @@ app.use((req, res, next) => {
   next()
 })
 
+// DEFINE ALL OTHER USE METHODS BEFORE THIS
+app.use((err, req, res, next) => {
+  log.error(err)
+
+  if (res.headersSent) {
+    next(err)
+  } else {
+    res.status(500);
+    res.json({
+      errors: "An error has occured"
+    });
+  }
+})
+
+app.get('/alive', async (req, res) => {
+  res.send('Hello from catalog!')
+})
+
 app.get(`/search/collection/*?`, async (req, res) => {
   let query: CollectionQuery;
 
   try {
     query = new CollectionQuery({collection: req.params[0]});
   } catch (error) {
-    logger.error(error)
+    log.error(error)
 
     res.json({
       errors: "error parsing query"
@@ -72,7 +86,7 @@ app.get(`/search/collection/*?`, async (req, res) => {
       });
     } catch (error) {
 
-      logger.error(error);
+      log.error(error);
 
       res.status(500);
 
@@ -91,7 +105,7 @@ app.post(`/search/product/count`, async (req, res) => {
   try {
     query = new ProductQuery(req.body);
   } catch (error) {
-    logger.error(error)
+    log.error(error)
 
     res.json({
       errors: "error parsing query"
@@ -121,7 +135,7 @@ app.post(`/search/product/count`, async (req, res) => {
     })
 
   } catch (error) {
-    logger.error(error);
+    log.error(error);
 
     res.status(500);
     res.json({
@@ -138,7 +152,7 @@ app.post(`/search/product/countByCollection`, async (req, res) => {
   try {
     query = new ProductQuery(req.body);
   } catch (error) {
-    logger.error(error)
+    log.error(error)
 
     res.json({
       errors: "error parsing query"
@@ -167,7 +181,7 @@ app.post(`/search/product/countByCollection`, async (req, res) => {
       result: countByCollection
     });
   } catch (error) {
-    logger.error(error);
+    log.error(error);
 
     res.status(500);
     res.json({
@@ -184,7 +198,7 @@ app.post(`/search/product`, async (req, res) => {
   try {
     query = new ProductQuery(req.body);
   } catch (error) {
-    logger.error(error)
+    log.error(error)
 
     res.json({
       errors: "error parsing query"
@@ -212,7 +226,7 @@ app.post(`/search/product`, async (req, res) => {
       result: products
     });
   } catch (error) {
-    logger.error(error);
+    log.error(error);
 
     res.status(500);
     res.json({
@@ -273,8 +287,8 @@ app.post(`/add/product`, async (req, res) => {
 
 if (!module.parent) {
   app.listen(env.port, () => {
-    logger.info(`app.server is listening on: http://localhost:${env.port}`);
-    logger.info(`node environment is ${env.name}`);
+    log.info(`app.server is listening on: http://localhost:${env.port}`);
+    log.info(`node environment is ${app.settings.env}`);
   });
 }
 

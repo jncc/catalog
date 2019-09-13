@@ -2,6 +2,7 @@
 # node environment variable file
 .env*
 !.env.example
+!.env.docker
 
 # our own docker mounts
 .temp
