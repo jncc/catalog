@@ -17,10 +17,17 @@ export class Logger {
             filename: process.env.LOG_LOCATION === undefined ? './logs/stdout.log' : process.env.LOG_LOCATION,
             format: winston.format.combine(
               winston.format.timestamp(),
-              winston.format.json()
+              winston.format.json(),
+              winston.format.errors({ stack: true })
             )
           }),
-          new winston.transports.Console({format: winston.format.simple()})
+          new winston.transports.Console({
+            format: winston.format.combine(
+              winston.format.timestamp(),
+              winston.format.colorize(),
+              winston.format.simple()
+            )
+          })
         ]
       });
 
