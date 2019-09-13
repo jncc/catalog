@@ -1,6 +1,11 @@
 
 # node environment variable file
-.env
+.env*
+!.env.example
+!.env.docker
+
+# our own docker mounts
+.temp
 
 # npm
 node_modules/
@@ -19,4 +24,5 @@ built/
 scripts/set_env.*
 
 # Ignore logging outputs
-logs/*
+app/logs/*
+app/yarn-error.log

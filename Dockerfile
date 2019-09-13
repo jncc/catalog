@@ -1,6 +1,7 @@
+# Image that both builds and runs the catalog database API.
+
 FROM node:10.15.1
 
-# Create app directory
 WORKDIR /usr/src/app
 
 RUN apt update && apt -y upgrade && \
@@ -13,30 +14,7 @@ RUN apt update && apt -y upgrade && \
 COPY app .
 
 RUN yarn install && \
-    yarn build 
-    
-    # && \
-    # mkdir -p /app/built && \
-    # cp -r ./built/ /app/built/ && \
-    # cp ./package.json /app 
-    
-    # && \
-    # rm -rf /usr/src/app
-
-# # Install app dependencies
-# # A wildcard is used to ensure both package.json AND package-lock.json are copied
-# # where available (npm@5+)
-# COPY package*.json ./
-# #ADD api api
-
-# RUN npm install
-
-# # Bundle app source
-# ADD built built
-
-# # Copy log rotation script
-# COPY config/etc/logrotate.d/application/application.logrotate /etc/logrotate.d/application
-
+    yarn build
 
 EXPOSE 8081
 CMD [ "node", "built/api/server.js" ]

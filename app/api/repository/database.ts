@@ -1,17 +1,38 @@
-import * as pgPromise from "pg-promise";
-import { IDatabase, IMain } from "pg-promise";
+import * as knex from 'knex';
+import { Logger } from "../logging/logger";
 
-/* Singleton database client. */
 export class Database {
-
-  // tslint:disable-next-line:variable-name
   private static _instance: Database;
-  public readonly connection: IDatabase<any>;
+  public readonly queryBuilder: knex;
 
   constructor() {
-    let pgp = pgPromise();
-    let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}?ssl=${process.env.PGSSL}`;
-    this.connection = pgp(cs);
+    let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
+
+    let logger = Logger.GetLog()
+
+    this.queryBuilder = knex({
+      client: 'pg',
+      connection: cs,
+      pool: {
+        min: 2,
+        max: 10
+      },
+      log: {
+        warn(message) {
+          logger.warn(message);
+        },
+        error(message) {
+          logger.error(message);
+        },
+        deprecate(message) {
+          logger.info(message);
+        },
+        debug(message) {
+          logger.debug(message);
+        },
+      },
+      debug: true,
+    });
   }
 
   static get instance(): Database {
@@ -20,4 +41,5 @@ export class Database {
     }
     return Database._instance;
   }
+
 }

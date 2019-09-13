@@ -2,7 +2,7 @@ import * as Collection from "../definitions/collection/collection";
 import * as Footprint from "../definitions/components/footprint";
 import * as Metadata from "../definitions/components/metadata";
 import * as Product from "../definitions/product/product";
-import { CatalogRepository } from "../repository/catalogRepository";
+import { CollectionStore} from "../repository/collectionStore";
 import * as ValidationHelper from "./validationHelper";
 import * as ValidatorFactory from "./validatorFactory";
 
@@ -17,34 +17,53 @@ import { Fixtures } from "../test/fixtures";
 //todo - Valdate that the collection has a properly defined schema if the product has properties.
 
 export class ProductValidator {
-  constructor(private repository: CatalogRepository) { }
+  collectionStore: CollectionStore;
 
-  public validate(product: Product.IProduct): Promise<string[]> {
+  constructor(collectionStore: CollectionStore) {
+    this.collectionStore = collectionStore;
+  }
+
+  public async validate(product: Product.IProduct): Promise<string[]> {
     let asyncValidator = ValidatorFactory.getValidator(Product.Schema.$schema);
-
     let productSchemaValidator = asyncValidator.compile(Product.Schema);
+
     let errors: string[] = new Array<string>();
 
     return new Promise<string[]>(async (resolve, reject) => {
-      productSchemaValidator(product)
-        .then(async () => await this.nonSchemaValidation(product, errors))
-        .then((e) => {
-          if (errors.length === 0) {
-            resolve(errors);
-          } else {
-            reject(errors);
-          }
-        })
-        .catch((e) => {
-          if ("errors" in e) {
-            // Return from an AJV promise
-            errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
-          } else {
-            // Return from a nonSchemaValidation promise
-            errors = errors.concat(e);
-          }
+
+      await productSchemaValidator(product).catch((e) => {
+        if ("errors" in e) {
+          // Return from an AJV promise
+          errors = errors.concat(ValidationHelper.reduceErrors(e.errors));
           reject(errors);
-        });
+          return;
+        } else {
+          throw new Error(e);
+        }
+      });
+
+      errors = Footprint.nonSchemaValidation(product.footprint, errors);
+      // Run additional validation on metadata
+      errors = Metadata.nonSchemaValidation(product.metadata, errors);
+      // Validate product properties according to its collection properties_schema
+
+      let collection = await this.collectionStore.getCollection(product.collectionName)
+
+      if (collection === undefined || collection === null) {
+        errors.push(`collectionName | ${product.collectionName} does not exist in the database`);
+
+        reject(errors);
+        return;
+      }
+
+      await this.validateProductProperties(collection as Collection.ICollection, product, errors)
+            .catch((e) => errors = e);
+
+      if (errors.length == 0) {
+        resolve(errors);
+      } else {
+        reject(errors);
+      }
     });
   }
 
@@ -58,8 +77,9 @@ export class ProductValidator {
 
     let propValidator = propertiesSchemaValidator(product.properties);
 
+    //propValidator.then is sometimes a boolean not a function.?? MD discovery
     if (typeof propValidator.then === 'function') {
-      return new Promise<string[]>((resolve, reject) => {
+      return new Promise<string[]>(async (resolve, reject) => {
         propValidator.then((x) => {
           resolve();
         }).catch((e) => {
@@ -76,19 +96,6 @@ export class ProductValidator {
     return Promise.resolve(errors);
   }
 
-  private nonSchemaValidation(product: Product.IProduct, errors: string[]): Promise<string[]> {
-    // Fix common issues with footprint and validate it
-    product.footprint = Footprint.fixCommonIssues(product.footprint);
-    errors = Footprint.nonSchemaValidation(product.footprint, errors);
-    // Run additional validation on metadata
-    errors = Metadata.nonSchemaValidation(product.metadata, errors);
-    // Validate product properties according to its collection properties_schema
-    return this.repository.checkCollectionNameExists(errors, product.collectionName).then((check) => {
-      return this.repository.getCollection(product.collectionName).then((c) => {
-        return this.validateProductProperties(c, product, errors);
-      });
-    });
-  }
 }
 
 // Tests
@@ -96,9 +103,28 @@ export class ProductValidator {
 // tslint:disable-next-line:no-var-requires
 chai.use(chaiAsPromised);
 
+describe("Legacy json schema spec support", () => {
+  it("should support draft-04 spec schemas", () => {
+    let mockRepo = Fixtures.GetMockCollectionStore(4);
+    let validator = new ProductValidator(mockRepo.object);
+    return chai.expect(validator.validate(Fixtures.GetTestProduct()))
+      .to.be.fulfilled
+      .and.eventually.be.an("array").that.is.empty;
+  });
+
+  it("should support draft-06 spec schemas", () => {
+    let mockRepo = Fixtures.GetMockCollectionStore(6);
+    let validator = new ProductValidator(mockRepo.object);
+    return chai.expect(validator.validate(Fixtures.GetTestProduct()))
+      .to.be.fulfilled
+      .and.eventually.be.an("array").that.is.empty;
+  });
+});
+
+
 describe("Product validator", () => {
 
-  let mockRepo = Fixtures.GetMockRepo();
+  let mockRepo = Fixtures.GetMockCollectionStore();
   let validator = new ProductValidator(mockRepo.object);
 
   it("should validate a valid product", () => {
@@ -138,25 +164,26 @@ describe("Product validator", () => {
       .and.include('collectionName | should match pattern "^(([A-Za-z0-9\_\-]+)(\/))*([A-Za-z0-9\_\-])+$"');
   });
 
-  // https://stackoverflow.com/questions/44520775/mock-and-string-array-parameter-in-typemoq
-  // TODO: Using isAny but really should be an array if we can figure it out
-  it("should not validate a product with an invalid collection name", () => {
-    let mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup((x) => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.reject(x);
+  it("should not validate a product with a non existant collection name", () => {
+    let mr = TypeMoq.Mock.ofType(CollectionStore);
+    mr.setup((x) => x.getCollection(TypeMoq.It.isAnyString())).returns((x, y) => {
+      return Promise.resolve(undefined);
     });
 
     let v2 = new ProductValidator(mr.object);
 
     const product = Fixtures.GetTestProduct();
 
-    return chai.expect(v2.validate(product)).to.be.rejected;
+    return chai.expect(v2.validate(product)).to.be.rejected
+      .and.eventually.be.an("array")
+      .that.has.lengthOf(1)
+      .and.include("collectionName | scotland-gov-gi/lidar-1/processed/dtm/gridded/27700/10000 does not exist in the database")
   });
 });
 
 describe("Metadata validator", () => {
 
-  let mockRepo = Fixtures.GetMockRepo();
+  let mockRepo = Fixtures.GetMockCollectionStore();
   let validator = new ProductValidator(mockRepo.object);
 
   it("should not validate a missing metadata title", () => {
@@ -415,7 +442,7 @@ describe("Metadata validator", () => {
 });
 
 describe("Data Validator", () => {
-  let mockRepo = Fixtures.GetMockRepo();
+  let mockRepo = Fixtures.GetMockCollectionStore();
   let validator = new ProductValidator(mockRepo.object);
 
   it("should not validate an s3 data group with missing region", () => {
@@ -701,7 +728,7 @@ describe("Data Validator", () => {
 });
 
 describe("Footprint Validator", () => {
-  let mockRepo = Fixtures.GetMockRepo();
+  let mockRepo = Fixtures.GetMockCollectionStore();
   let validator = new ProductValidator(mockRepo.object);
 
   it("should not validate a invalid GeoJSON blob", () => {
@@ -751,12 +778,12 @@ describe("Footprint Validator", () => {
       .and.contain("footprint.type | should be 'MultiPolygon'");
   });
 
-  it("should validate a missing CRS, replacing it with default for pushing into Postgres", () => {
+  it("should not validate a missing CRS", () => {
     let p = Fixtures.GetTestProduct();
     p.footprint = Fixtures.GetFootprint();
     delete p.footprint.crs;
 
-    return chai.expect(validator.validate(p)).to.be.fulfilled;
+    return chai.expect(validator.validate(p)).to.be.rejected;
   });
 
   it("should not validate a non WGS84 CRS", () => {
@@ -795,15 +822,10 @@ describe("Footprint Validator", () => {
 });
 
 describe("Product Properties Validator", () => {
-  let mockRepo = Fixtures.GetMockRepo();
-  let validator = new ProductValidator(mockRepo.object);
-  let mr: TypeMoq.IMock<CatalogRepository>;
+  let mr: TypeMoq.IMock<CollectionStore>;
 
   beforeEach(() => {
-    mr = TypeMoq.Mock.ofType(CatalogRepository);
-    mr.setup((x) => x.checkCollectionNameExists(TypeMoq.It.isAny(), TypeMoq.It.isAnyString())).returns((x, y) => {
-      return Promise.resolve(x);
-    });
+    mr = TypeMoq.Mock.ofType(CollectionStore);
   });
 
   it("should validate a product with an valid properties collection", () => {
@@ -1036,3 +1058,5 @@ describe("Product Properties Validator", () => {
     return chai.expect(v2.validate(product)).to.eventually.be.empty;
   });
 });
+
+

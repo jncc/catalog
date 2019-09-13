@@ -24,7 +24,7 @@ To run the importer you can run with the `-h` flag to get the most upto-date opt
 
 An example of running the service against a live catalog is as follows;
 
-`python3 importer.py -i input.json -a local-catalog.com -p --dbhost localhost --dbport 5432 --dbuser postgres --dbpass postgres`
+`python3 importer.py -i input.json -a http://local-catalog.com:8081 -p --dbhost localhost --dbport 5432 --dbuser postgres --dbpass postgres --dbname somedb`
 
 ## Scottish LIDAR generator example code
 

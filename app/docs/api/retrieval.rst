@@ -50,13 +50,15 @@ Returns a list of products matching the supplied criteria.
 Request
 -------
 
-Search the collections.
+Search the products.
 
 .. csv-table::
    :header: "Method", "URL"
    :widths: 20, 20
 
    "POST", "/search/product/"
+
+.. _product-search-payload:
 
 Payload
 """""""
@@ -67,7 +69,7 @@ The payload consists of a json query object with the following fields:
    :header: "Field Name", "Description", "Required"
    :widths: 20, 70, 40
 
-   "collection", "A properly formatted collection name :ref:`collection_schema`", "Yes"
+   "collections", "An array of properly formatted collection names :ref:`collection_schema`", "Yes"
    "productName", "A pattern for the product name. Can include the * wildcard", No
    "footprint", "A geospatial search filter in |geoJson| format and WSG84 projection", "No"
    "spatialOp", "The spatial operation to perform with the footprint (within | intersects | overlaps)", "No, defaults to intersects"
@@ -95,6 +97,7 @@ Notes
 
 * Where possible, all query properties are validated before returning any results.
 * The values in each term must be of the valid for the data type of the property being evaluated in the term. The data type of a property is specified in the productsSchema property of the collection. See :ref:`product_property_schema`.
+* All collections must have exactly the same product schema.
 
 Example
 """""""
@@ -110,7 +113,7 @@ The following example payload will return:
 .. code-block:: javascript
 
   {
-    "collection": "sentinel/1/ard/backscatter/osgb",
+    "collections": ["sentinel/1/ard/backscatter/osgb"],
     "productName": "S1A_*",
     "terms": [{
         "property": "begin",
@@ -137,5 +140,64 @@ Result
 Notes
 """""
 
-* The data is paged, by default the first 50 results are returned. This is determined by the limit and offset properties of the query. See `Payload`_.
+* The data is paged, by default the first 50 results are returned. This is determined by the limit and offset properties of the query. See `product-search-payload`_.
 
+Search Product Count
+====================
+
+Returns a count of products matching the supplied criteria.
+
+Request
+-------
+
+Count the products.
+
+.. csv-table::
+   :header: "Method", "URL"
+   :widths: 20, 20
+
+   "POST", "/search/product/count"
+
+Payload
+"""""""
+Takes the same payload as product search, the criteria for a valid query are exactly the same. See :ref:`product-search-payload`
+
+Result
+------
+
+.. csv-table::
+   :header: "Status", "Response"
+   :widths: 20, 70
+
+   "200", "Success. An count of the products is returned"
+   "400", "Failure. The query was invalid, an array of query validation errors is returned"
+
+Search Product Count by Collection
+==================================
+
+Returns a count of products matching the supplied criteria in each of the collections defined in the query.
+
+Request
+-------
+
+Count the products in each collection.
+
+.. csv-table::
+   :header: "Method", "URL"
+   :widths: 20, 20
+
+   "POST", "/search/product/countByCollection"
+
+Payload
+"""""""
+Takes the same payload as product search, the criteria for a valid query are exactly the same. See :ref:`product-search-payload`
+
+Result
+------
+
+.. csv-table::
+   :header: "Status", "Response"
+   :widths: 20, 70
+
+   "200", "Success. An count of the products by collection is returned"
+   "400", "Failure. The query was invalid, an array of query validation errors is returned"
