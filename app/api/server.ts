@@ -51,25 +51,13 @@ app.get('/alive', async (req, res) => {
   res.send('Hello from catalog!')
 })
 
-app.get(`/search/collection/*?`, async (req, res) => {
-  let query: CollectionQuery;
-
-  try {
-    query = new CollectionQuery({collection: req.params[0]});
-  } catch (error) {
-    log.error(error)
-
-    res.json({
-      errors: "error parsing query"
-    });
-
-    return;
-  }
+app.get(`/search/collection/*?`, async (req, res, next) => {
+  let query = new CollectionQuery({collection: req.params[0]});
 
   let errors = CollectionRequestValidator.validate(query);
 
   if (errors.length > 0) {
-    res.status(500);
+    res.status(400);
     res.json({
       query: query,
       errors: errors
@@ -85,34 +73,19 @@ app.get(`/search/collection/*?`, async (req, res) => {
         result: collections
       });
     } catch (error) {
-
       log.error(error);
 
       res.status(500);
-
       res.json({
         query: query,
         errors: "An error has occured"
       });
     };
-
   }
 });
 
 app.post(`/search/product/count`, async (req, res) => {
-  let query: ProductQuery;
-
-  try {
-    query = new ProductQuery(req.body);
-  } catch (error) {
-    log.error(error)
-
-    res.json({
-      errors: "error parsing query"
-    });
-
-    return;
-  }
+  let query = new ProductQuery(req.body);
 
   try {
     await productRequestValidator.validate(query)
@@ -147,19 +120,7 @@ app.post(`/search/product/count`, async (req, res) => {
 });
 
 app.post(`/search/product/countByCollection`, async (req, res) => {
-  let query: ProductQuery;
-
-  try {
-    query = new ProductQuery(req.body);
-  } catch (error) {
-    log.error(error)
-
-    res.json({
-      errors: "error parsing query"
-    });
-
-    return;
-  }
+  let query = new ProductQuery(req.body);
 
   try {
     await productRequestValidator.validate(query)
@@ -193,25 +154,14 @@ app.post(`/search/product/countByCollection`, async (req, res) => {
 });
 
 app.post(`/search/product`, async (req, res) => {
-  let query: ProductQuery;
-
-  try {
-    query = new ProductQuery(req.body);
-  } catch (error) {
-    log.error(error)
-
-    res.json({
-      errors: "error parsing query"
-    });
-
-    return;
-  }
+  let query = new ProductQuery(req.body);
 
   try {
     await productRequestValidator.validate(query)
   } catch (errors) {
     res.status(400);
     res.json({
+      query: query,
       errors: errors
     });
 
@@ -247,10 +197,20 @@ app.post(`/validate/product`, async (req, res) => {
 
   try {
     await productValidtor.validate(product)
-    res.sendStatus(200);
+    res.status(200);
+    res.json({
+      productName: product.name,
+      collectionName: product.collectionName,
+      valid: true
+    });
   } catch (errors) {
     res.status(400);
-    res.send(errors);
+    res.json({
+      productName: product.name,
+      collectionName: product.collectionName,
+      valid: false,
+      validationErrors: errors
+    });
   }
 
 });
@@ -268,9 +228,14 @@ app.post(`/add/product`, async (req, res) => {
 
   try {
     await productValidtor.validate(product);
-  } catch (result) {
+  } catch (errors) {
     res.statusCode = 400;
-    res.send(result);
+    res.json({
+      productName: product.name,
+      collectionName: product.collectionName,
+      valid: false,
+      validationErrors: errors
+    });
     return;
   };
 
@@ -278,10 +243,21 @@ app.post(`/add/product`, async (req, res) => {
 
     var productId = await productStore.storeProduct(product);
     res.status(200);
-    res.json({ productId: productId });
+    res.json({
+      productName: product.name,
+      collectionName: product.collectionName,
+      productId: productId
+    });
 
-  } catch {
-    res.sendStatus(500);
+  } catch(error) {
+    log.error(error);
+
+    res.status(500);
+    res.json({
+      productName: product.name,
+      collectionName: product.collectionName,
+      errors: "A database error occured, unable to save product"
+    })
   }
 });
 

@@ -24,19 +24,22 @@ A product conforming to the JSON product schema. :ref:`product_schema`
 
 Result
 ------
-+--------+-----------------------------------------------------------------------------------------+
-| Status | Response                                                                                |
-+--------+-----------------------------------------------------------------------------------------+
-| 200    | Indicates a valid product                                                               |
-|        |                                                                                         |
-|        | No data is returned                                                                     |
-+--------+-----------------------------------------------------------------------------------------+
-| 400    | An array of errors.                                                                     |
-|        |                                                                                         |
-|        | Example:                                                                                |
-|        |                                                                                         |
-|        | [ name | should match pattern "^([A-Za-z0-9-_.])+$"' ]                                  |
-+--------+-----------------------------------------------------------------------------------------+
+
++--------+-----------------------------------------+
+| Status | Response                                |
++--------+-----------------------------------------+
+| 200    | Indicates a valid product               |
+|        | No data is returned                     |
++--------+-----------------------------------------+
+| 400    |                                         |
+|        | The product failed validation.          |
+|        |                                         |
+|        | A JSON object containing the following: |
+|        |                                         |
+|        | * productName - product name            |
+|        | * collectionName - collection name      |
+|        | * errors - an array of validation errors|
++--------+-----------------------------------------+
 
 * All properties of the input payload are validated where possible
 * Multiple errors may be returned for the same property
@@ -63,19 +66,22 @@ A product conforming to the JSON product schema. :ref:`product_schema`
 
 Result
 ------
-+--------+-----------------------------------------------------------------------------------------+
-| Status | Response                                                                                |
-+--------+-----------------------------------------------------------------------------------------+
-| 200    | Indicates a valid product                                                               |
-|        |                                                                                         |
-|        | No data is returned                                                                     |
-+--------+-----------------------------------------------------------------------------------------+
-| 400    | An array of errors.                                                                     |
-|        |                                                                                         |
-|        | Example:                                                                                |
-|        |                                                                                         |
-|        | [ name | should match pattern "^([A-Za-z0-9-_.])+$"' ]                                  |
-+--------+-----------------------------------------------------------------------------------------+
+
++--------+-----------------------------------------+
+| Status | Response                                |
++--------+-----------------------------------------+
+| 200    | Indicates a valid product               |
+|        | No data is returned                     |
++--------+-----------------------------------------+
+| 400    |                                         |
+|        | The product failed validation.          |
+|        |                                         |
+|        | A JSON object containing the following: |
+|        |                                         |
+|        | * productName - product name            |
+|        | * collectionName - collection name      |
+|        | * errors - an array of validation errors|
++--------+-----------------------------------------+
 
 * All properties of the input payload are validated where possible
 * Multiple errors may be returned for the same property
