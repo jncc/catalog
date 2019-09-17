@@ -4,9 +4,8 @@ import argparse
 import json
 import uuid
 import requests
-import psycopg2
 
-from shapely import geometry
+from shapely import geometry,wkt,ops
 
 
 class Importer:
@@ -20,12 +19,10 @@ class Importer:
     multi_polygon       -- Set to force product footprints to MutliPolygon, true by default
     """
 
-    def __init__(self, api_base_url, input_file_path, cursor, product_import=False, multi_polygon=True):
+    def __init__(self, api_base_url, input_file_path, product_import=False):
         self.api_base_url = api_base_url
         self.input_file_path = input_file_path
-        self.cursor = cursor
         self.product_import = product_import
-        self.multi_polygon = multi_polygon
 
     @staticmethod
     def uuid_str_valid(uuid_str):
@@ -43,7 +40,7 @@ class Importer:
             return False
 
     def import_product(self, product):
-        """
+        """        self.multi_polygon = multi_polygon
         Import a single product from a JSON blob
 
         Keyword arguments:
@@ -52,24 +49,34 @@ class Importer:
         ###
         # General footprint fixing stuff
         ###
-        footprint = json.dumps(product['footprint'])
         geom = geometry.shape(product['footprint'])
 
         # Use PostGIS to force Multipolygon if needed
-        if self.multi_polygon and geom.type != 'MultiPolygon':
-            self.cursor.execute(
-                'SELECT ST_AsGeoJSON(ST_Multi(ST_GeomFromGeojson(%s)))', (footprint,))
-            footprint = self.cursor.fetchone()[0]
+        if geom.type != 'MultiPolygon':
+
+            geom = geometry.MultiPolygon([geom])
 
         # Use PostGIS to force Right Hand Rule on polygons as GeoJSON defines it (PostGIS
         # ST_ForceRHR produces exterior rings as CW, we need CCW so need to ST_Reverse as
         # well). Also force 2D to prevent people supplying 3D polygons randomly to the
         # service
-        self.cursor.execute(
-            'SELECT ST_AsGeoJSON(ST_Force2D(ST_Reverse(ST_ForceRHR(ST_GeomFromGeojson(%s)))))', (footprint,))
-        footprint = self.cursor.fetchone()[0]
 
-        product['footprint'] = json.loads(footprint)
+        if geom.has_z:
+            geom = ops.transform(geometry.GridService._to_2d, geom)
+
+        if (isinstance(geom, geometry.polygon.Polygon)):
+            geom = geometry.polygon.orient(geom)
+        elif (isinstance(geom, geometry.multipolygon.MultiPolygon)):
+            geom = [geometry.polygon.orient(g, sign=1.0) for g in geom.geoms]
+            geom = geometry.MultiPolygon(geom)
+        else:
+            raise ValueError("Geometry is not a polygon or a multipolygon")
+
+        product['footprint'] = {
+            "type": "MultiPolygon",
+            "coordinates": [geometry.mapping(g)['coordinates'] for g in geom.geoms]
+        }
+
 
         ###
         # Push product to import API
@@ -83,7 +90,7 @@ class Importer:
             raise ValueError('Product %s was not imported, error returned from API: %s'
                              % (product['name'], resp.text))
         else:
-          print('New id %s' % resp.text)
+            print('New id %s' % resp.text)
 
 
     # Not yet implemented.
@@ -134,26 +141,9 @@ if __name__ == '__main__':
     PARSER.add_argument('-p', '--product', required=False, action='store_true',
                         help='Tell the importer that we are importing a product / array of \
                         products [append to existing collection]')
-    PARSER.add_argument('--dbhost', type=str, required=True,
-                        help='PostGIS DB hostname - fixing polygons')
-    PARSER.add_argument('--dbport', type=int, required=False, default=5432,
-                        help='PostGIS DB port - fixing polygons')
-    PARSER.add_argument('--dbname', type=str, required=True,
-                        help='PostGIS DB name - fixing polygons')
-    PARSER.add_argument('--dbuser', type=str, required=True,
-                        help='PostGIS DB user - fixing polygons')
-    PARSER.add_argument('--dbpass', type=str, required=True,
-                        help='PostGIS DB password - fixing polygons')
 
     ARGS = PARSER.parse_args()
 
-    CONN = psycopg2.connect(dbname=ARGS.dbname, host=ARGS.dbhost,
-                            port=ARGS.dbport, user=ARGS.dbuser, password=ARGS.dbpass)
-    CURSOR = CONN.cursor()
+    IMPORTER = Importer(ARGS.api, ARGS.input, ARGS.product)
+    IMPORTER.do_import()
 
-    try:
-        IMPORTER = Importer(ARGS.api, ARGS.input, CURSOR, ARGS.product)
-        IMPORTER.do_import()
-    finally:
-        CURSOR.close()
-        CONN.close()
