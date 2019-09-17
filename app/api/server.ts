@@ -217,6 +217,11 @@ app.post(`/validate/product`, async (req, res) => {
 
 // store the query and give me a key for it
 app.post(`/add/product`, async (req, res) => {
+  if (process.env.READ_ONLY) {
+    res.statusCode = 403
+    return;
+  }
+
   let product: Product.IProduct = req.body;
   let productValidtor = new ProductValidator(collectionStore);
 
@@ -265,6 +270,10 @@ if (!module.parent) {
   app.listen(env.port, () => {
     log.info(`app.server is listening on: http://localhost:${env.port}`);
     log.info(`node environment is ${app.settings.env}`);
+    if (process.env.READ_ONLY) {
+      log.info(`catalog is READ ONLY`)
+    }
+
   });
 }
 
