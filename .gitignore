@@ -26,3 +26,9 @@ scripts/set_env.*
 # Ignore logging outputs
 app/logs/*
 app/yarn-error.log
+
+# Ignore .venv* folders
+.venv*
+
+# Ignore unzipped grids
+app/import/grids/scotland-os-grids-wgs84/*.geojson
