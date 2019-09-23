@@ -39,13 +39,14 @@ To run the script you just need to provide the following arguments;
 - `--path` - The S3 bucket prefix to scan over i.e. folder containing collection
 - `-c` - The collection name for this run (Must exist)
 - `-i` - The collection ID for this run (Must exist)
+- `-t` - A title used for the collections (used to compsite the product names i.e. `Scotland Lidar Phase 1`)
 - `-o` - The output file path / filename
 
-In this example the phase-1/2 DSM/DTM collections only require a 10k grid, while phase-1-laz requires 1k and phase-2-laz requires 5k.
+In this example the phase-1/2 DSM/DTM collections only require a 10k grid, while phase-1-laz requires 1k and phase-2-laz requires 5k, these are included zipped under the folder `app\import\grids\scotland-os-grids-wgs84`.
 
 To run just adapt the following example to what you are doing;
 
-`python3 scottish-json-gen-v2.py -b bucketname -r eu-west-1 -p scanProfile -g ./grids/osgb.10k.generated.geojson --path /phase/1/dsm -c scotland-gov/lidar/phase/1/dsm -i guid -o phase-1-dsm.json`
+`python3 scottish-json-gen-v2.py -b bucketname -r eu-west-1 -p scanProfile -g ./grids/osgb.10k.generated.geojson --path /phase/1/dsm -c scotland-gov/lidar/phase/1/dsm -i guid -t "Scotland Lidar Phase 1" -o phase-1-dsm.json`
 
 ## JSON file format
 
