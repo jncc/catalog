@@ -8,10 +8,6 @@ export class Database {
   constructor() {
     let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
 
-    if (process.env.SSL) {
-      cs = cs + "?ssl=true"
-    }
-
     let logger = Logger.GetLog()
 
     this.queryBuilder = knex({
