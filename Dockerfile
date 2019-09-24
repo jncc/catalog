@@ -2,6 +2,8 @@
 
 FROM node:10.15.1
 
+RUN mkdir -p /var/log/catalog
+
 WORKDIR /usr/src/app
 
 RUN apt update && apt -y upgrade && \
