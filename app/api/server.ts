@@ -73,6 +73,8 @@ app.get(`/search/collection/*?`, async (req, res, next) => {
         result: collections
       });
     } catch (error) {
+      console.log("db error", error);
+
       log.error(error);
 
       res.status(500);
