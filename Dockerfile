@@ -18,5 +18,7 @@ COPY app .
 RUN yarn install && \
     yarn build
 
+COPY ./config/etc/logrotate.d/application/application.logrotate /etc/logrotate.d/catalog
+
 EXPOSE 8081
 CMD [ "node", "built/api/server.js" ]
