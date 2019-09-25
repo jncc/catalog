@@ -188,6 +188,14 @@ app.post(`/search/product`, async (req, res) => {
 });
 
 app.post(`/validate/product`, async (req, res) => {
+  if (process.env.READ_ONLY) {
+    res.statusCode = 403
+    res.json({
+      error: "403 - Unauthorized"
+    })
+    return;
+  }
+
   let product: Product.IProduct = req.body;
   let productValidtor = new ProductValidator(collectionStore);
 
@@ -219,6 +227,9 @@ app.post(`/validate/product`, async (req, res) => {
 app.post(`/add/product`, async (req, res) => {
   if (process.env.READ_ONLY) {
     res.statusCode = 403
+    res.json({
+      error: "403 - Unauthorized"
+    })
     return;
   }
 
