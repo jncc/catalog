@@ -26,8 +26,8 @@ def get_bbox(item):
 		'west': west
 	}
 
-def get_products(bucket, region, s3_path, wgs84_grid_path, collection_id, collection_name, collection_title, profile):
-	
+def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, collection_title, profile):
+
     session = boto3.Session(profile_name=profile)
     resource = session.resource('s3')
     remote_bucket = resource.Bucket(bucket)
@@ -54,9 +54,7 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_id, collec
         (grid, resolution, productType, collectionIdentifier) = productName.split('_')
 
         products.append({
-            'id': str(uuid.uuid4()),
             'name': productName.lower(),
-            'collectionId': collection_id,
             'collectionName': collection_name,
 				'metadata': {
 					'title': '%s %s %s' % (collection_title, productType, grid),
@@ -94,19 +92,18 @@ def getFileType(fileType):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Scans a bucket and produces a consumeable json file for import into the catalog project.')
-    
+
     parser.add_argument('-b', '--bucket', help='S3 Bucket to scan', required=True)
     parser.add_argument('-r', '--region', help='S3 bucket region', required=True)
     parser.add_argument('-p', '--profile', help='AWS profile to use for authentication', required=True)
     parser.add_argument('-g', '--geojson', help='GeoJSON file containing grid system to add to scanned files metadata', required=True)
-    
+
     parser.add_argument('--path', help='Prefix path to scan for files on', required=True)
     parser.add_argument('-c', '--collection', help='Catalog Collection name to associate with the scanned files', required=True)
-    parser.add_argument('-i', '--collectionid', help='Catalog Collection ID to associate with the scanned files', required=True)
     parser.add_argument('-t', '--collectiontitle', help='Collection Title to use in creating titles for the scanned files', required=True)
     parser.add_argument('-o', '--output', help='Full output json file path', required=True)
 
     args = parser.parse_args()
-    
+
     with open(args.output, 'w') as output:
-        json.dump(get_products(args.bucket, args.region, args.path, args.geojson, args.collectionid, args.collection, args.collectiontitle, args.profile), output)
+        json.dump(get_products(args.bucket, args.region, args.path, args.geojson, args.collection, args.collectiontitle, args.profile), output)
