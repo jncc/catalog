@@ -2,7 +2,6 @@
 
 The `importer.py` file included here allows a user to mass import a json file formatted source into a running catalog instance that has write permissions to its database tables.
 
-Currently the importer requires a local postgis instance to do some general fixes to imported polygons, I would recommend using a [bigsql pgc](https://www.openscg.com/bigsql/docs/pgcli/pgcli/) instance to run against rather than a remote live database in this case. This should be coded out in future iterations but for now it was the most expedient way of fixing a number of polygon issues commonly come accross.
 
 ## Installing requirements
 
@@ -38,14 +37,14 @@ To run the script you just need to provide the following arguments;
 - `-g` - Appropriate GeoJSON file for this collection i.e. 10k / 5k / 1k
 - `--path` - The S3 bucket prefix to scan over i.e. folder containing collection
 - `-c` - The collection name for this run (Must exist)
-- `-i` - The collection ID for this run (Must exist)
+- `-t` - A title used for the collections (used to compsite the product names i.e. `Scotland Lidar Phase 1`)
 - `-o` - The output file path / filename
 
-In this example the phase-1/2 DSM/DTM collections only require a 10k grid, while phase-1-laz requires 1k and phase-2-laz requires 5k.
+In this example the phase-1/2 DSM/DTM collections only require a 10k grid, while phase-1-laz requires 1k and phase-2-laz requires 5k, these are included zipped under the folder `app\import\grids\scotland-os-grids-wgs84`.
 
 To run just adapt the following example to what you are doing;
 
-`python3 scottish-json-gen-v2.py -b bucketname -r eu-west-1 -p scanProfile -g ./grids/osgb.10k.generated.geojson --path /phase/1/dsm -c scotland-gov/lidar/phase/1/dsm -i guid -o phase-1-dsm.json`
+`python3 scottish-json-gen-v2.py -b bucketname -r eu-west-1 -p scanProfile -g ./grids/osgb.10k.generated.geojson --path /phase/1/dsm -c scotland-gov/lidar/phase/1/dsm -i guid -t "Scotland Lidar Phase 1" -o phase-1-dsm.json`
 
 ## JSON file format
 

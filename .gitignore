@@ -26,3 +26,13 @@ scripts/set_env.*
 # Ignore logging outputs
 app/logs/*
 app/yarn-error.log
+
+# Ignore .venv* folders
+.venv*
+
+# scottish lidar stuff
+# Ignore unzipped grids
+app/import/scotland-gov-lidar/data/grids/scotland-os-grids-wgs84/*.geojson
+app/import/scotland-gov-lidar/data/*.json
+
+
