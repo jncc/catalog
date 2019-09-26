@@ -661,7 +661,7 @@ describe("Data Validator", () => {
         title: "test-title",
         catalog: {
           collection: "test/collection",
-          product: "test product"
+          product: "test-product"
         }
       }
     };
@@ -732,12 +732,28 @@ describe("Data Validator", () => {
       }
     };
 
-    validator.validate(p).catch((x) => {console.log(x)} )
+    return chai.expect(validator.validate(p))
+    .to.be.rejected
+    .and.eventually.have.length(2)
+    .and.contain('data[\'product\'].catalog.product | should NOT be shorter than 1 characters')
+  });
+
+  it("should not validate a catalog data group with an invalid product name", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "test/collection",
+          product: "!#!##"
+        }
+      }
+    };
 
     return chai.expect(validator.validate(p))
     .to.be.rejected
     .and.eventually.have.length(1)
-    .and.contain('data[\'product\'].catalog.product | should NOT be shorter than 1 characters')
+    .and.contain('data[\'product\'].catalog.product | should match pattern "^([A-Za-z0-9-_.])+$"')
   });
 
   it("should validate an http data group with a valid url", () => {

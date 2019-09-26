@@ -44,6 +44,7 @@ export const Schema = {
       },
       product: {
         type: "string",
+        pattern: "^([A-Za-z0-9-_.])+$",
         minLength: 1
       }
     },
