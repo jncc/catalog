@@ -33,12 +33,13 @@ export const Schema = {
     },
     required: ["url", "name"]
   },
-  collection: {
+  catalog: {
     type: "object",
     additionalProperties: false,
     properties: {
       collection: {
         type: "string",
+        pattern: "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$",
         minLength: 1
       },
       product: {

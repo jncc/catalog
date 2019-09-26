@@ -640,6 +640,106 @@ describe("Data Validator", () => {
     return chai.expect(validator.validate(p)).to.be.fulfilled;
   });
 
+  it("should validate a catalog data group with a valid collection", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "test/collection"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.fulfilled;
+  });
+
+  it("should validate a catalog data group with a valid collection and product", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "test/collection",
+          product: "test product"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.fulfilled;
+  });
+
+  it("should not validate a catalog data group with a blank collection", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: ""
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p))
+    .to.be.rejected
+    .and.eventually.have.length(2)
+    .and.contain('data[\'product\'].catalog.collection | should NOT be shorter than 1 characters');
+  });
+
+  it("should not validate a catalog data group with an invalid collection name", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "#####"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p))
+    .to.be.rejected
+    .and.eventually.have.length(1)
+    .and.contain('data[\'product\'].catalog.collection | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+  });
+
+  it("should not validate a catalog data group with a collection name containing wild cards", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "*test/valid/pat*h/1/2/345aa*"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p))
+    .to.be.rejected
+    .and.eventually.have.length(1)
+    .and.contain('data[\'product\'].catalog.collection | should match pattern "^(([A-Za-z0-9-_.]+)(/))*([A-Za-z0-9-_.])+$"')
+  });
+
+  it("should not validate a catalog data group with a blank product name", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "test/collection",
+          product: ""
+        }
+      }
+    };
+
+    validator.validate(p).catch((x) => {console.log(x)} )
+
+    return chai.expect(validator.validate(p))
+    .to.be.rejected
+    .and.eventually.have.length(1)
+    .and.contain('data[\'product\'].catalog.product | should NOT be shorter than 1 characters')
+  });
+
   it("should validate an http data group with a valid url", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
@@ -671,7 +771,7 @@ describe("Data Validator", () => {
       .and.contain('data[\'product\'].http.url | should match format "url"');
   });
 
-  it("should validate a data group with a valid size and type", () => {
+  it("should validate a http data group with a valid size and type", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
@@ -688,7 +788,7 @@ describe("Data Validator", () => {
       .to.be.fulfilled;
   });
 
-  it("should not validate a data group with an invalid size", () => {
+  it("should not validate a http data group with an invalid size", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {
@@ -707,7 +807,7 @@ describe("Data Validator", () => {
       .and.contain('data[\'product\'].http.size | should be >= 1');
   });
 
-  it("should not validate a data group with empty type", () => {
+  it("should not validate an http data group with empty type", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
       product: {

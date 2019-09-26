@@ -1,5 +1,5 @@
 import { IFTP, IS3file, IHTTP } from "./files";
-import { IWFS, IWMS } from "./services";
+import { IWFS, IWMS, ICatalog } from "./services";
 
 export interface IData {
   product: IDataGroup;
@@ -13,6 +13,7 @@ export interface IDataGroup {
     http?: IHTTP;
     wms?: IWMS;
     wfs?: IWFS;
+    catalog?: ICatalog;
 }
 
 export const Schema = {
@@ -50,6 +51,9 @@ export const Schema = {
       },
       wfs: {
         $ref: "#/definitions/services/wfs"
+      },
+      catalog: {
+        $ref: "#/definitions/services/catalog"
       }
     }
   }
