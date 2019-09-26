@@ -81,6 +81,16 @@ class Importer:
         ###
         # Push product to import API
         ###
+        resp = requests.post('%s/validate/product' %
+                             self.api_base_url, json=product)
+        # resp = requests.post('%s/validate' %
+        #                      self.api_base_url, json=product)
+
+        if not resp.ok:
+            raise ValueError('Product %s was not validated, error returned from API: %s'
+                             % (product['name'], resp.text))
+
+
         resp = requests.post('%s/add/product' %
                              self.api_base_url, json=product)
         # resp = requests.post('%s/validate' %

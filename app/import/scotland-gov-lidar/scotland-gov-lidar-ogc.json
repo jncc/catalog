@@ -1,0 +1,644 @@
+ [
+    {
+      "id": "0c2c2791-c28e-4f9a-bbcb-dcf38b197674",
+      "name": "scotland-gov-lidar-phase-1-dsm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase I DSM OGC Service",
+        "lineage": "The LiDAR data was collected from an aircraft between March 2011 and May 2012 for 10 collection areas. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 10 collection areas. Blom delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy and point density for each collection area. The results were delivered between 1st July 2011 and 2nd May 2012.",
+        "abstract": "The Scottish Public Sector LiDAR (Phase I) dataset was commissioned in response to the Flood Risk Management Act (2009) by the Scottish Government, Scottish Environmental Protection Agency (SEPA), and Scottish Water collaboratively. Airborne LiDAR data was collected across 10 sites totalling 11,845 km2 (note the dataset does not have full national coverage) between March 2011 and May 2012. Aside from flood risk management, this data has also been used for archaeological and orienteering purposes. This dataset reflects the Digital Surface Model (DSM) produced from the point cloud data.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2017-03-01",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2012-05-31T23:59:59Z",
+          "begin": "2011-03-01T00:00:00Z"
+        },
+        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Scottish Water (2012). Open Government Licence v3",
+        "resourceLocator": "https://remotesensingdata.gov.scot/productsnullcollections=b32e4101-6d8a-538b-9c01-a23389acfe35",
+        "datasetReferenceDate": "2016-11-15",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/92367c84-74d3-4426-8b0f-6f4a8096f593"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase I DSM OGC Service",
+          "wms": {
+            "url": "https://eo.jncc.gov.uk/geoserver/scotland/wms",
+            "name": "scotland:scotland-lidar-1-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-1/dsm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.01856070727659,
+                54.7202519250655
+              ],
+              [
+                -1.73940709913353,
+                54.7202519250655
+              ],
+              [
+                -1.73940709913353,
+                59.1654844171309
+              ],
+              [
+                -6.01856070727659,
+                59.1654844171309
+              ],
+              [
+                -6.01856070727659,
+                54.7202519250655
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "fd1ff9e4-6e8d-40e6-b0b1-12445e78585b",
+      "name": "scotland-gov-lidar-phase-1-dtm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase I DTM OGC Service",
+        "lineage": "The LiDAR data was collected from an aircraft between March 2011 and May 2012 for 10 collection areas. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 10 collection areas. Blom delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy and point density for each collection area. The results were delivered between 1st July 2011 and 2nd May 2012.",
+        "abstract": "The Scottish Public Sector LiDAR (Phase I) dataset was commissioned in response to the Flood Risk Management Act (2009) by the Scottish Government, Scottish Environmental Protection Agency (SEPA), and Scottish Water collaboratively. Airborne LiDAR data was collected across 10 sites totalling 11,845 km2 (note the dataset does not have full national coverage) between March 2011 and May 2012. Aside from flood risk management, this data has also been used for archaeological and orienteering purposes. This dataset reflects the Digital Terrain Model (DTM) produced from the point cloud data.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2017-03-01",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2012-05-31T23:59:59Z",
+          "begin": "2011-03-01T00:00:00Z"
+        },
+        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Scottish Water (2012). Open Government Licence v3",
+        "resourceLocator": "https://remotesensingdata.gov.scot/productsnullcollections=572c2ead-84bc-5d27-8a2e-8fb1b35e5acc",
+        "datasetReferenceDate": "2016-11-15",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/40017f89-2857-49cb-a913-e0784f250769"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase I DTM OGC Service",
+          "wms": {
+            "url": "https://eo.jncc.gov.uk/geoserver/scotland/wms",
+            "name": "scotland:scotland-lidar-1-dtm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-1/dtm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.01856070727659,
+                54.7202519250655
+              ],
+              [
+                -1.73940709913353,
+                54.7202519250655
+              ],
+              [
+                -1.73940709913353,
+                59.1654844171309
+              ],
+              [
+                -6.01856070727659,
+                59.1654844171309
+              ],
+              [
+                -6.01856070727659,
+                54.7202519250655
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "6346e537-b993-40fd-97e5-b88570cb84a4",
+      "name": "scotland-gov-lidar-phase-1-laz",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase I LAZ OGC Service",
+        "lineage": "The LiDAR data was collected from an aircraft between March 2011 and May 2012 for 10 collection areas. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 10 collection areas. Blom delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy and point density for each collection area. The results were delivered between 1st July 2011 and 2nd May 2012.",
+        "abstract": "The Scottish Public Sector LiDAR (Phase I) dataset was commissioned in response to the Flood Risk Management Act (2009) by the Scottish Government, Scottish Environmental Protection Agency (SEPA), and Scottish Water collaboratively. Airborne LiDAR data was collected across 10 sites totalling 11,845 km2 (note the dataset does not have full national coverage) between March 2011 and May 2012. Aside from flood risk management, this data has also been used for archaeological and orienteering purposes. This dataset reflects the Digital Surface Model (DSM) produced from the point cloud data.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "LAZ",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2017-03-01",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2012-05-31T23:59:59Z",
+          "begin": "2011-03-01T00:00:00Z"
+        },
+        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Scottish Water (2012). Open Government Licence v3",
+        "resourceLocator": "https://remotesensingdata.gov.scot/productsnullcollections=b32e4101-6d8a-538b-9c01-a23389acfe35",
+        "datasetReferenceDate": "2016-11-15",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/92367c84-74d3-4426-8b0f-6f4a8096f593"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase I LAZ OGC Service",
+          "wms": {
+            "url": "https://eo.jncc.gov.uk/geoserver/scotland/wms",
+            "name": "scotland:scotland-lidar-1-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-1/laz"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.01856070727659,
+                54.7202519250655
+              ],
+              [
+                -1.73940709913353,
+                54.7202519250655
+              ],
+              [
+                -1.73940709913353,
+                59.1654844171309
+              ],
+              [
+                -6.01856070727659,
+                59.1654844171309
+              ],
+              [
+                -6.01856070727659,
+                54.7202519250655
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "6ebb0891-23bd-4393-b526-baa91ede4101",
+      "name": "scotland-gov-lidar-phase-2-dsm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase II DSM OGC Service",
+        "lineage": "The LiDAR data was collected from an aircraft between 29th November 2012 and 18th April 2014 for 66 sites. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 66 sites. Fugro BKS delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy for each site. The results were delivered between on the 5th July 2014.",
+        "abstract": "The Scottish Public Sector LiDAR (Phase II) dataset was commissioned in response to the Flood Risk Management Act (2009) by the Scottish Government, Scottish Environmental Protection Agency (SEPA), sportscotland, and 13 Scottish local authorities. This extension of the Phase I dataset collected airborne LiDAR for 66 additional sites for the purposes of localised flood management. Data was collected between 29th November 2012 and 18th April 2014 totalling an area of 3,516 km2 (note the dataset does not have full national coverage). Aside from flood risk management, this data has also been used for archaeological and orienteering purposes. This dataset reflects the Digital Surface Model (DSM) produced from the point cloud data.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2017-03-01",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2014-04-18T23:59:59Z",
+          "begin": "2012-11-29T00:00:00Z"
+        },
+        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
+        "resourceLocator": "https://eo.jncc.gov.uk/geoserver/scotland/wmsnull",
+        "datasetReferenceDate": "2016-11-15",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/689b5296-d265-4927-8449-99b46fa3f4e7"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase II DSM OGC Service",
+          "wms": {
+            "url": "https://eo.jncc.gov.uk/geoserver/scotland/wms",
+            "name": "scotland:scotland-lidar-2-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-2/dsm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "a1f7f282-445c-4380-bdfa-0bdbbd74d63e",
+      "name": "scotland-gov-lidar-phase-2-dtm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase II DTM OGC Service",
+        "lineage": "The LiDAR data was collected from an aircraft between 29th November 2012 and 18th April 2014 for 66 sites. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 66 sites. Fugro BKS delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy for each site. The results were delivered between on the 5th July 2014.",
+        "abstract": "The Scottish Public Sector LiDAR (Phase II) dataset was commissioned in response to the Flood Risk Management Act (2009) by the Scottish Government, Scottish Environmental Protection Agency (SEPA), sportscotland, and 13 Scottish local authorities. This extension of the Phase I dataset collected airborne LiDAR for 66 additional sites for the purposes of localised flood management. Data was collected between 29th November 2012 and 18th April 2014 totalling an area of 3,516 km2 (note the dataset does not have full national coverage). Aside from flood risk management, this data has also been used for archaeological and orienteering purposes. This dataset reflects the Digital Terrain Model (DTM) produced from the point cloud data.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2017-03-01",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2014-04-18T23:59:59Z",
+          "begin": "2012-11-29T00:00:00Z"
+        },
+        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
+        "resourceLocator": "https://eo.jncc.gov.uk/geoserver/scotland/wmsnull",
+        "datasetReferenceDate": "2016-11-15",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/2835f36d-35cf-4166-9bf0-09b3fc839f62"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase II DTM OGC Service",
+          "wms": {
+            "url": "https://eo.jncc.gov.uk/geoserver/scotland/wms",
+            "name": "scotland:scotland-lidar-2-dtm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-2/dtm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "194e20cf-277b-42a8-8d41-39c74527a9f0",
+      "name": "scotland-gov-lidar-phase-2-laz",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase II LAZ OGC Service",
+        "lineage": "The LiDAR data was collected from an aircraft between 29th November 2012 and 18th April 2014 for 66 sites. The point density was a minimum of 1 point/sqm, and approximately 2 points/sqm on average between the 66 sites. Fugro BKS delivered the raw LAS files alongside DTM and DSMs at 1m resolution in ESRI Grid and ASCII format. They also provided reports detailing the height accuracy for each site. The results were delivered between on the 5th July 2014.",
+        "abstract": "The Scottish Public Sector LiDAR (Phase II) dataset was commissioned in response to the Flood Risk Management Act (2009) by the Scottish Government, Scottish Environmental Protection Agency (SEPA), sportscotland, and 13 Scottish local authorities. This extension of the Phase I dataset collected airborne LiDAR for 66 additional sites for the purposes of localised flood management. Data was collected between 29th November 2012 and 18th April 2014 totalling an area of 3,516 km2 (note the dataset does not have full national coverage). Aside from flood risk management, this data has also been used for archaeological and orienteering purposes. This dataset reflects the Digital Surface Model (DSM) produced from the point cloud data.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2017-03-01",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2014-04-18T23:59:59Z",
+          "begin": "2012-11-29T00:00:00Z"
+        },
+        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
+        "resourceLocator": "https://eo.jncc.gov.uk/geoserver/scotland/wmsnull",
+        "datasetReferenceDate": "2016-11-15",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/689b5296-d265-4927-8449-99b46fa3f4e7"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase II LAZ OGC Service",
+          "wms": {
+            "url": "https://eo.jncc.gov.uk/geoserver/scotland/wms",
+            "name": "scotland:scotland-lidar-2-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-2/laz"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ]
+            ]
+          ]
+        ]
+      }
+    }
+  ]
