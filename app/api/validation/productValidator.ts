@@ -669,6 +669,21 @@ describe("Data Validator", () => {
     return chai.expect(validator.validate(p)).to.be.fulfilled;
   });
 
+  it("should validate a catalog data group with a valid collection and url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "test/collection",
+          url: "http://example.com/catalog"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.fulfilled;
+  });
+
   it("should not validate a catalog data group with a blank collection", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
@@ -754,6 +769,24 @@ describe("Data Validator", () => {
     .to.be.rejected
     .and.eventually.have.length(1)
     .and.contain('data[\'product\'].catalog.product | should match pattern "^([A-Za-z0-9-_.])+$"')
+  });
+
+  it("should not validate a catalog data group with an invalid url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        catalog: {
+          collection: "test/collection",
+          url: "!! Gibberish/.com"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p))
+    .to.be.rejected
+    .and.eventually.have.length(1)
+    .and.contain('data[\'product\'].catalog.url | should match format "uri"')
   });
 
   it("should validate an http data group with a valid url", () => {
