@@ -543,6 +543,142 @@ describe("Data Validator", () => {
   //     return chai.expect(validator.validate(p)).to.be.fulfilled;
   // })
 
+  it("should validate a valid wfs service data group", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wfs: {
+          name: "layer",
+          url: "http://example.com/ogc/wfs"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.fulfilled;
+  })
+
+  it("should not validate a wfs service data group with no name", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wfs: {
+          name: "",
+          url: "http://example.com/ogc/wfs"
+        }
+      }
+    };
+
+    validator.validate(p).catch((x) => console.log(x))
+
+    return chai.expect(validator.validate(p)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].wfs.name | should NOT be shorter than 1 characters');
+  })
+
+  it("should not validate a wfs service data group with an invalid url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wfs: {
+          name: "layer",
+          url: "/example.com/ogc/wfs"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].wfs.url | should match format "uri"')
+  })
+
+  it("should not validate a wfs service data group with a blank url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wfs: {
+          name: "layer",
+          url: ""
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].wfs.url | should match format "uri"')
+  })
+
+  //wms
+
+  it("should validate a valid wms service data group", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wms: {
+          name: "layer",
+          url: "http://example.com/ogc/wfs"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.fulfilled;
+  })
+
+  it("should not validate a wms service data group with no name", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wms: {
+          name: "",
+          url: "http://example.com/ogc/wfs"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].wms.name | should NOT be shorter than 1 characters');
+  })
+
+  it("should not validate a wms service data group with an invalid url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wms: {
+          name: "layer",
+          url: "/example.com/ogc/wfs"
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].wms.url | should match format "uri"')
+  })
+
+  it("should not validate a wms service data group with a blank url", () => {
+    let p = Fixtures.GetTestProduct();
+    p.data = {
+      product: {
+        title: "test-title",
+        wms: {
+          name: "layer",
+          url: ""
+        }
+      }
+    };
+
+    return chai.expect(validator.validate(p)).to.be.rejected
+      .and.eventually.have.length(1)
+      .and.contain('data[\'product\'].wms.url | should match format "uri"')
+  })
+
   it("should not validate an ftp data group with an invalid server URI", () => {
     let p = Fixtures.GetTestProduct();
     p.data = {
