@@ -570,8 +570,6 @@ describe("Data Validator", () => {
       }
     };
 
-    validator.validate(p).catch((x) => console.log(x))
-
     return chai.expect(validator.validate(p)).to.be.rejected
       .and.eventually.have.length(1)
       .and.contain('data[\'product\'].wfs.name | should NOT be shorter than 1 characters');
