@@ -35,7 +35,7 @@
           "begin": "2011-03-01T00:00:00Z"
         },
         "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Scottish Water (2012). Open Government Licence v3",
-        "resourceLocator": "https://remotesensingdata.gov.scot/productsnullcollections=b32e4101-6d8a-538b-9c01-a23389acfe35",
+        "resourceLocator": "https://remotesensingdata.gov.scot/products?collections=b32e4101-6d8a-538b-9c01-a23389acfe35",
         "datasetReferenceDate": "2016-11-15",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
@@ -142,7 +142,7 @@
           "begin": "2011-03-01T00:00:00Z"
         },
         "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Scottish Water (2012). Open Government Licence v3",
-        "resourceLocator": "https://remotesensingdata.gov.scot/productsnullcollections=572c2ead-84bc-5d27-8a2e-8fb1b35e5acc",
+        "resourceLocator": "https://remotesensingdata.gov.scot/products?collections=572c2ead-84bc-5d27-8a2e-8fb1b35e5acc",
         "datasetReferenceDate": "2016-11-15",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
@@ -249,7 +249,7 @@
           "begin": "2011-03-01T00:00:00Z"
         },
         "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Scottish Water (2012). Open Government Licence v3",
-        "resourceLocator": "https://remotesensingdata.gov.scot/productsnullcollections=b32e4101-6d8a-538b-9c01-a23389acfe35",
+        "resourceLocator": "https://remotesensingdata.gov.scot/products?collections=b32e4101-6d8a-538b-9c01-a23389acfe35",
         "datasetReferenceDate": "2016-11-15",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
@@ -356,7 +356,7 @@
           "begin": "2012-11-29T00:00:00Z"
         },
         "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
-        "resourceLocator": "https://eo.jncc.gov.uk/geoserver/scotland/wmsnull",
+        "resourceLocator": "https://remotesensingdata.gov.scot/products?collections=227b2528-0c7b-58f1-9e4e-315a1491969c",
         "datasetReferenceDate": "2016-11-15",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
@@ -463,7 +463,7 @@
           "begin": "2012-11-29T00:00:00Z"
         },
         "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
-        "resourceLocator": "https://eo.jncc.gov.uk/geoserver/scotland/wmsnull",
+        "resourceLocator": "https://remotesensingdata.gov.scot/products?collections=4bbd5cc3-d879-55e0-a44d-2567697a1471",
         "datasetReferenceDate": "2016-11-15",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
@@ -570,7 +570,7 @@
           "begin": "2012-11-29T00:00:00Z"
         },
         "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
-        "resourceLocator": "https://eo.jncc.gov.uk/geoserver/scotland/wmsnull",
+        "resourceLocator": "https://remotesensingdata.gov.scot/products?collections=a4b6e778-0fc6-5fe6-9c70-9721ad9a1ff8",
         "datasetReferenceDate": "2016-11-15",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
