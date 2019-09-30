@@ -24,4 +24,4 @@ python ./scotland-lidar-json-generator.py -b scotland-gov-lidar -r eu-west-1 -p 
 
 Import command
 
-python importer.py -p -a http://scotland-gov-remote-sensing-catalog-live.3bpwhtjc2s.eu-west-1.elasticbeanstalk.com/search/collection/* -i ./scotland-gov-lidar/lidar-1-laz.json
+python importer.py -p -a http://scotland-gov-remote-sensing-catalog-live.3bpwhtjc2s.eu-west-1.elasticbeanstalk.com/ -i ./scotland-gov-lidar/scotland-gov-lidar-ogc.json
