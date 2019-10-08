@@ -68,6 +68,12 @@ app.get(`/search/collection/*?`, async (req, res, next) => {
     try {
       let collections = await collectionStore.getCollections(query);
 
+      collections.forEach(c => {
+        //ST_ASGeoJson returns json as a quoted string.
+        //@ts-ignore
+        c.footprint = JSON.parse(c.footprint)
+      });
+
       res.json({
         query: query,
         result: collections
@@ -170,6 +176,12 @@ app.post(`/search/product`, async (req, res) => {
 
   try {
     let products = await productStore.getProducts(query)
+
+    products.forEach(p => {
+      //ST_ASGeoJson returns json as a quoted string.
+      //@ts-ignore
+      p.footprint = JSON.parse(p.footprint);
+    });
 
     res.json({
       query: query,

@@ -9,6 +9,7 @@ export interface IWFS extends IOGC { }
 export interface ICatalog {
   collection: string;
   product?: string;
+  url?: string;
 }
 
 export const Schema = {
@@ -33,18 +34,24 @@ export const Schema = {
     },
     required: ["url", "name"]
   },
-  collection: {
+  catalog: {
     type: "object",
     additionalProperties: false,
     properties: {
       collection: {
         type: "string",
+        pattern: "^(([A-Za-z0-9\-\_\.]+)(\/))*([A-Za-z0-9\-\_\.])+$",
         minLength: 1
       },
       product: {
         type: "string",
+        pattern: "^([A-Za-z0-9-_.])+$",
         minLength: 1
-      }
+      },
+      url: {
+        type: "string",
+        format: "uri"
+      },
     },
     required: ["collection"]
   }
