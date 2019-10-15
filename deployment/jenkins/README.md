@@ -11,6 +11,6 @@
     - `TARGET_APP` - The name of the elasticbeanstalk application that we are deploying for
     - `TARGET_ENV` - The environment of the elasticbeanstalk application that we are deploying to
     - `NGINX_CONFIG_CATALOG_URL` - The final deployment URL that this service will live under
-    - `SERVER_COMBINED_CRT_PATH` - The full path on the instance to the combined ssl cert i.e. `/etc/pki/tls/certs/server.crt`
-    - `SERVER_KEY_PATH` - The full path on the instance to the key for the ssl cert i.e. `/etc/pki/tls/private/server.key`
-    - `TRUSTED_INTERMEDIATE_CERT_PATH` - The full path on the instance to the trusted intermediate ssl cert (for OCSP stapling) i.e. `/etc/pki/tls/certs/trusted.crt`
+    - `SERVER_COMBINED_CRT_PATH` - The full path on the instance to the combined ssl cert i.e. `/etc/pki/tls/certs/server.crt` this replaces occurances with the same value (`SERVER_COMBINED_CRT_PATH`) in `server_combined_cert.config` and `https.config` during deployment
+    - `SERVER_KEY_PATH` - The full path on the instance to the key for the ssl cert i.e. `/etc/pki/tls/private/server.key` this replaces occurances with the same value (`SERVER_KEY_PATH`) in `server_key.config` and `https.config` during deployment
+    - `TRUSTED_INTERMEDIATE_CERT_PATH` - The full path on the instance to the trusted intermediate ssl cert (for OCSP stapling) i.e. `/etc/pki/tls/certs/trusted.crt` this replaces occurances with the same value (`TRUSTED_INTERMEDIATE_CERT_PATH`) in `server_trusted_intermediate_cert.config` and `https.config` during deployment
