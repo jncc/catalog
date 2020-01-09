@@ -27,24 +27,7 @@ An example of running the service against a live catalog is as follows;
 
 ## Scottish LIDAR generator example code
 
-There is a existing `scottish-json-gen-v2.py` file that generates json as required for this import process by crawling a known file format (Scottish lidar) as used in remotesensing.scot.gov. It needs a consumable list of OSGB grid references GeoJSON (10k, 5k and 1k in this case) to generate the various json collections involved, these are not included due to file size but can be relatively easilly generated if needed.
-
-To run the script you just need to provide the following arguments;
-
-- `-b` - S3 bucket to scan
-- `-r` - S3 bucket region
-- `-p` - AWS profile to use to provide permissions
-- `-g` - Appropriate GeoJSON file for this collection i.e. 10k / 5k / 1k
-- `--path` - The S3 bucket prefix to scan over i.e. folder containing collection
-- `-c` - The collection name for this run (Must exist)
-- `-t` - A title used for the collections (used to compsite the product names i.e. `Scotland Lidar Phase 1`)
-- `-o` - The output file path / filename
-
-In this example the phase-1/2 DSM/DTM collections only require a 10k grid, while phase-1-laz requires 1k and phase-2-laz requires 5k, these are included zipped under the folder `app\import\grids\scotland-os-grids-wgs84`.
-
-To run just adapt the following example to what you are doing;
-
-`python3 scottish-json-gen-v2.py -b bucketname -r eu-west-1 -p scanProfile -g ./grids/osgb.10k.generated.geojson --path /phase/1/dsm -c scotland-gov/lidar/phase/1/dsm -i guid -t "Scotland Lidar Phase 1" -o phase-1-dsm.json`
+There is a existing `scotland-lidar-json-generator.py` file that generates json as required for this import process by crawling a known file format (Scottish lidar) as used in remotesensing.scot.gov. It needs a consumable list of OSGB grid references GeoJSON (10k, 5k and 1k in this case) to generate the various json collections involved, these are not included due to file size but can be relatively easilly generated if needed, for more information see the README.md under `app/import/scotland-gov-lidar`.
 
 ## JSON file format
 
