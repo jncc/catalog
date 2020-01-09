@@ -6,9 +6,16 @@ export class Database {
   public readonly queryBuilder: knex;
 
   constructor() {
-    let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
-
     let logger = Logger.GetLog()
+
+    logger.debug(`Using host '${process.env.PGHOST}' and database '${process.env.PGDATABASE}'`)
+
+    let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
+    
+    if (process.env.PGSSL) {
+      cs = cs + '?ssl=true';
+      logger.debug(`Enabling SSL for database connection`)
+    }
 
     this.queryBuilder = knex({
       client: 'pg',
