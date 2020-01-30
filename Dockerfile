@@ -10,7 +10,7 @@ RUN apt update && apt -y upgrade && \
     apt -y install python3-pip && \
     ln -s /usr/bin/pip3 /usr/bin/pip && \
     ln -sf /usr/bin/python3 /usr/bin/python && \
-    pip install sphinx sphinx-autobuild && \
+    pip install sphinx && \
     npm i -g typescript yarn
 
 COPY app .
