@@ -28,7 +28,7 @@ def get_bbox(item):
 
 def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, collection_title, profile):
 
-    session = boto3.Session(profile_name=profile)
+    session = boto3.Session() if not profile else boto3.Session(profile_name=profile)
     resource = session.resource('s3')
     remote_bucket = resource.Bucket(bucket)
 
@@ -50,6 +50,7 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, coll
     for key in remote_bucket.objects.filter(Prefix=s3_path):
         #GRID_50CM_DSM_CONTRACTNAME.TIFF
         #Scotland Lidar-1 %s %s
+        print(key.key)
         (productName, fileType) = os.path.basename(key.key).split('.')
         (grid, resolution, productType, collectionIdentifier) = productName.split('_')
 
@@ -68,7 +69,8 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, coll
 					'product': {
 						'title': '%s %s %s' % (collection_title, productType, grid),
 						'http': {
-							'url': 'https://s3-%s.amazonaws.com/%s/%s' % (region, bucket, key.key),
+							# 'url': 'https://s3-%s.amazonaws.com/%s/%s' % (region, bucket, key.key),
+							'url': 'https://%s.s3-%s.amazonaws.com/%s' % (bucket, region, key.key),
 							'size': key.size,
 							'type': getFileType(fileType)
 						},
@@ -95,7 +97,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-b', '--bucket', help='S3 Bucket to scan', required=True)
     parser.add_argument('-r', '--region', help='S3 bucket region', required=True)
-    parser.add_argument('-p', '--profile', help='AWS profile to use for authentication', required=True)
+    parser.add_argument('-p', '--profile', help='AWS profile to use for authentication', required=False)
     parser.add_argument('-g', '--geojson', help='GeoJSON file containing grid system to add to scanned files metadata', required=True)
 
     parser.add_argument('--path', help='Prefix path to scan for files on', required=True)
