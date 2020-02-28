@@ -2,7 +2,6 @@
 
 The `importer.py` file included here allows a user to mass import a json file formatted source into a running catalog instance that has write permissions to its database tables.
 
-
 ## Installing requirements
 
 Current requirements are stored in the `requirements.txt` file, to install them simply run pip to restore them to the local environment or create a virtualenv to run in;
@@ -27,7 +26,7 @@ An example of running the service against a live catalog is as follows;
 
 ## Scottish LIDAR generator example code
 
-There is a existing `scotland-lidar-json-generator.py` file that generates json as required for this import process by crawling a known file format (Scottish lidar) as used in remotesensing.scot.gov. It needs a consumable list of OSGB grid references GeoJSON (10k, 5k and 1k in this case) to generate the various json collections involved, these are not included due to file size but can be relatively easilly generated if needed, for more information see the README.md under `app/import/scotland-gov-lidar`.
+There is a existing `scotland-lidar-json-generator.py` script that generates the json required for this import process by crawling the data files on S3. For more information see the README.md under `app/import/scotland-gov-lidar`.
 
 ## JSON file format
 
