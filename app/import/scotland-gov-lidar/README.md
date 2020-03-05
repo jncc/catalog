@@ -53,35 +53,19 @@ To run just adapt the following example:
 
 ### DSM Phase 3
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.5k.grid.scotland.geojson --path phase-3/dsm/27700/gridded -c scotland-gov/lidar/phase-3/dsm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dsm.json
-
-Removed the previously-uploaded 1k (I think!) squares using a glob.
-    aws s3 rm --dryrun --recursive --exclude "*" --include "*_1M_*" s3://scotland-gov-lidar-beta/phase-3/dsm/27700/gridded
-Removed all the NX square because there is no gridsquare for them.
-    aws s3 rm --dryrun --recursive --exclude "*" --include "NX*" s3://scotland-gov-lidar-beta/phase-3/dsm/27700/gridded/
-
     python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_5km.geojson --path phase-3/dsm/27700/gridded -c scotland-gov/lidar/phase-3/dsm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dsm.json
 
 ### DTM Phase 3
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.5k.grid.scotland.geojson --path phase-3/dtm/27700/gridded -c scotland-gov/lidar/phase-3/dtm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dtm.json
-
-Removed the previously-uploaded 1k (I think!) squares using a glob.
-    aws s3 rm  --dryrun --recursive --exclude "*" --include "*_1M_*" s3://scotland-gov-lidar-beta/phase-3/dtm/27700/gridded
-Removed all the NX square because there is no gridsquare for them.
-    aws s3 rm --dryrun --recursive --exclude "*" --include "NX*" s3://scotland-gov-lidar-beta/phase-3/dtm/27700/gridded/
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_5km.geojson --path phase-3/dtm/27700/gridded -c scotland-gov/lidar/phase-3/dtm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dtm.json
 
 ### LAZ Phase 3
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.1k.grid.scotland.geojson --path phase-3/laz/27700/gridded -c scotland-gov/lidar/phase-3/laz -t "Scotland Lidar Phase 3" -o ./data/lidar-3-laz.json
+Need to change the script to use `PLAN_NO` instead of `TILE_NAME`) as that's the attribute name in the OSGB grid.
 
-I deleted:
-  nx1429_4PPM_LAS_PHASE3.laz
-  nx1529_4PPM_LAS_PHASE3.laz
-  nx1629_4PPM_LAS_PHASE3.laz
-Because they caused the script to fail. Interestingly they were lowercase `nx` not `NX` - but renaming them to uppercase still didn't work. There are no NX gridsqaure in the grid file!
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_1km.geojson --path phase-3/laz/27700/gridded -c scotland-gov/lidar/phase-3/laz -t "Scotland Lidar Phase 3" -o ./data/lidar-3-laz.json
 
-## Importing the JSON files into a catalog
+## Importing the JSON files into a Catalog database
 
 Refer to the Importer README.md under `app/import`.
 
