@@ -3,9 +3,11 @@
 The `scotland-lidar-json-generator.py` script generates the JSON required for the importer by crawling the lidar data files on S3.
 
 It needs the relevant list of OSGB grid references, which are in GeoJSON (10k, 5k or 1k) grid files. These can be unzipped inside `app\import\grids\scotland-os-grids-wgs84`.
-However, the Phase 3 data included gridsquares which aren't included in these files. 
+However, the Phase 3 data included gridsquares which aren't included in these files.
 
-We found some here https://github.com/charlesroper/OSGB_Grids which appear to be more comprehensive. The files are very similar, but the property name for the tile is `TILE_NAME` not `id` - so we changed the script to use `TILE_NAME` and **it would need changing back to `id` to use the zipped grid files in this repo**.
+We found some here https://github.com/charlesroper/OSGB_Grids which appear to be more comprehensive. The files are very similar, but the property name for the tile is `TILE_NAME` or `PLAN_NO`, not `id`
+
+**The script needs the correct property name for the grid file you are running the script against. (For example, it woud need changing back to `id` to use the zipped grid files in this repo.)**.
 
 To run the script you just need to provide the following arguments;
 

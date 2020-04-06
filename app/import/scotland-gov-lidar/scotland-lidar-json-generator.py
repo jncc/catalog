@@ -37,7 +37,7 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, coll
     with open(wgs84_grid_path) as wgs84_grid_file:
         wgs84_grid_json = json.load(wgs84_grid_file)
         for item in wgs84_grid_json['features']:
-            grids[item['properties']['TILE_NAME']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
+            grids[item['properties']['PLAN_NO']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
 
     #with open(osgb_grid_path) as osgb_grid_file:
     #    osgb_grid_json = json.load(osgb_grid_file)
