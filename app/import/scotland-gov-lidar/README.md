@@ -4,7 +4,11 @@ The `scotland-lidar-json-generator.py` script generates the JSON required for th
 
 It needs the relevant list of OSGB grid references, which are in GeoJSON (10k, 5k or 1k) grid files.
 
-These can be unzipped in `grids/scotland-os-grids-wgs84`. However, the Phase 3 data included gridsquares which aren't included in these files. We found some here <https://github.com/charlesroper/OSGB_Grids> which appear to be more comprehensive. The files are very similar, but the property name for the tile is `TILE_NAME` or `PLAN_NO`, not `id` **The script obviously needs the correct property names for the grid file you are running the script against. (For example, it would need changing back to `id` to use the zipped grid files in this repo.)**.
+These can be unzipped in `grids/scotland-os-grids-wgs84`. However, the Phase 3 data included gridsquares which aren't included in these files. We found some here https://github.com/charlesroper/OSGB_Grids which appear to be more comprehensive. The files are very similar, but the property name for the tile is `TILE_NAME` or `PLAN_NO`, not `id` **The script obviously needs the correct property names for the grid file you are running the script against. (For example, it would need changing back to `id` to use the zipped grid files in this repo.)**.
+
+*****************************************************
+Tip: Just see the full list of historical examples below.
+*****************************************************
 
 ## Arguments
 
