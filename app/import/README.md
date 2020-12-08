@@ -1,14 +1,12 @@
 # Importer Readme
 
-The `importer.py` file included here allows a user to mass import a json file formatted source into a running catalog instance that has write permissions to its database tables.
+The `importer.py` imports a json file into a running Catalog.
 
-## Installing requirements
+## Requirements
 
-Current requirements are stored in the `requirements.txt` file, to install them simply run pip to restore them to the local environment or create a virtualenv to run in;
+    pip install -r requirements.txt
 
-`pip install -r requirements.txt`
-
-## Running importer with a formatted JSON file input
+## Running
 
 To run the importer you can run with the `-h` flag to get the most upto-date options but at the time of writing the following options exst;
 
@@ -22,9 +20,9 @@ To run the importer you can run with the `-h` flag to get the most upto-date opt
 
 An example of running the service against a live catalog is as follows;
 
-`python3 importer.py -i input.json -a http://local-catalog.com:8081 -p --dbhost localhost --dbport 5432 --dbuser postgres --dbpass postgres --dbname somedb`
+    python3 importer.py -i input.json -a http://local-catalog.com:8081 -p --dbhost localhost --dbport 5432 --dbuser postgres --dbpass postgres --dbname somedb
 
-## Scottish LIDAR generator example code
+## Scottish LIDAR generator
 
 There is a existing `scotland-lidar-json-generator.py` script that generates the json required for this import process by crawling the data files on S3. For more information see the README.md under `app/import/scotland-gov-lidar`.
 

@@ -1,10 +1,10 @@
  [
     {
-      "id": "b1da80ae-b0e3-4af7-a5e7-d07a08b84ce8",
-      "name": "scotland-gov-lidar-phase-3-dsm",
+      "id": "2a0f0063-4e41-4142-9350-3bef9fff477b",
+      "name": "scotland-gov-lidar-phase-4-dsm",
       "collectionName": "scotland-gov/lidar/ogc",
       "metadata": {
-        "title": "LiDAR for Scotland Phase III DSM OGC Service",
+        "title": "LiDAR for Scotland Phase IV DSM OGC Service",
         "lineage": "Lineage to be completed.",
         "abstract": "Abstract description to be completed.",
         "keywords": [
@@ -27,16 +27,16 @@
           "north": 60.87,
           "south": 54.63
         },
-        "metadataDate": "2017-03-01",
+        "metadataDate": "2020-11-23T23:59:59Z",
         "resourceType": "dataset",
         "topicCategory": "Orthoimagery Elevation",
         "temporalExtent": {
-          "end": "2014-04-18T23:59:59Z",
-          "begin": "2012-11-29T00:00:00Z"
+          "end": "2019-12-01T23:59:59Z",
+          "begin": "2017-01-01T00:00:00Z"
         },
-        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
+        "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
         "resourceLocator": "https://remotesensingdata.gov.scot/data",
-        "datasetReferenceDate": "2016-11-15",
+        "datasetReferenceDate": "2020-11-20",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
           "role": "metadataPointOfContact",
@@ -61,18 +61,18 @@
           }
         },
         "limitationsOnPublicAccess": "No limitations on public access",
-        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/689b5296-d265-4927-8449-99b46fa3f4e7"
+        "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/api/records/cac43a75-f66d-4197-81cd-daabefc50f39"
       },
       "properties": {},
       "data": {
         "product": {
-          "title":"LiDAR for Scotland Phase III DSM OGC Service",
+          "title":"LiDAR for Scotland Phase IV DSM OGC Service",
           "wms": {
             "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
-            "name": "scotland:scotland-lidar-3-dsm"
+            "name": "scotland:scotland-lidar-4-dsm"
           },
           "catalog": {
-            "collection": "scotland-gov/lidar/phase-3/dsm"
+            "collection": "scotland-gov/lidar/phase-4/dsm"
           }
         }
       },
@@ -107,11 +107,11 @@
       }
     },
     {
-      "id": "6038c8af-7f37-4139-838a-3e63ab4d9130",
-      "name": "scotland-gov-lidar-phase-3-dtm",
+      "id": "c50fad5e-c1ee-4c52-81a6-82f64afb45df",
+      "name": "scotland-gov-lidar-phase-4-dtm",
       "collectionName": "scotland-gov/lidar/ogc",
       "metadata": {
-        "title": "LiDAR for Scotland Phase III DTM OGC Service",
+        "title": "LiDAR for Scotland Phase IV DTM OGC Service",
         "lineage": "Lineage to be completed.",
         "abstract": "Abstract description to be completed.",
         "keywords": [
@@ -134,16 +134,16 @@
           "north": 60.87,
           "south": 54.63
         },
-        "metadataDate": "2017-03-01",
+        "metadataDate": "2020-11-23",
         "resourceType": "dataset",
         "topicCategory": "Orthoimagery Elevation",
         "temporalExtent": {
-          "end": "2014-04-18T23:59:59Z",
-          "begin": "2012-11-29T00:00:00Z"
+          "end": "2019-12-01T23:59:59Z",
+          "begin": "2017-01-01T00:00:00Z"
         },
-        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
+        "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
         "resourceLocator": "https://remotesensingdata.gov.scot/data",
-        "datasetReferenceDate": "2016-11-15",
+        "datasetReferenceDate": "2020-11-20",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
           "role": "metadataPointOfContact",
@@ -168,18 +168,18 @@
           }
         },
         "limitationsOnPublicAccess": "No limitations on public access",
-        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/2835f36d-35cf-4166-9bf0-09b3fc839f62"
+        "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/api/records/63a6482f-1bcf-4b75-92f4-cb4e9e413d4d"
       },
       "properties": {},
       "data": {
         "product": {
-          "title":"LiDAR for Scotland Phase III DTM OGC Service",
+          "title":"LiDAR for Scotland Phase IV DTM OGC Service",
           "wms": {
             "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
-            "name": "scotland:scotland-lidar-3-dtm"
+            "name": "scotland:scotland-lidar-4-dtm"
           },
           "catalog": {
-            "collection": "scotland-gov/lidar/phase-3/dtm"
+            "collection": "scotland-gov/lidar/phase-4/dtm"
           }
         }
       },
@@ -214,11 +214,11 @@
       }
     },
     {
-      "id": "873e195f-9911-485b-953b-b0bc18118648",
-      "name": "scotland-gov-lidar-phase-3-laz",
+      "id": "912eb7f9-d818-4a72-9864-a56d423e727e",
+      "name": "scotland-gov-lidar-phase-4-laz",
       "collectionName": "scotland-gov/lidar/ogc",
       "metadata": {
-        "title": "LiDAR for Scotland Phase III LAZ OGC Service",
+        "title": "LiDAR for Scotland Phase IV LAZ OGC Service",
         "lineage": "Lineage to be completed.",
         "abstract": "Abstract description to be completed.",
         "keywords": [
@@ -241,16 +241,16 @@
           "north": 60.87,
           "south": 54.63
         },
-        "metadataDate": "2017-03-01",
+        "metadataDate": "2020-11-23",
         "resourceType": "dataset",
         "topicCategory": "Orthoimagery Elevation",
         "temporalExtent": {
-          "end": "2014-04-18T23:59:59Z",
-          "begin": "2012-11-29T00:00:00Z"
+          "end": "2019-12-01T23:59:59Z",
+          "begin": "2017-01-01T00:00:00Z"
         },
-        "useConstraints": "The following attribution statement must be used to acknowledge the source of the information: Copyright Scottish Government and SEPA (2014). Fugro retain the commercial copyright. Open Government Licence v3",
+        "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
         "resourceLocator": "https://remotesensingdata.gov.scot/data",
-        "datasetReferenceDate": "2016-11-15",
+        "datasetReferenceDate": "2020-11-20",
         "metadataPointOfContact": {
           "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
           "role": "metadataPointOfContact",
@@ -275,18 +275,18 @@
           }
         },
         "limitationsOnPublicAccess": "No limitations on public access",
-        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/689b5296-d265-4927-8449-99b46fa3f4e7"
+        "additionalInformationSource": "https://data.gov.uk/dataset/89d2e87a-67b2-4704-8a1e-509d851b5cc5/lidar-for-scotland-phase-4-las"
       },
       "properties": {},
       "data": {
         "product": {
-          "title":"LiDAR for Scotland Phase III LAZ OGC Service",
+          "title":"LiDAR for Scotland Phase IV LAZ OGC Service",
           "wms": {
             "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
-            "name": "scotland:scotland-lidar-3-dsm"
+            "name": "scotland:scotland-lidar-4-dsm"
           },
           "catalog": {
-            "collection": "scotland-gov/lidar/phase-3/laz"
+            "collection": "scotland-gov/lidar/phase-4/laz"
           }
         }
       },

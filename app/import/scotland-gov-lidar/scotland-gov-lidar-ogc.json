@@ -68,7 +68,7 @@
         "product": {
           "title":"LiDAR for Scotland Phase I DSM OGC Service",
           "wms": {
-            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
             "name": "scotland:scotland-lidar-1-dsm"
           },
           "catalog": {
@@ -175,7 +175,7 @@
         "product": {
           "title":"LiDAR for Scotland Phase I DTM OGC Service",
           "wms": {
-            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
             "name": "scotland:scotland-lidar-1-dtm"
           },
           "catalog": {
@@ -282,7 +282,7 @@
         "product": {
           "title":"LiDAR for Scotland Phase I LAZ OGC Service",
           "wms": {
-            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
             "name": "scotland:scotland-lidar-1-dsm"
           },
           "catalog": {
@@ -389,7 +389,7 @@
         "product": {
           "title":"LiDAR for Scotland Phase II DSM OGC Service",
           "wms": {
-            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
             "name": "scotland:scotland-lidar-2-dsm"
           },
           "catalog": {
@@ -496,7 +496,7 @@
         "product": {
           "title":"LiDAR for Scotland Phase II DTM OGC Service",
           "wms": {
-            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
             "name": "scotland:scotland-lidar-2-dtm"
           },
           "catalog": {
@@ -603,7 +603,7 @@
         "product": {
           "title":"LiDAR for Scotland Phase II LAZ OGC Service",
           "wms": {
-            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
             "name": "scotland:scotland-lidar-2-dsm"
           },
           "catalog": {

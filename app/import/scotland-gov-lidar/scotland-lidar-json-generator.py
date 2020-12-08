@@ -37,7 +37,8 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, coll
     with open(wgs84_grid_path) as wgs84_grid_file:
         wgs84_grid_json = json.load(wgs84_grid_file)
         for item in wgs84_grid_json['features']:
-            grids[item['properties']['PLAN_NO']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
+            grids[item['properties']['TILE_NAME']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
+#           grids[item['properties']['PLAN_NO']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
 
     #with open(osgb_grid_path) as osgb_grid_file:
     #    osgb_grid_json = json.load(osgb_grid_file)
@@ -98,7 +99,7 @@ if __name__ == '__main__':
     parser.add_argument('-b', '--bucket', help='S3 Bucket to scan', required=True)
     parser.add_argument('-r', '--region', help='S3 bucket region', required=True)
     parser.add_argument('-p', '--profile', help='AWS profile to use for authentication', required=False)
-    parser.add_argument('-g', '--geojson', help='GeoJSON file containing grid system to add to scanned files metadata', required=True)
+    parser.add_argument('-g', '--geojson', help='The path to a GeoJSON file containing an appropriate grid system', required=True)
 
     parser.add_argument('--path', help='Prefix path to scan for files on', required=True)
     parser.add_argument('-c', '--collection', help='Catalog Collection name to associate with the scanned files', required=True)
