@@ -1,0 +1,324 @@
+ [
+    {
+      "id": "2a0f0063-4e41-4142-9350-3bef9fff477b",
+      "name": "scotland-gov-lidar-phase-4-dsm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase IV DSM OGC Service",
+        "lineage": "Lineage to be completed.",
+        "abstract": "Abstract description to be completed.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2020-11-23T23:59:59Z",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2019-12-01T23:59:59Z",
+          "begin": "2017-01-01T00:00:00Z"
+        },
+        "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2020-11-20",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/api/records/cac43a75-f66d-4197-81cd-daabefc50f39"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase IV DSM OGC Service",
+          "wms": {
+            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "name": "scotland:scotland-lidar-4-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-4/dsm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "c50fad5e-c1ee-4c52-81a6-82f64afb45df",
+      "name": "scotland-gov-lidar-phase-4-dtm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase IV DTM OGC Service",
+        "lineage": "Lineage to be completed.",
+        "abstract": "Abstract description to be completed.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2020-11-23",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2019-12-01T23:59:59Z",
+          "begin": "2017-01-01T00:00:00Z"
+        },
+        "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2020-11-20",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/api/records/63a6482f-1bcf-4b75-92f4-cb4e9e413d4d"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase IV DTM OGC Service",
+          "wms": {
+            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "name": "scotland:scotland-lidar-4-dtm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-4/dtm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "912eb7f9-d818-4a72-9864-a56d423e727e",
+      "name": "scotland-gov-lidar-phase-4-laz",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Scotland Phase IV LAZ OGC Service",
+        "lineage": "Lineage to be completed.",
+        "abstract": "Abstract description to be completed.",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -0.71,
+          "west": -8.8,
+          "north": 60.87,
+          "south": 54.63
+        },
+        "metadataDate": "2020-11-23",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2019-12-01T23:59:59Z",
+          "begin": "2017-01-01T00:00:00Z"
+        },
+        "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2020-11-20",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://data.gov.uk/dataset/89d2e87a-67b2-4704-8a1e-509d851b5cc5/lidar-for-scotland-phase-4-las"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Scotland Phase IV LAZ OGC Service",
+          "wms": {
+            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "name": "scotland:scotland-lidar-4-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/phase-4/laz"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                55.3971874872739
+              ],
+              [
+                -1.10456175131474,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                60.2141451028848
+              ],
+              [
+                -6.70707967704319,
+                55.3971874872739
+              ]
+            ]
+          ]
+        ]
+      }
+    }
+
+  ]
