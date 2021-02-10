@@ -1,0 +1,644 @@
+[
+  {
+    "id": "b3a5de31-0a7e-474d-b2c4-8775a70b568e",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-dsm-25cm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "LiDAR for Scotland Outer Hebrides 2019 25CM DSM OGC Service",
+      "lineage": "Lineage to be completed.",
+      "abstract": "Abstract description to be completed.",
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -6.00,
+        "west": -7.57,
+        "north": 58.28,
+        "south": 57.06
+      },
+      "metadataDate": "2021-02-10T23:59:59Z",
+      "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
+      "temporalExtent": {
+        "end": "2019-01-01T23:59:59Z",
+        "begin": "2020-01-01T00:00:00Z"
+      },
+      "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2021-02-10",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "Needs to be completed.",
+      "additionalInformationSource": "Needs to be completed."
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title":"LiDAR for Scotland Outer Hebrides 2019 25CM DSM OGC Service",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:scotland-outer-hebrides-2019-25cm-dsm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/25cm/dsm"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -7.572839560697914,
+              57.0645275761821
+            ],
+            [
+              -5.999080144916379,
+              57.0645275761821
+            ],
+            [
+              -5.999080144916379,
+              58.28178778433961
+            ],
+            [
+              -7.572839560697914,
+              58.28178778433961
+            ],
+            [
+              -7.572839560697914,
+              57.0645275761821
+            ]
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "efdbd034-4cbb-4098-9db0-fd7bfee250e7",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-dtm-25cm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "LiDAR for Scotland Outer Hebrides 2019 25CM DTM OGC Service",
+      "lineage": "Lineage to be completed.",
+      "abstract": "Abstract description to be completed.",
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -6.00,
+        "west": -7.57,
+        "north": 58.28,
+        "south": 57.06
+      },
+      "metadataDate": "2021-02-10T23:59:59Z",
+      "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
+      "temporalExtent": {
+        "end": "2019-01-01T23:59:59Z",
+        "begin": "2020-01-01T00:00:00Z"
+      },
+      "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2021-02-10",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "Needs to be completed.",
+      "additionalInformationSource": "Needs to be completed."
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title":"LiDAR for Scotland Outer Hebrides 2019 25CM DTM OGC Service",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:scotland-outer-hebrides-2019-25cm-dtm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/25cm/dtm"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -7.572839560697914,
+              57.0645275761821
+            ],
+            [
+              -5.999080144916379,
+              57.0645275761821
+            ],
+            [
+              -5.999080144916379,
+              58.28178778433961
+            ],
+            [
+              -7.572839560697914,
+              58.28178778433961
+            ],
+            [
+              -7.572839560697914,
+              57.0645275761821
+            ]
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "a286dee2-91a9-4e8b-aac7-d95ce3a486c2",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-25cm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "LiDAR for Scotland Outer Hebrides 2019 25CM LAZ OGC Service",
+      "lineage": "Lineage to be completed.",
+      "abstract": "Abstract description to be completed.",
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -6.00,
+        "west": -7.57,
+        "north": 58.28,
+        "south": 57.06
+      },
+      "metadataDate": "2021-02-10T23:59:59Z",
+      "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
+      "temporalExtent": {
+        "end": "2019-01-01T23:59:59Z",
+        "begin": "2020-01-01T00:00:00Z"
+      },
+      "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2021-02-10",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "Needs to be completed.",
+      "additionalInformationSource": "Needs to be completed."
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title":"LiDAR for Scotland Outer Hebrides 2019 25CM DTM OGC Service",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:scotland-outer-hebrides-2019-25cm-dtm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/25cm/laz"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -7.572839560697914,
+              57.0645275761821
+            ],
+            [
+              -5.999080144916379,
+              57.0645275761821
+            ],
+            [
+              -5.999080144916379,
+              58.28178778433961
+            ],
+            [
+              -7.572839560697914,
+              58.28178778433961
+            ],
+            [
+              -7.572839560697914,
+              57.0645275761821
+            ]
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "5caea2a6-7eb2-479a-8c3b-c601edb37ae9",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-dsm-50cm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "LiDAR for Scotland Outer Hebrides 2019 50CM DSM OGC Service",
+      "lineage": "Lineage to be completed.",
+      "abstract": "Abstract description to be completed.",
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -6.00,
+        "west": -7.66,
+        "north": 58.53,
+        "south": 57.03
+      },
+      "metadataDate": "2021-02-10T23:59:59Z",
+      "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
+      "temporalExtent": {
+        "end": "2019-01-01T23:59:59Z",
+        "begin": "2020-01-01T00:00:00Z"
+      },
+      "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2021-02-10",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "Needs to be completed.",
+      "additionalInformationSource": "Needs to be completed."
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title":"LiDAR for Scotland Outer Hebrides 2019 50CM DSM OGC Service",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:scotland-outer-hebrides-2019-50cm-dsm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/50cm/dsm"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -7.662275725154243,
+              57.03556264781076
+            ],
+            [
+              -5.99618117554249,
+              57.03556264781076
+            ],
+            [
+              -5.99618117554249,
+              58.5236462936041
+            ],
+            [
+              -7.662275725154243,
+              58.5236462936041
+            ],
+            [
+              -7.662275725154243,
+              57.03556264781076
+            ]
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "59aba6a6-4989-4cb3-8554-97fb6a1eeec0",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-dtm-50cm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "LiDAR for Scotland Outer Hebrides 2019 50CM DTM OGC Service",
+      "lineage": "Lineage to be completed.",
+      "abstract": "Abstract description to be completed.",
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -6.00,
+        "west": -7.66,
+        "north": 58.53,
+        "south": 57.03
+      },
+      "metadataDate": "2021-02-10T23:59:59Z",
+      "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
+      "temporalExtent": {
+        "end": "2019-01-01T23:59:59Z",
+        "begin": "2020-01-01T00:00:00Z"
+      },
+      "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2021-02-10",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "Needs to be completed.",
+      "additionalInformationSource": "Needs to be completed."
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title":"LiDAR for Scotland Outer Hebrides 2019 50CM DTM OGC Service",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:scotland-outer-hebrides-2019-50cm-dtm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/50cm/dtm"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -7.662275725154243,
+              57.03556264781076
+            ],
+            [
+              -5.99618117554249,
+              57.03556264781076
+            ],
+            [
+              -5.99618117554249,
+              58.5236462936041
+            ],
+            [
+              -7.662275725154243,
+              58.5236462936041
+            ],
+            [
+              -7.662275725154243,
+              57.03556264781076
+            ]
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "ef716cc8-ee95-47ae-9976-e4531a86b5be",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-50cm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "LiDAR for Scotland Outer Hebrides 2019 50CM LAZ OGC Service",
+      "lineage": "Lineage to be completed.",
+      "abstract": "Abstract description to be completed.",
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -6.00,
+        "west": -7.66,
+        "north": 58.53,
+        "south": 57.03
+      },
+      "metadataDate": "2021-02-10T23:59:59Z",
+      "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
+      "temporalExtent": {
+        "end": "2019-01-01T23:59:59Z",
+        "begin": "2020-01-01T00:00:00Z"
+      },
+      "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2021-02-10",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "Needs to be completed.",
+      "additionalInformationSource": "Needs to be completed."
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title":"LiDAR for Scotland Outer Hebrides 2019 50CM DTM OGC Service",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:scotland-outer-hebrides-2019-50cm-dtm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/50cm/laz"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -7.662275725154243,
+              57.03556264781076
+            ],
+            [
+              -5.99618117554249,
+              57.03556264781076
+            ],
+            [
+              -5.99618117554249,
+              58.5236462936041
+            ],
+            [
+              -7.662275725154243,
+              58.5236462936041
+            ],
+            [
+              -7.662275725154243,
+              57.03556264781076
+            ]
+          ]
+        ]
+      ]
+    }
+  }  
+]
