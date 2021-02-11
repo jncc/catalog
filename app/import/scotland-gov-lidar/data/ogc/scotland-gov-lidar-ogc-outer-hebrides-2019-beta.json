@@ -66,13 +66,13 @@
     "properties": {},
     "data": {
       "product": {
-        "title":"LiDAR for Scotland Outer Hebrides 2019 25CM DSM OGC Service",
+        "title":"LiDAR for Scotland Outer Hebrides 2019 DSM 25CM OGC Service",
         "wms": {
           "url": "https://srsp-ows.jncc.gov.uk/ows",
-          "name": "scotland:scotland-outer-hebrides-2019-25cm-dsm"
+          "name": "scotland:scotland-outer-hebrides-2019-dsm-25cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/25cm/dsm"
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/dsm/25cm"
         }
       }
     },
@@ -173,13 +173,13 @@
     "properties": {},
     "data": {
       "product": {
-        "title":"LiDAR for Scotland Outer Hebrides 2019 25CM DTM OGC Service",
+        "title":"LiDAR for Scotland Outer Hebrides 2019 DTM 25CM OGC Service",
         "wms": {
           "url": "https://srsp-ows.jncc.gov.uk/ows",
-          "name": "scotland:scotland-outer-hebrides-2019-25cm-dtm"
+          "name": "scotland:scotland-outer-hebrides-2019-dtm-25cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/25cm/dtm"
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/dtm/25cm"
         }
       }
     },
@@ -215,10 +215,10 @@
   },
   {
     "id": "a286dee2-91a9-4e8b-aac7-d95ce3a486c2",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-25cm",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-16PPM",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
-      "title": "LiDAR for Scotland Outer Hebrides 2019 25CM LAZ OGC Service",
+      "title": "LiDAR for Scotland Outer Hebrides 2019 16PPM LAZ OGC Service",
       "lineage": "Lineage to be completed.",
       "abstract": "Abstract description to be completed.",
       "keywords": [
@@ -280,13 +280,13 @@
     "properties": {},
     "data": {
       "product": {
-        "title":"LiDAR for Scotland Outer Hebrides 2019 25CM DTM OGC Service",
+        "title":"LiDAR for Scotland Outer Hebrides 2019 DSM 25CM OGC Service",
         "wms": {
           "url": "https://srsp-ows.jncc.gov.uk/ows",
-          "name": "scotland:scotland-outer-hebrides-2019-25cm-dtm"
+          "name": "scotland:scotland-outer-hebrides-2019-dsm-25cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/25cm/laz"
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/laz/16ppm"
         }
       }
     },
@@ -387,13 +387,13 @@
     "properties": {},
     "data": {
       "product": {
-        "title":"LiDAR for Scotland Outer Hebrides 2019 50CM DSM OGC Service",
+        "title":"LiDAR for Scotland Outer Hebrides 2019 DSM 50CM OGC Service",
         "wms": {
           "url": "https://srsp-ows.jncc.gov.uk/ows",
-          "name": "scotland:scotland-outer-hebrides-2019-50cm-dsm"
+          "name": "scotland:scotland-outer-hebrides-2019-dsm-50cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/50cm/dsm"
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/dsm/50cm"
         }
       }
     },
@@ -494,13 +494,13 @@
     "properties": {},
     "data": {
       "product": {
-        "title":"LiDAR for Scotland Outer Hebrides 2019 50CM DTM OGC Service",
+        "title":"LiDAR for Scotland Outer Hebrides 2019 DTM 50CM OGC Service",
         "wms": {
           "url": "https://srsp-ows.jncc.gov.uk/ows",
-          "name": "scotland:scotland-outer-hebrides-2019-50cm-dtm"
+          "name": "scotland:scotland-outer-hebrides-2019-dtm-50cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/50cm/dtm"
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/dtm/50cm"
         }
       }
     },
@@ -536,10 +536,10 @@
   },
   {
     "id": "ef716cc8-ee95-47ae-9976-e4531a86b5be",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-50cm",
+    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-4ppm",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
-      "title": "LiDAR for Scotland Outer Hebrides 2019 50CM LAZ OGC Service",
+      "title": "LiDAR for Scotland Outer Hebrides 2019 4PPM LAZ OGC Service",
       "lineage": "Lineage to be completed.",
       "abstract": "Abstract description to be completed.",
       "keywords": [
@@ -601,13 +601,13 @@
     "properties": {},
     "data": {
       "product": {
-        "title":"LiDAR for Scotland Outer Hebrides 2019 50CM DTM OGC Service",
+        "title":"LiDAR for Scotland Outer Hebrides 2019 DSM 50CM OGC Service",
         "wms": {
           "url": "https://srsp-ows.jncc.gov.uk/ows",
-          "name": "scotland:scotland-outer-hebrides-2019-50cm-dtm"
+          "name": "scotland:scotland-outer-hebrides-2019-dsm-50cm-limited"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/50cm/laz"
+          "collection": "scotland-gov/lidar/outer-hebrides/2019/laz/4ppm"
         }
       }
     },
