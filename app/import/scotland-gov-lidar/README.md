@@ -94,3 +94,69 @@ Need to change the script to use `PLAN_NO` instead of `TILE_NAME` as that's the 
         --output ./data/lidar-4-laz.json \
         --region eu-west-1 \
         --profile jncc-prod-readonly
+
+### Outer Hebrides
+
+Need to change the script to use `PLAN_NO` instead of `TILE_NAME` as that's the attribute name in the grid file.
+
+    python ./scotland-lidar-json-generator.py \
+        --bucket scotland-gov-lidar-beta \
+        --path outer-hebrides/2019/dsm/25cm/27700/gridded/ \
+        --geojson ./data/grids/uk-os-grids/OSGB_Grid_1km.geojson \
+        --collection scotland-gov/lidar/outerheb-2019/dsm/25cm \
+        --collectiontitle "Outer Hebrides 19" \
+        --output ./data/outer-hebrides-2019-dsm-25cm.json \
+        --region eu-west-1 \
+        --profile jncc-prod-readonly
+
+    python ./scotland-lidar-json-generator.py \
+        --bucket scotland-gov-lidar-beta \
+        --path outer-hebrides/2019/dtm/25cm/27700/gridded/ \
+        --geojson ./data/grids/uk-os-grids/OSGB_Grid_1km.geojson \
+        --collection scotland-gov/lidar/outerheb-2019/dtm/25cm \
+        --collectiontitle "Outer Hebrides 19" \
+        --output ./data/outer-hebrides-2019-dtm-25cm.json \
+        --region eu-west-1 \
+        --profile jncc-prod-readonly
+
+    python ./scotland-lidar-json-generator.py \
+        --bucket scotland-gov-lidar-beta \
+        --path outer-hebrides/2019/laz/4ppm/27700/gridded/ \
+        --geojson ./data/grids/uk-os-grids/OSGB_Grid_1km.geojson \
+        --collection scotland-gov/lidar/outerheb-2019/laz/4ppm \
+        --collectiontitle "Outer Hebrides 19" \
+        --output ./data/outer-hebrides-2019-laz-4ppm.json \
+        --region eu-west-1 \
+        --profile jncc-prod-readonly
+
+    python ./scotland-lidar-json-generator.py \
+        --bucket scotland-gov-lidar-beta \
+        --path outer-hebrides/2019/laz/16ppm/27700/gridded/ \
+        --geojson ./data/grids/uk-os-grids/OSGB_Grid_1km.geojson \
+        --collection scotland-gov/lidar/outerheb-2019/laz/16ppm \
+        --collectiontitle "Outer Hebrides 19" \
+        --output ./data/outer-hebrides-2019-laz-16ppm.json \
+        --region eu-west-1 \
+        --profile jncc-prod-readonly
+
+Need to change the script to use `TILE_NAME` instead of `PLAN_NO` as that's the attribute name in the grid file.
+
+    python ./scotland-lidar-json-generator.py \
+        --bucket scotland-gov-lidar-beta \
+        --path outer-hebrides/2019/dsm/50cm/27700/gridded/ \
+        --geojson ./data/grids/uk-os-grids/OSGB_Grid_5km.geojson \
+        --collection scotland-gov/lidar/outerheb-2019/dsm/50cm \
+        --collectiontitle "Outer Hebrides 19" \
+        --output ./data/outer-hebrides-2019-dsm-50cm.json \
+        --region eu-west-1 \
+        --profile jncc-prod-readonly
+
+    python ./scotland-lidar-json-generator.py \
+        --bucket scotland-gov-lidar-beta \
+        --path outer-hebrides/2019/dtm/50cm/27700/gridded/ \
+        --geojson ./data/grids/uk-os-grids/OSGB_Grid_5km.geojson \
+        --collection scotland-gov/lidar/outerheb-2019/dtm/50cm \
+        --collectiontitle "Outer Hebrides 19" \
+        --output ./data/outer-hebrides-2019-dtm-50cm.json \
+        --region eu-west-1 \
+        --profile jncc-prod-readonly

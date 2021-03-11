@@ -38,7 +38,7 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, coll
         wgs84_grid_json = json.load(wgs84_grid_file)
         for item in wgs84_grid_json['features']:
             grids[item['properties']['TILE_NAME']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
-#           grids[item['properties']['PLAN_NO']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
+#            grids[item['properties']['PLAN_NO']] = {'wgs84': {'geojson': item['geometry'], 'bbox': get_bbox(item)}}
 
     #with open(osgb_grid_path) as osgb_grid_file:
     #    osgb_grid_json = json.load(osgb_grid_file)
@@ -49,42 +49,42 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, coll
     products = []
 
     for key in remote_bucket.objects.filter(Prefix=s3_path):
-        #GRID_50CM_DSM_CONTRACTNAME.TIFF
-        #Scotland Lidar-1 %s %s
         print(key.key)
-        (productName, fileType) = os.path.basename(key.key).split('.')
-        (grid, resolution, productType, collectionIdentifier) = productName.split('_')
-
-        products.append({
-            'name': productName.lower(),
-            'collectionName': collection_name,
-				'metadata': {
-					'title': '%s %s %s' % (collection_title, productType, grid),
-					'boundingBox': grids[grid]['wgs84']['bbox']
-				},
-				'properties': {
-					'osgbGridRef': grid
-				},
-				'footprint': grids[grid]['wgs84']['geojson'],
-				'data': {
-					'product': {
-						'title': '%s %s %s' % (collection_title, productType, grid),
-						'http': {
-							# 'url': 'https://s3-%s.amazonaws.com/%s/%s' % (region, bucket, key.key),
-							'url': 'https://%s.s3-%s.amazonaws.com/%s' % (bucket, region, key.key),
-							'size': key.size,
-							'type': getFileType(fileType)
-						},
-						's3': {
-							'key': key.key,
-							'bucket': bucket,
-							'region': region,
-							'size': key.size,
-							'type': getFileType(fileType)
-						}
-					}
-				}
-            })
+        if (not key.key.endswith('/')):
+            #GRID_50CM_DSM_CONTRACTNAME.TIFF
+            #Scotland Lidar-1 %s %s
+            (productName, fileType) = os.path.basename(key.key).split('.')
+            (grid, resolution, productType, collectionIdentifier) = productName.split('_')
+            products.append({
+                'name': productName.lower(),
+                'collectionName': collection_name,
+                    'metadata': {
+                        'title': '%s %s %s %s' % (collection_title, productType, resolution.lower(), grid),
+                        'boundingBox': grids[grid]['wgs84']['bbox']
+                    },
+                    'properties': {
+                        'osgbGridRef': grid
+                    },
+                    'footprint': grids[grid]['wgs84']['geojson'],
+                    'data': {
+                        'product': {
+                            'title': '%s %s %s %s' % (collection_title, productType, resolution.lower(), grid),
+                            'http': {
+                                # 'url': 'https://s3-%s.amazonaws.com/%s/%s' % (region, bucket, key.key),
+                                'url': 'https://%s.s3-%s.amazonaws.com/%s' % (bucket, region, key.key),
+                                'size': key.size,
+                                'type': getFileType(fileType)
+                            },
+                            's3': {
+                                'key': key.key,
+                                'bucket': bucket,
+                                'region': region,
+                                'size': key.size,
+                                'type': getFileType(fileType)
+                            }
+                        }
+                    }
+                })
 
     return products
 

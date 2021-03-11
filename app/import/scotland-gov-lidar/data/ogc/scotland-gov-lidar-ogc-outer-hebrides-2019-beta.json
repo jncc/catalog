@@ -72,7 +72,7 @@
           "name": "scotland:outer-hebrides-2019-dsm-25cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/dsm/25cm"
+          "collection": "scotland-gov/lidar/outerheb-2019/dsm/25cm"
         }
       }
     },
@@ -179,7 +179,7 @@
           "name": "scotland:outer-hebrides-2019-dtm-25cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/dtm/25cm"
+          "collection": "scotland-gov/lidar/outerheb-2019/dtm/25cm"
         }
       }
     },
@@ -286,7 +286,7 @@
           "name": "scotland:outer-hebrides-2019-dsm-25cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/laz/16ppm"
+          "collection": "scotland-gov/lidar/outerheb-2019/laz/16ppm"
         }
       }
     },
@@ -393,7 +393,7 @@
           "name": "scotland:outer-hebrides-2019-dsm-50cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/dsm/50cm"
+          "collection": "scotland-gov/lidar/outerheb-2019/dsm/50cm"
         }
       }
     },
@@ -500,7 +500,7 @@
           "name": "scotland:outer-hebrides-2019-dtm-50cm"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/dtm/50cm"
+          "collection": "scotland-gov/lidar/outerheb-2019/dtm/50cm"
         }
       }
     },
@@ -607,7 +607,7 @@
           "name": "scotland:outer-hebrides-2019-dsm-50cm-limited"
         },
         "catalog": {
-          "collection": "scotland-gov/lidar/outer-hebrides/2019/laz/4ppm"
+          "collection": "scotland-gov/lidar/outerheb-2019/laz/4ppm"
         }
       }
     },
