@@ -36,30 +36,30 @@ You obviously need a working *Python environment*. For example:
 
 ### Phase 1
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.1k.grid.scotland.geojson --path phase-1/laz/27700/gridded -c scotland-gov/lidar/phase-1/laz -t "Scotland Lidar Phase 1" -o ./data/lidar-1-laz.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.1k.grid.scotland.geojson --path phase-1/laz/27700/gridded -c scotland-gov/lidar/phase-1/laz -t "Scotland Lidar Phase 1" -o ./data/lidar-1-laz.json --profile jncc-prod-readonly
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-1/dsm/27700/gridded -c scotland-gov/lidar/phase-1/dsm -t "Scotland Lidar Phase 1" -o ./data/lidar-1-dsm.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-1/dsm/27700/gridded -c scotland-gov/lidar/phase-1/dsm -t "Scotland Lidar Phase 1" -o ./data/lidar-1-dsm.json --profile jncc-prod-readonly
 
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-1/dtm/27700/gridded -c scotland-gov/lidar/phase-1/dtm -t "Scotland Lidar Phase 1" -o ./data/lidar-1-dtm.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-1/dtm/27700/gridded -c scotland-gov/lidar/phase-1/dtm -t "Scotland Lidar Phase 1" -o ./data/lidar-1-dtm.json --profile jncc-prod-readonly
 
 ### Phase 2
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.5k.grid.scotland.geojson --path phase-2/laz/27700/gridded -c scotland-gov/lidar/phase-2/laz -t "Scotland Lidar Phase 2" -o ./data/lidar-2-laz.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.5k.grid.scotland.geojson --path phase-2/laz/27700/gridded -c scotland-gov/lidar/phase-2/laz -t "Scotland Lidar Phase 2" -o ./data/lidar-2-laz.json --profile jncc-prod-readonly
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-2/dsm/27700/gridded -c scotland-gov/lidar/phase-2/dsm -t "Scotland Lidar Phase 2" -o ./data/lidar-2-dsm.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-2/dsm/27700/gridded -c scotland-gov/lidar/phase-2/dsm -t "Scotland Lidar Phase 2" -o ./data/lidar-2-dsm.json --profile jncc-prod-readonly
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-2/dtm/27700/gridded -c scotland-gov/lidar/phase-2/dtm -t "Scotland Lidar Phase 2" -o ./data/lidar-2-dtm.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/scotland-os-grids-wgs84/wgs84.10k.grid.uk.geojson --path phase-2/dtm/27700/gridded -c scotland-gov/lidar/phase-2/dtm -t "Scotland Lidar Phase 2" -o ./data/lidar-2-dtm.json --profile jncc-prod-readonly
 
 ### Phase 3
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_5km.geojson --path phase-3/dsm/27700/gridded -c scotland-gov/lidar/phase-3/dsm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dsm.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_5km.geojson --path phase-3/dsm/27700/gridded -c scotland-gov/lidar/phase-3/dsm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dsm.json --profile jncc-prod-readonly
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_5km.geojson --path phase-3/dtm/27700/gridded -c scotland-gov/lidar/phase-3/dtm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dtm.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_5km.geojson --path phase-3/dtm/27700/gridded -c scotland-gov/lidar/phase-3/dtm -t "Scotland Lidar Phase 3" -o ./data/lidar-3-dtm.json --profile jncc-prod-readonly
 
 Need to change the script to use `PLAN_NO` instead of `TILE_NAME` as that's the attribute name in the grid file.
 
-    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_1km.geojson --path phase-3/laz/27700/gridded -c scotland-gov/lidar/phase-3/laz -t "Scotland Lidar Phase 3" -o ./data/lidar-3-laz.json
+    python ./scotland-lidar-json-generator.py -b scotland-gov-lidar-beta -r eu-west-1 -g ./data/grids/OSGB_Grid_1km.geojson --path phase-3/laz/27700/gridded -c scotland-gov/lidar/phase-3/laz -t "Scotland Lidar Phase 3" -o ./data/lidar-3-laz.json --profile jncc-prod-readonly
 
 ### Phase 4
 

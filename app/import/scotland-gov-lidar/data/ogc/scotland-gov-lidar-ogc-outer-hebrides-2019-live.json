@@ -1,7 +1,7 @@
 [
   {
     "id": "b3a5de31-0a7e-474d-b2c4-8775a70b568e",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-dsm-25cm",
+    "name": "scotland-gov-lidar-outerheb-2019-dsm-25cm",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "LiDAR for Outer Hebrides 2019 - 25cm DSM OGC Service",
@@ -68,7 +68,7 @@
       "product": {
         "title":"LiDAR for Outer Hebrides 2019 - 25cm DSM OGC Service",
         "wms": {
-          "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
           "name": "scotland:outer-hebrides-2019-dsm-25cm"
         },
         "catalog": {
@@ -108,7 +108,7 @@
   },
   {
     "id": "efdbd034-4cbb-4098-9db0-fd7bfee250e7",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-dtm-25cm",
+    "name": "scotland-gov-lidar-outerheb-2019-dtm-25cm",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "LiDAR for Outer Hebrides 2019 - 25cm DTM OGC Service",
@@ -175,7 +175,7 @@
       "product": {
         "title":"LiDAR for Outer Hebrides 2019 - 25cm DTM OGC Service",
         "wms": {
-          "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
           "name": "scotland:outer-hebrides-2019-dtm-25cm"
         },
         "catalog": {
@@ -215,7 +215,7 @@
   },
   {
     "id": "a286dee2-91a9-4e8b-aac7-d95ce3a486c2",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-16ppm",
+    "name": "scotland-gov-lidar-outerheb-2019-laz-16ppm",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "LiDAR for Outer Hebrides 2019 - 16 PPM LAS (LAZ) OGC Service",
@@ -282,7 +282,7 @@
       "product": {
         "title":"LiDAR for Outer Hebrides 2019 - 25cm DSM OGC Service",
         "wms": {
-          "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
           "name": "scotland:outer-hebrides-2019-dsm-25cm"
         },
         "catalog": {
@@ -322,7 +322,7 @@
   },
   {
     "id": "5caea2a6-7eb2-479a-8c3b-c601edb37ae9",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-dsm-50cm",
+    "name": "scotland-gov-lidar-outerheb-2019-dsm-50cm",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "LiDAR for Outer Hebrides 2019 - 50cm DSM OGC Service",
@@ -389,7 +389,7 @@
       "product": {
         "title":"LiDAR for Outer Hebrides 2019 - 50cm DSM OGC Service",
         "wms": {
-          "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
           "name": "scotland:outer-hebrides-2019-dsm-50cm"
         },
         "catalog": {
@@ -429,7 +429,7 @@
   },
   {
     "id": "59aba6a6-4989-4cb3-8554-97fb6a1eeec0",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-dtm-50cm",
+    "name": "scotland-gov-lidar-outerheb-2019-dtm-50cm",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "LiDAR for Outer Hebrides 2019 - 50cm DTM OGC Service",
@@ -496,7 +496,7 @@
       "product": {
         "title":"LiDAR for Outer Hebrides 2019 - 50cm DTM OGC Service",
         "wms": {
-          "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
           "name": "scotland:outer-hebrides-2019-dtm-50cm"
         },
         "catalog": {
@@ -536,7 +536,7 @@
   },
   {
     "id": "ef716cc8-ee95-47ae-9976-e4531a86b5be",
-    "name": "scotland-gov-lidar-outer-hebrides-2019-laz-4ppm",
+    "name": "scotland-gov-lidar-outerheb-2019-laz-4ppm",
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "LiDAR for Outer Hebrides 2019 - 4 PPM LAS (LAZ) OGC Service",
@@ -603,7 +603,7 @@
       "product": {
         "title":"LiDAR for Outer Hebrides 2019 - 50cm DSM Limited OGC Service",
         "wms": {
-          "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
           "name": "scotland:outer-hebrides-2019-dsm-50cm-limited"
         },
         "catalog": {
