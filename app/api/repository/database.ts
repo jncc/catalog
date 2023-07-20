@@ -3,7 +3,7 @@ import { Logger } from "../logging/logger";
 
 export class Database {
   private static _instance: Database;
-  public readonly queryBuilder: knex;
+  public readonly queryBuilder: knex.Knex;
 
   constructor() {
     let logger = Logger.GetLog()
@@ -17,7 +17,7 @@ export class Database {
       logger.debug(`Enabling SSL for database connection`)
     }
 
-    this.queryBuilder = knex({
+    this.queryBuilder = knex.default({
       client: 'pg',
       connection: cs,
       pool: {

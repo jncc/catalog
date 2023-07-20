@@ -81,7 +81,7 @@ export class ProductValidator {
     if (typeof propValidator.then === 'function') {
       return new Promise<string[]>(async (resolve, reject) => {
         propValidator.then((x) => {
-          resolve();
+          resolve(new Array as string[]);
         }).catch((e) => {
           errors = errors.concat(ValidationHelper.reduceErrors(e.errors, "properties"));
           reject(errors);
@@ -1063,8 +1063,7 @@ describe("Footprint Validator", () => {
 
   it("should not validate a missing CRS", () => {
     let p = Fixtures.GetTestProduct();
-    p.footprint = Fixtures.GetFootprint();
-    delete p.footprint.crs;
+    p.footprint = Fixtures.GetFootprintWihoutCrs();
 
     return chai.expect(validator.validate(p)).to.be.rejected;
   });

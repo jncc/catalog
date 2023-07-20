@@ -51,6 +51,19 @@ export class Fixtures {
     };
   }
 
+  public static GetFootprintWihoutCrs(): any {
+    return {
+      type: "MultiPolygon",
+      coordinates: [[[
+        [-3.252708444643698, 55.01808601299337],
+        [-3.096345813599173, 55.01959554822891],
+        [-3.098805121795129, 55.1094396249146],
+        [-3.25551820944467, 55.10792506925024],
+        [-3.252708444643698, 55.01808601299337]
+      ]]]
+    };
+  }
+
   public static GetCollection(): ICollection {
     return {
       id: "3bfc0280-5708-40ee-aef4-df3ddeb4fd21",

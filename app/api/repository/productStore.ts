@@ -14,7 +14,7 @@ export class ProductStore {
   }
 
   public getProductCountByCollection(query: query.ProductQuery): Promise<any> {
-    let dbQuery = this.getProductCount(query) as knex.QueryBuilder
+    let dbQuery = this.getProductCount(query) as knex.Knex.QueryBuilder
 
     dbQuery = dbQuery
       .select({collectionName: 'collection_name'})
@@ -50,7 +50,7 @@ export class ProductStore {
     return dbQuery;
   }
 
-  private static getBaseQuery(query: query.ProductQuery): knex.QueryBuilder<IProduct, any> {
+  private static getBaseQuery(query: query.ProductQuery): knex.Knex.QueryBuilder<IProduct, any> {
     let qb = Database.instance.queryBuilder;
 
     let baseQuery = qb<IProduct>("product_view")
