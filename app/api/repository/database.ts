@@ -13,7 +13,7 @@ export class Database {
     let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
     
     if (process.env.PGSSL) {
-      cs = cs + '?ssl=true';
+      cs = cs + '?sslmode=require';
       logger.debug(`Enabling SSL for database connection`)
     }
 
