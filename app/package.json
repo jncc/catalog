@@ -24,7 +24,7 @@
   "homepage": "https://github.com/jncc/catalog#readme",
   "dependencies": {
     "@mapbox/geojsonhint": "3.2.0",
-    "ajv": "6.5.4",
+    "ajv": "6.12.3",
     "ajv-async": "1.0.1",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
