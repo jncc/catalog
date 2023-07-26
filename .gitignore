@@ -11,14 +11,14 @@
 node_modules/
 npm-debug.log
 
+# yarn
+yarn-error.log
+
+# vscode
+.vscode
+
 # build output
 built/
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
-*.lock
 
 # Ignore changes to set_env scripts
 scripts/set_env.*
