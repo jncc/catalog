@@ -67,7 +67,7 @@ export class ProductValidator {
     });
   }
 
-  private async validateProductProperties(collection: Collection.ICollection, product: Product.IProduct, errors: string[]): Promise<string[]> {
+  private async validateProductProperties(collection: Collection.ICollection, product: Product.IProduct, errors: string[]): Promise<string[] | void> {
     if (collection.productsSchema === "") {
       return Promise.resolve(errors);
     }
@@ -79,9 +79,9 @@ export class ProductValidator {
 
     //propValidator.then is sometimes a boolean not a function.?? MD discovery
     if (typeof propValidator.then === 'function') {
-      return new Promise<string[]>(async (resolve, reject) => {
+      return new Promise<string[] | void>(async (resolve, reject) => {
         propValidator.then((x) => {
-          resolve(new Array as string[]);
+          resolve();
         }).catch((e) => {
           errors = errors.concat(ValidationHelper.reduceErrors(e.errors, "properties"));
           reject(errors);
