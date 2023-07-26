@@ -1,5 +1,7 @@
 import * as knex from 'knex';
 import { Logger } from "../logging/logger";
+import * as fs from 'fs';
+import { ConnectionOptions } from 'tls';
 
 export class Database {
   private static _instance: Database;
@@ -9,17 +11,27 @@ export class Database {
     let logger = Logger.GetLog()
 
     logger.debug(`Using host '${process.env.PGHOST}' and database '${process.env.PGDATABASE}'`)
-
-    let cs = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
-    
+      
+    let ssl : boolean | ConnectionOptions = false;
     if (process.env.PGSSL) {
-      cs = cs + '?sslmode=require';
+      ssl = { 
+        ca: fs.readFileSync('built/certs/global-bundle.pem').toString()
+      }
       logger.debug(`Enabling SSL for database connection`)
     }
 
+    let conn = {
+      host: process.env.PGHOST,
+      port: Number(process.env.PGPORT),
+      user: process.env.PGUSER,
+      database: process.env.PGDATABASE,
+      password: process.env.PGPASSWORD,
+      ssl: ssl
+    };
+
     this.queryBuilder = knex.default({
       client: 'pg',
-      connection: cs,
+      connection: conn,
       pool: {
         min: 2,
         max: 10
