@@ -17,3 +17,101 @@ phases:
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:latest
+      - echo Writing new taskdef.json
+      - |
+        cat > taskdef.json <<EOF
+        {
+          "containerDefinitions": [
+            {
+              "name": "$PROJECT",
+              "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION,
+              "cpu": $CONTAINER_CPU_UNITS,
+              "memory": $CONTAINER_MEMORY,
+              "essential": true,
+              "entryPoint": null,
+              "portMappings": [
+                {
+                  "hostPort": $TASK_HOST_PORT,
+                  "protocol": "$TASK_HOST_PROTOCOL",
+                  "containerPort": $TASK_CONTAINER_PORT
+                }
+              ],
+              "environment": [
+                {
+                  "name": "NODE_ENV",
+                  "value": "production"
+                },
+                {
+                  "name"  = "PGSSL"
+                  "value" = "true"
+                },
+                {
+                  "name"  = "LOG_LEVEL"
+                  "value" = "info"
+                },
+                {
+                  "name"  = "LOG_LOCATION"
+                  "value" = "/var/log/catalog/catalog.log"
+                },
+                {
+                  "name"  = "READ_ONLY"
+                  "value" = "$READ_ONLY"
+                }
+              ],
+              "secrets": [
+                {
+                  "name"      = "PGUSER"
+                  "valueFrom" = "$PGUSER"
+                },
+                {
+                  "name"      = "PGPASSWORD"
+                  "valueFrom" = "$PGPASSWORD"
+                },
+                {
+                  "name"      = "PGHOST"
+                  "valueFrom" = "$PGHOST"
+                },
+                {
+                  "name"      = "PGPORT"
+                  "valueFrom" = "$PGPORT"
+                },
+                {
+                  "name"      = "PGDATABASE"
+                  "valueFrom" = "$PGDATABASE"
+                }
+              ],
+              "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "$TASK_AWSLOGS_GROUP",
+                  "awslogs-region": "$TASK_AWSLOGS_REGION",
+                  "awslogs-stream-prefix": "$TASK_AWSLOGS_PREFIX"
+                }
+              }
+            }
+          ]
+        }
+        EOF
+      - |
+        cat > appspec.yaml <<EOF
+        version: 0.0
+        Resources:
+          - TargetService:
+              Type: AWS::ECS::Service
+              Properties:
+                TaskDefinition: <TASK_DEFINITION>
+                LoadBalancerInfo:
+                  ContainerName: "$PROJECT"
+                  ContainerPort: $TASK_CONTAINER_PORT
+                PlatformVersion: "$APPSPEC_PLATFORM_VERSION"
+                NetworkConfiguration:
+                  AwsvpcConfiguration:
+                    Subnets: [$DEPLOYMENT_SUBNETS]
+                    SecurityGroups: [$DEPLOYMENT_SECURITY_GROUPS]
+        EOF
+      - echo Done!
+artifacts:
+  files:
+    - appspec.yaml
+    - taskdef.json
+  name: emodnet-geoserver-beta-$IMAGE_TAG
