@@ -42,41 +42,41 @@ phases:
                   "value": "production"
                 },
                 {
-                  "name": "PGSSL"
+                  "name": "PGSSL",
                   "value": "true"
                 },
                 {
-                  "name": "LOG_LEVEL"
+                  "name": "LOG_LEVEL",
                   "value": "info"
                 },
                 {
-                  "name": "LOG_LOCATION"
+                  "name": "LOG_LOCATION",
                   "value": "/var/log/catalog/catalog.log"
                 },
                 {
-                  "name": "READ_ONLY"
+                  "name": "READ_ONLY",
                   "value": "$READ_ONLY"
                 }
               ],
               "secrets": [
                 {
-                  "name": "PGUSER"
+                  "name": "PGUSER",
                   "valueFrom": "$PGUSER"
                 },
                 {
-                  "name": "PGPASSWORD"
+                  "name": "PGPASSWORD",
                   "valueFrom": "$PGPASSWORD"
                 },
                 {
-                  "name": "PGHOST"
+                  "name": "PGHOST",
                   "valueFrom": "$PGHOST"
                 },
                 {
-                  "name": "PGPORT"
+                  "name": "PGPORT",
                   "valueFrom": "$PGPORT"
                 },
                 {
-                  "name": "PGDATABASE"
+                  "name": "PGDATABASE",
                   "valueFrom": "$PGDATABASE"
                 }
               ],
