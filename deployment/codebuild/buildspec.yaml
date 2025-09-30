@@ -24,7 +24,6 @@ phases:
           "containerDefinitions": [
             {
               "name": "$PROJECT",
-              "family": "$FAMILY",
               "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION",
               "cpu": $CONTAINER_CPU_UNITS,
               "memory": $CONTAINER_MEMORY,
@@ -90,7 +89,14 @@ phases:
                 }
               }
             }
-          ]
+          ],
+          "family": "$FAMILY",
+          "networkMode": "$NETWORK_MODE",
+          "cpu": "$CONTAINER_CPU_UNITS",
+          "memory": "$CONTAINER_MEMORY",
+          "executionRoleArn": "$EXECUTION_ROLE_ARN",
+          "taskRoleArn": "$TASK_ROLE_ARN",
+          "requiresCompatibilities": ["FARGATE"]
         }
         EOF
       - |
