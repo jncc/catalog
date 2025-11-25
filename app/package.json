@@ -26,7 +26,7 @@
     "@mapbox/geojsonhint": "3.2.0",
     "ajv": "6.12.3",
     "ajv-async": "1.0.1",
-    "body-parser": "^1.20.2",
+    "body-parser": "^2.2.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "geojson": "0.5.0",
