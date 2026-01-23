@@ -15,7 +15,8 @@ export class Database {
     let ssl : boolean | ConnectionOptions = false;
     if (process.env.PGSSL) {
       ssl = { 
-        ca: fs.readFileSync('built/certs/global-bundle.pem').toString()
+        ca: fs.readFileSync('built/certs/global-bundle.pem').toString(),
+        rejectUnauthorized: false
       }
       logger.debug(`Enabling SSL for database connection`)
     }
