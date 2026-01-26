@@ -1,0 +1,286 @@
+[
+  {
+    "id": "c4a5829e-84e4-49af-b531-abb635b61ee5",
+    "name": "scotland-gov-lidar-nlp-nlp-2025-dsm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "Scottish Land LiDAR Programme - 2025 capture - DSM",
+      "lineage": "",
+      "abstract": "The Scottish Land LiDAR Programme is the result of collaboration across government to capture LiDAR data for the country. The Rural and Environment Science and Analytical Services (RESAS) team and Digital Directorate teams have worked collaboratively with UK Government Digital Services, who have provided our mechanism for data collection through the Aerial Photography for Great Britain (APGB) Project. The programme is funded jointly by Scottish Government (including Agriculture and Rural Economy, Environment and Forestry, RESAS, Agricultural Reform Programme, and Digital Directorate), Scottish Environment Protection Agency, Foresty and Land Scotland, NatureScot, Scottish Water and Scottish Forestry. The data are collected and processed by Bluesky International Limited. The data will be captured between 2025 to 2027.  This dataset is from the 2025 capture, and is supplied as: Point cloud (.las format) with a resolution of 10 points per square metre; Digital Terrain Model and Digital Surface Model (DTM and DSM), available for download as GeoTIFF, and also supplied via WMS by JNCC.",
+      "keywords": [],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -4.3316470761219765,
+        "west": -5.86016600765827,
+        "north": 55.75726352903444,
+        "south": 54.62913742846132
+      },
+      "metadataDate": "2026-01-26",
+      "resourceType": "dataset",
+      "temporalExtent": {
+        "end": "2025-12-31",
+        "begin": "2025-05-19"
+      },
+      "useConstraints": "No limitations to public access. Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government © Crown copyright and database right (2025).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2026-01-22",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "No limitations on public access",
+      "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/1136b932-bc88-4e23-9f26-762cd5e0e5a0"
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title": "Scottish Land LiDAR Programme - 2025 capture - DSM",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:nlp-2025-dsm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/nlp/nlp-2025/dsm"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -5.86016600765827,
+              54.62913742846132
+            ],
+            [
+              -4.3316470761219765,
+              54.62913742846132
+            ],
+            [
+              -4.3316470761219765,
+              55.75726352903444
+            ],
+            [
+              -5.86016600765827,
+              55.75726352903444
+            ],
+            [
+              -5.86016600765827,
+              54.62913742846132
+            ]
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "1f84fef5-cea7-46f4-9766-694f6fd3ecdd",
+    "name": "scotland-gov-lidar-nlp-nlp-2025-dtm",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "Scottish Land LiDAR Programme - 2025 capture - DTM",
+      "lineage": "",
+      "abstract": "The Scottish Land LiDAR Programme is the result of collaboration across government to capture LiDAR data for the country. The Rural and Environment Science and Analytical Services (RESAS) team and Digital Directorate teams have worked collaboratively with UK Government Digital Services, who have provided our mechanism for data collection through the Aerial Photography for Great Britain (APGB) Project. The programme is funded jointly by Scottish Government (including Agriculture and Rural Economy, Environment and Forestry, RESAS, Agricultural Reform Programme, and Digital Directorate), Scottish Environment Protection Agency, Foresty and Land Scotland, NatureScot, Scottish Water and Scottish Forestry. The data are collected and processed by Bluesky International Limited. The data will be captured between 2025 to 2027.  This dataset is from the 2025 capture, and is supplied as: Point cloud (.las format) with a resolution of 10 points per square metre; Digital Terrain Model and Digital Surface Model (DTM and DSM), available for download as GeoTIFF, and also supplied via WMS by JNCC.",
+      "keywords": [],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -4.3316470761219765,
+        "west": -5.86016600765827,
+        "north": 55.75726352903444,
+        "south": 54.62913742846132
+      },
+      "metadataDate": "2026-01-26",
+      "resourceType": "dataset",
+      "topicCategory": "",
+      "temporalExtent": {
+        "end": "2025-12-31",
+        "begin": "2025-05-19"
+      },
+      "useConstraints": "No limitations to public access. Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government © Crown copyright and database right (2025).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2026-01-22",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "No limitations on public access",
+      "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/1136b932-bc88-4e23-9f26-762cd5e0e5a0"
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title": "Scottish Land LiDAR Programme - 2025 capture - DTM",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:nlp-2025-dtm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/nlp/nlp-2025/dtm"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -5.86016600765827,
+              54.62913742846132
+            ],
+            [
+              -4.3316470761219765,
+              54.62913742846132
+            ],
+            [
+              -4.3316470761219765,
+              55.75726352903444
+            ],
+            [
+              -5.86016600765827,
+              55.75726352903444
+            ],
+            [
+              -5.86016600765827,
+              54.62913742846132
+            ]
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "1a89460d-21a9-430a-b33b-c1184aa0c601",
+    "name": "scotland-gov-lidar-nlp-nlp-2025-laz",
+    "collectionName": "scotland-gov/lidar/ogc",
+    "metadata": {
+      "title": "Scottish Land LiDAR Programme - 2025 capture - LAZ",
+      "lineage": "",
+      "abstract": "The Scottish Land LiDAR Programme is the result of collaboration across government to capture LiDAR data for the country. The Rural and Environment Science and Analytical Services (RESAS) team and Digital Directorate teams have worked collaboratively with UK Government Digital Services, who have provided our mechanism for data collection through the Aerial Photography for Great Britain (APGB) Project. The programme is funded jointly by Scottish Government (including Agriculture and Rural Economy, Environment and Forestry, RESAS, Agricultural Reform Programme, and Digital Directorate), Scottish Environment Protection Agency, Foresty and Land Scotland, NatureScot, Scottish Water and Scottish Forestry. The data are collected and processed by Bluesky International Limited. The data will be captured between 2025 to 2027.  This dataset is from the 2025 capture, and is supplied as: Point cloud (.las format) with a resolution of 10 points per square metre; Digital Terrain Model and Digital Surface Model (DTM and DSM), available for download as GeoTIFF, and also supplied via WMS by JNCC.",
+      "keywords": [],
+      "dataFormat": "GeoTIFF",
+      "boundingBox": {
+        "east": -4.3316470761219765,
+        "west": -5.86016600765827,
+        "north": 55.75726352903444,
+        "south": 54.62913742846132
+      },
+      "metadataDate": "2026-01-26",
+      "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
+      "temporalExtent": {
+        "end": "2025-12-31",
+        "begin": "2025-05-19"
+      },
+      "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
+      "resourceLocator": "https://remotesensingdata.gov.scot/data",
+      "datasetReferenceDate": "2026-01-22",
+      "metadataPointOfContact": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "metadataPointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "spatialReferenceSystem": "EPSG:27700",
+      "responsibleOrganisation": {
+        "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+        "role": "pointOfContact",
+        "email": "GI-SAT@gov.scot",
+        "address": {
+          "city": "Edinburgh, Scotland",
+          "country": "United Kingdom",
+          "postalCode": "EH6 6QQ",
+          "deliveryPoint": "Victoria Quay"
+        }
+      },
+      "limitationsOnPublicAccess": "No limitations on public access",
+      "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/1136b932-bc88-4e23-9f26-762cd5e0e5a0"
+    },
+    "properties": {},
+    "data": {
+      "product": {
+        "title": "Scottish Land LiDAR Programme - 2025 capture - LAZ",
+        "wms": {
+          "url": "https://srsp-ows.jncc.gov.uk/ows",
+          "name": "scotland:nlp-2025-dsm"
+        },
+        "catalog": {
+          "collection": "scotland-gov/lidar/nlp/nlp-2025/laz"
+        }
+      }
+    },
+    "footprint": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -5.86016600765827,
+              54.62913742846132
+            ],
+            [
+              -4.3316470761219765,
+              54.62913742846132
+            ],
+            [
+              -4.3316470761219765,
+              55.75726352903444
+            ],
+            [
+              -5.86016600765827,
+              55.75726352903444
+            ],
+            [
+              -5.86016600765827,
+              54.62913742846132
+            ]
+          ]
+        ]
+      ]
+    }
+  }
+]
