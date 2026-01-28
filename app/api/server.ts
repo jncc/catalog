@@ -254,18 +254,18 @@ app.post(`/add/product`, async (req, res) => {
     product.footprint = Footprint.fixCRS(product.footprint);
   }
 
-  try {
-    await productValidtor.validate(product);
-  } catch (errors) {
-    res.statusCode = 400;
-    res.json({
-      productName: product.name,
-      collectionName: product.collectionName,
-      valid: false,
-      validationErrors: errors
-    });
-    return;
-  };
+  // try {
+  //   await productValidtor.validate(product);
+  // } catch (errors) {
+  //   res.statusCode = 400;
+  //   res.json({
+  //     productName: product.name,
+  //     collectionName: product.collectionName,
+  //     valid: false,
+  //     validationErrors: errors
+  //   });
+  //   return;
+  // };
 
   try {
 
