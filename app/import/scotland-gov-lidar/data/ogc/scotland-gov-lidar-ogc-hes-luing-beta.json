@@ -1,0 +1,326 @@
+[
+    {
+        "id": "ef00fddd-b599-4101-939b-45f30e11a5f5",
+        "name": "scotland-gov-lidar-hes-hes-luing-dsm",
+        "collectionName": "scotland-gov/lidar/ogc",
+        "metadata": {
+            "title": "LiDAR for Historic Environment Scotland Projects Isle of Luing DSM",
+            "lineage": "Commissioned by Luing History Group in 2020, the contract was awarded to Fugro who conducted the survey and processed the data. The survey took place on 9th September 2020 and covered about 20 km². The average point density is about 25 last echoes/sqm. The Digital Surface Model (DSM) is at 50cm resolution.",
+            "abstract": "The data was collected for the Slate Islands off the west coast of Scotland offering a complete coverage of Luing and Torsa. A group of small islands to the west including Fladda and Belnahua, as well as the southernmost part of Seil and northern tip of Shuna were also scanned.",
+            "keywords": [
+                {
+                    "value": "Orthoimagery",
+                    "vocab": "GEMET - INSPIRE themes, version 1.0"
+                },
+                {
+                    "value": "Elevation",
+                    "vocab": "GEMET - INSPIRE themes, version 1.0"
+                },
+                {
+                    "value": "Society",
+                    "vocab": ""
+                }
+            ],
+            "dataFormat": "GeoTIFF",
+            "boundingBox": {
+                "east": -5.579067128495297,
+                "west": -5.701120310416321,
+                "north": 56.28435921497489,
+                "south": 56.18241164704304
+            },
+            "metadataDate": "2022-05-06",
+            "resourceType": "dataset",
+            "topicCategory": "Orthoimagery Elevation",
+            "temporalExtent": {
+                "end": "2020-09-09",
+                "begin": "2020-09-09"
+            },
+            "useConstraints": "Non-Commercial Government Licence",
+            "resourceLocator": "https://remotesensingdata.gov.scot",
+            "datasetReferenceDate": "2022-07-07T09:14:33",
+            "metadataPointOfContact": {
+                "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+                "role": "metadataPointOfContact",
+                "email": "GI-SAT@gov.scot",
+                "address": {
+                    "city": "Edinburgh, Scotland",
+                    "country": "United Kingdom",
+                    "postalCode": "EH6 6QQ",
+                    "deliveryPoint": "Victoria Quay"
+                }
+            },
+            "spatialReferenceSystem": "EPSG:27700",
+            "responsibleOrganisation": {
+                "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+                "role": "pointOfContact",
+                "email": "GI-SAT@gov.scot",
+                "address": {
+                    "city": "Edinburgh, Scotland",
+                    "country": "United Kingdom",
+                    "postalCode": "EH6 6QQ",
+                    "deliveryPoint": "Victoria Quay"
+                }
+            },
+            "limitationsOnPublicAccess": "Non-Commercial Government Licence",
+            "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/62a2d932-5b73-4815-9718-23a92c3267a2"
+        },
+        "properties": {},
+        "data": {
+            "product": {
+                "title": "LiDAR for Historic Environment Scotland Isle of Luing DSM",
+                "wms": {
+                    "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+                    "name": "scotland:scotland-gov-lidar-hes-hes-luing-dsm"
+                },
+                "catalog": {
+                    "collection": "scotland-gov/lidar/hes/hes-luing/dsm"
+                }
+            }
+        },
+        "footprint": {
+            "type": "MultiPolygon",
+            "coordinates": [
+                [
+                    [
+                        [
+                            -5.70112031,
+                            56.182411647
+                        ],
+                        [
+                            -5.579067128,
+                            56.182411647
+                        ],
+                        [
+                            -5.579067128,
+                            56.284359215
+                        ],
+                        [
+                            -5.70112031,
+                            56.284359215
+                        ],
+                        [
+                            -5.70112031,
+                            56.182411647
+                        ]
+                    ]
+                ]
+            ]
+        }
+    },
+    {
+        "id": "dc5e2cfa-1d7d-4755-8519-81ebd0a93bf0",
+        "name": "scotland-gov-lidar-hes-hes-luing-dtm",
+        "collectionName": "scotland-gov/lidar/ogc",
+        "metadata": {
+            "title": "LiDAR for Historic Environment Scotland Projects Isle of Luing DTM",
+            "lineage": "Commissioned by Luing History Group in 2020, the contract was awarded to Fugro who conducted the survey and processed the data. The survey took place on 9th September 2020 and covered about 20 km². The average point density is about 25 last echoes/sqm. The Digital Surface Model (DSM) is at 50cm resolution.",
+            "abstract": "The data was collected for the Slate Islands off the west coast of Scotland offering a complete coverage of Luing and Torsa. A group of small islands to the west including Fladda and Belnahua, as well as the southernmost part of Seil and northern tip of Shuna were also scanned.",
+            "keywords": [
+                {
+                    "value": "Orthoimagery",
+                    "vocab": "GEMET - INSPIRE themes, version 1.0"
+                },
+                {
+                    "value": "Elevation",
+                    "vocab": "GEMET - INSPIRE themes, version 1.0"
+                },
+                {
+                    "value": "Society",
+                    "vocab": ""
+                }
+            ],
+            "dataFormat": "GeoTIFF",
+            "boundingBox": {
+                "east": -5.579067128495297,
+                "west": -5.701120310416321,
+                "north": 56.28435921497489,
+                "south": 56.18241164704304
+            },
+            "metadataDate": "2022-05-06",
+            "resourceType": "dataset",
+            "topicCategory": "Orthoimagery Elevation",
+            "temporalExtent": {
+                "end": "2020-09-09",
+                "begin": "2020-09-09"
+            },
+            "useConstraints": "Non-Commercial Government Licence",
+            "resourceLocator": "https://remotesensingdata.gov.scot",
+            "datasetReferenceDate": "2022-07-07T09:14:33",
+            "metadataPointOfContact": {
+                "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+                "role": "metadataPointOfContact",
+                "email": "GI-SAT@gov.scot",
+                "address": {
+                    "city": "Edinburgh, Scotland",
+                    "country": "United Kingdom",
+                    "postalCode": "EH6 6QQ",
+                    "deliveryPoint": "Victoria Quay"
+                }
+            },
+            "spatialReferenceSystem": "EPSG:27700",
+            "responsibleOrganisation": {
+                "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+                "role": "pointOfContact",
+                "email": "GI-SAT@gov.scot",
+                "address": {
+                    "city": "Edinburgh, Scotland",
+                    "country": "United Kingdom",
+                    "postalCode": "EH6 6QQ",
+                    "deliveryPoint": "Victoria Quay"
+                }
+            },
+            "limitationsOnPublicAccess": "Non-Commercial Government Licence",
+            "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/3b005723-7f14-48d8-80ed-1eeabc44633a"
+        },
+        "properties": {},
+        "data": {
+            "product": {
+                "title": "LiDAR for Historic Environment Scotland Isle of Luing DTM",
+                "wms": {
+                    "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+                    "name": "scotland:scotland-gov-lidar-hes-hes-luing-dtm"
+                },
+                "catalog": {
+                    "collection": "scotland-gov/lidar/hes/hes-luing/dtm"
+                }
+            }
+        },
+        "footprint": {
+            "type": "MultiPolygon",
+            "coordinates": [
+                [
+                    [
+                        [
+                            -5.70112031,
+                            56.182411647
+                        ],
+                        [
+                            -5.579067128,
+                            56.182411647
+                        ],
+                        [
+                            -5.579067128,
+                            56.284359215
+                        ],
+                        [
+                            -5.70112031,
+                            56.284359215
+                        ],
+                        [
+                            -5.70112031,
+                            56.182411647
+                        ]
+                    ]
+                ]
+            ]
+        }
+    },
+    {
+        "id": "399cf197-0baf-44f9-8db8-38684bd9faab",
+        "name": "scotland-gov-lidar-hes-hes-luing-laz",
+        "collectionName": "scotland-gov/lidar/ogc",
+        "metadata": {
+            "title": "LiDAR for Historic Environment Scotland Projects Isle of Luing LAZ",
+            "lineage": "Commissioned by Luing History Group in 2020, the contract was awarded to Fugro who conducted the survey and processed the data. The survey took place on 9th September 2020 and covered about 20 km². The average point density is about 25 last echoes/sqm. The Digital Surface Model (DSM) is at 50cm resolution.",
+            "abstract": "The data was collected for the Slate Islands off the west coast of Scotland offering a complete coverage of Luing and Torsa. A group of small islands to the west including Fladda and Belnahua, as well as the southernmost part of Seil and northern tip of Shuna were also scanned.",
+            "keywords": [
+                {
+                    "value": "Orthoimagery",
+                    "vocab": "GEMET - INSPIRE themes, version 1.0"
+                },
+                {
+                    "value": "Elevation",
+                    "vocab": "GEMET - INSPIRE themes, version 1.0"
+                },
+                {
+                    "value": "Society",
+                    "vocab": ""
+                }
+            ],
+            "dataFormat": "GeoTIFF",
+            "boundingBox": {
+                "east": -5.579067128495297,
+                "west": -5.701120310416321,
+                "north": 56.28435921497489,
+                "south": 56.18241164704304
+            },
+            "metadataDate": "2022-05-06",
+            "resourceType": "dataset",
+            "topicCategory": "Orthoimagery Elevation",
+            "temporalExtent": {
+                "end": "2020-09-09",
+                "begin": "2020-09-09"
+            },
+            "useConstraints": "Non-Commercial Government Licence",
+            "resourceLocator": "https://remotesensingdata.gov.scot",
+            "datasetReferenceDate": "2022-07-07T09:14:33",
+            "metadataPointOfContact": {
+                "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+                "role": "metadataPointOfContact",
+                "email": "GI-SAT@gov.scot",
+                "address": {
+                    "city": "Edinburgh, Scotland",
+                    "country": "United Kingdom",
+                    "postalCode": "EH6 6QQ",
+                    "deliveryPoint": "Victoria Quay"
+                }
+            },
+            "spatialReferenceSystem": "EPSG:27700",
+            "responsibleOrganisation": {
+                "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+                "role": "pointOfContact",
+                "email": "GI-SAT@gov.scot",
+                "address": {
+                    "city": "Edinburgh, Scotland",
+                    "country": "United Kingdom",
+                    "postalCode": "EH6 6QQ",
+                    "deliveryPoint": "Victoria Quay"
+                }
+            },
+            "limitationsOnPublicAccess": "Non-Commercial Government Licence",
+            "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/f96bdfe3-9889-4e3c-b9b5-9c70695fa01c"
+        },
+        "properties": {},
+        "data": {
+            "product": {
+                "title": "LiDAR for Historic Environment Scotland Isle of Luing LAZ",
+                "wms": {
+                    "url": "https://beta-srsp-ows.jncc.gov.uk/ows",
+                    "name": "scotland:scotland-gov-lidar-hes-hes-luing-dsm"
+                },
+                "catalog": {
+                    "collection": "scotland-gov/lidar/hes/hes-luing/laz"
+                }
+            }
+        },
+        "footprint": {
+            "type": "MultiPolygon",
+            "coordinates": [
+                [
+                    [
+                        [
+                            -5.70112031,
+                            56.182411647
+                        ],
+                        [
+                            -5.579067128,
+                            56.182411647
+                        ],
+                        [
+                            -5.579067128,
+                            56.284359215
+                        ],
+                        [
+                            -5.70112031,
+                            56.284359215
+                        ],
+                        [
+                            -5.70112031,
+                            56.182411647
+                        ]
+                    ]
+                ]
+            ]
+        }
+    }
+]
