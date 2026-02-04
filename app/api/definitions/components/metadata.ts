@@ -137,7 +137,7 @@ export const Schema = {
       },
       resourceType: {
         type: "string",
-        minLength: "1"
+        minLength: 1
       },
       boundingBox: {
         $ref: "#/definitions/metadata/boundingBox"
