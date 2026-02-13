@@ -10,7 +10,7 @@ import * as ValidatorFactory from "./validatorFactory";
 import "mocha";
 import "mocha-inline";
 import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import chaiAsPromised from "chai-as-promised";
 import * as TypeMoq from "typemoq";
 import { Fixtures } from "../test/fixtures";
 

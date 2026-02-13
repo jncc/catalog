@@ -8,7 +8,7 @@ import * as ValidatorFactory from "../validatorFactory";
 import "mocha"; // test reqs
 import "mocha-inline"; // test reqs
 import * as chai from "chai"; // test reqs
-import * as chaiAsPromised from "chai-as-promised"; // test reqs
+import chaiAsPromised from "chai-as-promised"; // test reqs
 import { Fixtures } from "../../test/fixtures";
 import * as TypeMoq from "typemoq";
 
