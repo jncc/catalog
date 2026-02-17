@@ -11,14 +11,20 @@ export class Database {
     let logger = Logger.GetLog()
 
     logger.debug(`Using host '${process.env.PGHOST}' and database '${process.env.PGDATABASE}'`)
-      
-    let ssl : boolean | ConnectionOptions = false;
+    let ssl: boolean | ConnectionOptions = false;
     if (process.env.PGSSL) {
-      ssl = { 
-        ca: fs.readFileSync('built/certs/global-bundle.pem').toString(),
-        rejectUnauthorized: false
+      logger.info(`Enabling SSL for database connection`)
+      if (process.env.PGHOST === 'localhost' && process.env.NODE_ENV === 'development') {
+        logger.warn(`Using SSL for local development, ignoring certificate errors. This is not recommended for production environments.`)
+        ssl = {
+          ca: fs.readFileSync('built/certs/global-bundle.pem').toString(),
+          rejectUnauthorized: false
+        }
+      } else {
+        ssl = {
+          ca: fs.readFileSync('built/certs/global-bundle.pem').toString()
+        }
       }
-      logger.debug(`Enabling SSL for database connection`)
     }
 
     let conn = {
