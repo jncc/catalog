@@ -126,6 +126,8 @@ export class ProductStore {
           footprint: qb.raw("ST_SetSRID(ST_GeomFromGeoJSON(?), 4326)", JSON.stringify(product.footprint)),
           name: product.name
         })
+        .onConflict(['collection_id', 'name'])
+        .merge()
 
       return query.then((r) => {
         return (r as number[])[0];

@@ -5,9 +5,21 @@
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "Scottish Land LiDAR Programme - 2025 capture - DSM",
-      "lineage": "",
+      "lineage": "The LiDAR data were captured and processed by Bluesky International Limited. This dataset is for data collected between May 2025 and December 2025. LiDAR data was acquired using a Leica Terrain Mapper scanner with an integrated Hyperion 2+ LiDAR unit. Scanner settings and flying height were optimised to meet a minimum of 10 laser measurements per metre and an absolute vertical accuracy of 15cm.",
       "abstract": "The Scottish Land LiDAR Programme is the result of collaboration across government to capture LiDAR data for the country. The Rural and Environment Science and Analytical Services (RESAS) team and Digital Directorate teams have worked collaboratively with UK Government Digital Services, who have provided our mechanism for data collection through the Aerial Photography for Great Britain (APGB) Project. The programme is funded jointly by Scottish Government (including Agriculture and Rural Economy, Environment and Forestry, RESAS, Agricultural Reform Programme, and Digital Directorate), Scottish Environment Protection Agency, Foresty and Land Scotland, NatureScot, Scottish Water and Scottish Forestry. The data are collected and processed by Bluesky International Limited. The data will be captured between 2025 to 2027.  This dataset is from the 2025 capture, and is supplied as: Point cloud (.las format) with a resolution of 10 points per square metre; Digital Terrain Model and Digital Surface Model (DTM and DSM), available for download as GeoTIFF, and also supplied via WMS by JNCC.",
-      "keywords": [],
+      "keywords": [
+      {
+        "value": "Orthoimagery",
+        "vocab": "GEMET - INSPIRE themes, version 1.0"
+      },
+      {
+        "value": "Elevation",
+        "vocab": "GEMET - INSPIRE themes, version 1.0"
+      },
+      {
+        "value": "Society"
+      }
+      ],
       "dataFormat": "GeoTIFF",
       "boundingBox": {
         "east": -4.3316470761219765,
@@ -15,15 +27,16 @@
         "north": 55.75726352903444,
         "south": 54.62913742846132
       },
-      "metadataDate": "2026-01-26",
+      "metadataDate": "2026-01-30",
       "resourceType": "dataset",
+      "topicCategory": "Orthoimagery Elevation",
       "temporalExtent": {
-        "end": "2025-12-31",
-        "begin": "2025-05-19"
+        "end": "2025-12-31T23:59:59Z",
+        "begin": "2025-05-19T00:00:00Z"
       },
       "useConstraints": "No limitations to public access. Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government © Crown copyright and database right (2025).",
       "resourceLocator": "https://remotesensingdata.gov.scot/data",
-      "datasetReferenceDate": "2026-01-22",
+      "datasetReferenceDate": "2026-01-29",
       "metadataPointOfContact": {
         "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
         "role": "metadataPointOfContact",
@@ -99,9 +112,21 @@
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "Scottish Land LiDAR Programme - 2025 capture - DTM",
-      "lineage": "",
+      "lineage": "The LiDAR data were captured and processed by Bluesky International Limited. This dataset is for data collected between May 2025 and December 2025. LiDAR data was acquired using a Leica Terrain Mapper scanner with an integrated Hyperion 2+ LiDAR unit. Scanner settings and flying height were optimised to meet a minimum of 10 laser measurements per metre and an absolute vertical accuracy of 15cm.",
       "abstract": "The Scottish Land LiDAR Programme is the result of collaboration across government to capture LiDAR data for the country. The Rural and Environment Science and Analytical Services (RESAS) team and Digital Directorate teams have worked collaboratively with UK Government Digital Services, who have provided our mechanism for data collection through the Aerial Photography for Great Britain (APGB) Project. The programme is funded jointly by Scottish Government (including Agriculture and Rural Economy, Environment and Forestry, RESAS, Agricultural Reform Programme, and Digital Directorate), Scottish Environment Protection Agency, Foresty and Land Scotland, NatureScot, Scottish Water and Scottish Forestry. The data are collected and processed by Bluesky International Limited. The data will be captured between 2025 to 2027.  This dataset is from the 2025 capture, and is supplied as: Point cloud (.las format) with a resolution of 10 points per square metre; Digital Terrain Model and Digital Surface Model (DTM and DSM), available for download as GeoTIFF, and also supplied via WMS by JNCC.",
-      "keywords": [],
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
       "dataFormat": "GeoTIFF",
       "boundingBox": {
         "east": -4.3316470761219765,
@@ -109,16 +134,16 @@
         "north": 55.75726352903444,
         "south": 54.62913742846132
       },
-      "metadataDate": "2026-01-26",
+      "metadataDate": "2026-01-30",
       "resourceType": "dataset",
-      "topicCategory": "",
+      "topicCategory": "Orthoimagery Elevation",
       "temporalExtent": {
-        "end": "2025-12-31",
-        "begin": "2025-05-19"
+        "end": "2025-12-31T23:59:59Z",
+        "begin": "2025-05-19T00:00:00Z"
       },
       "useConstraints": "No limitations to public access. Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government © Crown copyright and database right (2025).",
       "resourceLocator": "https://remotesensingdata.gov.scot/data",
-      "datasetReferenceDate": "2026-01-22",
+      "datasetReferenceDate": "2026-01-29",
       "metadataPointOfContact": {
         "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
         "role": "metadataPointOfContact",
@@ -194,9 +219,21 @@
     "collectionName": "scotland-gov/lidar/ogc",
     "metadata": {
       "title": "Scottish Land LiDAR Programme - 2025 capture - LAZ",
-      "lineage": "",
+      "lineage": "The LiDAR data were captured and processed by Bluesky International Limited. This dataset is for data collected between May 2025 and December 2025. LiDAR data was acquired using a Leica Terrain Mapper scanner with an integrated Hyperion 2+ LiDAR unit. Scanner settings and flying height were optimised to meet a minimum of 10 laser measurements per metre and an absolute vertical accuracy of 15cm.",
       "abstract": "The Scottish Land LiDAR Programme is the result of collaboration across government to capture LiDAR data for the country. The Rural and Environment Science and Analytical Services (RESAS) team and Digital Directorate teams have worked collaboratively with UK Government Digital Services, who have provided our mechanism for data collection through the Aerial Photography for Great Britain (APGB) Project. The programme is funded jointly by Scottish Government (including Agriculture and Rural Economy, Environment and Forestry, RESAS, Agricultural Reform Programme, and Digital Directorate), Scottish Environment Protection Agency, Foresty and Land Scotland, NatureScot, Scottish Water and Scottish Forestry. The data are collected and processed by Bluesky International Limited. The data will be captured between 2025 to 2027.  This dataset is from the 2025 capture, and is supplied as: Point cloud (.las format) with a resolution of 10 points per square metre; Digital Terrain Model and Digital Surface Model (DTM and DSM), available for download as GeoTIFF, and also supplied via WMS by JNCC.",
-      "keywords": [],
+      "keywords": [
+        {
+          "value": "Orthoimagery",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Elevation",
+          "vocab": "GEMET - INSPIRE themes, version 1.0"
+        },
+        {
+          "value": "Society"
+        }
+      ],
       "dataFormat": "GeoTIFF",
       "boundingBox": {
         "east": -4.3316470761219765,
@@ -204,16 +241,16 @@
         "north": 55.75726352903444,
         "south": 54.62913742846132
       },
-      "metadataDate": "2026-01-26",
+      "metadataDate": "2026-01-30",
       "resourceType": "dataset",
       "topicCategory": "Orthoimagery Elevation",
       "temporalExtent": {
-        "end": "2025-12-31",
-        "begin": "2025-05-19"
+        "end": "2025-12-31T23:59:59Z",
+        "begin": "2025-05-19T00:00:00Z"
       },
       "useConstraints": "Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government, SEPA and Fugro (2020).",
       "resourceLocator": "https://remotesensingdata.gov.scot/data",
-      "datasetReferenceDate": "2026-01-22",
+      "datasetReferenceDate": "2026-01-29",
       "metadataPointOfContact": {
         "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
         "role": "metadataPointOfContact",

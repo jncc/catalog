@@ -2,20 +2,23 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - echo `aws --version`
+      - echo `node --version`
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - docker tag $PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - docker tag $PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:latest
+      - docker build -t $PROJECT:$IMAGE_TAG .
+      - docker tag $PROJECT:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$IMAGE_TAG
+      - docker tag $PROJECT:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$IMAGE_TAG
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:latest
       - echo Writing new taskdef.json
       - |
@@ -24,7 +27,7 @@ phases:
           "containerDefinitions": [
             {
               "name": "$PROJECT",
-              "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$CODEBUILD_RESOLVED_SOURCE_VERSION",
+              "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PROJECT:$IMAGE_TAG",
               "cpu": $CONTAINER_CPU_UNITS,
               "memory": $CONTAINER_MEMORY,
               "essential": true,
@@ -121,4 +124,3 @@ artifacts:
   files:
     - appspec.yaml
     - taskdef.json
-  name: emodnet-geoserver-beta-$IMAGE_TAG

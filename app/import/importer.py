@@ -52,7 +52,7 @@ class Importer:
         geom = geometry.shape(product['footprint'])
 
         # Use PostGIS to force Multipolygon if needed
-        if geom.type != 'MultiPolygon':
+        if geom.geom_type != 'MultiPolygon':
 
             geom = geometry.MultiPolygon([geom])
 
