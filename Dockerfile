@@ -1,6 +1,6 @@
 # Image that both builds and runs the catalog database API.
 
-FROM node:18.20.8
+FROM node:24
 
 RUN mkdir -p /var/log/catalog
 
@@ -14,7 +14,8 @@ RUN apt update && apt -y upgrade && \
 
 COPY app .
 
-RUN yarn install --frozen-lockfile && \
+RUN corepack enable
+RUN yarn install --immutable && \
     yarn build 
 
 COPY ./config/etc/logrotate.d/application/application.logrotate /etc/logrotate.d/catalog
