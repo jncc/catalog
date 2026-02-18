@@ -13,6 +13,7 @@ npm-debug.log
 
 # yarn
 yarn-error.log
+app/.yarn
 
 # vscode
 .vscode
@@ -34,5 +35,3 @@ app/yarn-error.log
 # Ignore unzipped grids
 app/import/scotland-gov-lidar/data/grids/scotland-os-grids-wgs84/*.geojson
 app/import/scotland-gov-lidar/data/*.json
-
-
