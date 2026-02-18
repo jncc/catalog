@@ -6,15 +6,17 @@ Metadata and data product catalogue.
 
 The catalog API is a Node.js REST server application written in Typescript.
 
-Install Node.js (Note: Ubuntu requires the `nodejs-legacy` package to create a `node` symlink
-https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
+Install Node.js typically we are using NVM to manage local node versions (https://github.com/nvm-sh/nvm). Currently
+we are working with Node v24
 
-    apt install nodejs-legacy
+Enable corepack
 
-Install Typescript and Yarn
+    corepack enable
 
-    npm i -g typescript
-    npm i -g yarn
+**NOTE**: if you have issues running corepack you can try force installing it (its core node so should just work TM)
+
+    npm uninstall -g yarn (Remove global yarn if you have already installed)
+    npm install -g corepack
 
 Install Sphinx for documentation
 
@@ -40,7 +42,7 @@ Either fill in a .env file with the appropriate Environment values or add the ap
 You're good to go.
 
     cd ./app
-    yarn
+    yarn install
     yarn dev
 
 This will run the API server. Don't forget the tests!
