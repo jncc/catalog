@@ -1,4 +1,4 @@
-import geojsonhint = require("@mapbox/geojsonhint/lib/object");
+const gjv = require("geojson-validation");
 
 export interface ICRSProperties {
   name: string;
@@ -31,15 +31,10 @@ export function fixCRS(footprint: any) {
 }
 
 export function nonSchemaValidation(footprint: any, errors: string[]) {
-  let result = geojsonhint.hint(footprint, {
-    precisionWarning: false
-  });
-
+  const result = gjv.isGeoJSONObject(footprint, true)
+  
   result.forEach((e) => {
-    if (e.message !== "old-style crs member is not recommended" &&
-      e.message !== "old-style crs member is not recommended, this object is equivalent to the default and should be removed") {
-      errors.push("footprint | " + e.message);
-    }
+    errors.push("footprint | " + e);
   });
 
   if (footprint.type !== "MultiPolygon") {
