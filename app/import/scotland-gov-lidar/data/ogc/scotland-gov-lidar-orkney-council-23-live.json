@@ -1,0 +1,326 @@
+ [
+    {
+      "id": "1109edd6-c528-47b4-928f-286f27e21bc7",
+      "name": "scotland-gov-lidar-orkney-islands-council-23-dsm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Orkney Islands Council 2023 - DSM",
+        "lineage": "The LiDAR dataset was directly acquired by Orkney Islands Council in 2023. The data were delivered in the following formats: LAS point cloud files at 16 points per metre, 50cm Digital Terrain Model in GeoTIFF format with Lcw-compression, 50cm Digital Surface Model in GeoTIFF format with Lcw-compression. The coordinate system used is as follows: horizontal datum OSGB35_from_OSTN15_Orkney, projection British National Grid (ESPG:27700), and vertical datum  UK_ODN_(Newlyn)_from_OSGM15_for_OSGB36.",
+        "abstract": "A LiDAR survey of Orkney was commissioned by Orkney Islands Council to support the development of a Coastal Change Adaptation Plan for the islands with additional inland areas surveyed with support from other public bodies. The aerial survey was carried out by Field Group AS in June 2023 and covers 1,655km2. The data was processed and calibrated by Field Group AS and indexed by 1km OS grid. It was supplied in: point cloud (.las format) with a resolution of 16 points per square metre, Digital Terrain Model and Digital Surface Model (DTM and DSM) with 50cm resolution (GeoTIFF), and Georeferenced orthophotography (9cm/pixel) were supplied alongside this data as GeoTIFF. Please contact data@jncc.gov.uk if you would like to access this data. ",
+        "keywords": [
+ 	{
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -2.347078519845215,
+  	  "west": -3.4630709133007267,
+  	  "north": 59.398744271271575,
+  	  "south": 58.71771389758278
+        },
+        "metadataDate": "2026-03-05T23:59:59Z",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2023-06-14T23:59:59Z",
+          "begin": "2023-06-10T00:00:00Z"
+        },
+        "useConstraints": "Open Government Licence v3. ",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2026-03-05",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/f5b823cc-7eea-44b1-9e37-3e5e8736f162"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Orkney Islands Council 2023 - DSM",
+          "wms": {
+            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "name": "scotland:orkney-islands-council-23-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/orkney-islands-council-23/dsm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.4630709133007267,
+                58.71771389758278
+              ],
+              [
+                -2.347078519845215,
+                58.71771389758278
+              ],
+              [
+                -2.347078519845215,
+                59.398744271271575
+              ],
+              [
+                -3.4630709133007267,
+                59.398744271271575
+              ],
+              [
+                -3.4630709133007267,
+                58.71771389758278
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "5a149bc5-0942-4dbb-9c16-5994b7803587",
+      "name": "scotland-gov-lidar-orkney-islands-council-23-dtm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Orkney Islands Council 2023 - DTM",
+        "lineage": "The LiDAR dataset was directly acquired by Orkney Islands Council in 2023. The data were delivered in the following formats: LAS point cloud files at 16 points per metre, 50cm Digital Terrain Model in GeoTIFF format with Lcw-compression, 50cm Digital Surface Model in GeoTIFF format with Lcw-compression. The coordinate system used is as follows: horizontal datum OSGB35_from_OSTN15_Orkney, projection British National Grid (ESPG:27700), and vertical datum  UK_ODN_(Newlyn)_from_OSGM15_for_OSGB36.",
+        "abstract": "A LiDAR survey of Orkney was commissioned by Orkney Islands Council to support the development of a Coastal Change Adaptation Plan for the islands with additional inland areas surveyed with support from other public bodies. The aerial survey was carried out by Field Group AS in June 2023 and covers 1,655km2. The data was processed and calibrated by Field Group AS and indexed by 1km OS grid. It was supplied in: point cloud (.las format) with a resolution of 16 points per square metre, Digital Terrain Model and Digital Surface Model (DTM and DSM) with 50cm resolution (GeoTIFF), and Georeferenced orthophotography (9cm/pixel) were supplied alongside this data as GeoTIFF. Please contact data@jncc.gov.uk if you would like to access this data. ",
+        "keywords": [
+ 	{
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -2.347078519845215,
+  	  "west": -3.4630709133007267,
+  	  "north": 59.398744271271575,
+  	  "south": 58.71771389758278
+        },
+        "metadataDate": "2026-03-05T23:59:59Z",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2023-06-14T23:59:59Z",
+          "begin": "2023-06-10T00:00:00Z"
+        },
+        "useConstraints": "Open Government Licence v3. ",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2026-03-05",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/e630a2d1-f8f3-427a-ab24-1045ea90d88e"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Orkney Islands Council 2023 - DTM",
+          "wms": {
+            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "name": "scotland:orkney-islands-council-23-dtm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/orkney-islands-council-23/dtm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.4630709133007267,
+                58.71771389758278
+              ],
+              [
+                -2.347078519845215,
+                58.71771389758278
+              ],
+              [
+                -2.347078519845215,
+                59.398744271271575
+              ],
+              [
+                -3.4630709133007267,
+                59.398744271271575
+              ],
+              [
+                -3.4630709133007267,
+                58.71771389758278
+
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "d05e636a-dcc9-45ba-a271-93dbbc3b8844",
+      "name": "scotland-gov-lidar-orkney-islands-council-23-laz",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "LiDAR for Orkney Islands Council 2023 - LAZ",
+        "lineage": "The LiDAR dataset was directly acquired by Orkney Islands Council in 2023. The data were delivered in the following formats: LAS point cloud files at 16 points per metre, 50cm Digital Terrain Model in GeoTIFF format with Lcw-compression, 50cm Digital Surface Model in GeoTIFF format with Lcw-compression. The coordinate system used is as follows: horizontal datum OSGB35_from_OSTN15_Orkney, projection British National Grid (ESPG:27700), and vertical datum  UK_ODN_(Newlyn)_from_OSGM15_for_OSGB36.",
+        "abstract": "A LiDAR survey of Orkney was commissioned by Orkney Islands Council to support the development of a Coastal Change Adaptation Plan for the islands with additional inland areas surveyed with support from other public bodies. The aerial survey was carried out by Field Group AS in June 2023 and covers 1,655km2. The data was processed and calibrated by Field Group AS and indexed by 1km OS grid. It was supplied in: point cloud (.las format) with a resolution of 16 points per square metre, Digital Terrain Model and Digital Surface Model (DTM and DSM) with 50cm resolution (GeoTIFF), and Georeferenced orthophotography (9cm/pixel) were supplied alongside this data as GeoTIFF. Please contact data@jncc.gov.uk if you would like to access this data. ",
+        "keywords": [
+ 	{
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -2.347078519845215,
+  	  "west": -3.4630709133007267,
+  	  "north": 59.398744271271575,
+  	  "south": 58.71771389758278
+        },
+        "metadataDate": "2026-03-05T23:59:59Z",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2023-06-14T23:59:59Z",
+          "begin": "2023-06-10T00:00:00Z"
+        },
+        "useConstraints": "Open Government Licence v3. ",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2026-03-05",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GI-SAT@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/028c787a-2666-46cd-a531-50f79545694b"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"LiDAR for Orkney Islands Council 2023 - LAZ",
+          "wms": {
+            "url": "https://srsp-ows.jncc.gov.uk/ows",
+            "name": "scotland:orkney-islands-council-23-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/orkney-islands-council-23/laz"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -3.4630709133007267,
+                58.71771389758278
+              ],
+              [
+                -2.347078519845215,
+                58.71771389758278
+              ],
+              [
+                -2.347078519845215,
+                59.398744271271575
+              ],
+              [
+                -3.4630709133007267,
+                59.398744271271575
+              ],
+              [
+                -3.4630709133007267,
+                58.71771389758278
+
+              ]
+            ]
+          ]
+        ]
+      }
+    }
+
+  ]
