@@ -395,15 +395,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:6.12.3":
-  version: 6.12.3
-  resolution: "ajv@npm:6.12.3"
+"ajv@npm:6.14.0":
+  version: 6.14.0
+  resolution: "ajv@npm:6.14.0"
   dependencies:
     fast-deep-equal: "npm:^3.1.1"
     fast-json-stable-stringify: "npm:^2.0.0"
     json-schema-traverse: "npm:^0.4.1"
     uri-js: "npm:^4.2.2"
-  checksum: 10c0/db373a7c39ef99a2ad3621955b034e31d7e31c8ad1f3e2303272c279f27529c1fed04cae62efb8a9761d437a5b4f86b3b3f35b14542642257e62562e5adbae85
+  checksum: 10c0/a2bc39b0555dc9802c899f86990eb8eed6e366cddbf65be43d5aa7e4f3c4e1a199d5460fd7ca4fb3d864000dbbc049253b72faa83b3b30e641ca52cb29a68c22
   languageName: node
   linkType: hard
 
@@ -664,7 +664,7 @@ __metadata:
     "@types/geojson": "npm:7946.0.16"
     "@types/mocha": "npm:10.0.10"
     "@types/wellknown": "npm:0.5.8"
-    ajv: "npm:6.12.3"
+    ajv: "npm:6.14.0"
     ajv-async: "npm:1.0.1"
     body-parser: "npm:^2.2.2"
     chai: "npm:6.2.2"
