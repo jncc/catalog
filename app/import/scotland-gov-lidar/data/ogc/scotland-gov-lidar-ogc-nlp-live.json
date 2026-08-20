@@ -68,8 +68,8 @@
       "product": {
         "title": "Scottish National LiDAR Programme - DSM",
         "wms": {
-          "url": "https://ows.beta.remotesensing.data.gov.scot/geoserver/ows",
-          "name": "scotland:nlp-2025-dsm"
+          "url": "https://ows.remotesensing.data.gov.scot/geoserver/ows",
+          "name": "scotland:nlp-dsm"
         },
         "catalog": {
           "collection": "scotland-gov/lidar/national-lidar-programme/dsm"
@@ -175,8 +175,8 @@
       "product": {
         "title": "Scottish National LiDAR Programme - DTM",
         "wms": {
-          "url": "https://ows.beta.remotesensing.data.gov.scot/geoserver/ows",
-          "name": "scotland:nlp-2025-dtm"
+          "url": "https://ows.remotesensing.data.gov.scot/geoserver/ows",
+          "name": "scotland:nlp-dtm"
         },
         "catalog": {
           "collection": "scotland-gov/lidar/national-lidar-programme/dtm"
@@ -282,8 +282,8 @@
       "product": {
         "title": "Scottish National LiDAR Programme - LAZ",
         "wms": {
-          "url": "https://ows.beta.remotesensing.data.gov.scot/geoserver/ows",
-          "name": "scotland:nlp-2025-dsm"
+          "url": "https://ows.remotesensing.data.gov.scot/geoserver/ows",
+          "name": "scotland:nlp-dsm"
         },
         "catalog": {
           "collection": "scotland-gov/lidar/national-lidar-programme/laz"
