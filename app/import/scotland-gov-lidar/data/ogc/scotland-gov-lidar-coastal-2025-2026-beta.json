@@ -1,0 +1,324 @@
+ [
+    {
+      "id": "519ebd24-183d-4e7c-ac23-f65a5414df36",
+      "name": "scotland-gov-lidar-coastal-coastal-2025-2026-dsm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "Scottish Coastal LiDAR Survey 2025-26 DSM",
+        "lineage": "The LiDAR dataset was acquired by Fugro on behalf of the Scottish Government, via a Pilatus PC-6 aircraft, using a  RIEGL LiDAR sensor. Whilst concurrent imagery was collected, this was not procured as part of the contract.",
+        "abstract": "The Scottish Government commissioned a LiDAR survey along parts of Scotland’s coast to improve the topographic data available for monitoring coastal changes, inform Coastal Change Adaptation Plans and inform modelling coastal and surface water flood risk. The aerial survey was carried out by Fugro Ltd. between February and March 2026 and coincided with low tides. The point cloud data was captured above the minimum specified requirement of 10 points per square metre (10 ppm) (and was routinely  closer to 16ppm) and processed using the OSGM15 geoid model, OSTN15 horizontal transformation and Newlyn datum. Each of the coastal survey sections had ground control areas with RMSE values from 0.009m to 0.049m. Three types of datasets are provided, including a point cloud (LAZ), a 50 cm resolution Digital Surface Model and 50cm Digital Terrain Model, derived from the point cloud. The total area captured was approximately 792 km².",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -2.0953845215505336,
+          "west": -7.312016213816208,
+          "north": 58.64483235957007,
+          "south": 54.9287061073103
+        },
+        "metadataDate": "2026-09-29",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2026-03-31T23:59:59Z",
+          "begin": "2026-02-17T00:00:00Z"
+        },
+        "useConstraints": "This data is made available under an Open Government Licence. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2026-09-25",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GIS@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GIS@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/92cc23e4-94e9-4cc9-915c-7418425a62af"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"Scottish Coastal LiDAR Survey 2025-26 DSM",
+          "wms": {
+            "url": "https://ows.beta.remotesensing.data.gov.scot/geoserver/ows",
+            "name": "scotland:coastal-2025-2026-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/coastal/coastal-2025-2026/dsm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -7.312016213816208,
+                54.9287061073103
+              ],
+              [
+                -2.0953845215505336,
+                54.9287061073103
+              ],
+              [
+                -2.0953845215505336,
+                58.64483235957007
+              ],
+              [
+                -7.312016213816208,
+                58.64483235957007
+              ],
+              [
+                -7.312016213816208,
+                54.9287061073103
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "2411e2cc-74e9-4ea8-a95e-5c310bccbd57",
+      "name": "scotland-gov-lidar-coastal-coastal-2025-2026-dtm",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "Scottish Coastal LiDAR Survey 2025-26 DTM",
+        "lineage": "The LiDAR dataset was acquired by Fugro on behalf of the Scottish Government, via a Pilatus PC-6 aircraft, using a  RIEGL LiDAR sensor. Whilst concurrent imagery was collected, this was not procured as part of the contract.",
+        "abstract": "The Scottish Government commissioned a LiDAR survey along parts of Scotland’s coast to improve the topographic data available for monitoring coastal changes, inform Coastal Change Adaptation Plans and inform modelling coastal and surface water flood risk. The aerial survey was carried out by Fugro Ltd. between February and March 2026 and coincided with low tides. The point cloud data was captured above the minimum specified requirement of 10 points per square metre (10 ppm) (and was routinely  closer to 16ppm) and processed using the OSGM15 geoid model, OSTN15 horizontal transformation and Newlyn datum. Each of the coastal survey sections had ground control areas with RMSE values from 0.009m to 0.049m. Three types of datasets are provided, including a point cloud (LAZ), a 50 cm resolution Digital Surface Model and 50cm Digital Terrain Model, derived from the point cloud. The total area captured was approximately 792 km².",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -2.0953845215505336,
+          "west": -7.312016213816208,
+          "north": 58.64483235957007,
+          "south": 54.9287061073103
+        },
+        "metadataDate": "2026-09-29",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2026-03-31T23:59:59Z",
+          "begin": "2026-02-17T00:00:00Z"
+        },
+        "useConstraints": "This data is made available under an Open Government Licence. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2026-09-25",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GIS@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GIS@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/9297dc6b-f8de-4f1d-a8cd-af027c9d7935"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"Scottish Coastal LiDAR Survey 2025-26 DTM",
+          "wms": {
+            "url": "https://ows.beta.remotesensing.data.gov.scot/geoserver/ows",
+            "name": "scotland:coastal-2025-2026-dtm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/coastal/coastal-2025-2026/dtm"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -7.312016213816208,
+                54.9287061073103
+              ],
+              [
+                -2.0953845215505336,
+                54.9287061073103
+              ],
+              [
+                -2.0953845215505336,
+                58.64483235957007
+              ],
+              [
+                -7.312016213816208,
+                58.64483235957007
+              ],
+              [
+                -7.312016213816208,
+                54.9287061073103
+              ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "da2a07ec-b3c8-4050-a763-8727673728fd",
+      "name": "scotland-gov-lidar-coastal-coastal-2025-2026-laz",
+      "collectionName": "scotland-gov/lidar/ogc",
+      "metadata": {
+        "title": "Scottish Coastal LiDAR Survey 2025-26 LAZ",
+        "lineage": "The LiDAR dataset was acquired by Fugro on behalf of the Scottish Government, via a Pilatus PC-6 aircraft, using a  RIEGL LiDAR sensor. Whilst concurrent imagery was collected, this was not procured as part of the contract.",
+        "abstract": "The Scottish Government commissioned a LiDAR survey along parts of Scotland’s coast to improve the topographic data available for monitoring coastal changes, inform Coastal Change Adaptation Plans and inform modelling coastal and surface water flood risk. The aerial survey was carried out by Fugro Ltd. between February and March 2026 and coincided with low tides. The point cloud data was captured above the minimum specified requirement of 10 points per square metre (10 ppm) (and was routinely  closer to 16ppm) and processed using the OSGM15 geoid model, OSTN15 horizontal transformation and Newlyn datum. Each of the coastal survey sections had ground control areas with RMSE values from 0.009m to 0.049m. Three types of datasets are provided, including a point cloud (LAZ), a 50 cm resolution Digital Surface Model and 50cm Digital Terrain Model, derived from the point cloud. The total area captured was approximately 792 km².",
+        "keywords": [
+          {
+            "value": "Orthoimagery",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Elevation",
+            "vocab": "GEMET - INSPIRE themes, version 1.0"
+          },
+          {
+            "value": "Society"
+          }
+        ],
+        "dataFormat": "GeoTIFF",
+        "boundingBox": {
+          "east": -2.0953845215505336,
+          "west": -7.312016213816208,
+          "north": 58.64483235957007,
+          "south": 54.9287061073103
+        },
+        "metadataDate": "2026-09-29",
+        "resourceType": "dataset",
+        "topicCategory": "Orthoimagery Elevation",
+        "temporalExtent": {
+          "end": "2026-03-31T23:59:59Z",
+          "begin": "2026-02-17T00:00:00Z"
+        },
+        "useConstraints": "This data is made available under an Open Government Licence v3. The following attribution statement must be used to acknowledge the source of the information: Crown copyright Scottish Government",
+        "resourceLocator": "https://remotesensingdata.gov.scot/data",
+        "datasetReferenceDate": "2026-09-25",
+        "metadataPointOfContact": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "metadataPointOfContact",
+          "email": "GIS@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "spatialReferenceSystem": "EPSG:27700",
+        "responsibleOrganisation": {
+          "name": "Scottish Government, Geographic Information Science and Analysis Team (GI-SAT), Directorate for Digital",
+          "role": "pointOfContact",
+          "email": "GIS@gov.scot",
+          "address": {
+            "city": "Edinburgh, Scotland",
+            "country": "United Kingdom",
+            "postalCode": "EH6 6QQ",
+            "deliveryPoint": "Victoria Quay"
+          }
+        },
+        "limitationsOnPublicAccess": "No limitations on public access",
+        "additionalInformationSource": "https://www.spatialdata.gov.scot/geonetwork/srv/eng/catalog.search#/metadata/2de6fba1-50f5-458a-b73d-e494d12fa70e"
+      },
+      "properties": {},
+      "data": {
+        "product": {
+          "title":"Scottish Coastal LiDAR Survey 2025-26 LAZ",
+          "wms": {
+            "url": "https://ows.beta.remotesensing.data.gov.scot/geoserver/ows",
+            "name": "scotland:coastal-2025-2026-dsm"
+          },
+          "catalog": {
+            "collection": "scotland-gov/lidar/coastal/coastal-2025-2026/laz"
+          }
+        }
+      },
+      "footprint": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -7.312016213816208,
+                54.9287061073103
+              ],
+              [
+                -2.0953845215505336,
+                54.9287061073103
+              ],
+              [
+                -2.0953845215505336,
+                58.64483235957007
+              ],
+              [
+                -7.312016213816208,
+                58.64483235957007
+              ],
+              [
+                -7.312016213816208,
+                54.9287061073103
+              ]
+            ]
+          ]
+        ]
+      }
+    }
+
+  ]
