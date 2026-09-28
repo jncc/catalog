@@ -74,8 +74,7 @@ def get_products(bucket, region, s3_path, wgs84_grid_path, collection_name, coll
                         'product': {
                             'title': base_title,
                             'http': {
-                                # 'url': 'https://s3-%s.amazonaws.com/%s/%s' % (region, bucket, key.key),
-                                'url': 'https://%s.s3-%s.amazonaws.com/%s' % (bucket, region, key.key),
+                                'url': 'https://%s.s3.%s.amazonaws.com/%s' % (bucket, region, key.key),
                                 'size': key.size,
                                 'type': getFileType(fileType)
                             },
