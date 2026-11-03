@@ -1,6 +1,6 @@
 # Image that both builds and runs the catalog database API.
 
-FROM node:26.12.1
+FROM node:24
 
 RUN mkdir -p /var/log/catalog
 
