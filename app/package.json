@@ -57,5 +57,5 @@
     "typemoq": "2.1.0",
     "typescript": "^5.1.6"
   },
-  "packageManager": "yarn@4.12.0"
+  "packageManager": "yarn@4.18.1"
 }

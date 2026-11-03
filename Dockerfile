@@ -1,20 +1,21 @@
 # Image that both builds and runs the catalog database API.
 
-FROM node:24
+FROM node:26-alpine
 
 RUN mkdir -p /var/log/catalog
 
 WORKDIR /usr/src/app
 
-RUN apt update && apt -y upgrade && \
-    apt -y install python3-pip && \
-    ln -sf /usr/bin/pip3 /usr/bin/pip && \
-    ln -sf /usr/bin/python3 /usr/bin/python && \
-    pip install sphinx --break-system-packages
+RUN apk update && apk upgrade && \
+    apk add --no-cache python3 py3-pip && \
+    python3 -m venv /opt/sphinx-env && \
+    /opt/sphinx-env/bin/pip install sphinx
+
+ENV PATH="/opt/sphinx-env/bin:$PATH"
 
 COPY app .
 
-RUN corepack enable
+RUN npm install -g corepack && corepack enable
 RUN yarn install --immutable && \
     yarn build 
 
