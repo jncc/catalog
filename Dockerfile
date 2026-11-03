@@ -1,6 +1,6 @@
 # Image that both builds and runs the catalog database API.
 
-FROM node:24
+FROM node:26.12.1
 
 RUN mkdir -p /var/log/catalog
 
@@ -14,7 +14,7 @@ RUN apt update && apt -y upgrade && \
 
 COPY app .
 
-RUN corepack enable
+RUN npm install -g corepack && corepack enable
 RUN yarn install --immutable && \
     yarn build 
 
