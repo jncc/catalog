@@ -14,7 +14,7 @@ export interface ITerm {
 
 export class ProductQuery {
   public offset: number = 0;
-  public limit: number = 50;
+  public limit: number = 100;
   public collections: string[] = [];
   public footprint: string = "";
   public spatialop: string = "intersects";
